@@ -1,0 +1,36 @@
+
+project:
+  type: website
+website:
+  title: "Andreas Varotsis"
+  site-url: "https://andreasthinks.me"
+  description: "Personal website for Andreas Varotsis"
+  favicon: favicon.png
+  twitter-card: true
+  open-graph: true
+  navbar:
+    left:
+      - text: "Home"
+        file: index.qmd
+      - text: "About"
+        file: about.qmd
+      - text: "Recent Work"
+        file: recent_work.qmd
+    right:
+      - text: "{{< fa brands mastodon size=xl >}}" 
+        href: https://fosstodon.org/@AndreasThinks
+        rel: "me"
+      - text: "{{< fa brands twitter size=xl >}}" 
+        href: https://twitter.com/AndreasThinks
+      - text: "{{< fa brands github size=xl >}}" 
+        href: https://github.com/AndreasThinks
+      - text: "{{< fa brands linkedin size=xl >}}" 
+        href: https://www.linkedin.com/in/avarotsis/
+      - text: "{{< fa envelope size=xl >}}" 
+        href: mailto:andreas.varotsis@gmail.com
+      - text: "{{< fa rss size=xl >}}" 
+        href: index.xml
+format:
+  html:
+    theme: cyborg
+    css: styles.css

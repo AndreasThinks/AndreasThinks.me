@@ -1,0 +1,16 @@
+---
+title: "Home"
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  categories: true
+  sort-ui: false
+  filter-ui: false
+  feed:
+    categories: [crime, data-science, policing]
+page-layout: full
+title-block-banner: false
+---
+
+
