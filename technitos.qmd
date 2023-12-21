@@ -1,0 +1,3 @@
+# Consulting
+
+If  you'd like to hire me to consult or contract on your projects, I'm always happy to chat: I specialise in applying advanced analytics and data science to operational problems. [Get in touch and we'll go from there!](mailto:andreas@technitos.ai)

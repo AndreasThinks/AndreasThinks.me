@@ -16,6 +16,8 @@ website:
         file: about.qmd
       - text: "Recent Work"
         file: recent_work.qmd
+      - text: "Consulting"
+        file: technitos.qmd
     right:
       - text: "{{< fa brands mastodon size=xl >}}" 
         href: https://fosstodon.org/@AndreasThinks

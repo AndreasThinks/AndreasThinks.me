@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.78">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,7 +17,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -60,7 +60,8 @@ ul.task-list li input[type="checkbox"] {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 <script>
@@ -73,9 +74,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-date','listing-title','listing-author','listing-subtitle','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -93,6 +94,7 @@ ul.task-list li input[type="checkbox"] {
   })
   </script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
@@ -113,6 +115,7 @@ ul.task-list li input[type="checkbox"] {
     <span class="navbar-title">Andreas Varotsis</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -129,6 +132,10 @@ ul.task-list li input[type="checkbox"] {
   <li class="nav-item">
     <a class="nav-link" href="./recent_work.html" rel="" target="">
  <span class="menu-text">Recent Work</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./technitos.html" rel="" target="">
+ <span class="menu-text">Consulting</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -157,7 +164,8 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text"><i class="fa-solid fa-rss fa-xl" aria-hidden="true"></i></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -168,7 +176,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(7)</span></div><div class="category" data-category="ai">ai <span class="quarto-category-count">(1)</span></div><div class="category" data-category="crime">crime <span class="quarto-category-count">(4)</span></div><div class="category" data-category="data-science">data-science <span class="quarto-category-count">(5)</span></div><div class="category" data-category="forecasting">forecasting <span class="quarto-category-count">(2)</span></div><div class="category" data-category="geospatial">geospatial <span class="quarto-category-count">(2)</span></div><div class="category" data-category="news">news <span class="quarto-category-count">(1)</span></div><div class="category" data-category="nlp">nlp <span class="quarto-category-count">(1)</span></div><div class="category" data-category="policing">policing <span class="quarto-category-count">(2)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(9)</span></div><div class="category" data-category="ai">ai <span class="quarto-category-count">(2)</span></div><div class="category" data-category="crime">crime <span class="quarto-category-count">(4)</span></div><div class="category" data-category="data-science">data-science <span class="quarto-category-count">(5)</span></div><div class="category" data-category="datascience">datascience <span class="quarto-category-count">(1)</span></div><div class="category" data-category="forecasting">forecasting <span class="quarto-category-count">(2)</span></div><div class="category" data-category="geospatial">geospatial <span class="quarto-category-count">(3)</span></div><div class="category" data-category="news">news <span class="quarto-category-count">(1)</span></div><div class="category" data-category="nlp">nlp <span class="quarto-category-count">(1)</span></div><div class="category" data-category="open-source">open-source <span class="quarto-category-count">(1)</span></div><div class="category" data-category="personal">personal <span class="quarto-category-count">(2)</span></div><div class="category" data-category="policing">policing <span class="quarto-category-count">(2)</span></div><div class="category" data-category="technology">technology <span class="quarto-category-count">(2)</span></div></div></div>
 <!-- main -->
 <main class="content column-page-left" id="quarto-document-content">
 
@@ -195,9 +203,91 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="policing,ai,data-science" data-listing-date-sort="1679184000000" data-listing-file-modified-sort="1679239050000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5.09">
+<div class="quarto-post image-right" data-index="0" data-categories="personal,technology,open-source,geospatial" data-listing-date-sort="1723413600000" data-listing-file-modified-sort="1703167066680" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
 <div class="thumbnail">
-<p><a href="./posts/Copbot/explainer.html"> <img src="./posts/Copbot/images/cop_bot.png" class="thumnail-image"> </a></p>
+<p><a href="./posts/OSM_for_christmas/osm_for_xmas.html"> <p class="card-img-top"><img src="posts/OSM_for_christmas/atms.png"  class="thumbnail-image card-img"/></p> </a></p>
+</div>
+<div class="body">
+<a href="./posts/OSM_for_christmas/osm_for_xmas.html">
+<h3 class="no-anchor listing-title">
+Why I’m Contributing to OpenStreetMap for Christmas…
+</h3>
+<div class="listing-subtitle">
+…and maybe you should too!
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('personal'); return false;">
+personal
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('technology'); return false;">
+technology
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('open-source'); return false;">
+open-source
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('geospatial'); return false;">
+geospatial
+</div>
+</div>
+<a href="./posts/OSM_for_christmas/osm_for_xmas.html">
+<div class="listing-description">
+In the eternal words of The Thick of it, everything that happens in the world has to happen somewhere. It sounds…<strong></strong>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/OSM_for_christmas/osm_for_xmas.html">
+<div class="listing-date">
+Aug 12, 2024
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="personal,technology,ai,datascience" data-listing-date-sort="1691445600000" data-listing-file-modified-sort="1703167871825" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
+<div class="thumbnail">
+<p><a href="./posts/cccamp23/index.html"> <p class="card-img-top"><img src="posts/cccamp23/magnet_bus.jpg"  class="thumbnail-image card-img"/></p> </a></p>
+</div>
+<div class="body">
+<a href="./posts/cccamp23/index.html">
+<h3 class="no-anchor listing-title">
+Hackers aren’t excited about AI (and other bits from CCCamp23)
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('personal'); return false;">
+personal
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('technology'); return false;">
+technology
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('ai'); return false;">
+ai
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('datascience'); return false;">
+datascience
+</div>
+</div>
+<a href="./posts/cccamp23/index.html">
+<div class="listing-description">
+So I’m sitting in Berlin airport, waiting to get home from Chaos Communication Camp 2023. It was, to put it bluntly…
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/cccamp23/index.html">
+<div class="listing-date">
+Aug 8, 2023
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-categories="policing,ai,data-science" data-listing-date-sort="1679180400000" data-listing-file-modified-sort="1679239050000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
+<div class="thumbnail">
+<p><a href="./posts/Copbot/explainer.html"> <p class="card-img-top"><img src="posts/Copbot/images/cop_bot.png"  class="thumbnail-image card-img"/></p> </a></p>
 </div>
 <div class="body">
 <a href="./posts/Copbot/explainer.html">
@@ -233,9 +323,9 @@ Mar 19, 2023
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="policing,crime,data-science" data-listing-date-sort="1672272000000" data-listing-file-modified-sort="1677425769000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14.055">
+<div class="quarto-post image-right" data-index="3" data-categories="policing,crime,data-science" data-listing-date-sort="1672268400000" data-listing-file-modified-sort="1677425769000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15">
 <div class="thumbnail">
-<p><a href="./posts/burglary_attendance/index.html"> <img src="./posts/burglary_attendance/severity-plot.png" class="thumnail-image"> </a></p>
+<p><a href="./posts/burglary_attendance/index.html"> <p class="card-img-top"><img src="posts/burglary_attendance/severity-plot.png"  class="thumbnail-image card-img"/></p> </a></p>
 </div>
 <div class="body">
 <a href="./posts/burglary_attendance/index.html">
@@ -271,9 +361,9 @@ Dec 29, 2022
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="news" data-listing-date-sort="1664233200000" data-listing-file-modified-sort="1664355977000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1.565">
+<div class="quarto-post image-right" data-index="4" data-categories="news" data-listing-date-sort="1664229600000" data-listing-file-modified-sort="1664355977000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
 <div class="thumbnail">
-<p><a href="./posts/migrated_to_quarto/index.html"> <img src="./posts/migrated_to_quarto/unsplash.jpg" class="thumnail-image"> </a></p>
+<p><a href="./posts/migrated_to_quarto/index.html"> <p class="card-img-top"><img src="posts/migrated_to_quarto/unsplash.jpg" alt="A picture of a red computer chip."  class="thumbnail-image card-img"/></p> </a></p>
 </div>
 <div class="body">
 <a href="./posts/migrated_to_quarto/index.html">
@@ -303,13 +393,9 @@ Sep 27, 2022
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="crime,geospatial" data-listing-date-sort="1647043200000" data-listing-file-modified-sort="1664309302000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9.935">
+<div class="quarto-post image-right" data-index="5" data-categories="crime,geospatial" data-listing-date-sort="1647039600000" data-listing-file-modified-sort="1664309302000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10">
 <div class="thumbnail">
-<a href="./posts/robbery_and_searches_in_space/robbery_and_searches_in_space.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/robbery_and_searches_in_space/robbery_and_searches_in_space.html"></a></p>
+<p><a href="./posts/robbery_and_searches_in_space/robbery_and_searches_in_space.html"> <p class="card-img-top"><img src="posts/robbery_and_searches_in_space/robbery_and_searches_in_space_files/figure-html/cell-19-output-1.png"  class="thumbnail-image card-img"/></p> </a></p>
 </div>
 <div class="body">
 <a href="./posts/robbery_and_searches_in_space/robbery_and_searches_in_space.html">
@@ -342,9 +428,9 @@ Mar 12, 2022
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="data-science,forecasting,crime,geospatial" data-listing-date-sort="1621638000000" data-listing-file-modified-sort="1664315632000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="27.85">
+<div class="quarto-post image-right" data-index="6" data-categories="data-science,forecasting,crime,geospatial" data-listing-date-sort="1621634400000" data-listing-file-modified-sort="1664315632000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="28">
 <div class="thumbnail">
-<p><a href="./posts/lockdown_effect/index.html"> <img src="./posts/lockdown_effect/london_mobility.png" class="thumnail-image"> </a></p>
+<p><a href="./posts/lockdown_effect/index.html"> <p class="card-img-top"><img src="posts/lockdown_effect/index_files/figure-html/unnamed-chunk-4-1.png"  class="thumbnail-image card-img"/></p> </a></p>
 </div>
 <div class="body">
 <a href="./posts/lockdown_effect/index.html">
@@ -383,13 +469,9 @@ May 22, 2021
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="data-science,forecasting,crime" data-listing-date-sort="1604534400000" data-listing-file-modified-sort="1671714713000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1.085">
+<div class="quarto-post image-right" data-index="7" data-categories="data-science,forecasting,crime" data-listing-date-sort="1604530800000" data-listing-file-modified-sort="1671714713000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
 <div class="thumbnail">
-<a href="./posts/lapd_and_prophet/lapd_and_prophet.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/lapd_and_prophet/lapd_and_prophet.html"></a></p>
+<p><a href="./posts/lapd_and_prophet/lapd_and_prophet.html"> <p class="card-img-top"><img src="posts/lapd_and_prophet/lapd_and_prophet_files/figure-html/cell-9-output-1.png"  class="thumbnail-image card-img"/></p> </a></p>
 </div>
 <div class="body">
 <a href="./posts/lapd_and_prophet/lapd_and_prophet.html">
@@ -425,13 +507,9 @@ Nov 5, 2020
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="data-science,nlp" data-listing-date-sort="1599692400000" data-listing-file-modified-sort="1671721701000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3.275">
+<div class="quarto-post image-right" data-index="8" data-categories="data-science,nlp" data-listing-date-sort="1599688800000" data-listing-file-modified-sort="1671721701000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
 <div class="thumbnail">
-<a href="./posts/FastAI_Twitter_Sentiment_Analysis_Tutorial/FastAI_Twitter_Sentiment_Analysis_Tutorial.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/FastAI_Twitter_Sentiment_Analysis_Tutorial/FastAI_Twitter_Sentiment_Analysis_Tutorial.html"></a></p>
+<p><a href="./posts/FastAI_Twitter_Sentiment_Analysis_Tutorial/FastAI_Twitter_Sentiment_Analysis_Tutorial.html"> <p class="card-img-top"><img src="posts/FastAI_Twitter_Sentiment_Analysis_Tutorial/FastAI_Twitter_Sentiment_Analysis_Tutorial_files/figure-html/cell-14-output-2.png"  class="thumbnail-image card-img"/></p> </a></p>
 </div>
 <div class="body">
 <a href="./posts/FastAI_Twitter_Sentiment_Analysis_Tutorial/FastAI_Twitter_Sentiment_Analysis_Tutorial.html">
@@ -496,9 +574,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -563,6 +655,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
