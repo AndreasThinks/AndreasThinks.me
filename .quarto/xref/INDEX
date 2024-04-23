@@ -67,5 +67,17 @@
   },
   "posts/Copbot/explainer.ipynb": {
     "explainer.html": "3e24477b"
+  },
+  "technitos.qmd": {
+    "technitos.html": "02715ae9"
+  },
+  "posts/cccamp23/index.qmd": {
+    "index.html": "b2c2acc9"
+  },
+  "posts/OSM_for_christmas/osm_for_xmas.qmd": {
+    "osm_for_xmas.html": "af33c047"
+  },
+  "posts/quarto_comments/index.qmd": {
+    "index.html": "88f88f12"
   }
 }

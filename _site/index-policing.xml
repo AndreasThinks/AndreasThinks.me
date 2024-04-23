@@ -10,7 +10,7 @@
 <atom:link href="https://andreasthinks.me/index-policing.xml" rel="self" type="application/rss+xml"/>
 <description>Personal website for Andreas Varotsis</description>
 <generator>quarto-1.3.450</generator>
-<lastBuildDate>Sat, 18 Mar 2023 23:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 19 Mar 2023 00:00:00 GMT</lastBuildDate>
 <item>
   <title>Teaching OpenAI to assess risk, with CopBot!</title>
   <link>https://andreasthinks.me/posts/Copbot/explainer.html</link>
@@ -404,7 +404,7 @@ Staff should tell the detainee that she can ask to see the carer at any time. Fo
   <category>ai</category>
   <category>data-science</category>
   <guid>https://andreasthinks.me/posts/Copbot/explainer.html</guid>
-  <pubDate>Sat, 18 Mar 2023 23:00:00 GMT</pubDate>
+  <pubDate>Sun, 19 Mar 2023 00:00:00 GMT</pubDate>
 </item>
 <item>
   <title>What’s Happened to Burglary, and does Attending Help?</title>
@@ -4851,7 +4851,7 @@ font-style: inherit;">=</span>panel_data</span>
   <category>crime</category>
   <category>data-science</category>
   <guid>https://andreasthinks.me/posts/burglary_attendance/index.html</guid>
-  <pubDate>Wed, 28 Dec 2022 23:00:00 GMT</pubDate>
+  <pubDate>Thu, 29 Dec 2022 00:00:00 GMT</pubDate>
 </item>
 </channel>
 </rss>
