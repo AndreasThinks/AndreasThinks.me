@@ -2,9 +2,6 @@
 title: "Learning R - Exploring the COVID Crime Effect in London"
 description: " I use public London crime data on robbery and burglary to examine where this COVID crime shift was strongest, and whether any specific drivers or correlates can be identified.  "
 date: "5/22/2021"
-execute:
-  freeze: auto  # never re-render during project render
-freeze: auto  # never re-render during project render
 categories:
   - data-science
   - forecasting
