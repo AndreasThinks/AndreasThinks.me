@@ -15,7 +15,7 @@ mastodon_comments:
   toot_id: "112321976298496233"
 ---
 
-I've become a big fan of the ["fediverse"](https://en.wikipedia.org/wiki/Fediverse) in the last few years - social media let me find my own delightful community of crime/ai/evidence nerds, and I don't want those systems to be any more centralised and out of my control than they are already. I also really like the scientific publishing platform Quarto [(that's what the site is built on!)](posts/migrated_to_quarto/index.ipynb).
+I've become a big fan of the ["fediverse"](https://en.wikipedia.org/wiki/Fediverse) in the last few years - social media let me find my own delightful community of crime/ai/evidence nerds, and I don't want those systems to be any more centralised and out of my control than they are already. I also really like the scientific publishing platform Quarto [(that's what the site is built on!)](../migrated_to_quarto/index.ipynb).
 
 So last night, I got wondering how hard it would be to get Mastodon powered comments on this blog. Quarto [does support a few native comment options](https://quarto.org/docs/output-formats/html-basics.html#commenting), but predictably, nothing Fediverse compatible... so that's why I built one! [It's bundled up as a neat little Quarto extension](https://github.com/AndreasThinks/quarto-mastodon-comments), and the whole thing was actually surprisingly painless. 
 
