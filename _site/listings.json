@@ -2,6 +2,8 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/uv-for-python-package.html",
+      "/posts/copbot_online/index.html",
       "/posts/quarto_comments/index.html",
       "/posts/OSM_for_christmas/osm_for_xmas.html",
       "/posts/Copbot/explainer.html",

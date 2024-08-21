@@ -79,5 +79,14 @@
   },
   "posts/quarto_comments/index.qmd": {
     "index.html": "88f88f12"
+  },
+  "posts/copbot_online/index.qmd": {
+    "index.html": "7b2909fa"
+  },
+  "posts/uv-for-python-package.qmd": {
+    "uv-for-python-package.html": "692efec6"
+  },
+  "posts/building_with_fasthtml/index.qmd": {
+    "index.html": "967005fe"
   }
 }
