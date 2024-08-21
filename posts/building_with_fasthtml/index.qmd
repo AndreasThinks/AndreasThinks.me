@@ -1,0 +1,9 @@
+---
+title: "Building with FastHTML is bloody delightful"
+format: html
+date: "08/22/2024"
+categories:
+    - web-development
+draft: true
+---
+

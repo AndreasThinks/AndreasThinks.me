@@ -1,0 +1,26 @@
+---
+title: "Quarto Comments, Powered by the Fediverse"
+subtitle: "I built a Quarto extension!"
+format: html
+date: "04/23/2024"
+categories: 
+  - personal
+  - technology
+  - open-source
+filters:
+  - mastodon-comments
+mastodon_comments:
+  user: "AndreasThinks"
+  host: "fosstodon.org"
+  toot_id: "112321976298496233"
+---
+
+I've become a big fan of the ["fediverse"](https://en.wikipedia.org/wiki/Fediverse) in the last few years - social media let me find my own delightful community of crime/ai/evidence nerds, and I don't want those systems to be any more centralised and out of my control than they are already. I also really like the scientific publishing platform Quarto [(that's what the site is built on!)](posts/migrated_to_quarto/index.ipynb).
+
+So last night, I got wondering how hard it would be to get Mastodon powered comments on this blog. Quarto [does support a few native comment options](https://quarto.org/docs/output-formats/html-basics.html#commenting), but predictably, nothing Fediverse compatible... so that's why I built one! [It's bundled up as a neat little Quarto extension](https://github.com/AndreasThinks/quarto-mastodon-comments), and the whole thing was actually surprisingly painless. 
+
+![](wordmark-white-text.svg){fig-align="centre"}
+
+Most of that is thanks to this [excellent web-component](https://github.com/dpecos/mastodon-comments?tab=readme-ov-file), which does 90% of the technical heavy lifting - you can read about their [implementation in more detail here](https://danielpecos.com/2022/12/25/mastodon-as-comment-system-for-your-static-blog/). To cut a long story short, thanks to the open nature of the Fediverse, it's relatively straightforward for some javascript code to get updates on a toot.  Thanks to the surprisingly understandable [Quarto extensions framework](https://quarto.org/docs/extensions/), all you then need is some Lua code to inject the component, along with your chosen variables into your Quarto theme, and after a bit of javascript tweaking and some help from ChatGPT, bob's your uncle... in theory, you *should* be seeing comments below this post.
+
+If you found this useful, leave a comment! I'd also very much welcome any [PRs or contributions on my horrendous code (please help me fix it)](https://github.com/AndreasThinks/quarto-mastodon-comments).

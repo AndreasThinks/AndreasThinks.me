@@ -1,0 +1,18 @@
+---
+title: "Reflections on Policing Data and Technology"
+format: html
+draft: true
+---
+
+
+
+Operational First
+Most policing technology is built because it *had to be* - crime recording systems so we can record crime, shift systems to record shifts...you get the idea.  Very little is created becuase it
+Most of policing technology is built because it has to be.
+
+Lets build communities
+
+Cops who code
+
+A ramp to success
+

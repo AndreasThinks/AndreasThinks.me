@@ -1,0 +1,18 @@
+---
+title: "FOSS I Loved in 2022"
+format: html
+date: "21/12/2022"
+category: personal
+draft: true
+categories: 
+  - personal
+  - technology
+  - open-source
+---
+
+## OpenStreetMap
+## Quarto
+## Ergonomic Keyboards
+## The Fediverse
+
+
