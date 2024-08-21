@@ -1,6 +1,7 @@
 
 project:
   type: website
+  output-dir: docs
 website:
   title: "Andreas Varotsis"
   site-url: "https://andreasthinks.me"

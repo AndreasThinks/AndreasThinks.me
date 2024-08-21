@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2022-03-12">
+<meta name="description" content="Using Python GIS libraries to explore the spatial distribution of robberies in London">
+
+<title>Andreas Varotsis - Learning GIS in Python - Robbery and Police Searches in Space</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Andreas Varotsis - Learning GIS in Python - Robbery and Police Searches in Space">
+<meta property="og:description" content="Using Python GIS libraries to explore the spatial distribution of robberies in London">
+<meta property="og:image" content="https://andreasthinks.me/posts/robbery_and_searches_in_space/robbery_and_searches_in_space_files/figure-html/cell-19-output-1.png">
+<meta property="og:site-name" content="Andreas Varotsis">
+<meta property="og:image:height" content="646">
+<meta property="og:image:width" content="1166">
+<meta name="twitter:title" content="Andreas Varotsis - Learning GIS in Python - Robbery and Police Searches in Space">
+<meta name="twitter:description" content="Using Python GIS libraries to explore the spatial distribution of robberies in London">
+<meta name="twitter:image" content="https://andreasthinks.me/posts/robbery_and_searches_in_space/robbery_and_searches_in_space_files/figure-html/cell-19-output-1.png">
+<meta name="twitter:image-height" content="646">
+<meta name="twitter:image-width" content="1166">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Andreas Varotsis</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../recent_work.html" rel="" target="">
+ <span class="menu-text">Recent Work</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../technitos.html" rel="" target="">
+ <span class="menu-text">Consulting</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://fosstodon.org/@AndreasThinks" rel="me" target="">
+ <span class="menu-text"><i class="fa-brands fa-mastodon fa-xl" aria-hidden="true"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://twitter.com/AndreasThinks" rel="" target="">
+ <span class="menu-text"><i class="fa-brands fa-twitter fa-xl" aria-hidden="true"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/AndreasThinks" rel="" target="">
+ <span class="menu-text"><i class="fa-brands fa-github fa-xl" aria-hidden="true"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://www.linkedin.com/in/avarotsis/" rel="" target="">
+ <span class="menu-text"><i class="fa-brands fa-linkedin fa-xl" aria-hidden="true"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="mailto:andreas.varotsis@gmail.com" rel="" target="">
+ <span class="menu-text"><i class="fa-solid fa-envelope fa-xl" aria-hidden="true"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.xml" rel="" target="">
+ <span class="menu-text"><i class="fa-solid fa-rss fa-xl" aria-hidden="true"></i></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Learning GIS in Python - Robbery and Police Searches in Space</h1>
+                  <div>
+        <div class="description">
+          Using Python GIS libraries to explore the spatial distribution of robberies in London
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">crime</div>
+                <div class="quarto-category">geospatial</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 12, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>Amongst stuffing my face with wine and cheese, I’ve used this Christmas break to learn more about geospatial modelling in Python.</p>
+<p>This blog post is largely intended for my reference and to act as a useful example for others…as such, it may be messy! I’ll try and tidy it into a Medium post in the coming weeks.</p>
+<p>Space is an often disregarded dimension of modelling within policing research. As per <a href="https://en.wikipedia.org/wiki/Tobler%27s_first_law_of_geography">Tobler’s first law of geography, “everything is related to everything else, but near things are more related than distant things”</a>, and this is probably especially true of crime, that tenders to cluster in both time and space…treating your models as not having distinct physical locations that influence how they behave is likely to miss crucial information. <!-- TEASER_END --></p>
+<p>Nearly all of the below is adapted from a fantastic work in progress book, <a href="https://geographicdata.science/book/intro.html">Geographic Data Science with PySAL and the PyData Stack</a> - I’ve found it hugely helpful, and the code examples are very approachable. I’d also recommend browsing the <a href="https://pysal.org/documentation">Pysal documentation.</a></p>
+<p>All of the below is based on public data: - Police recorded crime and searches from January 2019 through October 2020 <a href="https://data.police.uk/data/">(data.police.uk)</a> - London MSOA geographic and demographic data <a href="https://data.london.gov.uk/dataset/statistical-gis-boundary-files-london">(MOPAC)</a></p>
+<p>The key libraries used are: - Standard Python libraries as included in <a href="https://www.anaconda.com/">Anaconda</a> (statsmodels, pandas, sklearn, seaborn) - <a href="https://geopandas.org/">Geopandas</a> - allowing you to read, write, and plot spatial data - <a href="https://pysal.org/">Pysal</a> - a collection of modules for geospatial data science</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#both of the below are used to read your directory</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#core DS libraries</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans, AgglomerativeClustering</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#graphic libraries</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt  </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> colors</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns             </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#geographic analysis</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pysal.explore <span class="im">import</span> esda   <span class="co"># Exploratory Spatial analytics</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pysal.lib <span class="im">import</span> weights</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> contextily                <span class="co"># Background tiles</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pysal.viz <span class="im">import</span> splot</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> splot.esda <span class="im">import</span> plot_moran</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">#positive outcomes to obtain detection rate</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>positive_outcomes <span class="op">=</span> [</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>       <span class="st">'Offender given conditional discharge'</span>, <span class="st">'Offender fined'</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>       <span class="st">'Offender given a drugs possession warning'</span>,</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>       <span class="st">'Court result unavailable'</span>, <span class="st">'Local resolution'</span>,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>       <span class="st">'Offender given community sentence'</span>,</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>       <span class="st">'Offender given penalty notice'</span>, <span class="st">'Offender given a caution'</span>,</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>       <span class="st">'Offender sent to prison'</span>, <span class="st">'Court case unable to proceed'</span>,</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>       <span class="st">'Defendant found not guilty'</span>,</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>       <span class="st">'Offender given suspended prison sentence'</span>,</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>       <span class="st">'Awaiting court outcome'</span>, <span class="st">'Offender otherwise dealt with'</span>,</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>       <span class="st">'Defendant sent to Crown Court'</span>, <span class="st">'Offender deprived of property'</span>,</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>       <span class="st">'Offender ordered to pay compensation'</span>,</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>       <span class="st">'Offender given absolute discharge'</span>,</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>       <span class="st">'Formal action is not in the public interest'</span>,</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>       <span class="st">'Suspect charged as part of another case'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="spatial-data" class="level2">
+<h2 class="anchored" data-anchor-id="spatial-data">Spatial Data</h2>
+<p>We begin by importing our spatial border data. Spatial coordinates are just coordinates, so without understanding what those coordinates mean (for instance, where you are in a city, or in the world, at what altitude, etc), they’re essentially points on a chart.</p>
+<p>For us, this is provided by the <a href="https://data.london.gov.uk/dataset/statistical-gis-boundary-files-london">Mayor’s Office for Policing and Crime</a>, and also conveniently contains some area characteristics. We use Geopandas to read the file.</p>
+<p>Geospatial modelling relies on assigning events to a unit of space. You could theoretically make this as detailed as possible - for instance, meter squares - but given we’re going to analyse how our units are interconnected, that’s probably not computationally feasible (if everything is connected to everything, you’re going to need a really big computer). You’ll need to reach a suitable compromise. Helpfully, the UK government provides various statistical units, including border coordinates, for download. Lower Super Output Areas (LSOAs) and Middle Super Output Areas (MSOAs) contain populations of between 5,000 and 7,200, and as such should be (partly) comparable.</p>
+<p>Geospatial data will use a specific <a href="https://cran.r-project.org/web/packages/eRTG3D/vignettes/v6.html#:~:text=coordinate%20reference%20system%20(CRS)%20is,between%20different%20spatial%20reference%20systems.">Coordinate Reference System, or CRS</a> which will affect how your data is processed. Make sure you’re using the right one - worldwide data that assumes it is on a sphere will behave very differently to data from a specific country on a flat plane.</p>
+<p>UK policing data often uses National Grid Easting/Northing coordinates, rather than the more common Lat/Longs. Daata.Police.uk comes pre-processed into lat/long coordinates. Thankfully, whichever you have, geopandas can easily convert (or “re-project”) to another system.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>msoas <span class="op">=</span> geopandas.read_file(<span class="st">"statistical-gis-boundaries-london/MapInfo/MSOA_2011_London_gen_MHW.tab"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>msoas <span class="op">=</span> msoas.to_crs(epsg<span class="op">=</span><span class="dv">4326</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\Admin\Anaconda3\envs\geospatial\lib\site-packages\geopandas\geodataframe.py:422: RuntimeWarning: Sequential read of iterator was interrupted. Resetting iterator. This can negatively impact the performance.
+  for feature in features_lst:</code></pre>
+</div>
+</div>
+<p>Our data on both stop and search and robberies was manually downloaded from data.police.uk, and extracted into our working folder. Given this is then returned into a folder per month, I have written a series of helper functions to read the files, assign them to an MSOA, and combine them into a total per MSOA.</p>
+<p>To assign to an MSOA, we use a <a href="http://wiki.gis.com/wiki/index.php/Spatial_Join#:~:text=A%20Spatial%20join%20is%20a,spatially%20to%20other%20feature%20layers.">“spatial join”</a>: like a normal table join (think vlookup in Excel), this connects elements from one table, to elements from another, via a common column. In our case, the common column is the geographic location: which MSOA is our search/crime located in.</p>
+<p>Crime data from <a href="https://data.police.uk/">data.police.uk</a> is separated into <a href="https://data.police.uk/about/">“major” crime types</a>, which is very helpful for anonymisation (we can’t figure out who the victim was if we don’t know specific crime types), but does mean that all violent and sexual crime is agglomerated into one - given I think it’s unlikely searches deter sexual offences, that’s unhelpful. As such, we’ll focus on robbery, which is disaggregated. This isn’t ideal, but robbery remains a serious, violent, high priority crime, and as such you’d hope they are connected, and robbery might in fact be a rough proxy for overall violence.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_and_add(file_path):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(file_path)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    robberies <span class="op">=</span> df[df[<span class="st">"Crime type"</span>] <span class="op">==</span> <span class="st">'Robbery'</span>]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#we create a geopandas object that uses the lat/long coordinates, using the appropriate CRS code.</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    robberies <span class="op">=</span> geopandas.GeoDataFrame(robberies, geometry<span class="op">=</span>geopandas.points_from_xy(robberies.Longitude, robberies.Latitude), crs<span class="op">=</span><span class="st">"epsg:4326"</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    detected_mask <span class="op">=</span> robberies[<span class="st">"Last outcome category"</span>].isin(positive_outcomes)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># identify which crimes resulted in a detected outcome </span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    robberies.loc[detected_mask, <span class="st">"Detected"</span>] <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    detected_mask <span class="op">=</span> robberies[<span class="st">"Last outcome category"</span>].isin(positive_outcomes)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    detected_df <span class="op">=</span> robberies[detected_mask]</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    robberies.loc[detected_mask, <span class="st">"Detected"</span>] <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    dfsjoin_r <span class="op">=</span> geopandas.sjoin(msoas, robberies) <span class="co">#Spatial join Points to polygons</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    dfsjoin_d <span class="op">=</span> geopandas.sjoin(msoas, detected_df) <span class="co">#Spatial join Points to polygons</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">#aggregate to a pivot table that will count our outputs.</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    pivot_r <span class="op">=</span> pd.pivot_table(dfsjoin_r,index<span class="op">=</span><span class="st">'MSOA11CD'</span>,fill_value<span class="op">=</span><span class="dv">0</span>,columns<span class="op">=</span><span class="st">'Crime type'</span>,aggfunc<span class="op">=</span>{<span class="st">'Crime type'</span>:<span class="bu">len</span>})</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    pivot_d <span class="op">=</span> pd.pivot_table(dfsjoin_d,index<span class="op">=</span><span class="st">'MSOA11CD'</span>,fill_value<span class="op">=</span><span class="dv">0</span>,columns<span class="op">=</span><span class="st">'Crime type'</span>,aggfunc<span class="op">=</span>{<span class="st">'Crime type'</span>:<span class="bu">len</span>})</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    all_pivot <span class="op">=</span> pivot_r.join(pivot_d, rsuffix<span class="op">=</span><span class="st">"detected"</span>).reset_index()</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> all_pivot.fillna(<span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_and_add_search(file_path):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(file_path)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> geopandas.GeoDataFrame(df, geometry<span class="op">=</span>geopandas.points_from_xy(df.Longitude, df.Latitude), crs<span class="op">=</span><span class="st">"epsg:4326"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    dfsjoin <span class="op">=</span> geopandas.sjoin(msoas, df) <span class="co">#Spatial join Points to polygons</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    pivot_d <span class="op">=</span> dfsjoin.groupby([<span class="st">"MSOA11CD"</span>])[<span class="st">'Object of search'</span>].count()</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#pivot_d = pd.pivot_table(dfsjoin,index='MSOA11CD',fill_value=0,columns='Object of search', aggfunc=len)</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame(pivot_d.fillna(<span class="dv">0</span>)).reset_index()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> merge_dfs(list_of_df):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    initial_df <span class="op">=</span> list_of_df[<span class="dv">0</span>]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    remaining <span class="op">=</span> list_of_df[<span class="dv">1</span>:]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> pivot <span class="kw">in</span> remaining:</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        initial_df.groupby(<span class="st">"MSOA11CD"</span>, as_index<span class="op">=</span><span class="va">False</span>).<span class="bu">sum</span>()</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        initial_df <span class="op">=</span> pivot.merge(initial_df.groupby(<span class="st">"MSOA11CD"</span>, as_index<span class="op">=</span><span class="va">False</span>).<span class="bu">sum</span>(), how<span class="op">=</span><span class="st">"outer"</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#initial_df.columns=["MSOA11CD","Robbery","Detected"]</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span> (<span class="st">"dataframe length is "</span> <span class="op">+</span> <span class="bu">str</span>(initial_df.shape[<span class="dv">0</span>]))</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> initial_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#we iterate over all files and subfolders in our data directory, and use the appropriate helper functions based on their last characters.</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>list_of_pivot <span class="op">=</span> []</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>list_of_searches <span class="op">=</span> []</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>rootdir <span class="op">=</span> os.getcwd()</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> subdir, dirs, files <span class="kw">in</span> os.walk(<span class="st">"data"</span>):</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> files:</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        filepath <span class="op">=</span> subdir <span class="op">+</span> os.sep <span class="op">+</span> <span class="bu">file</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> filepath.endswith(<span class="st">"street.csv"</span>):</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>            list_of_pivot.append(read_and_add(filepath))</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> filepath.endswith(<span class="st">"search.csv"</span>):</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>            list_of_searches.append(read_and_add_search(filepath))</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">#now we concatenate all our individual dataframes into a single one</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"aggregating robbery"</span>)</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>final_pivot <span class="op">=</span> merge_dfs(list_of_pivot)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"aggregating searches"</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>final_search <span class="op">=</span> merge_dfs(list_of_searches)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>aggregating robbery
+dataframe length is 1705
+aggregating searches
+dataframe length is 1953</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\Admin\Anaconda3\envs\geospatial\lib\site-packages\pandas\core\generic.py:3889: PerformanceWarning: dropping on a non-lexsorted multi-index without a level parameter may impact performance.
+  obj = obj._drop_axis(labels, axis, level=level, errors=errors)</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#finally, merge those into a single pivot with the sum of all incidents during our data, by MSOA.</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>final_pivot.columns<span class="op">=</span>[<span class="st">"MSOA11CD"</span>,<span class="st">"Robbery"</span>,<span class="st">"Detected"</span>]</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>final_pivot <span class="op">=</span> final_pivot.groupby(<span class="st">"MSOA11CD"</span>).<span class="bu">sum</span>()</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>final_search <span class="op">=</span> final_search.groupby(<span class="st">"MSOA11CD"</span>).<span class="bu">sum</span>()</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>final_join <span class="op">=</span> final_search.join(final_pivot).reset_index().copy()</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>final_join.columns<span class="op">=</span>[<span class="st">"MSOA11CD"</span>, <span class="st">"search_count"</span>, <span class="st">"robbery_count"</span>,<span class="st">"detected_robbery"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>final_join</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">MSOA11CD</th>
+<th data-quarto-table-cell-role="th">search_count</th>
+<th data-quarto-table-cell-role="th">robbery_count</th>
+<th data-quarto-table-cell-role="th">detected_robbery</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>E02000001</td>
+<td>268</td>
+<td>37</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>E02000002</td>
+<td>173</td>
+<td>38</td>
+<td>2.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>E02000003</td>
+<td>294</td>
+<td>115</td>
+<td>7.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>E02000004</td>
+<td>216</td>
+<td>19</td>
+<td>0.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>E02000005</td>
+<td>132</td>
+<td>61</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">978</td>
+<td>E02006927</td>
+<td>581</td>
+<td>68</td>
+<td>7.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">979</td>
+<td>E02006928</td>
+<td>638</td>
+<td>89</td>
+<td>5.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">980</td>
+<td>E02006929</td>
+<td>1373</td>
+<td>146</td>
+<td>7.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">981</td>
+<td>E02006930</td>
+<td>168</td>
+<td>56</td>
+<td>2.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">982</td>
+<td>E02006931</td>
+<td>393</td>
+<td>105</td>
+<td>5.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>983 rows × 4 columns</p>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>final_join.<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>MSOA11CD            E02000001E02000002E02000003E02000004E02000005E...
+search_count                                                   477668
+robbery_count                                                   60093
+detected_robbery                                                 3054
+dtype: object</code></pre>
+</div>
+</div>
+<p>Our final file then, contains nearly 500,000 searches and just over 60,000 robberies (of which a suspect was found in around 3,000) across London’s 938 MSOAs.</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>msoas[<span class="st">"MSOA11CD"</span>] <span class="op">=</span> msoas[<span class="st">"MSOA11CD"</span>].astype(<span class="st">"string"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>final_join[<span class="st">"MSOA11CD"</span>] <span class="op">=</span> final_join[<span class="st">"MSOA11CD"</span>].astype(<span class="st">"string"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>msoas <span class="op">=</span> msoas.merge(final_join, on<span class="op">=</span>[<span class="st">"MSOA11CD"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We then re-combine this with our geometry file, before calculating a proportion of robbery detected figure, and a search per robbery rate - the final table is below.</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>msoas[<span class="st">"robbery_solve"</span>] <span class="op">=</span> msoas[<span class="st">"detected_robbery"</span>] <span class="op">/</span> msoas[<span class="st">"robbery_count"</span>]</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>msoas[<span class="st">"search_rate"</span>] <span class="op">=</span> msoas[<span class="st">"search_count"</span>] <span class="op">/</span> msoas[<span class="st">"robbery_count"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>msoas.index <span class="op">=</span> msoas[<span class="st">"MSOA11NM"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The data is now processed. Now is probably a good time to write this to a file to retrieve it in the future.</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>msoas.to_file(<span class="st">"msoas.shp"</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>msoas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">MSOA11CD</th>
+<th data-quarto-table-cell-role="th">MSOA11NM</th>
+<th data-quarto-table-cell-role="th">LAD11CD</th>
+<th data-quarto-table-cell-role="th">LAD11NM</th>
+<th data-quarto-table-cell-role="th">RGN11CD</th>
+<th data-quarto-table-cell-role="th">RGN11NM</th>
+<th data-quarto-table-cell-role="th">UsualRes</th>
+<th data-quarto-table-cell-role="th">HholdRes</th>
+<th data-quarto-table-cell-role="th">ComEstRes</th>
+<th data-quarto-table-cell-role="th">PopDen</th>
+<th data-quarto-table-cell-role="th">Hholds</th>
+<th data-quarto-table-cell-role="th">AvHholdSz</th>
+<th data-quarto-table-cell-role="th">geometry</th>
+<th data-quarto-table-cell-role="th">search_count</th>
+<th data-quarto-table-cell-role="th">robbery_count</th>
+<th data-quarto-table-cell-role="th">detected_robbery</th>
+<th data-quarto-table-cell-role="th">robbery_solve</th>
+<th data-quarto-table-cell-role="th">search_rate</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">MSOA11NM</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">City of London 001</td>
+<td>E02000001</td>
+<td>City of London 001</td>
+<td>E09000001</td>
+<td>City of London</td>
+<td>E12000007</td>
+<td>London</td>
+<td>7375</td>
+<td>7187</td>
+<td>188</td>
+<td>25.5</td>
+<td>4385</td>
+<td>1.6</td>
+<td>MULTIPOLYGON (((-0.09676 51.52325, -0.09644 51...</td>
+<td>268</td>
+<td>37</td>
+<td>0.0</td>
+<td>0.000000</td>
+<td>7.243243</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Barking and Dagenham 001</td>
+<td>E02000002</td>
+<td>Barking and Dagenham 001</td>
+<td>E09000002</td>
+<td>Barking and Dagenham</td>
+<td>E12000007</td>
+<td>London</td>
+<td>6775</td>
+<td>6724</td>
+<td>51</td>
+<td>31.3</td>
+<td>2713</td>
+<td>2.5</td>
+<td>POLYGON ((0.14811 51.59678, 0.14809 51.59640, ...</td>
+<td>173</td>
+<td>38</td>
+<td>2.0</td>
+<td>0.052632</td>
+<td>4.552632</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Barking and Dagenham 002</td>
+<td>E02000003</td>
+<td>Barking and Dagenham 002</td>
+<td>E09000002</td>
+<td>Barking and Dagenham</td>
+<td>E12000007</td>
+<td>London</td>
+<td>10045</td>
+<td>10033</td>
+<td>12</td>
+<td>46.9</td>
+<td>3834</td>
+<td>2.6</td>
+<td>POLYGON ((0.15065 51.58306, 0.14841 51.58075, ...</td>
+<td>294</td>
+<td>115</td>
+<td>7.0</td>
+<td>0.060870</td>
+<td>2.556522</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Barking and Dagenham 003</td>
+<td>E02000004</td>
+<td>Barking and Dagenham 003</td>
+<td>E09000002</td>
+<td>Barking and Dagenham</td>
+<td>E12000007</td>
+<td>London</td>
+<td>6182</td>
+<td>5937</td>
+<td>245</td>
+<td>24.8</td>
+<td>2318</td>
+<td>2.6</td>
+<td>POLYGON ((0.18511 51.56480, 0.18403 51.56391, ...</td>
+<td>216</td>
+<td>19</td>
+<td>0.0</td>
+<td>0.000000</td>
+<td>11.368421</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Barking and Dagenham 004</td>
+<td>E02000005</td>
+<td>Barking and Dagenham 004</td>
+<td>E09000002</td>
+<td>Barking and Dagenham</td>
+<td>E12000007</td>
+<td>London</td>
+<td>8562</td>
+<td>8562</td>
+<td>0</td>
+<td>72.1</td>
+<td>3183</td>
+<td>2.7</td>
+<td>POLYGON ((0.14990 51.56807, 0.15078 51.56778, ...</td>
+<td>132</td>
+<td>61</td>
+<td>1.0</td>
+<td>0.016393</td>
+<td>2.163934</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Greenwich 034</td>
+<td>E02006927</td>
+<td>Greenwich 034</td>
+<td>E09000011</td>
+<td>Greenwich</td>
+<td>E12000007</td>
+<td>London</td>
+<td>8315</td>
+<td>8241</td>
+<td>74</td>
+<td>33.0</td>
+<td>3338</td>
+<td>2.5</td>
+<td>POLYGON ((0.02900 51.46779, 0.02995 51.46592, ...</td>
+<td>581</td>
+<td>68</td>
+<td>7.0</td>
+<td>0.102941</td>
+<td>8.544118</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Greenwich 035</td>
+<td>E02006928</td>
+<td>Greenwich 035</td>
+<td>E09000011</td>
+<td>Greenwich</td>
+<td>E12000007</td>
+<td>London</td>
+<td>7341</td>
+<td>6410</td>
+<td>931</td>
+<td>136.0</td>
+<td>2977</td>
+<td>2.2</td>
+<td>MULTIPOLYGON (((-0.00961 51.48366, -0.00979 51...</td>
+<td>638</td>
+<td>89</td>
+<td>5.0</td>
+<td>0.056180</td>
+<td>7.168539</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Greenwich 036</td>
+<td>E02006929</td>
+<td>Greenwich 036</td>
+<td>E09000011</td>
+<td>Greenwich</td>
+<td>E12000007</td>
+<td>London</td>
+<td>7490</td>
+<td>7489</td>
+<td>1</td>
+<td>29.4</td>
+<td>3333</td>
+<td>2.2</td>
+<td>POLYGON ((0.01619 51.49578, 0.01854 51.49498, ...</td>
+<td>1373</td>
+<td>146</td>
+<td>7.0</td>
+<td>0.047945</td>
+<td>9.404110</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Greenwich 037</td>
+<td>E02006930</td>
+<td>Greenwich 037</td>
+<td>E09000011</td>
+<td>Greenwich</td>
+<td>E12000007</td>
+<td>London</td>
+<td>6561</td>
+<td>6557</td>
+<td>4</td>
+<td>75.6</td>
+<td>2876</td>
+<td>2.3</td>
+<td>POLYGON ((0.00866 51.48917, 0.00837 51.48877, ...</td>
+<td>168</td>
+<td>56</td>
+<td>2.0</td>
+<td>0.035714</td>
+<td>3.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Greenwich 038</td>
+<td>E02006931</td>
+<td>Greenwich 038</td>
+<td>E09000011</td>
+<td>Greenwich</td>
+<td>E12000007</td>
+<td>London</td>
+<td>9186</td>
+<td>8973</td>
+<td>213</td>
+<td>46.1</td>
+<td>4113</td>
+<td>2.2</td>
+<td>POLYGON ((-0.00201 51.48155, -0.00136 51.48145...</td>
+<td>393</td>
+<td>105</td>
+<td>5.0</td>
+<td>0.047619</td>
+<td>3.742857</td>
+</tr>
+</tbody>
+</table>
+
+<p>983 rows × 18 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="analysis" class="level2">
+<h2 class="anchored" data-anchor-id="analysis">Analysis</h2>
+<p>Let’s start exploring our data. Before doing anything, we’ll use Pysal to create “spatial weights” - this let’s us understand our objects in space, and how they interact. There are a myriad of different methods, but we’ll just pick the 8 nearest MSOAs in space.</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate W from the GeoDataFrame</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> weights.distance.KNN.from_dataframe(msoas, k<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>w.neighbors[<span class="st">'City of London 001'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>['Islington 023',
+ 'Southwark 002',
+ 'Islington 022',
+ 'Hackney 027',
+ 'Hackney 026',
+ 'Southwark 006',
+ 'Southwark 003',
+ 'Southwark 009']</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Row-standardization</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>w.transform <span class="op">=</span> <span class="st">'R'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We also create a spatial “lag” for our key values - this is one of the most straightforward measures of spatial relationships, and captures the products and weights of our value in neighbouring observations. Essentially, it’s the value of our metric, <em>weighted</em> by the value of the metric in neighbourhing observations - so clusters will expect to be high, while a single high value surrounded by low values will be diminished.</p>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>msoas[<span class="st">'w_search_count'</span>] <span class="op">=</span> weights.spatial_lag.lag_spatial(w, msoas[<span class="st">'search_count'</span>])</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>msoas[<span class="st">'w_robbery_count'</span>] <span class="op">=</span> weights.spatial_lag.lag_spatial(w, msoas[<span class="st">'robbery_count'</span>])</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>msoas[<span class="st">'w_rate'</span>] <span class="op">=</span> weights.spatial_lag.lag_spatial(w, msoas[<span class="st">'search_rate'</span>])</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s start by mapping out our key crime and search figures, and seeing if anything stands out.</p>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>f, axs <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">2</span>, ncols<span class="op">=</span><span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">12</span>))</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>msoas.plot(column<span class="op">=</span><span class="st">'search_count'</span>, </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>        cmap<span class="op">=</span><span class="st">'viridis'</span>, </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>        scheme<span class="op">=</span><span class="st">'quantiles'</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>        k<span class="op">=</span><span class="dv">5</span>, </span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>        edgecolor<span class="op">=</span><span class="st">'white'</span>, </span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>        linewidth<span class="op">=</span><span class="fl">0.</span>, </span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>        alpha<span class="op">=</span><span class="fl">0.75</span>, </span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>        legend<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>        legend_kwds<span class="op">=</span>{<span class="st">"loc"</span>: <span class="dv">2</span>},</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>        ax<span class="op">=</span>axs[<span class="dv">0</span>,<span class="dv">0</span>]</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>       )</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>,<span class="dv">0</span>].title.set_text(<span class="st">'Search Count'</span>)</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>msoas.plot(column<span class="op">=</span><span class="st">'robbery_count'</span>, </span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>        cmap<span class="op">=</span><span class="st">'viridis'</span>, </span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>        scheme<span class="op">=</span><span class="st">'quantiles'</span>,</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>        k<span class="op">=</span><span class="dv">5</span>, </span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>        edgecolor<span class="op">=</span><span class="st">'white'</span>, </span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>        linewidth<span class="op">=</span><span class="fl">0.</span>, </span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>        alpha<span class="op">=</span><span class="fl">0.75</span>, </span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>        legend<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>        legend_kwds<span class="op">=</span>{<span class="st">"loc"</span>: <span class="dv">2</span>},</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>        ax<span class="op">=</span>axs[<span class="dv">0</span>,<span class="dv">1</span>]</span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>       )</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>,<span class="dv">1</span>].title.set_text(<span class="st">'Robbery Count'</span>)</span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>msoas.plot(column<span class="op">=</span><span class="st">'robbery_solve'</span>, </span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>        cmap<span class="op">=</span><span class="st">'viridis'</span>, </span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>        scheme<span class="op">=</span><span class="st">'quantiles'</span>,</span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>        k<span class="op">=</span><span class="dv">5</span>, </span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>        edgecolor<span class="op">=</span><span class="st">'white'</span>, </span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>        linewidth<span class="op">=</span><span class="fl">0.</span>, </span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>        alpha<span class="op">=</span><span class="fl">0.75</span>, </span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>        legend<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a>        legend_kwds<span class="op">=</span>{<span class="st">"loc"</span>: <span class="dv">2</span>},</span>
+<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a>        ax<span class="op">=</span>axs[<span class="dv">1</span>,<span class="dv">0</span>]</span>
+<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a>       )</span>
+<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>,<span class="dv">0</span>].title.set_text(<span class="st">'Detected Robbery Proportion'</span>)</span>
+<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a>msoas.plot(column<span class="op">=</span><span class="st">'search_rate'</span>, </span>
+<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a>        cmap<span class="op">=</span><span class="st">'viridis'</span>, </span>
+<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a>        scheme<span class="op">=</span><span class="st">'quantiles'</span>,</span>
+<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a>        k<span class="op">=</span><span class="dv">5</span>, </span>
+<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a>        edgecolor<span class="op">=</span><span class="st">'white'</span>, </span>
+<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a>        linewidth<span class="op">=</span><span class="fl">0.</span>, </span>
+<span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a>        alpha<span class="op">=</span><span class="fl">0.75</span>, </span>
+<span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a>        legend<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb23-52"><a href="#cb23-52" aria-hidden="true" tabindex="-1"></a>        legend_kwds<span class="op">=</span>{<span class="st">"loc"</span>: <span class="dv">2</span>},</span>
+<span id="cb23-53"><a href="#cb23-53" aria-hidden="true" tabindex="-1"></a>        ax<span class="op">=</span>axs[<span class="dv">1</span>,<span class="dv">1</span>]</span>
+<span id="cb23-54"><a href="#cb23-54" aria-hidden="true" tabindex="-1"></a>       )</span>
+<span id="cb23-55"><a href="#cb23-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-56"><a href="#cb23-56" aria-hidden="true" tabindex="-1"></a><span class="co">#contextily pulls a background tile from online providers</span></span>
+<span id="cb23-57"><a href="#cb23-57" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>,<span class="dv">1</span>].title.set_text(<span class="st">'Search per Robbery'</span>)</span>
+<span id="cb23-58"><a href="#cb23-58" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax <span class="kw">in</span> axs.reshape(<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb23-59"><a href="#cb23-59" aria-hidden="true" tabindex="-1"></a>        contextily.add_basemap(ax, </span>
+<span id="cb23-60"><a href="#cb23-60" aria-hidden="true" tabindex="-1"></a>                           crs<span class="op">=</span>msoas.crs, </span>
+<span id="cb23-61"><a href="#cb23-61" aria-hidden="true" tabindex="-1"></a>                           source<span class="op">=</span>contextily.providers.Stamen.TerrainBackground)</span>
+<span id="cb23-62"><a href="#cb23-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-63"><a href="#cb23-63" aria-hidden="true" tabindex="-1"></a><span class="co">#ax1.set_axis_off()</span></span>
+<span id="cb23-64"><a href="#cb23-64" aria-hidden="true" tabindex="-1"></a><span class="co">#ax2.set_axis_off()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="robbery_and_searches_in_space_files/figure-html/cell-19-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>There are a few apparently spatial trends at play: - Searches and robberies seem most common in central London, though searches also seem to cluster on the Western area of the city - The proportion of robberies that are detected seems to be scaterred pretty randomly - The rate of search per robbery seems to form a “U” shape around the soutehrn side of the city, with the Northern edge standing out as potentially “under-policed”</p>
+<p>Let’s ignore the spatial dimension for a second, and just create a correlation heatmap. This should let us identify any commonalities between our measured characteristics</p>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>corr_cols <span class="op">=</span> [<span class="st">'UsualRes'</span>, <span class="st">'HholdRes'</span>, <span class="st">'ComEstRes'</span>, <span class="st">'PopDen'</span>, <span class="st">'Hholds'</span>, <span class="st">'AvHholdSz'</span>,</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>             <span class="st">'search_count'</span>, <span class="st">'robbery_count'</span>,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>       <span class="st">'robbery_solve'</span>, <span class="st">'search_rate'</span>,</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>             <span class="st">'w_search_count'</span>, <span class="st">'w_robbery_count'</span>,<span class="st">'w_rate'</span>]</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>sns.set_theme(style<span class="op">=</span><span class="st">"white"</span>)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>cmap <span class="op">=</span> sns.diverging_palette(<span class="dv">230</span>, <span class="dv">20</span>, as_cmap<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">6</span>))</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co"># define the mask to set the values in the upper triangle to True</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>mask <span class="op">=</span> np.triu(np.ones_like(msoas[corr_cols].corr(), dtype<span class="op">=</span>np.<span class="bu">bool</span>))</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>heatmap <span class="op">=</span> sns.heatmap(msoas[corr_cols].corr(), mask<span class="op">=</span>mask, vmin<span class="op">=-</span><span class="dv">1</span>, vmax<span class="op">=</span><span class="dv">1</span>, annot<span class="op">=</span><span class="va">True</span>, cmap<span class="op">=</span>cmap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="robbery_and_searches_in_space_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The good news is that search and robbery counts are closely correlated: those MSOAs where most robberies occur also see the most searches.</p>
+<p>There is also a weak positive correlation (0.3) between commercial households and robberies - this is probably due to some combination of high footfall and affuluence.</p>
+<p>There is also a negative relationship between the spatial lag of robberies, and the average household size - I’m not quite sure how to interpret this. Potentially those areas with lots of focused large households are large nexuses of robbery?</p>
+<p>Let’s go a bit further by building a scatter plot between robbery and search counts.</p>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span><span class="st">"search_count"</span>, y<span class="op">=</span><span class="st">"robbery_count"</span>, data<span class="op">=</span>msoas)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>&lt;AxesSubplot:xlabel='search_count', ylabel='robbery_count'&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="robbery_and_searches_in_space_files/figure-html/cell-21-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>It’s a bit of a mess. Most of our robberies are focused on the lower angle, with a few huge outliers. This might benefit from a log transformaton - keeping the key characteristics the same, but normalising our distribution and making the relationship linear.</p>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span>np.log(msoas[<span class="st">"search_count"</span>]), y<span class="op">=</span>np.log(msoas[<span class="st">"robbery_count"</span>]), data<span class="op">=</span>msoas)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<pre><code>&lt;AxesSubplot:xlabel='search_count', ylabel='robbery_count'&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="robbery_and_searches_in_space_files/figure-html/cell-22-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<p>As planned, a lot better - this suggests a linear relationship between both variables, and they should now be normally distributed, allowing us to model them.</p>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>sns.displot(x<span class="op">=</span>np.log(msoas[<span class="st">"search_rate"</span>]), kde<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="robbery_and_searches_in_space_files/figure-html/cell-23-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="spatial-structures" class="level2">
+<h2 class="anchored" data-anchor-id="spatial-structures">Spatial Structures</h2>
+<p>To identify whether geography plays a role in how our values change, we’ll contrast the values to their spatial lag - the local value, impacted by their neighbours. This should <em>smooth out</em> any outliers, and let us get a general value per area, rather than by MSOA.</p>
+<div class="cell" data-tags="[&quot;hide-input&quot;]" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>f, axs <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">3</span>, ncols<span class="op">=</span><span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">12</span>))</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>msoas.plot(column<span class="op">=</span><span class="st">'search_count'</span>, </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>        cmap<span class="op">=</span><span class="st">'viridis'</span>, </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>        scheme<span class="op">=</span><span class="st">'quantiles'</span>,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>        k<span class="op">=</span><span class="dv">5</span>, </span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>        edgecolor<span class="op">=</span><span class="st">'white'</span>, </span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>        linewidth<span class="op">=</span><span class="fl">0.</span>, </span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>        alpha<span class="op">=</span><span class="fl">0.75</span>, </span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>        legend<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>        legend_kwds<span class="op">=</span>{<span class="st">"loc"</span>: <span class="dv">2</span>},</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>        ax<span class="op">=</span>axs[<span class="dv">0</span>,<span class="dv">0</span>]</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>       )</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>,<span class="dv">0</span>].title.set_text(<span class="st">'Search Count'</span>)</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>msoas.plot(column<span class="op">=</span><span class="st">'w_search_count'</span>, </span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>        cmap<span class="op">=</span><span class="st">'viridis'</span>, </span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>        scheme<span class="op">=</span><span class="st">'quantiles'</span>,</span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>        k<span class="op">=</span><span class="dv">5</span>, </span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>        edgecolor<span class="op">=</span><span class="st">'white'</span>, </span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>        linewidth<span class="op">=</span><span class="fl">0.</span>, </span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a>        alpha<span class="op">=</span><span class="fl">0.75</span>, </span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a>        legend<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a>        legend_kwds<span class="op">=</span>{<span class="st">"loc"</span>: <span class="dv">2</span>},</span>
+<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a>        ax<span class="op">=</span>axs[<span class="dv">0</span>,<span class="dv">1</span>]</span>
+<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a>       )</span>
+<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>,<span class="dv">1</span>].title.set_text(<span class="st">'Spatial Lag - Search Count'</span>)</span>
+<span id="cb30-29"><a href="#cb30-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-30"><a href="#cb30-30" aria-hidden="true" tabindex="-1"></a>msoas.plot(column<span class="op">=</span><span class="st">'robbery_count'</span>, </span>
+<span id="cb30-31"><a href="#cb30-31" aria-hidden="true" tabindex="-1"></a>        cmap<span class="op">=</span><span class="st">'viridis'</span>, </span>
+<span id="cb30-32"><a href="#cb30-32" aria-hidden="true" tabindex="-1"></a>        scheme<span class="op">=</span><span class="st">'quantiles'</span>,</span>
+<span id="cb30-33"><a href="#cb30-33" aria-hidden="true" tabindex="-1"></a>        k<span class="op">=</span><span class="dv">5</span>, </span>
+<span id="cb30-34"><a href="#cb30-34" aria-hidden="true" tabindex="-1"></a>        edgecolor<span class="op">=</span><span class="st">'white'</span>, </span>
+<span id="cb30-35"><a href="#cb30-35" aria-hidden="true" tabindex="-1"></a>        linewidth<span class="op">=</span><span class="fl">0.</span>, </span>
+<span id="cb30-36"><a href="#cb30-36" aria-hidden="true" tabindex="-1"></a>        alpha<span class="op">=</span><span class="fl">0.75</span>, </span>
+<span id="cb30-37"><a href="#cb30-37" aria-hidden="true" tabindex="-1"></a>        legend<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb30-38"><a href="#cb30-38" aria-hidden="true" tabindex="-1"></a>        legend_kwds<span class="op">=</span>{<span class="st">"loc"</span>: <span class="dv">2</span>},</span>
+<span id="cb30-39"><a href="#cb30-39" aria-hidden="true" tabindex="-1"></a>        ax<span class="op">=</span>axs[<span class="dv">1</span>,<span class="dv">0</span>]</span>
+<span id="cb30-40"><a href="#cb30-40" aria-hidden="true" tabindex="-1"></a>       )</span>
+<span id="cb30-41"><a href="#cb30-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-42"><a href="#cb30-42" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>,<span class="dv">0</span>].title.set_text(<span class="st">'Robbery Count'</span>)</span>
+<span id="cb30-43"><a href="#cb30-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-44"><a href="#cb30-44" aria-hidden="true" tabindex="-1"></a>msoas.plot(column<span class="op">=</span><span class="st">'w_robbery_count'</span>, </span>
+<span id="cb30-45"><a href="#cb30-45" aria-hidden="true" tabindex="-1"></a>        cmap<span class="op">=</span><span class="st">'viridis'</span>, </span>
+<span id="cb30-46"><a href="#cb30-46" aria-hidden="true" tabindex="-1"></a>        scheme<span class="op">=</span><span class="st">'quantiles'</span>,</span>
+<span id="cb30-47"><a href="#cb30-47" aria-hidden="true" tabindex="-1"></a>        k<span class="op">=</span><span class="dv">5</span>, </span>
+<span id="cb30-48"><a href="#cb30-48" aria-hidden="true" tabindex="-1"></a>        edgecolor<span class="op">=</span><span class="st">'white'</span>, </span>
+<span id="cb30-49"><a href="#cb30-49" aria-hidden="true" tabindex="-1"></a>        linewidth<span class="op">=</span><span class="fl">0.</span>, </span>
+<span id="cb30-50"><a href="#cb30-50" aria-hidden="true" tabindex="-1"></a>        alpha<span class="op">=</span><span class="fl">0.75</span>, </span>
+<span id="cb30-51"><a href="#cb30-51" aria-hidden="true" tabindex="-1"></a>        legend<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb30-52"><a href="#cb30-52" aria-hidden="true" tabindex="-1"></a>        legend_kwds<span class="op">=</span>{<span class="st">"loc"</span>: <span class="dv">2</span>},</span>
+<span id="cb30-53"><a href="#cb30-53" aria-hidden="true" tabindex="-1"></a>        ax<span class="op">=</span>axs[<span class="dv">1</span>,<span class="dv">1</span>]</span>
+<span id="cb30-54"><a href="#cb30-54" aria-hidden="true" tabindex="-1"></a>       )</span>
+<span id="cb30-55"><a href="#cb30-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-56"><a href="#cb30-56" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>,<span class="dv">1</span>].title.set_text(<span class="st">'Spatial Lag - Robbery Count'</span>)</span>
+<span id="cb30-57"><a href="#cb30-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-58"><a href="#cb30-58" aria-hidden="true" tabindex="-1"></a>msoas.plot(column<span class="op">=</span><span class="st">'search_rate'</span>, </span>
+<span id="cb30-59"><a href="#cb30-59" aria-hidden="true" tabindex="-1"></a>        cmap<span class="op">=</span><span class="st">'viridis'</span>, </span>
+<span id="cb30-60"><a href="#cb30-60" aria-hidden="true" tabindex="-1"></a>        scheme<span class="op">=</span><span class="st">'quantiles'</span>,</span>
+<span id="cb30-61"><a href="#cb30-61" aria-hidden="true" tabindex="-1"></a>        k<span class="op">=</span><span class="dv">5</span>, </span>
+<span id="cb30-62"><a href="#cb30-62" aria-hidden="true" tabindex="-1"></a>        edgecolor<span class="op">=</span><span class="st">'white'</span>, </span>
+<span id="cb30-63"><a href="#cb30-63" aria-hidden="true" tabindex="-1"></a>        linewidth<span class="op">=</span><span class="fl">0.</span>, </span>
+<span id="cb30-64"><a href="#cb30-64" aria-hidden="true" tabindex="-1"></a>        alpha<span class="op">=</span><span class="fl">0.75</span>, </span>
+<span id="cb30-65"><a href="#cb30-65" aria-hidden="true" tabindex="-1"></a>        legend<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb30-66"><a href="#cb30-66" aria-hidden="true" tabindex="-1"></a>        legend_kwds<span class="op">=</span>{<span class="st">"loc"</span>: <span class="dv">2</span>},</span>
+<span id="cb30-67"><a href="#cb30-67" aria-hidden="true" tabindex="-1"></a>        ax<span class="op">=</span>axs[<span class="dv">2</span>,<span class="dv">0</span>]</span>
+<span id="cb30-68"><a href="#cb30-68" aria-hidden="true" tabindex="-1"></a>       )</span>
+<span id="cb30-69"><a href="#cb30-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-70"><a href="#cb30-70" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">2</span>,<span class="dv">0</span>].title.set_text(<span class="st">'Search per Robbery'</span>)</span>
+<span id="cb30-71"><a href="#cb30-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-72"><a href="#cb30-72" aria-hidden="true" tabindex="-1"></a>msoas.plot(column<span class="op">=</span><span class="st">'w_rate'</span>, </span>
+<span id="cb30-73"><a href="#cb30-73" aria-hidden="true" tabindex="-1"></a>        cmap<span class="op">=</span><span class="st">'viridis'</span>, </span>
+<span id="cb30-74"><a href="#cb30-74" aria-hidden="true" tabindex="-1"></a>        scheme<span class="op">=</span><span class="st">'quantiles'</span>,</span>
+<span id="cb30-75"><a href="#cb30-75" aria-hidden="true" tabindex="-1"></a>        k<span class="op">=</span><span class="dv">5</span>, </span>
+<span id="cb30-76"><a href="#cb30-76" aria-hidden="true" tabindex="-1"></a>        edgecolor<span class="op">=</span><span class="st">'white'</span>, </span>
+<span id="cb30-77"><a href="#cb30-77" aria-hidden="true" tabindex="-1"></a>        linewidth<span class="op">=</span><span class="fl">0.</span>, </span>
+<span id="cb30-78"><a href="#cb30-78" aria-hidden="true" tabindex="-1"></a>        alpha<span class="op">=</span><span class="fl">0.75</span>, </span>
+<span id="cb30-79"><a href="#cb30-79" aria-hidden="true" tabindex="-1"></a>        legend<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb30-80"><a href="#cb30-80" aria-hidden="true" tabindex="-1"></a>        legend_kwds<span class="op">=</span>{<span class="st">"loc"</span>: <span class="dv">2</span>},</span>
+<span id="cb30-81"><a href="#cb30-81" aria-hidden="true" tabindex="-1"></a>        ax<span class="op">=</span>axs[<span class="dv">2</span>,<span class="dv">1</span>]</span>
+<span id="cb30-82"><a href="#cb30-82" aria-hidden="true" tabindex="-1"></a>       )</span>
+<span id="cb30-83"><a href="#cb30-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-84"><a href="#cb30-84" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">2</span>,<span class="dv">1</span>].title.set_text(<span class="st">'Spatial Lag - Search Rate'</span>)</span>
+<span id="cb30-85"><a href="#cb30-85" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax <span class="kw">in</span> axs.reshape(<span class="op">-</span><span class="dv">1</span>):</span>
+<span id="cb30-86"><a href="#cb30-86" aria-hidden="true" tabindex="-1"></a>        contextily.add_basemap(ax, </span>
+<span id="cb30-87"><a href="#cb30-87" aria-hidden="true" tabindex="-1"></a>                           crs<span class="op">=</span>msoas.crs, </span>
+<span id="cb30-88"><a href="#cb30-88" aria-hidden="true" tabindex="-1"></a>                           source<span class="op">=</span>contextily.providers.Stamen.TerrainBackground)</span>
+<span id="cb30-89"><a href="#cb30-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-90"><a href="#cb30-90" aria-hidden="true" tabindex="-1"></a><span class="co">#ax1.set_axis_off()</span></span>
+<span id="cb30-91"><a href="#cb30-91" aria-hidden="true" tabindex="-1"></a><span class="co">#ax2.set_axis_off()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="robbery_and_searches_in_space_files/figure-html/cell-24-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Our spatial weights enable us to clearly identy trends in space: - the search count and robbery count is now far more focused on centralon London, with the exception of a few pockets - the north of London cluster stands out more distinctly as a location where the rate of search per robbery is distinctively lower</p>
+</section>
+<section id="clustering" class="level2">
+<h2 class="anchored" data-anchor-id="clustering">Clustering</h2>
+<p>As an alternative method for exploring our data, we’ll use some machine learning techniques to undertake some clustering. We’ll be using K Means clustering (which focuses on the mean of all our values, and picks the most similar other MSOAs) - given we’re now focusing on modelling, we’ll use the log values.</p>
+<div class="cell" data-execution_count="68">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>msoas[<span class="st">'ln_search_count'</span>] <span class="op">=</span> np.log(msoas[<span class="st">'search_count'</span>])</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>msoas[<span class="st">'ln_robbery_count'</span>] <span class="op">=</span> np.log(msoas[<span class="st">'robbery_count'</span>])</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>msoas[<span class="st">'ln_rate'</span>] <span class="op">=</span> np.log(msoas[<span class="st">'search_rate'</span>])</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>msoas[<span class="st">'w_search_count'</span>] <span class="op">=</span> weights.spatial_lag.lag_spatial(w, msoas[<span class="st">'ln_search_count'</span>])</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>msoas[<span class="st">'w_robbery_count'</span>] <span class="op">=</span> weights.spatial_lag.lag_spatial(w, msoas[<span class="st">'w_robbery_count'</span>])</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>msoas[<span class="st">'w_rate'</span>] <span class="op">=</span> weights.spatial_lag.lag_spatial(w, msoas[<span class="st">'w_rate'</span>])</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> weights.distance.KNN.from_dataframe(msoas, k<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Row-standardization</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>w.transform <span class="op">=</span> <span class="st">'R'</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We’ll also include the demographic information provided by MOPAC (household numbers and populations), and use the KMeans Clustering implementation from sklearn. A number of clusters must be specified - I’ve gone for 5 on this occasion. We’ll then map them.</p>
+<p>Essentially, we’re trying to aggregate MSOAs into 5 distinct groups, based on our crime and demographic characteristics.</p>
+<div class="cell" data-execution_count="175">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>cluster_variables <span class="op">=</span> [<span class="st">'UsualRes'</span>, <span class="st">'HholdRes'</span>, <span class="st">'ComEstRes'</span>, <span class="st">'PopDen'</span>, <span class="st">'Hholds'</span>, <span class="st">'AvHholdSz'</span>, </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>       <span class="st">'robbery_solve'</span>, <span class="st">'w_search_count'</span>, <span class="st">'w_robbery_count'</span>,</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>       <span class="st">'w_rate'</span>, <span class="st">'ln_search_count'</span>, <span class="st">'ln_robbery_count'</span>, <span class="st">'ln_rate'</span>]</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialise KMeans instance</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>kmeans <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the seed for reproducibility</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>numpy.random.seed(<span class="dv">1234</span>)</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Run K-Means algorithm</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>k5cls <span class="op">=</span> kmeans.fit(msoas[cluster_variables])</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign labels into a column</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>msoas[<span class="st">'k5cls'</span>] <span class="op">=</span> k5cls.labels_</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Setup figure and ax</span></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>f, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">9</span>))</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot unique values choropleth including a legend and with no boundary lines</span></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>msoas.plot(column<span class="op">=</span><span class="st">'k5cls'</span>, categorical<span class="op">=</span><span class="va">True</span>, legend<span class="op">=</span><span class="va">True</span>, linewidth<span class="op">=</span><span class="dv">0</span>, ax<span class="op">=</span>ax)</span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove axis</span></span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>ax.set_axis_off()</span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep axes proportionate</span></span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">'equal'</span>)</span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Add title</span></span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="vs">r'Geodemographic Clusters (k-means, $k=5$)'</span>)</span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>contextily.add_basemap(ax, crs<span class="op">=</span>msoas.crs, </span>
+<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>                           source<span class="op">=</span>contextily.providers.Stamen.TerrainBackground)</span>
+<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the map</span></span>
+<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="robbery_and_searches_in_space_files/figure-html/cell-26-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Interestingly, there are no clear patterns here: cluster membership is spread out throughout London. That said, we still don’t know what these actually mean - to understand that, we’ll visualise the distributions of our characteristics in each cluster.</p>
+<div class="cell" data-execution_count="174">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Index db on cluster ID</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>tidy_db <span class="op">=</span> msoas.set_index(<span class="st">'k5cls'</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Keep only variables used for clustering</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>tidy_db <span class="op">=</span> tidy_db[cluster_variables]</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Stack column names into a column, obtaining </span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="co"># a "long" version of the dataset</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>tidy_db <span class="op">=</span> tidy_db.stack()</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Take indices into proper columns</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>tidy_db <span class="op">=</span> tidy_db.reset_index()</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Rename column names</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>tidy_db <span class="op">=</span> tidy_db.rename(columns<span class="op">=</span>{</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>                        <span class="st">'level_1'</span>: <span class="st">'Attribute'</span>, </span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>                        <span class="dv">0</span>: <span class="st">'Values'</span>})</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Setup the facets</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>facets <span class="op">=</span> seaborn.FacetGrid(data<span class="op">=</span>tidy_db, col<span class="op">=</span><span class="st">'Attribute'</span>, hue<span class="op">=</span><span class="st">'k5cls'</span>, <span class="op">\</span></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>                  sharey<span class="op">=</span><span class="va">False</span>, sharex<span class="op">=</span><span class="va">False</span>, aspect<span class="op">=</span><span class="dv">2</span>, col_wrap<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the plot from `sns.kdeplot`</span></span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> facets.<span class="bu">map</span>(seaborn.kdeplot, <span class="st">'Values'</span>, shade<span class="op">=</span><span class="va">True</span>).add_legend()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="robbery_and_searches_in_space_files/figure-html/cell-27-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>The defining metric seems to be density, but some other trends stand out: the densest group (3) also sees the largest proportion of robberies and searches, while conversely group 2 is the very opposite.</p>
+</section>
+<section id="spatial-autocorrelation" class="level2">
+<h2 class="anchored" data-anchor-id="spatial-autocorrelation">Spatial Autocorrelation</h2>
+<p>We’re now quite happy there are some spatial relationships in our data: where you are in London matters. It appears that an MSOA in the South and North of London might expect differnet numbers of searches and robberies, even were all there other characteristics the same. We can test this by checking for spatial auto-correlation in our data, the primary metric of which is Moran’s I.</p>
+<div class="cell" data-execution_count="75">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>moran <span class="op">=</span> esda.moran.Moran(msoas[<span class="st">'search_count'</span>], w)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>moran.I</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="75">
+<pre><code>0.28837097453822225</code></pre>
+</div>
+</div>
+<p>Our Moran’s I shows weak, positive autocorrelation accross our entire dataset: an MSOA with a high search count will generally be next to similar MSOAs.</p>
+<div class="cell" data-execution_count="76">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>moran.p_sim</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="76">
+<pre><code>0.001</code></pre>
+</div>
+</div>
+<p>The P statistic suggests this Moran’s I is statistically different to what we would expect if it were random (at P&lt;0.05) - we reject the hypothesis that there is no spatial dimension.</p>
+<div class="cell" data-execution_count="77">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>plot_moran(moran)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="robbery_and_searches_in_space_files/figure-html/cell-30-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="regression-modelling" class="level2">
+<h2 class="anchored" data-anchor-id="regression-modelling">Regression Modelling</h2>
+<p>Finally, we’re explore regression models. We’ll build a series of models, each attempting to predict the number of searches in an MSOA, based on the number of robberies and the population density. We’ll start by simple OLS models, and then attempt variations that account for spatial weights.</p>
+<div class="cell" data-execution_count="84">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pysal.model <span class="im">import</span> spreg</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pysal.lib <span class="im">import</span> weights</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pysal.explore <span class="im">import</span> esda</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> sm</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> patsy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="ols" class="level4">
+<h4 class="anchored" data-anchor-id="ols">OLS</h4>
+<p>First, we run a simple log OLS model, using the Pysal spreg implementation (you could also get identical results using StatsModels or SKLearn). This doesn’t use any spatial modelling at all. I’m using Patsy to transform our Dataframe appropriately.</p>
+<div class="cell" data-execution_count="94">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>y, X <span class="op">=</span>  patsy.dmatrices(<span class="st">"np.log(search_count) ~ np.log(robbery_count) + np.log(PopDen)"</span>, msoas, return_type<span class="op">=</span><span class="st">"matrix"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="96">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.array(y)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.array(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="97">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="op">=</span> spreg.OLS(y, X,</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>                name_y<span class="op">=</span><span class="st">'Log Search Count'</span>, name_x<span class="op">=</span>[<span class="st">"Constant"</span>,<span class="st">"Log Robbery Count"</span>,<span class="st">"Log Pop Density"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="98">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(m1.summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>REGRESSION
+----------
+SUMMARY OF OUTPUT: ORDINARY LEAST SQUARES
+-----------------------------------------
+Data set            :     unknown
+Weights matrix      :        None
+Dependent Variable  :Log Search Count                Number of Observations:         983
+Mean dependent var  :      5.7488                Number of Variables   :           3
+S.D. dependent var  :      0.9163                Degrees of Freedom    :         980
+R-squared           :      0.4181
+Adjusted R-squared  :      0.4169
+Sum squared residual:     479.795                F-statistic           :    352.0632
+Sigma-square        :       0.490                Prob(F-statistic)     :  5.987e-116
+S.E. of regression  :       0.700                Log likelihood        :   -1042.289
+Sigma-square ML     :       0.488                Akaike info criterion :    2090.577
+S.E of regression ML:      0.6986                Schwarz criterion     :    2105.249
+
+------------------------------------------------------------------------------------
+            Variable     Coefficient       Std.Error     t-Statistic     Probability
+------------------------------------------------------------------------------------
+            CONSTANT       3.1161071       0.1416924      21.9920574       0.0000000
+   Log Robbery Count       0.5845225       0.0260850      22.4083679       0.0000000
+     Log Pop Density       0.1141935       0.0357637       3.1929958       0.0014529
+------------------------------------------------------------------------------------
+Warning: Variable(s) ['Constant'] removed for being constant.
+
+REGRESSION DIAGNOSTICS
+MULTICOLLINEARITY CONDITION NUMBER           15.197
+
+TEST ON NORMALITY OF ERRORS
+TEST                             DF        VALUE           PROB
+Jarque-Bera                       2           4.305           0.1162
+
+DIAGNOSTICS FOR HETEROSKEDASTICITY
+RANDOM COEFFICIENTS
+TEST                             DF        VALUE           PROB
+Breusch-Pagan test                2           4.046           0.1322
+Koenker-Bassett test              2           3.543           0.1700
+================================ END OF REPORT =====================================</code></pre>
+</div>
+</div>
+<p>The model is actually pretty good - the R2 suggests we account for over 40% of the variance, and each of our variables are significant. This is what we’d expect given the correlation between robbery and search counts.</p>
+</section>
+<section id="exogeneous-spatial-effects-model" class="level3">
+<h3 class="anchored" data-anchor-id="exogeneous-spatial-effects-model">Exogeneous Spatial Effects Model</h3>
+<p>Now, let’s use a model including the spatial lag of our exogenous variables. We use the same OLS implementation, and just add the weights as a variable.</p>
+<div class="cell" data-execution_count="113">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>y, X <span class="op">=</span>  patsy.dmatrices(<span class="st">"np.log(search_count) ~ np.log(robbery_count) + np.log(PopDen) + np.log(w_robbery_count)"</span>, msoas, return_type<span class="op">=</span><span class="st">"matrix"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="114">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.array(y)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.array(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="117">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="op">=</span> spreg.OLS(y, X,</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>                name_y<span class="op">=</span><span class="st">'Log Search Count'</span>, name_x<span class="op">=</span>[<span class="st">"Constant"</span>,<span class="st">"Log Robbery Count"</span>,<span class="st">"Log Pop Density"</span>,<span class="st">"Robbery Spatial Weights"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="118">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(m2.summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>REGRESSION
+----------
+SUMMARY OF OUTPUT: ORDINARY LEAST SQUARES
+-----------------------------------------
+Data set            :     unknown
+Weights matrix      :        None
+Dependent Variable  :Log Search Count                Number of Observations:         983
+Mean dependent var  :      5.7488                Number of Variables   :           4
+S.D. dependent var  :      0.9163                Degrees of Freedom    :         979
+R-squared           :      0.4188
+Adjusted R-squared  :      0.4170
+Sum squared residual:     479.214                F-statistic           :    235.1495
+Sigma-square        :       0.489                Prob(F-statistic)     :   7.02e-115
+S.E. of regression  :       0.700                Log likelihood        :   -1041.693
+Sigma-square ML     :       0.488                Akaike info criterion :    2091.386
+S.E of regression ML:      0.6982                Schwarz criterion     :    2110.948
+
+------------------------------------------------------------------------------------
+            Variable     Coefficient       Std.Error     t-Statistic     Probability
+------------------------------------------------------------------------------------
+            CONSTANT       2.9955315       0.1797701      16.6631230       0.0000000
+   Log Robbery Count       0.5587104       0.0352339      15.8571653       0.0000000
+     Log Pop Density       0.0987403       0.0384697       2.5666998       0.0104148
+Robbery Spatial Weights       0.0711112       0.0652601       1.0896585       0.2761318
+------------------------------------------------------------------------------------
+Warning: Variable(s) ['Constant'] removed for being constant.
+
+REGRESSION DIAGNOSTICS
+MULTICOLLINEARITY CONDITION NUMBER           27.105
+
+TEST ON NORMALITY OF ERRORS
+TEST                             DF        VALUE           PROB
+Jarque-Bera                       2           4.293           0.1169
+
+DIAGNOSTICS FOR HETEROSKEDASTICITY
+RANDOM COEFFICIENTS
+TEST                             DF        VALUE           PROB
+Breusch-Pagan test                3           5.101           0.1645
+Koenker-Bassett test              3           4.506           0.2118
+================================ END OF REPORT =====================================</code></pre>
+</div>
+</div>
+<p>Interestingly, adding a spatial lag does not improve our model at all - the lag is not statistically significant.</p>
+</section>
+<section id="spatial-error-models" class="level3">
+<h3 class="anchored" data-anchor-id="spatial-error-models">Spatial Error Models</h3>
+<p>Instead of adding a spatial lag, we add a spatial error - effectively assuming we’re slightly off, in a consistent way, because of our spatial characteristics, and accounting for it.</p>
+<div class="cell" data-execution_count="159">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>y, X <span class="op">=</span>  patsy.dmatrices(<span class="st">"np.log(search_count) ~ 0 + np.log(robbery_count) + np.log(PopDen)"</span>, msoas, return_type<span class="op">=</span><span class="st">"matrix"</span>)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.array(y)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.array(X)</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>m6 <span class="op">=</span> spreg.GM_Error_Het(y, X, </span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>                           w<span class="op">=</span>w, name_y<span class="op">=</span><span class="st">'Log Search Count'</span>, name_x<span class="op">=</span>[<span class="st">"Log Robbery Count"</span>,<span class="st">"Log Pop Density"</span>])</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(m6.summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>REGRESSION
+----------
+SUMMARY OF OUTPUT: SPATIALLY WEIGHTED LEAST SQUARES (HET)
+---------------------------------------------------------
+Data set            :     unknown
+Weights matrix      :     unknown
+Dependent Variable  :Log Search Count                Number of Observations:         983
+Mean dependent var  :      5.7488                Number of Variables   :           3
+S.D. dependent var  :      0.9163                Degrees of Freedom    :         980
+Pseudo R-squared    :      0.4134
+N. of iterations    :           1                Step1c computed       :          No
+
+------------------------------------------------------------------------------------
+            Variable     Coefficient       Std.Error     z-Statistic     Probability
+------------------------------------------------------------------------------------
+            CONSTANT       3.5341582       0.2141206      16.5054581       0.0000000
+   Log Robbery Count       0.5823628       0.0365549      15.9311915       0.0000000
+     Log Pop Density       0.0124371       0.0397069       0.3132221       0.7541119
+              lambda       0.6810127       0.0298280      22.8313537       0.0000000
+------------------------------------------------------------------------------------
+================================ END OF REPORT =====================================</code></pre>
+</div>
+</div>
+<p>Interestingly, while our model seems to be just as accurate, population density is no longer significant - this suggests density may be acting as a proxy for our spatial characteristics.</p>
+</section>
+<section id="spatial-lag-model" class="level3">
+<h3 class="anchored" data-anchor-id="spatial-lag-model">Spatial Lag Model</h3>
+<p>Finally, we’ll test a model that includes the spatial lag of our dependent variable - the search count varies based on nearby search counts. That breaks the assumptions of traditional OLS regression - we’re essentially forcing the search count to be on either side of the equation, meaning both will be correlated. Pysal has a specific implementation using two stage least squares to tackle these issues.</p>
+<div class="cell" data-execution_count="155">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>y, X <span class="op">=</span>  patsy.dmatrices(<span class="st">"np.log(search_count) ~ np.log(robbery_count) + np.log(PopDen)"</span>, msoas, return_type<span class="op">=</span><span class="st">"matrix"</span>)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.array(y)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.array(X)</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>m7 <span class="op">=</span> spreg.GM_Lag(y, X, w<span class="op">=</span>w, name_y<span class="op">=</span><span class="st">'Log of Search Count'</span>, name_x<span class="op">=</span>[<span class="st">"Constant"</span>,<span class="st">"Log Robbery Count"</span>,<span class="st">"Log Pop Density"</span>])</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(m7.summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>REGRESSION
+----------
+SUMMARY OF OUTPUT: SPATIAL TWO STAGE LEAST SQUARES
+--------------------------------------------------
+Data set            :     unknown
+Weights matrix      :     unknown
+Dependent Variable  :Log of Search Count                Number of Observations:         983
+Mean dependent var  :      5.7488                Number of Variables   :           4
+S.D. dependent var  :      0.9163                Degrees of Freedom    :         979
+Pseudo R-squared    :      0.4584
+Spatial Pseudo R-squared:  0.4175
+
+------------------------------------------------------------------------------------
+            Variable     Coefficient       Std.Error     z-Statistic     Probability
+------------------------------------------------------------------------------------
+            CONSTANT       2.7219978       0.3420296       7.9583682       0.0000000
+   Log Robbery Count       0.5614888       0.0311151      18.0455524       0.0000000
+     Log Pop Density       0.0818749       0.0430088       1.9036779       0.0569522
+W_Log of Search Count       0.1066105       0.0848248       1.2568327       0.2088142
+------------------------------------------------------------------------------------
+Instrumented: W_Log of Search Count
+Instruments: W_Log Pop Density, W_Log Robbery Count
+Warning: Variable(s) ['Constant'] removed for being constant.
+================================ END OF REPORT =====================================</code></pre>
+</div>
+</div>
+<p>This is a our best model yet. Note that density is once again no longer significant, but our model has improved somewhat - this seems the best fit yet.</p>
+<div class="cell" data-execution_count="156">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>y, X <span class="op">=</span>  patsy.dmatrices(<span class="st">"np.log(search_count) ~ 0 + np.log(robbery_count)"</span>, msoas, return_type<span class="op">=</span><span class="st">"matrix"</span>)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.array(y)</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.array(X)</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>m7 <span class="op">=</span> spreg.GM_Lag(y, X, w<span class="op">=</span>w, name_y<span class="op">=</span><span class="st">'Log of Search Count'</span>, name_x<span class="op">=</span>[<span class="st">"Log Robbery Count"</span>])</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(m7.summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>REGRESSION
+----------
+SUMMARY OF OUTPUT: SPATIAL TWO STAGE LEAST SQUARES
+--------------------------------------------------
+Data set            :     unknown
+Weights matrix      :     unknown
+Dependent Variable  :Log of Search Count                Number of Observations:         983
+Mean dependent var  :      5.7488                Number of Variables   :           3
+S.D. dependent var  :      0.9163                Degrees of Freedom    :         980
+Pseudo R-squared    :      0.4544
+Spatial Pseudo R-squared:  0.4130
+
+------------------------------------------------------------------------------------
+            Variable     Coefficient       Std.Error     z-Statistic     Probability
+------------------------------------------------------------------------------------
+            CONSTANT       2.9856130       0.3464531       8.6176549       0.0000000
+   Log Robbery Count       0.5879825       0.0320598      18.3401657       0.0000000
+W_Log of Search Count       0.1040083       0.0724840       1.4349150       0.1513113
+------------------------------------------------------------------------------------
+Instrumented: W_Log of Search Count
+Instruments: W_Log Robbery Count
+================================ END OF REPORT =====================================</code></pre>
+</div>
+</div>
+<p>Based on the pseudo-R2, this is our best model, though I’m not sure whether it’s directly comparable, and the spatial term is not significant.</p>
+<p>That said, we’ve now created a few simple models, using various techniques. We could do an awful lot more to improve these: I suspect accounting for more local characteristics might help (such as presence of tube stations), as well as distance from central London.</p>
+<p>I’ve quite enjoyed learning this, and it’s been far more approachable than I expected - I’ll keep expanding on this and clean it up in the future!</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
