@@ -24,7 +24,7 @@ Copbot was written with FastHTML, a delightful Python web-framework I've falled 
 
 ![Copbot Online](images/copbot_featured.png)
 
-At it's simplest, Copbot online is a survey: you're given a random scenario (with random variables for factors such ass age and ethnicity), and asked to submit a response, on a scale from very low risk to high risk. More importantly, we also ask at least 2 large language models the exact same question, 20 times over, and record their responses. So far, Copbot has recorded just over 50 human predictions, as well as well over 2000 comparable AI predictions. 
+At it's simplest, Copbot online is a survey: you're given a random scenario (with random variables for factors such as age and ethnicity), and asked to submit a response, on a scale from very low risk to high risk. More importantly, we also ask at least 2 large language models the exact same question, 20 times over, and record their responses. So far, Copbot has recorded just over 50 human predictions, as well as well over 2000 comparable AI predictions. 
 
 If you haven't tried it yet, I'd really appreciate if you [submitted a response...](https://copbot.online/) if you do, you'll get to see our full results page!
 

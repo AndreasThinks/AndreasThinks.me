@@ -1,0 +1,50 @@
+---
+title: "Weeknote - 2024-W34 (2024-08-19)"
+date: "08-22-2024"
+tags: ["week-notes"]
+draft: true
+---
+
+
+ *Inspired by [Simon Willison](https://simonwillison.net/), and because I'm starting as Newspeak faculty this year, I'm starting to write weekly notes... let's see how they get on! *
+ 
+## General Thoughts
+- I've written my first post about [Copbot Online](https://andreasthinks.me/posts/copbot_online/), with some interesting notes about bias in LLM models
+- Speaking of CopBot, I wrote it using [FastHTML](https://www.fastht.ml/), which I'm really enjoying building with.  I promise I'm not just a Jeremy Howard shill, though his other projects like [FastAI](https://www.fast.ai/) and [nbdev](https://nbdev.fast.ai/) are all bloody excellent. 
+- I also made an [Obsidian plugin](https://github.com/AndreasThinks/obsidian-to-quarto-exporter)! I write my notes using Obsidian, but my site is managed with Quarto, and swapping one to the other was a pain.  Now it's magical and automated!  Thank god for LLMs.
+## What I've Found
+- I've written my first post about [Copbot Online](https://andreasthinks.me/posts/copbot_online/), with some interesting notes about bias in LLM models
+- Speaking of CopBot, I wrote it using [FastHTML](https://www.fastht.ml/), which I'm really enjoying building with.  I promise I'm not just a Jeremy Howard shill, though his other projects like [FastAI](https://www.fast.ai/) and [nbdev](https://nbdev.fast.ai/) are all bloody excellent. 
+
+## What I've Found
+- [UV](https://astral.sh/blog/uv-unified-python-packaging), the rust-based Python package manager and all around pip replacement, has a new version out. I was previously bundling it with [Rye](https://rye.astral.sh/), and found it didn't *quite* work in every scenario... but this looks like it might just be perfect?  
+
+## What I've Read
+
+
+
+## Embedded note: The Llama 3 Herd of Models
+
+
+# The Llama 3 Herd of Models
+
+![rw-book-cover](https://readwise-assets.s3.amazonaws.com/media/reader/parsed_document_assets/200799228/w5XuZ763dmRc0KQCQ03r3MuwJvT9dpD9ruP2A77AOGo-cove_cFI3JiI.png)
+
+
+## Metadata
+- Author: [[z-p3-scontent.flhr14-1.fna.fbcdn.net]]
+- Full Title: The Llama 3 Herd of Models
+- Category: #articles
+- Summary: Llama 3 has improved data quality and quantity, using about 15 trillion multilingual tokens for training. It includes a multilingual expert trained to enhance non-English annotations. The model's performance is evaluated across various tasks, showing significant advancements over previous versions.
+- URL: https://z-p3-scontent.flhr14-1.fna.fbcdn.net/v/t39.2365-6/453304228_1160109801904614_7143520450792086005_n.pdf?_nc_cat=108&ccb=1-7&_nc_sid=3c67a6&_nc_ohc=PC3CtquZIecQ7kNvgEzK9MK&_nc_ht=z-p3-scontent.flhr14-1.fna&oh=00_AYAzFdyi-cVu0F4p-JbrBQNQ-xItLFB39dYOyeGeUgsxqw&oe=66B7A547
+
+
+## Highlights
+- Managing complexity. [We make design choices that seek to maximize our ability to scale the model development process. For example, we opt for a standard dense Transformer model architecture (](https://z-p3-scontent.flhr14-1.fna.fbcdn.net/v/t39.2365-6/453304228_1160109801904614_7143520450792086005_n.pdf/#bookmark444)[Vaswani et](https://z-p3-scontent.flhr14-1.fna.fbcdn.net/v/t39.2365-6/453304228_1160109801904614_7143520450792086005_n.pdf/#bookmark444) al.[,](https://z-p3-scontent.flhr14-1.fna.fbcdn.net/v/t39.2365-6/453304228_1160109801904614_7143520450792086005_n.pdf/#bookmark444) 2017[) with minor adaptations, rather than for a mixture-of-experts model (](https://z-p3-scontent.flhr14-1.fna.fbcdn.net/v/t39.2365-6/453304228_1160109801904614_7143520450792086005_n.pdf/#bookmark424)[Shazeer et](https://z-p3-scontent.flhr14-1.fna.fbcdn.net/v/t39.2365-6/453304228_1160109801904614_7143520450792086005_n.pdf/#bookmark424) al.[,](https://z-p3-scontent.flhr14-1.fna.fbcdn.net/v/t39.2365-6/453304228_1160109801904614_7143520450792086005_n.pdf/#bookmark424) 2017[) to maximize training stability. Similarly, we adopt a relatively simple post-training procedure based on supervised finetuning (SFT), rejection sampling (RS), and direct preference optimization (DPO;](https://z-p3-scontent.flhr14-1.fna.fbcdn.net/v/t39.2365-6/453304228_1160109801904614_7143520450792086005_n.pdf/#bookmark401) [Rafailov et](https://z-p3-scontent.flhr14-1.fna.fbcdn.net/v/t39.2365-6/453304228_1160109801904614_7143520450792086005_n.pdf/#bookmark401) al. [(](https://z-p3-scontent.flhr14-1.fna.fbcdn.net/v/t39.2365-6/453304228_1160109801904614_7143520450792086005_n.pdf/#bookmark401)2023[))](https://z-p3-scontent.flhr14-1.fna.fbcdn.net/v/t39.2365-6/453304228_1160109801904614_7143520450792086005_n.pdf/#bookmark384) ([View Highlight](https://read.readwise.io/read/01j4kb1wdy27zh0cx7p5r1ssgg))
+    - Note: This is interesting. MoE models haven't really taken off.
+
+## New highlights added August 8, 2024 at 9:51 AM
+- extract high-quality diverse text. To do so, we build a custom parser that extracts the HTML content and optimizes for precision in boilerplate removal and content recall. ([View Highlight](https://read.readwise.io/read/01j4nykzsm5q7xpdx7q8whnfg0))
+
+
+
