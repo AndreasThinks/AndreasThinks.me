@@ -1,50 +1,87 @@
 ---
 title: "Weeknote - 2024-W34 (2024-08-19)"
-date: "08-22-2024"
-tags: ["week-notes"]
-draft: true
+date: "08-24-2024"
+tags:
+  - week-notes
+toc: true
+toc-depth: 5
+toc-expand: 5
 ---
 
+*Inspired by [Simon Willison](https://simonwillison.net/), and because I'm starting as [Newspeak House](https://newspeak.house/) faculty this year, I'm starting to write weekly notes... let's see how they get on! *
 
- *Inspired by [Simon Willison](https://simonwillison.net/), and because I'm starting as Newspeak faculty this year, I'm starting to write weekly notes... let's see how they get on! *
- 
-## General Thoughts
-- I've written my first post about [Copbot Online](https://andreasthinks.me/posts/copbot_online/), with some interesting notes about bias in LLM models
+- I've been on holiday this week, which probably explains why I've *done all the things*. Nothing makes me productive more than throwing me into the middle of nowhere with no meetings and nothing to do... hence I've started these notes, and done a bunch of random side-projects. 
+	- There's probably a future blog post in this: holidays are bloody important, and in this world ever more knowledge work, we should probably all be taking more. Maybe the French are onto something.
+
+
+## What I've done
+- I've written my first post about [Copbot Online](https://andreasthinks.me/posts/copbot_online/), an online tool I built to compare human and AI risk perception, with some interesting notes about bias in LLM models
 - Speaking of CopBot, I wrote it using [FastHTML](https://www.fastht.ml/), which I'm really enjoying building with.  I promise I'm not just a Jeremy Howard shill, though his other projects like [FastAI](https://www.fast.ai/) and [nbdev](https://nbdev.fast.ai/) are all bloody excellent. 
 - I also made an [Obsidian plugin](https://github.com/AndreasThinks/obsidian-to-quarto-exporter)! I write my notes using Obsidian, but my site is managed with Quarto, and swapping one to the other was a pain.  Now it's magical and automated!  Thank god for LLMs.
-## What I've Found
-- I've written my first post about [Copbot Online](https://andreasthinks.me/posts/copbot_online/), with some interesting notes about bias in LLM models
-- Speaking of CopBot, I wrote it using [FastHTML](https://www.fastht.ml/), which I'm really enjoying building with.  I promise I'm not just a Jeremy Howard shill, though his other projects like [FastAI](https://www.fast.ai/) and [nbdev](https://nbdev.fast.ai/) are all bloody excellent. 
+	- It is a **teeeeeny** bit janky, so apologies for formatting weirdness on this page.  Thanks for beta testing?  
 
-## What I've Found
+## What I've found
 - [UV](https://astral.sh/blog/uv-unified-python-packaging), the rust-based Python package manager and all around pip replacement, has a new version out. I was previously bundling it with [Rye](https://rye.astral.sh/), and found it didn't *quite* work in every scenario... but this looks like it might just be perfect?  
+- [Zed](https://zed.dev/), the AI coding IDE. Programming was probably the first industry to be meaningfully disrupted by AI, but I do think co-pilot is probably the very fist pass at a bespoke tool... Like most revolutions, [building the infrastructure into our daily practice will take longer than the "core" discovery](https://timharford.com/books/50things/). 
 
 ## What I've Read
 
+### Papers
+
+##### The Llama 3 Herd of Models
+This thing is *disgustingly* long, but worth a browse. Some headline thoughts:
+	- training LLMs isn't an exploratory science, it's an industry - the amount of though that goes into scaling and optimising the learning process is vaguely terrifying
+	- Architecture wise, we're still surprisingly... old school?  Mixture of Experts don't feature, nor do all sorts of other bits - it's pretty traditional.
 
 
-## Embedded note: The Llama 3 Herd of Models
 
-
-# The Llama 3 Herd of Models
-
-![rw-book-cover](https://readwise-assets.s3.amazonaws.com/media/reader/parsed_document_assets/200799228/w5XuZ763dmRc0KQCQ03r3MuwJvT9dpD9ruP2A77AOGo-cove_cFI3JiI.png)
-
-
-## Metadata
+###### Metadata
 - Author: [[z-p3-scontent.flhr14-1.fna.fbcdn.net]]
 - Full Title: The Llama 3 Herd of Models
 - Category: #articles
-- Summary: Llama 3 has improved data quality and quantity, using about 15 trillion multilingual tokens for training. It includes a multilingual expert trained to enhance non-English annotations. The model's performance is evaluated across various tasks, showing significant advancements over previous versions.
+- Summary: Llama 3 has improved data quality and quantity, using about 15 trillion multilingual tokens for training. It includes a multilingual expert trained to enhance non-English annotations. The model's performance is evaluated across various tasks, showing significant advancements over previous versions. 
 - URL: https://z-p3-scontent.flhr14-1.fna.fbcdn.net/v/t39.2365-6/453304228_1160109801904614_7143520450792086005_n.pdf?_nc_cat=108&ccb=1-7&_nc_sid=3c67a6&_nc_ohc=PC3CtquZIecQ7kNvgEzK9MK&_nc_ht=z-p3-scontent.flhr14-1.fna&oh=00_AYAzFdyi-cVu0F4p-JbrBQNQ-xItLFB39dYOyeGeUgsxqw&oe=66B7A547
 
 
-## Highlights
-- Managing complexity. [We make design choices that seek to maximize our ability to scale the model development process. For example, we opt for a standard dense Transformer model architecture (](https://z-p3-scontent.flhr14-1.fna.fbcdn.net/v/t39.2365-6/453304228_1160109801904614_7143520450792086005_n.pdf/#bookmark444)[Vaswani et](https://z-p3-scontent.flhr14-1.fna.fbcdn.net/v/t39.2365-6/453304228_1160109801904614_7143520450792086005_n.pdf/#bookmark444) al.[,](https://z-p3-scontent.flhr14-1.fna.fbcdn.net/v/t39.2365-6/453304228_1160109801904614_7143520450792086005_n.pdf/#bookmark444) 2017[) with minor adaptations, rather than for a mixture-of-experts model (](https://z-p3-scontent.flhr14-1.fna.fbcdn.net/v/t39.2365-6/453304228_1160109801904614_7143520450792086005_n.pdf/#bookmark424)[Shazeer et](https://z-p3-scontent.flhr14-1.fna.fbcdn.net/v/t39.2365-6/453304228_1160109801904614_7143520450792086005_n.pdf/#bookmark424) al.[,](https://z-p3-scontent.flhr14-1.fna.fbcdn.net/v/t39.2365-6/453304228_1160109801904614_7143520450792086005_n.pdf/#bookmark424) 2017[) to maximize training stability. Similarly, we adopt a relatively simple post-training procedure based on supervised finetuning (SFT), rejection sampling (RS), and direct preference optimization (DPO;](https://z-p3-scontent.flhr14-1.fna.fbcdn.net/v/t39.2365-6/453304228_1160109801904614_7143520450792086005_n.pdf/#bookmark401) [Rafailov et](https://z-p3-scontent.flhr14-1.fna.fbcdn.net/v/t39.2365-6/453304228_1160109801904614_7143520450792086005_n.pdf/#bookmark401) al. [(](https://z-p3-scontent.flhr14-1.fna.fbcdn.net/v/t39.2365-6/453304228_1160109801904614_7143520450792086005_n.pdf/#bookmark401)2023[))](https://z-p3-scontent.flhr14-1.fna.fbcdn.net/v/t39.2365-6/453304228_1160109801904614_7143520450792086005_n.pdf/#bookmark384) ([View Highlight](https://read.readwise.io/read/01j4kb1wdy27zh0cx7p5r1ssgg))
-    - Note: This is interesting. MoE models haven't really taken off.
 
-## New highlights added August 8, 2024 at 9:51 AM
-- extract high-quality diverse text. To do so, we build a custom parser that extracts the HTML content and optimizes for precision in boilerplate removal and content recall. ([View Highlight](https://read.readwise.io/read/01j4nykzsm5q7xpdx7q8whnfg0))
+### Articles
+
+##### The Death of “Deliverism” 
+It turns out that government just getting stuff done might not be enough to convince people it's great. This feels linked to a bunch of articles I've been seeing about how the "West" needs to rediscover it's passion and ability to tell stories and really inspire people again. I'm yet to be convinced - it feels like pushing back against the enlightenment, and people who feel  inspired can do very stupid things.
 
 
+
+###### Metadata
+
+- Author: [[Democracy Journal]]
+- Full Title: The Death of “Deliverism”
+- Category: #articles
+- Summary: The article discusses how the significant drop in childhood poverty did not lead to political change, as people's unhappiness influences their voting behavior more than economic policies. It argues that progressives need to address emotional and social issues, not just economic ones, to effectively combat authoritarianism. To connect with voters, they must focus on community, belonging, and the lived experiences of individuals.
+- URL: https://democracyjournal.org/arguments/the-death-of-deliverism/
+
+
+
+### Books
+
+##### How to Take Smart Notes
+God, I wish I could take good note. I can't, and maybe this will inspire me. I've at least bought a tiny notebook, so that's something.
+
+
+
+###### Metadata
+- Author: [[Sönke Ahrens]]
+- Full Title: How to Take Smart Notes
+- Category: #books
+
+
+
+#### Quit
+I've been pondering when and how you should dump projects recently...if anybody has figured it out, let me know!
+
+
+
+###### Metadata
+- Author: [[Annie Duke]]
+- Full Title: Quit
+- Category: #books
 
