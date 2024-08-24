@@ -2,7 +2,7 @@
 title: "Quarto Comments, Powered by the Fediverse"
 subtitle: "I built a Quarto extension!"
 description: |
-  I built an extension, and now my blog has fancy comments (and your can too!)
+  I built an extension, and now my blog has fancy comments (and yours can too!)
 format: html
 date: "04/23/2024"
 categories: 
