@@ -8,3 +8,7 @@ div.quarto-post .thumbnail {
 div.quarto-post .body {
     flex-basis: 80%;
     }   
+
+    #quarto-post image-right {
+        padding-bottom: 15px;
+    }
