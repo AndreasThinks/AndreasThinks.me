@@ -7,10 +7,12 @@ listing:
   categories: true
   sort-ui: false
   filter-ui: false
+  image-height: "0"
   feed:
     categories: [crime, data-science, policing]
 page-layout: full
 title-block-banner: false
+max-description-length: 300
 ---
 
 

@@ -2,6 +2,8 @@
 title: "Copbot Online: bias and variance in AI perceptions of risk"
 format: html
 date: "08/21/2024"
+description: |
+  I built a website to look at whether language models could help articulate (or maybe even predict) police risk assessments for missing people. The conclusion?  Eeeeh.  Maybe. Ish?
 categories:
     - policing
     - ai

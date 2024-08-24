@@ -1,11 +1,19 @@
 ---
 title: "Weeknote - 2024-W34 (2024-08-19)"
 date: "08-24-2024"
+description: |
+  On productivity during holidays, sharing thoughts on Copbot Online, 
+  FastHTML, and a new Obsidian plugin. Plus, interesting reads on Llama 3 models 
+  and the challenges of "deliverism" in government.
 tags:
   - week-notes
 toc: true
 toc-depth: 5
 toc-expand: 5
+mastodon_comments:
+  user: "AndreasThinks"
+  host: "fosstodon.org"
+  toot_id: "113015850883967288"
 ---
 
 *Inspired by [Simon Willison](https://simonwillison.net/), and because I'm starting as [Newspeak House](https://newspeak.house/) faculty this year, I'm starting to write weekly notes... let's see how they get on! *

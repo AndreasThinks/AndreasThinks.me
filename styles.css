@@ -1,1 +1,10 @@
 /* css styles */
+
+div.quarto-post .thumbnail {
+
+    flex-basis: 0%;
+    }
+    
+div.quarto-post .body {
+    flex-basis: 80%;
+    }   
