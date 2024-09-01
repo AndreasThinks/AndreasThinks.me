@@ -1,0 +1,79 @@
+---
+title: "Weeknote - 2024-W35"
+date: "09-01-2024"
+categories:
+  - week-notes
+description: |
+ Reflections on post-holiday productivity slumps and UK's AI education gaps.
+ Exploring tools for converting scientific papers to HTML and AI-powered
+ front-end development. Thoughts on social media disinformation, crime
+ perception, and the allure of new note-taking apps. Plus, intriguing reads
+ on slow productivity and necromancers in space.
+toc: true
+toc-depth: 5
+toc-expand: 2
+---
+
+
+## General Thoughts
+- God, getting back from holiday is *the worst*, isn't it? It's so strange watching that sudden influx of energy slowly draining away when faced with the reality of the modern world. This probably isn't helped by my reading Slow Productivity (more below)
+- **STEM and AI education in the UK:**  I've been pondering education in the UK, and whether it's failing us in the AI field (eg, why haven't we got a "Bristral" yet). My main comparison point on this is probably the French education system, and my two working theories are that:
+	- Our research and PhD system is too separated from real work (eg, lots of spending 4 years pondering a hundred thousand words and not enough working in industry)
+	- Our education system really does have some failings in core STEM fields (eg, we all stop doing maths)
+- **Government and delivery:** My reading of deliveris last week reminded me that I wrote neartly a whole PHD on policing risk ,and how disconnected it is from realty. 
+
+
+## What I've Found
+
+##### Converting scientific papers to HTML
+- I've been trying to read more scientific papers on my Boox, and my god I still hate PDF, so I've been exploring options to convert research papers to HTML.  Did you know that even if a paper on Arxiv doesn't show html as available, you can  either just replace  the x with a 5 in the url, or use [https://academ.us](https://academ.us) to get a totally passable html generation version?
+
+##### UV is continuing to be awesome
+They've [now released 0.4.0](https://github.com/astral-sh/uv). I think I'm finally putting vanilla pip to bed now?
+
+##### Making gorgeous front-end with AI
+There seem to be loads of tools now to make beautiful front-ends with LLMs, but I've been really impressed both with[ v0.dev ](https://v0.dev/), and [MakeItReal from TlDraw](https://github.com/tldraw/make-real) (tldraw is also just exceptional, but that's a whole other thing)
+
+#### Is Obsidian still the best thing for my brain?
+Someone recently recommended [Anytype](https://anytype.io/), and it is, to put it bluntly *bloody gorgeous*. I do also love their entity structure, but I'm not sure I'm ready to ditch my fancy obsidian just yet (especially seeing I've now made an extension) 
+
+## What I've Read
+
+#### Social Media
+
+##### It looks like Russian disinformation actors are hiring actors on Cameo to look legitimate
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Thread on a disinformation campaign involving celebrities. Last week, the Bellingcat contact email received this message, directing us to look at a videos, titled &quot;Olympics Has Fallen 2&quot;, voiced by <a href="https://twitter.com/elonmusk?ref_src=twsrc%5Etfw">@elonmusk</a> himself. So we dug into it, because it was fishy as hell. <a href="https://t.co/HqpGs7yLqT">pic.twitter.com/HqpGs7yLqT</a></p>&mdash; Eliot Higgins (@EliotHiggins) <a href="https://twitter.com/EliotHiggins/status/1828012513968922809?ref_src=twsrc%5Etfw">August 26, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+##### People are safe, but some people very definitely don't feel it
+Last week I wondered whether competence was enough to generate trust, and this post reminded me that at least in the policing and crime space, they *absolutely do not*: we've never been safer, but lots of people definitely don't feel it.
+
+<blockquote class="bluesky-embed" data-bluesky-uri="at://did:plc:tzaahqhqfnzty2fwfd4tya45/app.bsky.feed.post/3l33mqsesz22y" data-bluesky-cid="bafyreihnedyrmm5wjhen4uj3mjvch45tpmn3qljebk66eib6brxdx5y7oq"><p lang="en">Do you think the world is becoming a more dangerous place?
+
+Your answer to this question - and the strength of it - says a lot about your politics…
+
+The first of my new weekly column, in today’s @thetimes.com
+
+1/2<br><br><a href="https://bsky.app/profile/did:plc:tzaahqhqfnzty2fwfd4tya45/post/3l33mqsesz22y?ref_src=embed">[image or embed]</a></p>&mdash; Tom Calver (<a href="https://bsky.app/profile/did:plc:tzaahqhqfnzty2fwfd4tya45?ref_src=embed">@tomcalver.bsky.social</a>) <a href="https://bsky.app/profile/did:plc:tzaahqhqfnzty2fwfd4tya45/post/3l33mqsesz22y?ref_src=embed">Sep 1, 2024 at 12:56</a></blockquote><script async src="https://embed.bsky.app/static/embed.js" charset="utf-8"></script>
+
+#### Podcasts
+
+##### [The Black Box from the Guardian](https://www.theguardian.com/technology/series/blackbox)
+I really wasn't expecting this to be good, but it is!
+
+#### Books
+
+##### [Slow Productivity](https://www.google.co.uk/books/edition/Slow_Productivity/E5jPEAAAQBAJ?hl=en&gbpv=0)
+I've been pondering what being productive means a lot recently, and this just made me ponder a lot more.
+
+##### [Gideon the Ninth](https://www.google.co.uk/books/edition/Gideon_the_Ninth/HHJwDwAAQBAJ?hl=en&gbpv=0&kptab=overview)
+Queer necromancers from space.  That is all.
+
+#### Articles
+
+##### [An Age of Hyperabundance](https://www.nplusonemag.com/issue-47/essays/an-age-of-hyperabundance/)
+A good reminder that plenty of people really don't want to be sceptical.
+
+##### [The OSI have finally defined Open Source AI](https://opensource.org/deepdive)
+
+##### [On Fairness and CV screening](https://www.fairnesstales.com/p/issue-2-case-studies-when-ai-and-cv-screening-goes-wrong) 
