@@ -1,82 +1,102 @@
 ---
-title: "Innovation in Public Institutions: Challenges in Pushback, Delivery, and Implementation"
+title: "Delivering Innovation and Public Institutions"
+subtitle: "Advanced Module, Newspeak House 2024-25"
 author: "Andreas Varotsis"
+title-slide-attributes:
+  data-background-image: images/newspeak_house_logo.png
+  data-background-size: 30%
+  data-background-position: bottom
 format:
   revealjs: 
+    chalkboard: true
     theme: [default, ../newspeak-theme.scss]
     logo: images/newspeak_house_logo.png
     footer: |
       ![](images/newspeak_house_logo.png){height=500px}
----
-
-## Slide 1: Title
-
-# Innovation in Public Institutions
-## Pushback, Delivery, and Implementation Challenges
 
 ---
+# Welcome!
 
-## Slide 2: Introduction to Module and Facilitator
+## Aims for today
 
-### Introduction to Facilitator
+- Introduction to the module content
+- Some group decisions
+- A case study from me
 
-- I have experience working in the UK Civil Service, providing me with first-hand insights into the unique challenges faced by public institutions.
-- I've been involved in exploring and implementing innovative approaches within government settings, gaining a deep understanding of institutional change complexities.
-- My passion lies in how cities operate and the nature of innovation within public systems, along with the barriers preventing good ideas from succeeding.
+## About Me
 
----
+- Operational policing and crime background
+- Lots of work around community tech innovation
+- Focus on impact evaluation
+- Now work in central govt
 
-## Slide 3: What This Module Will Achieve
+# Module Overview
 
-- Focus is **not** on building innovation from scratch (covered in service design modules).
-- Instead, emphasis on **how to implement innovation** effectively.
-  - Challenges around incentives.
-  - Internal pushback and resistance to change.
+## Module Aims
+
+- Focus is **not** on building innovation (covered in plenty of other modules)
+- Instead, we'll look at **how to implement innovation** (and when it fails)
+  - Implementation and delivery
+  - Pushback, internal and external
+  - Incentives and pushback
   - Implementation delivery challenges that can kill good ideas.
 
----
+## Linked Modules
 
-## Slide 4: Engagement and Participation Approach
+- There are several other modules that will touch on topics touched here. 
+  - [Institutional Analysis](https://docs.google.com/document/d/1ezGpso8ybfX-6qmH6LVd495xEWCwiNHLW4jKJYoWkks/edit?tab=t.0#heading=h.x14ba9dm4sw2)
+  - [Political Organising](https://docs.google.com/document/d/1fihxw4nnFLcAn3KwBrtb-sqTfeIOn3oEtPjT3CURfYs/edit?tab=t.0#heading=h.yb4s0nhgopm4)
+  - [Service Design](https://docs.google.com/document/d/1YTaVDtPK-k7hj4p58pOa07tU5I_Lr6cVdfsQqUQlScU/edit?tab=t.0#heading=h.yb4s0nhgopm4)
+  - [Product Design](https://docs.google.com/document/d/15YW0yzh1eddBb07nrbp3zTeRwlw-eW9z7ryuSWsdVxw/edit?tab=t.0#heading=h.yb4s0nhgopm4)
+  - and more!
 
-### Structure of Engagement
+  - Evaluation masterclass next year?
 
-- **Attend Government Innovation Meetups**: Gain insights from practitioners and reflect on their challenges.
-- **Case Study Discussion Sessions**: Select 2-3 case studies throughout the year for deep dives.
+## Structure
+
+- **Attend Meetups and Events**: I'll mantain a list of government innovation associated meetups. You should attend at least 1 of these, and share notes and reflections with the group
+- **Case Study Discussion Sessions**: As a group, we'll select 2-3 examples of innovation as case studies, to read up and discuss 
 - **Online Discussion Platform**: Space for ongoing conversations, article sharing, and reflection.
-- **Personalized Interaction**:
-  - Choose online platform preferences.
-  - Select preferred case studies.
-  - Tailor the experience based on interests.
 
----
+# Decisions for today!
 
-## Slide 5: Where Should Our Online Community Be?
+## Online Content
 
-### Online Platform Preferences
-
-- **Discussion Prompt**: What platform would work best for an online community?
+- Where do you want online stuff?
   - Slack
   - Discord
   - WhatsApp
   - Others?
 - Consider what works best for interaction, notifications, and accessibility.
 
+## In Person - Where and When?
+
+- I'll aim to pencil in the next event for the end of this year.
+- Every 6-8 weeks?
+- Case studies 4 weeks in advance
+
+## Case Studies
+
+- I'll suggest a few interesting case studies...
+- But you should also come up with your own!
+- We'll aim to select the first in the next couple of weeks
+
+# Case Studies
+
+## Finding case studies
+
+- I've listed a few potential case studies in the module guide. These include
+  - GOV.UK
+  - NHS Horizon
+  - Healthcare.gov
+  - X-Road
+- but I'd encourage you to think beyond the technical! For example...
+
 ---
 
-## Slide 6: How Do You Want to Engage?
-
-### Engagement and Module Timing
-
-- **Discussion Prompt**: How would you prefer the module to work?
-  - Timing and scheduling of sessions.
-  - Book club-style discussions?
-  - Study group meetings?
-  - Voting on topics?
-  - What format encourages the most engagement?
+## Case Study 1 - Sortition in Ancient Athens
 
 ---
-
-## Slide 7: Case Study 1 - Sortition in Ancient Athens (Overview)
 
 ### Sortition in Ancient Athens
 
@@ -90,18 +110,17 @@ format:
 
 ---
 
-## Slide 8: Case Study 1 - Sortition in Ancient Athens (Resources)
-
 ### Key Resources
 
-- [Internet Classics Archive - Aristotle](http://classics.mit.edu/Aristotle/athenian_const.html)
-- Book: "Democracy and Knowledge: Innovation and Learning in Classical Athens" by Josiah Ober
-- Article: "Sortition and Democracy: Historical and Contemporary Perspectives" by Yves Sintomer
-- Web Page: [Ancient History Encyclopedia - Athenian Democracy](https://www.ancient.eu/Athenian_Democracy/)
+- [Sortition (Wikipedia)](https://en.wikipedia.org/wiki/Sortition)
+- [Selection by Lot and Democracy: New Trend, Ancient Model](https://www.scirp.org/journal/paperinformation?paperid=107594)
+- [Ancient History Encyclopedia - Athenian Democracy](https://www.ancient.eu/Athenian_Democracy/)
 
 ---
 
-## Slide 9: Case Study 2 - Pneumatic Tube Mail Systems (Overview)
+## Case Study 2 - Pneumatic Tube Mail Systems
+
+---
 
 ### Pneumatic Tube Mail Systems
 
@@ -115,18 +134,17 @@ format:
 
 ---
 
-## Slide 10: Case Study 2 - Pneumatic Tube Mail Systems (Resources)
-
-### Key Resources
+## Key Resources
 
 - [Smithsonian Postal Museum - Pneumatic Mail](https://postalmuseum.si.edu/exhibition/mail-marks-history-mail-systems-pneumatic-tube-service)
+- [Atlas Obscura - Pneumatic Tubes](https://www.atlasobscura.com/articles/pneumatic-tube-mail)
 - Book: "Neither Snow Nor Rain: A History of the United States Postal Service" by Devin Leonard
-- Article: "The Rise and Fall of the Pneumatic Tube System" by Tom Vanderbilt
-- Web Page: [Atlas Obscura - Pneumatic Tubes](https://www.atlasobscura.com/articles/pneumatic-tube-mail)
 
 ---
 
-## Slide 11: Case Study 3 - Metric System Implementation in the U.S. (Overview)
+## Case Study 3 - Metric System Implementation in the U.S.
+
+---
 
 ### Metric System Implementation in the U.S.
 
@@ -140,18 +158,17 @@ format:
 
 ---
 
-## Slide 12: Case Study 3 - Metric System Implementation in the U.S. (Resources)
-
 ### Key Resources
 
 - [NIST - History of the Metric System in the U.S.](https://www.nist.gov/pml/us-metric-system)
+- [Smithsonian Magazine - The Story of the Metric System in the U.S.](https://www.smithsonianmag.com/science-nature/why-wont-america-go-metric-131229901/)
 - Book: "Measuring America: How an Untamed Wilderness Shaped the United States and Fulfilled the Promise of Democracy" by Andro Linklater
-- Article: "Why the U.S. Hasn't Adopted the Metric System" by Eugene K. Chow
-- Web Page: [Smithsonian Magazine - The Story of the Metric System in the U.S.](https://www.smithsonianmag.com/science-nature/why-wont-america-go-metric-131229901/)
 
 ---
 
-## Slide 13: Case Study 4 - Proportional Representation in the UK (Overview)
+## Case Study 4 - Proportional Representation in the UK 
+
+---
 
 ### Proportional Representation in the UK
 
@@ -165,65 +182,15 @@ format:
 
 ---
 
-## Slide 14: Case Study 4 - Proportional Representation in the UK (Resources)
-
 ### Key Resources
 
 - [Electoral Reform Society - PR](https://www.electoral-reform.org.uk)
+- [BBC - Proportional Representation Explained](https://www.bbc.co.uk/news/election-2019-50428426)
 - Book: "Electoral Systems and Democracy" edited by Larry Diamond and Marc F. Plattner
-- Article: "Why First-Past-The-Post Is So Hard to Replace" by David Runciman
-- Web Page: [BBC - Proportional Representation Explained](https://www.bbc.co.uk/news/election-2019-50428426)
 
 ---
 
-## Slide 15: Common Themes & Discussion
+## And more!
 
-### Key Takeaways
-
-- **Common Themes**:
-  - Societal norms, vested interests, complexity of change.
-- **Discussion Prompt**: What do these examples teach us about innovation in government institutions?
-- **Interactive Poll**: Biggest challenge to innovation in public institutions?
-
----
-
-## Slide 16: Interactive Discussion
-
-- Open up discussion on module structure.
-- **Discussion Points**:
-  - Preferred online platform for discussion.
-  - Most interesting case studies to explore.
-  - Missing connections or additional topics to add?
-
----
-
-## Slide 17: Conclusion
-
-### Summary of Key Learnings
-
-- **Innovative Ideas**:
-  - Often brilliant but can face significant challenges.
-- **Key Takeaway**: Overcoming challenges requires understanding pushback, incentives, and delivery complexities.
-
----
-
-## Slide 18: Resources & Links
-
-### Useful Resources
-
-1. [Internet Classics Archive - Aristotle](http://classics.mit.edu/Aristotle/athenian_const.html)
-2. [Smithsonian Postal Museum - Pneumatic Mail](https://postalmuseum.si.edu/exhibition/mail-marks-history-mail-systems-pneumatic-tube-service)
-3. [NIST - History of the Metric System in the U.S.](https://www.nist.gov/pml/us-metric-system)
-4. [Electoral Reform Society - PR](https://www.electoral-reform.org.uk)
-5. [Innovation in Government - OECD](https://www.oecd.org/gov/innovation/)
-
-**Action Item**: Reflect on how to overcome challenges to innovation in your institutions.
-
----
-
-## Slide 19: Thank You!
-
-### Closing Note
-
-- Thank you for participating in today's module.
-- I look forward to seeing your reflections and contributions on the online discussion platform.
+- There are plenty of other suggested case studies in the module handbook
+- We'll aim to highlight a few, and identify suggested reading, in the next few weeks
