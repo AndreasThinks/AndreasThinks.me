@@ -1,13 +1,14 @@
 ---
-title: "Delivering Innovation and Public Institutions"
+title: "Delivering Innovation in Public Institutions"
 subtitle: "Advanced Module, Newspeak House 2024-25"
 author: "Andreas Varotsis"
 title-slide-attributes:
   data-background-image: images/newspeak_house_logo.png
-  data-background-size: 30%
+  data-background-size: 10%
   data-background-position: bottom
 format:
   revealjs: 
+    incremental: true  
     chalkboard: true
     theme: [default, ../newspeak-theme.scss]
     logo: images/newspeak_house_logo.png
@@ -100,8 +101,6 @@ format:
 
 ### Sortition in Ancient Athens
 
-- **Title**: Sortition in Ancient Athens
-- **Basic Facts**:
   - Innovation: Random selection of officials.
   - Time Period: Classical Athens, circa 5th century BCE.
   - Aim: Reduce the power of elites and increase representation.
@@ -124,8 +123,6 @@ format:
 
 ### Pneumatic Tube Mail Systems
 
-- **Title**: Pneumatic Tube Mail Systems
-- **Basic Facts**:
   - Innovation: Pneumatic tubes for fast mail delivery.
   - Time Period: Late 19th to early 20th century.
   - Cities: New York, Paris, London.
@@ -148,8 +145,6 @@ format:
 
 ### Metric System Implementation in the U.S.
 
-- **Title**: Metric System Implementation in the U.S.
-- **Basic Facts**:
   - Innovation: Standardized metric system.
   - Aim: Align U.S. with global measurement systems.
   - Challenges: Cultural resistance.
@@ -172,8 +167,6 @@ format:
 
 ### Proportional Representation in the UK
 
-- **Title**: Proportional Representation (PR) in the UK
-- **Basic Facts**:
   - Innovation: Align vote percentages with seat allocation.
   - Aim: Fairer electoral representation.
   - Challenges: Political resistance.
