@@ -1,0 +1,229 @@
+---
+title: "Innovation in Public Institutions: Challenges in Pushback, Delivery, and Implementation"
+author: "Andreas Varotsis"
+format:
+  revealjs: 
+    theme: [default, ../newspeak-theme.scss]
+    logo: images/newspeak_house_logo.png
+    footer: |
+      ![](images/newspeak_house_logo.png){height=500px}
+---
+
+## Slide 1: Title
+
+# Innovation in Public Institutions
+## Pushback, Delivery, and Implementation Challenges
+
+---
+
+## Slide 2: Introduction to Module and Facilitator
+
+### Introduction to Facilitator
+
+- I have experience working in the UK Civil Service, providing me with first-hand insights into the unique challenges faced by public institutions.
+- I've been involved in exploring and implementing innovative approaches within government settings, gaining a deep understanding of institutional change complexities.
+- My passion lies in how cities operate and the nature of innovation within public systems, along with the barriers preventing good ideas from succeeding.
+
+---
+
+## Slide 3: What This Module Will Achieve
+
+- Focus is **not** on building innovation from scratch (covered in service design modules).
+- Instead, emphasis on **how to implement innovation** effectively.
+  - Challenges around incentives.
+  - Internal pushback and resistance to change.
+  - Implementation delivery challenges that can kill good ideas.
+
+---
+
+## Slide 4: Engagement and Participation Approach
+
+### Structure of Engagement
+
+- **Attend Government Innovation Meetups**: Gain insights from practitioners and reflect on their challenges.
+- **Case Study Discussion Sessions**: Select 2-3 case studies throughout the year for deep dives.
+- **Online Discussion Platform**: Space for ongoing conversations, article sharing, and reflection.
+- **Personalized Interaction**:
+  - Choose online platform preferences.
+  - Select preferred case studies.
+  - Tailor the experience based on interests.
+
+---
+
+## Slide 5: Where Should Our Online Community Be?
+
+### Online Platform Preferences
+
+- **Discussion Prompt**: What platform would work best for an online community?
+  - Slack
+  - Discord
+  - WhatsApp
+  - Others?
+- Consider what works best for interaction, notifications, and accessibility.
+
+---
+
+## Slide 6: How Do You Want to Engage?
+
+### Engagement and Module Timing
+
+- **Discussion Prompt**: How would you prefer the module to work?
+  - Timing and scheduling of sessions.
+  - Book club-style discussions?
+  - Study group meetings?
+  - Voting on topics?
+  - What format encourages the most engagement?
+
+---
+
+## Slide 7: Case Study 1 - Sortition in Ancient Athens (Overview)
+
+### Sortition in Ancient Athens
+
+- **Title**: Sortition in Ancient Athens
+- **Basic Facts**:
+  - Innovation: Random selection of officials.
+  - Time Period: Classical Athens, circa 5th century BCE.
+  - Aim: Reduce the power of elites and increase representation.
+- **Why It Was Innovative**: Sortition was a radical approach to ensure equal opportunity and fairness, promoting democracy by reducing elite influence.
+- **Outcome**: Despite its democratic intent, sortition faced significant resistance from powerful elites and gradually faded as societies favored expertise and elections over random selection.
+
+---
+
+## Slide 8: Case Study 1 - Sortition in Ancient Athens (Resources)
+
+### Key Resources
+
+- [Internet Classics Archive - Aristotle](http://classics.mit.edu/Aristotle/athenian_const.html)
+- Book: "Democracy and Knowledge: Innovation and Learning in Classical Athens" by Josiah Ober
+- Article: "Sortition and Democracy: Historical and Contemporary Perspectives" by Yves Sintomer
+- Web Page: [Ancient History Encyclopedia - Athenian Democracy](https://www.ancient.eu/Athenian_Democracy/)
+
+---
+
+## Slide 9: Case Study 2 - Pneumatic Tube Mail Systems (Overview)
+
+### Pneumatic Tube Mail Systems
+
+- **Title**: Pneumatic Tube Mail Systems
+- **Basic Facts**:
+  - Innovation: Pneumatic tubes for fast mail delivery.
+  - Time Period: Late 19th to early 20th century.
+  - Cities: New York, Paris, London.
+- **Why It Was Innovative**: The pneumatic tube system was an exciting and novel way to move mail quickly, reflecting significant ingenuity in urban logistics.
+- **Outcome**: The system eventually became obsolete due to rising mail volumes and the advent of better communication technologies, such as telephones and electronic mail.
+
+---
+
+## Slide 10: Case Study 2 - Pneumatic Tube Mail Systems (Resources)
+
+### Key Resources
+
+- [Smithsonian Postal Museum - Pneumatic Mail](https://postalmuseum.si.edu/exhibition/mail-marks-history-mail-systems-pneumatic-tube-service)
+- Book: "Neither Snow Nor Rain: A History of the United States Postal Service" by Devin Leonard
+- Article: "The Rise and Fall of the Pneumatic Tube System" by Tom Vanderbilt
+- Web Page: [Atlas Obscura - Pneumatic Tubes](https://www.atlasobscura.com/articles/pneumatic-tube-mail)
+
+---
+
+## Slide 11: Case Study 3 - Metric System Implementation in the U.S. (Overview)
+
+### Metric System Implementation in the U.S.
+
+- **Title**: Metric System Implementation in the U.S.
+- **Basic Facts**:
+  - Innovation: Standardized metric system.
+  - Aim: Align U.S. with global measurement systems.
+  - Challenges: Cultural resistance.
+- **Why It Was Innovative**: The metric system offered a universal, rational standard that could have streamlined commerce, science, and daily life.
+- **Outcome**: Despite its advantages, the metric system faced strong cultural resistance in the U.S., where the familiarity and tradition of customary units prevailed, leading to only partial adoption.
+
+---
+
+## Slide 12: Case Study 3 - Metric System Implementation in the U.S. (Resources)
+
+### Key Resources
+
+- [NIST - History of the Metric System in the U.S.](https://www.nist.gov/pml/us-metric-system)
+- Book: "Measuring America: How an Untamed Wilderness Shaped the United States and Fulfilled the Promise of Democracy" by Andro Linklater
+- Article: "Why the U.S. Hasn't Adopted the Metric System" by Eugene K. Chow
+- Web Page: [Smithsonian Magazine - The Story of the Metric System in the U.S.](https://www.smithsonianmag.com/science-nature/why-wont-america-go-metric-131229901/)
+
+---
+
+## Slide 13: Case Study 4 - Proportional Representation in the UK (Overview)
+
+### Proportional Representation in the UK
+
+- **Title**: Proportional Representation (PR) in the UK
+- **Basic Facts**:
+  - Innovation: Align vote percentages with seat allocation.
+  - Aim: Fairer electoral representation.
+  - Challenges: Political resistance.
+- **Why It Was Innovative**: PR aimed to provide a more equitable electoral system, ensuring that the representation in government matched the popular vote more closely.
+- **Outcome**: The introduction of PR faced significant resistance from entrenched political interests that benefited from the existing first-past-the-post system, leading to limited adoption in the UK.
+
+---
+
+## Slide 14: Case Study 4 - Proportional Representation in the UK (Resources)
+
+### Key Resources
+
+- [Electoral Reform Society - PR](https://www.electoral-reform.org.uk)
+- Book: "Electoral Systems and Democracy" edited by Larry Diamond and Marc F. Plattner
+- Article: "Why First-Past-The-Post Is So Hard to Replace" by David Runciman
+- Web Page: [BBC - Proportional Representation Explained](https://www.bbc.co.uk/news/election-2019-50428426)
+
+---
+
+## Slide 15: Common Themes & Discussion
+
+### Key Takeaways
+
+- **Common Themes**:
+  - Societal norms, vested interests, complexity of change.
+- **Discussion Prompt**: What do these examples teach us about innovation in government institutions?
+- **Interactive Poll**: Biggest challenge to innovation in public institutions?
+
+---
+
+## Slide 16: Interactive Discussion
+
+- Open up discussion on module structure.
+- **Discussion Points**:
+  - Preferred online platform for discussion.
+  - Most interesting case studies to explore.
+  - Missing connections or additional topics to add?
+
+---
+
+## Slide 17: Conclusion
+
+### Summary of Key Learnings
+
+- **Innovative Ideas**:
+  - Often brilliant but can face significant challenges.
+- **Key Takeaway**: Overcoming challenges requires understanding pushback, incentives, and delivery complexities.
+
+---
+
+## Slide 18: Resources & Links
+
+### Useful Resources
+
+1. [Internet Classics Archive - Aristotle](http://classics.mit.edu/Aristotle/athenian_const.html)
+2. [Smithsonian Postal Museum - Pneumatic Mail](https://postalmuseum.si.edu/exhibition/mail-marks-history-mail-systems-pneumatic-tube-service)
+3. [NIST - History of the Metric System in the U.S.](https://www.nist.gov/pml/us-metric-system)
+4. [Electoral Reform Society - PR](https://www.electoral-reform.org.uk)
+5. [Innovation in Government - OECD](https://www.oecd.org/gov/innovation/)
+
+**Action Item**: Reflect on how to overcome challenges to innovation in your institutions.
+
+---
+
+## Slide 19: Thank You!
+
+### Closing Note
+
+- Thank you for participating in today's module.
+- I look forward to seeing your reflections and contributions on the online discussion platform.
