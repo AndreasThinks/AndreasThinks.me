@@ -2,7 +2,7 @@
 title: "My 2025 resolution: share more crappy fiddles (and unfinished research)"
 subtitle: "...and why you should too"
 format: html
-date: "29-12-2024"
+date: "12-29-2024"
 toc: true
 toc-depth: 4
 categories: 
@@ -33,18 +33,18 @@ So, why all this faff? I'm hoping working in the open will help me [build more s
 
 {{< video https://www.youtube.com/watch?v=MJzV0CX0q8o >}}
 
-### Building More Stuff
+### Build more stuff
 
 Todepond (who also works on [Tldraw](https://tldraw.dev/), which is also very awesome) thinks we should all be sharing more [crappy fiddles](https://www.todepond.com/wikiblogarden/scrappy-fiddles/sharing/normalising/live/): that we all spend so long sitting on early and half-finished work, worried about the harsh reaction of public scrutiny, that we miss out on all the incredible benefits of the internets gaze: lots of (sometimes helpful) feedback, and an army of nerds often willing to help build stuff.
 
 I should probably recognise that I've got some pretty chonky privilege here: as a good looking, straight white man, the internet is a lot less harsh and angry at me than it is too others. Plenty of people don't have the luxury of putting stuff onto the internet and it not being a horrible, abusive place... But I'm going to take Lu's inspirational call to arms to heart, and share more stuff.
 
-### More, Better Writing
+### More, better writing
 Technical writers I admire share a few things in common: they write often, they write in public, but most importantly they write *for themselves*. I'm endlessly inspired by people like [Simon](https://simonwillison.net/) or [Terence](https://shkspr.mobi/blog/), who are terrifyingly prolific just by regularly, consistently putting stuff into the wild, but also people like [Jeremy Howard of fast.ai](https://www.fast.ai/), who puts a huge emphasis on [writing up what you build](https://nbdev.fast.ai/) to help you and others learn. 
 
 Writing in public is hard, and doing it consistently is harder still, but it helps you learn - just like [taking notes](https://www.soenkeahrens.de/en/takesmartnotes), putting words into the wild forces you to put them in order in your head...and in the long run, I'm hoping it will help me write better.  So here is to consistent writing in 2025. 
 
-### It helps us all build better science
+### Better science
 Now, this might be the most self-agrandising writing I've ever done, but bear with me: writing in public is how good science happens. 
 
 I've done a fair bit of thinking about the scientific process in the last few years. I started a PhD, which led to most of my work being stuck inside endless drafts while I fretted about while it was ready for publication. I've been inspired by machine learning researchers who put everything in pre-prints (though I do wonder who reads them). And meanwhile, Elon and Yann LeCun are [duking it out about technical papers on twitter](https://venturebeat.com/ai/elon-musk-and-yann-lecuns-social-media-feud-highlights-key-differences-in-approach-to-ai-research-and-hype/). And more importantly, I've seen people building exciting new networks to think about [what science could be](https://lu.ma/londonsciencefutures).
