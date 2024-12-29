@@ -1,5 +1,4 @@
 ---
-title: "Recent Work and Publications"
 format: html
 ---
 ### Talks
@@ -7,9 +6,6 @@ format: html
 - [Spotlight on AI Fairness and AI in Government (AI and Deep Learning for Enterprise - July 2024)](https://www.youtube.com/watch?v=4ZOCMZXE_uM)
 - [Examining Policing Use of Force and Disproportionality through Data (Global Evidence Based Policing Conference - October 2022)](https://globalebpconference.com/2022-programme)
 - [The importance of a multi-disciplinary approach: How data science helps us understand policing & how policing helps us understand our own data (Society of Evidence Based Policing Conference - May 2021)](https://www.youtube.com/watch?v=9tzzKnQnDqM)
-
-### Packages and Libraries
-- [PyDyTuesday (Python)](https://github.com/AndreasThinks/PyDyTuesday) - Automatically download #TidyTuesday datasets
 
 ### Papers
 - [The Impact of CONNECT Drop 1 on Crime Rates and Detection in the Metropolitan Police: Synthetic Control Analysis (2024)](https://doi.org/10.21428/cb6ab371.0459a825)
@@ -19,9 +15,3 @@ format: html
 - [Automating Knife Classification with Machine Learning (April 2021)](https://andreas-varotsis.medium.com/automating-knife-classification-with-machine-learning-3767d93d2789)
 - [Predicting Police Call Demand for Fun (and Prophet) (Towards Data Science - May 2020)](https://towardsdatascience.com/predicting-police-call-demand-for-fun-and-prophet-2e278828a1a1)
 - [Lessons from Scraping a DarkNet Market (Towards Data Science - April 2020)](https://towardsdatascience.com/lessons-from-scraping-a-darknet-market-63e4ca546c18)
-
-### Work - Professional
- - [Met police gather clues to best practice in fighting crime (Financial Times - October 2020)](https://www.ft.com/content/a62aaa39-09af-4360-ad02-a3c4e24ea47e) - A Financial Times article on the work of our team designing and testing an intervention to reduce child re-offending
- - [Domestic abuse in
-times of quarantine (LSE Centre for Economic Performance - July 2020)](https://cep.lse.ac.uk/pubs/download/cp578.pdf) - Our team worked with partners at LSE to produce a data-driven dive into the changes in patterns of domestic crime under lockdown, and design an appropriate intervention.  Also available [as a blog](https://blogs.lse.ac.uk/covid19/2020/06/30/home-is-not-a-safe-place-for-everyone-domestic-abuse-between-current-partners-increased-during-lockdown/).
- - [Fighting crime with data and innovation (Behavioural Insights Team Blog - February 2020)](https://www.bi.team/blogs/bit-crime-week-2-fighting-crime-with-data-and-innovation/) - this blog by the SIU Head of Unit summarises some of our recent work and projects

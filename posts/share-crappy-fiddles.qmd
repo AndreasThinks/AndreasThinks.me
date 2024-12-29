@@ -12,7 +12,7 @@ categories:
 
 I'm a big believer of "working in the open" - open-source, open science, open communication, that sort of thing. It's not just that I think this stuff is ethnical or *right* (though it mostly is), I think it helps build things that really matter.
 
-But it's also really bloody hard: exposing yourself to the scrutiny of the world (and nowdays, the internet), and doing the extra real, chunky, hard work to put yourself in that withering gaze, is hard... but a few things in the last few months have reminded me it's probably worth it. So here's my commitment to 2025: I'm sharing more unfinished *stuff*. And maybe, just maybe, that will help me actually finish some bits along the way. 
+But it's also really bloody hard: exposing yourself to the scrutiny of the world (and more specifically, the internet), while doing the extra real, chunky, hard work to put yourself under that withering gaze, really isn't something I do naturally.... but a few things in the last few months have reminded me it's probably worth it. **So here's my commitment for 2025: I'm sharing more unfinished *stuff*. And maybe, just maybe, that will help me actually finish some bits along the way. **
 
 ::: {.callout-tip title="So what am i sharing?"}
 
@@ -22,18 +22,18 @@ So, I'm doing two things:
 2. **More early-work!** I've decided to start putting my random pieces of research up earlier.  You'll be able to see them all in the ["work in progress" tag here](https://andreasthinks.me/#category=work-in-progress)
 :::
 
-So, why all this faff? I'm hoping working in the open will help me [build more stuff](#building-more-stuff), be [better at communicating](#more-better-writing), and [do better science](#it-helps-us-all-build-better-science). If you want to see nearly all my argument articulated far better than I probably will, you can start by watching this excellent video by [Todepond](https://www.todepond.com/).
+So, why all this faff? I'm hoping working in the open will help me [build more stuff](#building-more-stuff), be [better at communicating](#more-better-writing), and [do better science](#it-helps-us-all-build-better-science). If you want to see nearly all my arguments articulated far better than I probably will, you can start by watching this excellent video by [Todepond](https://www.todepond.com/), who kicked off a lot of this thinking.
 
 {{< video https://www.youtube.com/watch?v=MJzV0CX0q8o >}}
 
 ### Building More Stuff
 
-Todepond (who also works on [Tldraw](https://tldraw.dev/), which is also very awesome) thinks we should all be sharing more [crappy fiddles](https://www.todepond.com/wikiblogarden/scrappy-fiddles/sharing/normalising/live/): that we all spend so long sitting on early and half-finished work, worried about the harsh reaction of public scrutiny, that we miss out on all the incredible benefits of the internets harsh gaze: feedback, and an army of nerds often willing to help build stuff for you.
+Todepond (who also works on [Tldraw](https://tldraw.dev/), which is also very awesome) thinks we should all be sharing more [crappy fiddles](https://www.todepond.com/wikiblogarden/scrappy-fiddles/sharing/normalising/live/): that we all spend so long sitting on early and half-finished work, worried about the harsh reaction of public scrutiny, that we miss out on all the incredible benefits of the internets gaze: lots of (sometimes helpful) feedback, and an army of nerds often willing to help build stuff.
 
 I should probably recognise that I've got some pretty chonky privilege here: as a good looking, straight white man, the internet is a lot less harsh and angry at me than it is too others. Plenty of people don't have the luxury of putting stuff onto the internet and it not being a horrible, abusive place... But I'm going to take Lu's inspirational call to arms to heart, and share more stuff.
 
 ### More, Better Writing
-Technical writers I admire share a few things in common: they write often, they write in public, but most importantly they write *for themselves*. I'm endlesly inspired by people like [Simon](https://simonwillison.net/) or [Terence](https://shkspr.mobi/blog/), who are terrifyingly prolific just by regularly, consistently putting stuff into the wild, but also people like [Jeremy Howard of fast.ai](https://www.fast.ai/), who puts a huge emphasis on [writing up what you build](https://nbdev.fast.ai/) to help you and others learn. 
+Technical writers I admire share a few things in common: they write often, they write in public, but most importantly they write *for themselves*. I'm endlessly inspired by people like [Simon](https://simonwillison.net/) or [Terence](https://shkspr.mobi/blog/), who are terrifyingly prolific just by regularly, consistently putting stuff into the wild, but also people like [Jeremy Howard of fast.ai](https://www.fast.ai/), who puts a huge emphasis on [writing up what you build](https://nbdev.fast.ai/) to help you and others learn. 
 
 Writing in public is hard, and doing it consistently is harder still, but it helps you learn - just like [taking notes](https://www.soenkeahrens.de/en/takesmartnotes), putting words into the wild forces you to put them in order in your head...and in the long run, I'm hoping it will help me write better.  So here is to consistent writing in 2025. 
 

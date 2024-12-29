@@ -16,7 +16,7 @@ website:
         file: index.qmd
       - text: "About"
         file: about.qmd
-      - text: "Recent Work"
+      - text: "Talks & Publications"
         file: recent_work.qmd
       - text: "Consulting"
         file: technitos.qmd
