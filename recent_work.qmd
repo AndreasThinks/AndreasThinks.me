@@ -3,14 +3,17 @@ title: "Recent Work and Publications"
 format: html
 ---
 ### Talks
+- [Transforming government with AI (TransformGov Talks - October 2024)](https://www.youtube.com/watch?v=lMkiEnzEDg8)
+- [Spotlight on AI Fairness and AI in Government (AI and Deep Learning for Enterprise - July 2024)](https://www.youtube.com/watch?v=4ZOCMZXE_uM)
 - [Examining Policing Use of Force and Disproportionality through Data (Global Evidence Based Policing Conference - October 2022)](https://globalebpconference.com/2022-programme)
 - [The importance of a multi-disciplinary approach: How data science helps us understand policing & how policing helps us understand our own data (Society of Evidence Based Policing Conference - May 2021)](https://www.youtube.com/watch?v=9tzzKnQnDqM)
 
 ### Packages and Libraries
 - [PyDyTuesday (Python)](https://github.com/AndreasThinks/PyDyTuesday) - Automatically download #TidyTuesday datasets
 
-### Journals
-- Identifying the Impact of Varying Officer Dosage in Crime Hotspots. Varotsis, A. and T. Davies (2021). In preparation
+### Papers
+- [The Impact of CONNECT Drop 1 on Crime Rates and Detection in the Metropolitan Police: Synthetic Control Analysis (2024)](https://doi.org/10.21428/cb6ab371.0459a825)
+- [Impact of Police Bail on Domestic Revictimisation in London - Evidence from 2017 Reforms in England and Wales (2022)](https://www.crimrxiv.com/pub/x9x1p7vk/)
 
 ### Articles [(See more at Medium)](https://andreas-varotsis.medium.com/)
 - [Automating Knife Classification with Machine Learning (April 2021)](https://andreas-varotsis.medium.com/automating-knife-classification-with-machine-learning-3767d93d2789)
