@@ -8,7 +8,14 @@ toc-depth: 4
 categories: 
     - personal
     - open-source  
+filters:
+  - mastodon-comments
+mastodon_comments:
+  user: "AndreasThinks"
+  host: "fosstodon.org"
+  toot_id: "113736849424507863"
 ---
+
 
 I'm a big believer of "working in the open" - open-source, open science, open communication, that sort of thing. It's not just that I think this stuff is ethnical or *right* (though it mostly is), I think it helps build things that really matter.
 
