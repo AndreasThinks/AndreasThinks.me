@@ -1,0 +1,40 @@
+---
+title: "My 2024 resolution: share more crappy fiddles (and unfinished research)"
+subtitle: "...and why you should too"
+format: html
+date: "29-12-2024"
+draft: true
+categories: 
+    - personal
+    - open-source  
+---
+
+I'm a big believer of "working in the open" - open-source, open science, open communication. It's not just that I think this stuff is ethnical or *right* (though it mostly is), I think it helps build good stuff. But it's also really bloody hard: exposing yourslef to the scruitny of the world, and doing the extra real, chunky, hard work to put yourself in that withering gaze, is hard... but a few things in the last few months have reminded me it's probably worth it. So here's my commitment to 2025: I'm sharing more unfinished *stuff*. And maybe, just maybe, that will help me actually finish some bits along the way. 
+
+So, why all this faff? I'm hoping working in the open will help me build more stuff, be better at communicating, and do more science. If you want to see nearly all my argument articulated far better than I probably will, you can start by watching this excellent video by [Todepond](https://www.todepond.com/).
+
+{{< video https://www.youtube.com/watch?v=MJzV0CX0q8o >}}
+
+Todepond (who also works on [Tldraw](https://tldraw.dev/), which is also very awesome) thinks we should all be sharing more [crappy fiddles](https://www.todepond.com/wikiblogarden/scrappy-fiddles/sharing/normalising/live/): that we all spend so long sitting on early and half-finished work, worried about the harsh reaction of public scrutiny, that we miss out on all the incredible benefits of the internets harsh gaze: feedback, and an army of nerds often willing to help build stuff for you.
+
+I should probably recognise that I've got some pretty chonky privilege here: as a good looking, straight white man, the internet is a lot less harsh and angry at me than it is too others. Plenty of people don't have the luxury of putting stuff onto the internet and it not being a horrible, abusive place... But I'm going to take Lu's inspirational call to arms to heart, and share more stuff.
+
+I'm kicking off wit two bits:
+- more pre-prints
+- More [early work](https://andreasthinks.me/#category=work-in-progress) 
+
+::: {.callout-tip title="So what am i doing?"}
+So what have I shared recently?  Two pre-prints, and one paper in progress
+
+
+https://www.crimrxiv.com/pub/x9x1p7vk/
+
+https://www.crimrxiv.com/pub/4v3ftiya/
+:::
+
+#### It makes you write good
+Writing in public is good writing. I've spoken before about how much I admire Jeremy Howards, Terence's and Simon's online presence, and I've pondered how to get there quite a bit, but in summary: write often, write for yourself, and then put it out there.
+
+#### It helps us all build better science
+Science use to be about writing letters.  
+Science futures!

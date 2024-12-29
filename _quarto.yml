@@ -24,6 +24,8 @@ website:
       - text: "{{< fa brands mastodon size=xl >}}" 
         href: https://fosstodon.org/@AndreasThinks
         rel: "me"
+      - text: "{{< fa brands bluesky size=xl >}}" 
+        href: https://bsky.app/profile/andreasthinks.me
       - text: "{{< fa brands twitter size=xl >}}" 
         href: https://twitter.com/AndreasThinks
       - text: "{{< fa brands github size=xl >}}" 
