@@ -14,7 +14,7 @@ max-description-length: 300
 
 ::: {.grid}
 ::: {.g-col-3}
-![](images/round_me.png){.profile-pic width="200px"}
+![](images/round_me.png){.profile-pic}
 :::
 ::: {.g-col-9}
 I'm Andreas, [a data scientist and public safety researcher working to improve the use of data and evidence in government](https://andreasthinks.me/about.html). I enjoy [coordinating exciting communities](https://lu.ma/ai-for-good), and working with [fantastic](https://newspeak.house/) [institutions](https://ai.gov.uk/) to build projects that improve the world. You can read more about me [on my about page here](https://andreasthinks.me/about.html).
