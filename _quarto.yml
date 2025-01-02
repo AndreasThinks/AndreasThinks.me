@@ -4,6 +4,7 @@ project:
 execute:
   freeze: auto
 website:
+  google-analytics: "GG-378MDZNVX4"
   title: "Andreas Varotsis"
   site-url: "https://andreasthinks.me"
   description: "Personal website for Andreas Varotsis"
@@ -18,8 +19,6 @@ website:
         file: about.qmd
       - text: "Talks & Publications"
         file: recent_work.qmd
-      - text: "Consulting"
-        file: technitos.qmd
     right:
       - text: "{{< fa brands mastodon size=xl >}}" 
         href: https://fosstodon.org/@AndreasThinks
