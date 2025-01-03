@@ -1,0 +1,18 @@
+Original_name,new_name,Group
+Intercept,Intercept,Intercept
+"C(risk, Treatment(reference='out_of_character'))[T.involved_in_crime]",Involved in crime,Risk Factor (out of character as reference category)
+"C(risk, Treatment(reference='out_of_character'))[T.regular_missing_person]",Regular missing person,Risk Factor (out of character as reference category)
+"C(sex, Treatment(reference='female'))[T.male]",Male (female as reference),Sex (female as reference category)
+"C(age, Treatment(reference=25))[T.5]",,Age (25 as reference category)
+"C(age, Treatment(reference=25))[T.10]",,Age (25 as reference category)
+"C(age, Treatment(reference=25))[T.14]",,Age (25 as reference category)
+"C(age, Treatment(reference=25))[T.16]",,Age (25 as reference category)
+"C(age, Treatment(reference=25))[T.20]",,Age (25 as reference category)
+"C(age, Treatment(reference=25))[T.50]",,Age (25 as reference category)
+"C(age, Treatment(reference=25))[T.80]",,Age (25 as reference category)
+"C(hours_missing, Treatment(reference=8))[T.10]",,Hours missing (8 as reference category)
+"C(hours_missing, Treatment(reference=8))[T.14]",,Hours missing (8 as reference category)
+"C(hours_missing, Treatment(reference=8))[T.18]",,Hours missing (8 as reference category)
+"C(ethnicity, Treatment(reference='White'))[T.Asian]",,Ethnicity (white as reference category)
+"C(ethnicity, Treatment(reference='White'))[T.Black]",,Ethnicity (white as reference category)
+"C(ethnicity, Treatment(reference='White'))[T.mixed race]",,Ethnicity (white as reference category)
