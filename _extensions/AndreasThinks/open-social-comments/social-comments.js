@@ -18,12 +18,16 @@ const styles = `
   background-color: var(--block-background-color);
   border-radius: var(--block-border-radius);
   border: var(--block-border-width) var(--block-border-color) solid;
-  padding: 20px;
+  padding: 1rem;
   margin-bottom: 1.5rem;
   display: flex;
   flex-direction: column;
   color: var(--font-color);
   font-size: var(--font-size);
+  max-width: 100%;
+  box-sizing: border-box;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .social-comment p {
@@ -33,6 +37,9 @@ const styles = `
 .social-comment .author {
   padding-top: 0;
   display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: flex-start;
 }
 
 .social-comment .author a {
@@ -40,14 +47,18 @@ const styles = `
 }
 
 .social-comment .author .avatar img {
-  margin-right: 1rem;
-  min-width: 60px;
+  margin-right: 0.5rem;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
   border-radius: 5px;
 }
 
 .social-comment .author .details {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  min-width: 0;
 }
 
 .social-comment .author .details .name {
@@ -62,18 +73,28 @@ const styles = `
 .social-comment .author .date {
   margin-left: auto;
   font-size: small;
+  white-space: nowrap;
 }
 
 .social-comment .content {
-  margin: 15px 20px;
+  margin: 0.75rem 0;
+  width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
 }
 
 .social-comment .attachments {
-  margin: 0px 10px;
+  margin: 0.5rem 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .social-comment .attachments > * {
-  margin: 0px 10px;
+  margin: 0;
+  max-width: 100%;
 }
 
 .social-comment .attachments img {
@@ -113,7 +134,7 @@ const styles = `
   margin-left: auto;
   padding: 2px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .social-comment .platform-indicator i {
@@ -183,7 +204,7 @@ class SocialComments extends HTMLElement {
       <p>Join the conversation on 
         ${this.mastodonTootId ? `<a href="https://${this.mastodonHost}/@${this.mastodonUser}/${this.mastodonTootId}">Mastodon</a>` : ''}
         ${this.mastodonTootId && this.blueskyPostUri ? ' or ' : ''}
-        ${this.getAttribute("bluesky-post") ? `<a href="${this.getAttribute("bluesky-post")}">Bluesky</a>` : ''}
+        ${this.getAttribute("bluesky-post") ? `<a href="${this.getAttribute("bluesky-post").startsWith('http') ? this.getAttribute("bluesky-post") : `https://bsky.app/profile/${this.getAttribute("bluesky-post").split('/')[2]}/post/${this.getAttribute("bluesky-post").split('/').pop()}`}">Bluesky</a>` : ''}
       </p>
       <div id="social-comments-list"></div>
     `;
@@ -223,10 +244,14 @@ class SocialComments extends HTMLElement {
         await this.loadBlueskyComments();
       }
 
-      // Sort all comments by date
-      this.allComments.sort((a, b) => new Date(b.date) - new Date(a.date));
+      // Filter out original posts for display but include their stats in total
+      const originalPosts = this.allComments.filter(comment => comment.isOriginalPost);
+      const replies = this.allComments.filter(comment => !comment.isOriginalPost);
+      
+      // Sort replies by date
+      replies.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-      // Calculate total stats
+      // Calculate total stats including original posts
       const totalStats = this.allComments.reduce((acc, comment) => {
         acc.replies += comment.stats.replies || 0;
         acc.reposts += comment.stats.reposts || 0;
@@ -235,7 +260,7 @@ class SocialComments extends HTMLElement {
       }, { replies: 0, reposts: 0, likes: 0 });
 
       // Render comments
-      if (this.allComments.length > 0) {
+      if (replies.length > 0 || originalPosts.length > 0) {
         const commentsContainer = document.getElementById("social-comments-list");
         commentsContainer.innerHTML = "";
 
@@ -278,8 +303,8 @@ class SocialComments extends HTMLElement {
 
         commentsContainer.appendChild(statsContainer);
 
-        // Render individual comments
-        this.allComments.forEach(comment => {
+        // Render replies only
+        replies.forEach(comment => {
           this.renderComment(comment);
         });
       } else {
@@ -297,6 +322,35 @@ class SocialComments extends HTMLElement {
 
   async loadMastodonComments() {
     try {
+      // First get the original toot's stats
+      const statusResponse = await fetch(
+        `https://${this.mastodonHost}/api/v1/statuses/${this.mastodonTootId}`
+      );
+      const statusData = await statusResponse.json();
+      
+      // Add the original toot's stats
+      this.allComments.push({
+        platform: 'mastodon',
+        id: statusData.id,
+        content: statusData.content,
+        author: {
+          name: statusData.account.display_name,
+          handle: this.getMastodonHandle(statusData.account),
+          avatar: statusData.account.avatar_static,
+          url: statusData.account.url
+        },
+        date: statusData.created_at,
+        url: statusData.url,
+        stats: {
+          replies: statusData.replies_count,
+          reposts: statusData.reblogs_count,
+          likes: statusData.favourites_count
+        },
+        attachments: statusData.media_attachments,
+        isOriginalPost: true
+      });
+
+      // Then get the context (replies)
       const contextResponse = await fetch(
         `https://${this.mastodonHost}/api/v1/statuses/${this.mastodonTootId}/context`
       );
@@ -346,6 +400,31 @@ class SocialComments extends HTMLElement {
       }
 
       const data = await response.json();
+      
+      // Add the original post's stats
+      if (data.thread?.post) {
+        const post = data.thread.post;
+        this.allComments.push({
+          platform: 'bluesky',
+          id: post.uri,
+          content: post.record.text,
+          author: {
+            name: post.author.displayName || post.author.handle,
+            handle: post.author.handle,
+            avatar: post.author.avatar,
+            url: `https://bsky.app/profile/${post.author.did}`
+          },
+          date: post.indexedAt,
+          url: `https://bsky.app/profile/${post.author.handle}/post/${post.uri.split('/').pop()}`,
+          stats: {
+            replies: post.replyCount,
+            reposts: post.repostCount,
+            likes: post.likeCount
+          },
+          isOriginalPost: true
+        });
+      }
+
       if (data.thread && data.thread.replies) {
         this.processBlueskyReplies(data.thread.replies);
       }
@@ -419,7 +498,7 @@ class SocialComments extends HTMLElement {
           ${platformIcon}
         </span>
       </div>
-      <div class="content">${comment.platform === 'mastodon' ? comment.content : this.escapeHtml(comment.content)}</div>
+      <div class="content">${comment.platform === 'mastodon' ? comment.content : this.formatBlueskyContent(comment.content)}</div>
       ${comment.attachments ? this.renderAttachments(comment.attachments) : ''}
       <div class="status">
         <div class="replies ${comment.stats.replies > 0 ? 'active' : ''}">
@@ -448,6 +527,52 @@ class SocialComments extends HTMLElement {
     }
 
     document.getElementById("social-comments-list").appendChild(div);
+  }
+
+  formatBlueskyContent(text) {
+    // Create arrays to store our special elements and their replacements
+    const elements = [];
+    let tempText = text;
+    let counter = 0;
+    
+    // Function to store an element and return a placeholder
+    const storePlaceholder = (element, link, display) => {
+      const placeholder = `__ELEMENT_${counter}__`;
+      elements.push({
+        placeholder,
+        html: `<a href="${this.escapeHtml(link)}" rel="nofollow">${this.escapeHtml(display)}</a>`
+      });
+      counter++;
+      return placeholder;
+    };
+
+    // Extract URLs
+    const urlPattern = /(https?:\/\/[^\s<]+[^<.,:;"')\]\s])/g;
+    tempText = tempText.replace(urlPattern, (url) => 
+      storePlaceholder(url, url, url)
+    );
+
+    // Extract mentions
+    const mentionPattern = /@([a-zA-Z0-9.-]+)/g;
+    tempText = tempText.replace(mentionPattern, (match, handle) => 
+      storePlaceholder(match, `https://bsky.app/profile/${handle}`, match)
+    );
+
+    // Extract hashtags
+    const hashtagPattern = /#([a-zA-Z0-9_]+)/g;
+    tempText = tempText.replace(hashtagPattern, (match, tag) => 
+      storePlaceholder(match, `https://bsky.app/search?q=${encodeURIComponent(match)}`, match)
+    );
+
+    // Escape the remaining text
+    tempText = this.escapeHtml(tempText);
+
+    // Replace placeholders with their HTML elements
+    elements.forEach(({placeholder, html}) => {
+      tempText = tempText.replace(placeholder, html);
+    });
+
+    return tempText;
   }
 
   renderAttachments(attachments) {

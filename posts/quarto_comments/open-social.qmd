@@ -3,6 +3,7 @@ title: "Quarto comments, by the open social web"
 description: "All the comments, all the time, on all the networks? Sure, we can do that."
 format: html
 date: "2025-01-12"
+freeze: false
 filters:
   - open-social-comments
 mastodon_comments:
