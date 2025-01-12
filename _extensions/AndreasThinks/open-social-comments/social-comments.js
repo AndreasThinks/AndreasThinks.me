@@ -1,12 +1,24 @@
 const styles = `
 :root {
-  --font-color: #5d686f;
-  --font-size: 1.0rem;
-  --block-border-width: 1px;
-  --block-border-radius: 3px;
-  --block-border-color: #ededf0;
-  --block-background-color: #f7f8f8;
+  /* Inherit from Quarto theme where possible */
+  --font-color: var(--bs-body-color, #5d686f);
+  --font-size: var(--bs-body-font-size, 1rem);
+  --block-border-width: var(--bs-border-width, 1px);
+  --block-border-radius: var(--bs-border-radius, 0.375rem);
+  --block-border-color: var(--bs-border-color, rgba(0, 0, 0, 0.125));
+  --block-background-color: var(--bs-tertiary-bg, #f8f9fa);
   --comment-indent: 40px;
+  
+  /* Platform-specific colors that maintain brand identity */
+  --mastodon-color: #563acc;
+  --bluesky-color: #0085ff;
+  
+  /* Interactive element colors */
+  --link-color: var(--bs-link-color, #0d6efd);
+  --link-hover-color: var(--bs-link-hover-color, #0a58ca);
+  --replies-active-color: var(--bs-primary, #0d6efd);
+  --reblogs-active-color: var(--bs-info, #0dcaf0);
+  --likes-active-color: var(--bs-warning, #ffc107);
 }
 
 #social-comments-list {
@@ -72,7 +84,8 @@ const styles = `
 }
 
 .social-comment .author .details .user {
-  color: #5d686f;
+  color: var(--font-color);
+  opacity: 0.8;
   font-size: medium;
   grid-row: 2;
 }
@@ -131,22 +144,22 @@ const styles = `
 }
 
 .social-comment .status a {
-  color: #5d686f;
+  color: var(--font-color);
   text-decoration: none;
 }
 
 .social-comment .status .replies.active a {
-  color: #003eaa;
+  color: var(--replies-active-color);
 }
 
 .social-comment .status .reblogs.active a,
 .social-comment .status .reposts.active a {
-  color: #8c8dff;
+  color: var(--reblogs-active-color);
 }
 
 .social-comment .status .favourites.active a,
 .social-comment .status .likes.active a {
-  color: #ca8f04;
+  color: var(--likes-active-color);
 }
 
 
@@ -262,7 +275,7 @@ class SocialComments extends HTMLElement {
       const replies = this.allComments.filter(comment => !comment.isOriginalPost);
       
       // Sort replies by date
-      replies.sort((a, b) => new Date(b.date) - new Date(a.date));
+      replies.sort((a, b) => new Date(a.date) - new Date(b.date));
 
       // Calculate total stats including original posts
       const totalStats = this.allComments.reduce((acc, comment) => {
@@ -285,8 +298,8 @@ class SocialComments extends HTMLElement {
           gap: 20px;
           margin-bottom: 15px;
           color: var(--font-color);
-          font-size: 0.9rem;
-          padding: 10px;
+          font-size: calc(var(--font-size) * 0.9);
+          padding: var(--bs-card-spacer-y, 1rem) var(--bs-card-spacer-x, 1rem);
           background: var(--block-background-color);
           border-radius: var(--block-border-radius);
           border: var(--block-border-width) var(--block-border-color) solid;
@@ -465,7 +478,7 @@ class SocialComments extends HTMLElement {
           reposts: reply.post.repostCount,
           likes: reply.post.likeCount
         },
-        inReplyTo: reply.post.reply?.parent.uri
+        inReplyTo: reply.post.reply?.parent?.uri || reply.post.reply?.root?.uri
       });
 
       if (reply.replies && reply.replies.length > 0) {
@@ -487,13 +500,19 @@ class SocialComments extends HTMLElement {
     const div = document.createElement("div");
     div.classList.add("social-comment");
     
-    if (comment.inReplyTo) {
+    // Only indent if it's a reply to another reply, not to the original post
+    const isReplyToReply = comment.inReplyTo && 
+      (comment.platform === 'mastodon' ? 
+        comment.inReplyTo !== this.mastodonTootId :
+        comment.inReplyTo !== this.blueskyPostUri);
+    
+    if (isReplyToReply) {
       div.style.marginLeft = "var(--comment-indent)";
     }
 
     const platformIcon = comment.platform === 'mastodon' ? 
-      '<i class="fab fa-mastodon" style="color: #563acc"></i>' : 
-      '<i class="fa-brands fa-bluesky" style="color: #0085ff"></i>';
+      '<i class="fab fa-mastodon" style="color: var(--mastodon-color)"></i>' : 
+      '<i class="fa-brands fa-bluesky" style="color: var(--bluesky-color)"></i>';
 
     div.innerHTML = `
       <div class="author">
