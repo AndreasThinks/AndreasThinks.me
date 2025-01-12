@@ -1,0 +1,41 @@
+---
+title: "Quarto comments, by the open social web"
+description: "All the comments, all the time, on all the networks? Sure, we can do that."
+format: html
+date: "2025-01-12"
+filters:
+  - open-social-comments
+mastodon_comments:
+  user: "AndreasThinks"
+  host: "fosstodon.org"
+  toot_id: "111995180253316042"
+bluesky_comments:
+  post_uri: "https://bsky.app/profile/theradr.bsky.social/post/3knoaw5z4ek2v"
+---
+
+A few months ago, I released [Quarto-mastodon-comments](https://andreasthinks.me/posts/quarto_comments/), a quarto extension to add comment functionality to this blog via Mastodon (and the wider fediverse).  
+
+Well, inspired by [Terence's excellent blog functionality](https://shkspr.mobi/blog/2025/01/graphing-the-connections-between-my-blog-posts/), and building on the web-components by [LoueeD](https://gist.github.com/LoueeD/b7dec10b2ea56c825cbb0b3a514720ed) and [Dpecos](https://github.com/dpecos/mastodon-comments?tab=readme-ov-file), I've now added Bluesky (and in theory, [AT Protocol](https://atproto.com/)) functionality! You can now comment on either network, with all the comments coming together in a nice unified interface. To reflect these changes, I've renamed the extension to [open-social-comments](https://github.com/AndreasThinks/quarto-open-social-comments).
+
+To use the extension (or migrate from the old version), just install the new version:
+
+```bash
+quarto install extension AndreasThinks/open-social-comments
+```
+
+You can then just add the relevant Bluesky and/or Mastodon comments into the header of your post:
+
+```yaml
+filters:
+  - open-social-comments
+mastodon_comments:
+  user: "AndreasThinks"
+  host: "fosstodon.org"
+  toot_id: "111995180253316042"
+bluesky_comments:
+  post_uri: "https://bsky.app/profile/theradr.bsky.social/post/3knoaw5z4ek2v"
+```
+
+This does, sadly, still have the old "chicken or egg" problem, in that you need to publish your social toots/skeets before you can publish the post itself... but sadly, I haven't quite figured out how to get around that yet (I figure someone could build a nice GitHub Actions workflow if they felt suitably inspired).
+
+If everything has gone according to plan, you *should* be able to see comments from both networks below... I hope you all find it useful!
