@@ -1,0 +1,24 @@
+/* css styles */
+
+div.quarto-post .thumbnail {
+
+    flex-basis: 0%;
+    }
+    
+div.quarto-post .body {
+    flex-basis: 80%;
+    }   
+
+    #quarto-post image-right {
+        padding-bottom: 15px;
+    }
+
+    /* Hide border-bottom on list items if present */
+.quarto-listing .quarto-post {
+    border-bottom: none !important;
+  }
+  
+div.quarto-post{
+    margin-bottom: 10px;
+}
+
