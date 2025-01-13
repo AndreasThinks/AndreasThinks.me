@@ -8,6 +8,7 @@ format: html
 - [The importance of a multi-disciplinary approach: How data science helps us understand policing & how policing helps us understand our own data (Society of Evidence Based Policing Conference - May 2021)](https://www.youtube.com/watch?v=9tzzKnQnDqM)
 
 ### Papers
+- [Measuring Bias and Variance in AI Perceptions of Policing Risk (2025)](https://doi.org/10.57874/4gns-9f83)
 - [The Impact of CONNECT Drop 1 on Crime Rates and Detection in the Metropolitan Police: Synthetic Control Analysis (2024)](https://doi.org/10.21428/cb6ab371.0459a825)
 - [Impact of Police Bail on Domestic Revictimisation in London - Evidence from 2017 Reforms in England and Wales (2022)](https://www.crimrxiv.com/pub/x9x1p7vk/)
 
