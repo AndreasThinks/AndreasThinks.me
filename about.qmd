@@ -5,11 +5,9 @@ about:
   template: trestles
 ---
 
-I'm Andreas Varotsis, a data scientist and public safety researcher working to improve the use of data and evidence in government.
+I'm Andreas Varotsis, a data scientist and public safety researcher working to improve the use of data and evidence in government.I try to use an empirical approach and multi-disciplinary, quantitative tools to understand, diagnose, and build solutions for critical problems around public cohesion, society and public safety.
 
-I also help coordinate [Police Rewired](https://www.policecoders.org/), a community of volunteer professionals with an interest in policing technology, community safety, and fighting crime.
-
-I try to use empirical approach and multi-disciplinary, quantitative tools to understand, diagnose, and propose solutions to crime and policing questions.
+I also enjoy [coordinating exciting communities](https://lu.ma/ai-for-good), and working with [fantastic](https://newspeak.house/) [institutions](https://ai.gov.uk/) to build projects that improve the world.
 
 My particular areas of interest are:
 
@@ -18,7 +16,6 @@ My particular areas of interest are:
 - econometrics and economic modelling
 - experimental and quasi-experimental testing
 - rapid technological solutions and innovation
-
 
 I use this site to showcase [my recent work](recent_work.qmd), and discuss [new data-science and statistical tools and techniques on my blog](https://andreasthinks.me/).
 
