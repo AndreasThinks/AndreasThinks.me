@@ -1,0 +1,134 @@
+---
+title: "Evaluation Masterclass"
+subtitle: "Advanced Module, Newspeak House 2024-25"
+author: "Andreas Varotsis"
+title-slide-attributes:
+  data-background-image: ../images/newspeak_house_logo.png
+  data-background-size: 10%
+  data-background-position: bottom
+format:
+  revealjs: 
+    incremental: true  
+    chalkboard: true
+    theme: [default, ../newspeak-theme.scss]
+    logo: ../images/newspeak_house_logo.png
+    footer: |
+      ![](images/newspeak_house_logo.png){height=500px}
+
+---
+
+## Introduction
+
+- **Importance of Evaluation**:
+  - Demonstrates impact, accountability, and guides improvements.
+- **Treatment Effect**:
+  - Measures causal impact of interventions.
+
+---
+
+## Why Evaluation Matters
+
+- Crucial for funding and credibility.
+- Essential for learning and continuous improvement.
+- Helps organizations focus resources effectively.
+
+## Treatment Effects: Why They Matter
+
+- Shows causal impact, not just correlation.
+- Essential for effective decision-making and resource allocation.
+
+## Challenges: Correlation vs Causation
+
+- Correlation ≠ causation.
+- Importance of a counterfactual (control group).
+
+**Example:**
+- Youth employment improvements might coincide with economic growth, not just program impact.
+
+## Rigorous Methods: Randomized Controlled Trials (RCTs)
+
+- Gold standard for impact evaluation.
+- Participants randomly assigned (treatment/control).
+
+**UK Example:**
+- [Family Nurse Partnership Scotland Evaluation](https://www.gov.scot/publications/evaluation-family-nurse-partnership-scotland/)
+
+## Rigorous Alternatives: Quasi-Experimental
+
+- When RCTs aren't feasible.
+- Propensity score matching, difference-in-differences, regression discontinuity.
+
+**Case Study:** Family Nurse Partnership (FNP), Scotland, using natural timing differences as controls.
+
+## Case Study 1: Read Easy UK
+
+- Volunteer-led adult literacy improvement.
+- Personal narratives (e.g., Jay Blades).
+
+> *“Over 200 adults gained literacy skills through personalized coaching, enabling life-changing improvements.”*
+
+[Read Easy UK](https://readeasy.org.uk)
+
+## Case Study: Code Club
+
+- Free coding clubs for children aged 9-13.
+- Over 90% improved in confidence and problem-solving.
+
+**Narrative:** *“Code Club transforms children's lives by boosting digital skills and creativity, reaching over 200,000 young people globally.”*
+
+[Code Club Impact](https://www.raspberrypi.org/education/research/code-club-impact-report)
+
+## Case Study: Skills for Life Strategy
+
+- Massive UK adult literacy and numeracy initiative.
+- Despite extensive investment, numeracy levels declined.
+
+**Lesson:** Outputs don't guarantee outcomes. Importance of targeting and meaningful metrics.
+
+[Skills for Life Evaluation](https://www.nao.org.uk/report/skills-for-life/)
+
+## Case Study: Sure Start
+
+- Integrated child services for disadvantaged families.
+- Initial evaluations found minimal impact; long-term studies showed significant positive outcomes.
+
+**Narrative:** *Early struggles can lead to later successes; patience and continued evaluation essential.*
+
+[Sure Start Impact Study](https://ifs.org.uk/publications/sure-start-long-term-benefits)
+
+## Famous Failure: D.A.R.E.
+
+- Popular anti-drug education program.
+- Rigorous evaluations showed no effect on drug use.
+
+**Lesson:** Popular ≠ effective. Importance of evidence-based design.
+
+[D.A.R.E. Evaluation](https://www.drugabuse.gov/publications/preventing-drug-use-among-children-adolescents/chapter-3-prevention-intervention-programs/)
+
+## Qualitative vs Quantitative
+
+- **Quantitative:** Numbers, measurable outcomes.
+- **Qualitative:** Stories, feedback, context.
+
+**Best Practice:** Use both to tell a comprehensive story.
+
+## Selecting Metrics
+
+- Outcomes vs outputs.
+- SMART criteria (Specific, Measurable, Achievable, Relevant, Time-bound).
+
+**Example of Good Metrics:**
+- Percentage increase in civic participation.
+- Long-term housing retention for homeless interventions.
+
+## Summary & Key Takeaways
+
+- Evaluation demonstrates impact and drives improvement.
+- Treatment effects require rigorous methods.
+- Effective communication combines data and storytelling.
+- Avoid common pitfalls with clear planning and meaningful metrics.
+
+## Q&A and Discussion
+
+- Your experiences?
+- How could these concepts apply to your projects?
