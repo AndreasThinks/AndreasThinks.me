@@ -112,5 +112,17 @@
   },
   "posts/copbot_analysis/analysis.ipynb": {
     "analysis.html": "ba732ec0"
+  },
+  "posts/ai-at-play/index.qmd": {
+    "index.html": "76caf002"
+  },
+  "posts/quarto_comments/open-social.qmd": {
+    "open-social.html": "812b290b"
+  },
+  "public_innovation/evaluation_masterclass/index.qmd": {
+    "index.html": "4506fce6"
+  },
+  "public_innovation/intro/intro.qmd": {
+    "intro.html": "7945a7bb"
   }
 }

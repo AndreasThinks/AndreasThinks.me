@@ -16,9 +16,9 @@ filters:
 mastodon_comments:
   user: "AndreasThinks"
   host: "fosstodon.org"
-  toot_id: "113781980851850508"
+  toot_id: "114958602908444442"
 bluesky_comments:
-  post_uri: "https://bsky.app/profile/andreasthinks.me/post/3lf3dqtmyik2x"
+  post_uri: "https://bsky.app/profile/andreasthinks.me/post/3lvfvzoej322p"
 ---
 ::: {#description-meta}
 Earlier this year, Anthropic treated us to the delightful [Claude Plays Pokemon](https://www.twitch.tv/claudeplayspokemon): a wonderful way of watching some poor AI model get lost forever in Mt Moon, fighting a swarm of Zubats, and presumably hating it just as much as we once did.
