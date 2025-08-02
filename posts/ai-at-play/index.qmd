@@ -3,59 +3,68 @@ title: "AI at Play - Lessons from a silly benchmark"
 format:
   html:
     lightbox: true
-draft: true
 toc: true
-date: 08/01/2025
+date: 08/02/2025
 categories: 
   - personal
   - technology
   - ai
   - open-source
   - games
+filters:
+  - open-social-comments
+mastodon_comments:
+  user: "AndreasThinks"
+  host: "fosstodon.org"
+  toot_id: "113781980851850508"
+bluesky_comments:
+  post_uri: "https://bsky.app/profile/andreasthinks.me/post/3lf3dqtmyik2x"
 ---
-
+::: {#description-meta}
 Earlier this year, Anthropic treated us to the delightful [Claude Plays Pokemon](https://www.twitch.tv/claudeplayspokemon): a wonderful way of watching some poor AI model get lost forever in Mt Moon, fighting a swarm of Zubats, and presumably hating it just as much as we once did.
 
-Now, I don't work at Anthropic (and I definitely don't have as many credits as they do), but I do love games, and I think they tell us something about the people playing them. So, inspired by Claude Plays Pokemon, I've built my own little experiment in LLM gaming: **[AIs at Risk](https://ai-at-play.online/)**, a cute, silly little benchmark that I think _might_ just tell us something meaningful.
+Now, I don't work at Anthropic (and I definitely don't have as many credits as they do), but I do love games, and think they tell us something about the people playing them. So, inspired by Claude Plays Pokemon, I've built my own little experiment in LLM gaming: **[AIs at Risk](https://ai-at-play.online/)**, a cute, silly little benchmark that I think _might_ just tell us something meaningful.
+:::
 
-It's all [open-source, and you can view the code here](https://github.com/AndreasThinks/ai-at-risk). I'll be honest, it is a bit of a monster: there are quite a few *vibes* behind this codebase, and in places, it's all gotten a bit out of hand. But I've learned a fair bit, and I think it's kind of cool. So read on to hear the tale of my own little monstrous benchmark, why I think we need more language models playing games, and some technical lessons/mistakes I've picked up along the way.
+It's all [open-source, and you can view the code here](https://github.com/AndreasThinks/ai-at-risk). I'll be honest, it is a bit of a monster: there are quite a few *vibes* behind this codebase, and in places, it's all gotten a bit out of hand. But I've learned a fair bit, and I think it's kind of cool. So read on to hear the tale of my own little monster of a benchmark, why I think we need more language models playing games, and some technical lessons/mistakes I've picked up along the way.
 
 :::{.column-page}
 ![](assets/overview.png)
 :::
 
 ## Wait, what?
-In AI at Risk, four LLM-powered agents compete in the classic (and not actually very-good) board game [Risk](https://en.wikipedia.org/wiki/Risk_\(game\)). The whole thing is actually running on a FastAPI server, which handles both the game state (with endpoints for taking turns, sending messages, etc.) and coordinating the agents, with each agent being prompted to take an action whenever it's their turn - each option, like placing armies, is actually a tool made available to the agent via MCP (thanks to the very nifty [fastapi_mcp library](https://github.com/tadata-org/fastapi_mcp)). There are a few helper functions and scaffolding to help present the game status to each agent as the game progresses (more on this later), but the logic running the game is actually rather simple.
+In AI at Risk, four LLM-powered agents compete in the classic (and not actually very-good) board game [Risk](https://en.wikipedia.org/wiki/Risk_\(game\)). The whole thing is actually running on a single Python server, which handles both the game state (with endpoints for taking turns, sending messages, etc.) and coordinating the agents, with each agent being prompted to take an action whenever it's their turn - each option, like placing armies, is actually a tool made available to the agent via MCP (thanks to the very nifty [fastapi_mcp library](https://github.com/tadata-org/fastapi_mcp)). There are a few helper functions and scaffolding to help present the game status to each agent as the game progresses (more on this later), but the logic running the game is actually rather simple.
 
 Each agent is then assigned a character ranging from the serious (Sun Tzu) to the very silly ("a risk meeple 🧩"), at which point they'll scheme, strategize, send each other messages, backstab, and generally recreate all the nefarious family fun you've probably had to suffer through at some once-upon-a-time family Christmas gathering. Then, an hour later (because Risk lasts a million years and I don't have infinite money), the game ends, a winner is called, and we get to see _some stats_.
 
-By itself, it's really rather fun: Alexander will duke it out with Cleopatra, Boris Johnson, and Spock for control of Northern America, and that's just fun. But the really nifty bit is that we randomly assign a model to each character at the start of each and every game... and thanks to [the magic of randomisation](https://matheusfacure.github.io/python-causality-handbook/landing-page.html), we can pick out  interesting behaviours that seem to be driven by the underlying model. In essence, we've created a Randomised Control Trial (with a tiny sprinkling of Battle Royale).
+::: {.column-margin}
+![](assets/sample_1.png)
+:::
 
+By itself, it's really rather fun: Alexander will duke it out with Cleopatra, Boris Johnson, and Spock for control of Northern America, exchanging diplomatic missives and barbs like the pilot for some long lost Sci-Fi show that never quite made the grade. But the really nifty bit is that we randomly assign a model to each character at the start of each and every game... and thanks to [the magic of randomisation](https://matheusfacure.github.io/python-causality-handbook/landing-page.html), we can pick out  interesting behaviours that seem to be driven by the underlying model. In essence, we've created a Randomised Control Trial (with a tiny sprinkling of Battle Royale).
 
 ### So what does it tell us?
-Well, let's look at the figures. Since I started this silly experiment a couple of weeks ago, we've had 264 hour-long games of Risk. 10 models competed, each playing around 30 games each, with the exception of [Glm 4-5](https://openrouter.ai/z-ai/glm-4.5) and the mysterious [Horizon Alpha](https://openrouter.ai/openrouter/horizon-alpha), which were added after their release (we slightly over-weight new models to ensure they get a chance to play). And what have we learnt?
+Well, let's look at the figures. Since I started this silly experiment a couple of weeks ago, we've had 264 hour-long games of Risk. 10 models competed, each playing around 30 games each, with the exception of [GLM-4.5](https://openrouter.ai/z-ai/glm-4.5) and the mysterious [Horizon Alpha](https://openrouter.ai/openrouter/horizon-alpha), which were added after their release (we slightly over-weight new models to ensure they get a chance to play). And what have we learnt?
 
 ![](assets/benchmark.png)
 
-You'll probably notice I haven't got the really big boy models on here: they're not cheap, and there is a limit to how much of my paycheck I'm willing to splurge letting LLM models have more fun me. The other thing you'll probably notice? _Horizon Alpha is kicking some serious ass_. This is a "cloaked" model, dumped on OpenRouter by some mysterious lab to see how it plays, and well, it plays pretty darn well.
+You'll probably notice I haven't got the really big boy models on here: they're not cheap, and there is a limit to how much of my paycheck I'm willing to splurge letting LLM models have more fun than me. The other thing you'll probably notice? _Horizon Alpha is kicking some serious ass_. This is a "cloaked" model, dumped on OpenRouter by some mysterious lab to see how it plays, and well, it plays pretty darn well.
 
-The other models perform *broadly* as you'd expect off more general benchmarks, although you do notice some weird quirks: Mistral Nemo just seems totally incapable of using the tools for some reason I can't quite diagnose, and Grok-3-mini is just... doing something weird (I have a sneaking suspicion these might be driven by some combination of OpenRouter and tool use.) All in all, Risk looks to mostly work as a basic benchmark: some models do well, and others struggle. But the really cool bit isn't when you watch whether models win... it's when you watch _how they play_.
+The other models perform *broadly* as you'd expect on more general benchmarks, although you do notice some weird quirks: Mistral Nemo just seems totally incapable of using the tools for some reason I can't quite diagnose, and Grok-3-mini is just... doing something weird (I have a sneaking suspicion these might be driven by some combination of OpenRouter and tool use.) All in all, Risk looks to mostly work as a basic benchmark: some models do well, and others struggle. But the really cool bit isn't when you watch whether models win... it's when you watch _how they play_.
 
-To try and figure that out, we can take a look at model *preferences* - how likely they are to take use a particular tool on any one turn. 
+To try and figure that out, we can take a look at model *preferences* - how likely they are to use a particular tool on any one turn.
 
 ![Model preferences per turn](assets/per_game.png)
 
-To help figure out what's also going on (and also because 💫statistics💫), I've pulled out the 95% confidence intervals. It's not the most robust approach in the world, but it lets us see which models seem to be behaving meaningfully differently... and we do actually see some interesting bits. Horizon Alpha isn't just one hell of a Risk player: it's a violent maurauder that attacks every chance it bloody gets. 
+To help figure out what's also going on (and also because 💫statistics💫), I've pulled out the 95% confidence intervals. It's not the most robust approach in the world, but it lets us see which models seem to be behaving meaningfully differently... and we do actually see some interesting bits. Horizon Alpha isn't just one hell of a Risk player: it's a violent marauder that attacks every chance it bloody gets. 
 
-::: {.column-page layout-ncol=2}
-![Messages per Turn](assets/messages.png)
+Looking beyond messages, you see some other interesting tidbits: Qwen-3 isn't just a committed pacifist, it's also an utter chatterbox which messages other players at every opportunity it gets.
 
-![Attacks per Turn](assets/attacks.png)
+::: {.column-margin}
+![](assets/sample_2.png)
 :::
 
-Looking beyond messages, you seem some other ineresting tidbits: Qwen-3 isn't just a commited pacifist, it's also an utter chatterbox which messages other players at every opportunity it gets.
-
-Now, some of this is likely just a reflection around how the models are trained, and their capacity with instruction following and tool-use...but it's also clearly affectign how they behave. So sure, maybe it's a model quirk influencing what the stochastic parrot is repeating... but also, it's kind of affecting how they "*think*". Which is kind of nifty: if a model plays risk as some psycopathic Wisigoth, I kind of want to know about it. So I think more people should run this sort of thing (I'm looking at you, [AISI](https://www.aisi.gov.uk/).)
+Now, some of this is likely just a reflection around how the models are trained, and their capacity with instruction following and tool-use...but it's also clearly affectign how they behave. So sure, maybe it's a model quirk influencing what the stochastic parrot is repeating... but also, it's kind of affecting how they "*think*". Which is kind of nifty: if a model plays risk as some psychopathic visigoth, I kind of want to know about it. So I think more people should run this sort of thing (I'm looking at you, [AISI](https://www.aisi.gov.uk/).)
 
 ## Games make great benchmarks: make more of them
 At the risk of sounding like an utter tit, a good game contains multitudes. It's visual, it's artistic, it's systematic, it's full of choices and opportunities. Whether or not you expect AGI to be around the corner, we should all recognize that intelligence is a complex and fickle thing: taking a single measure of quality, a single binary for intelligence, is blinding yourself to the endless variety of options we're presented with in each and every second of our lives. We should make AI play games: we'll learn a lot about them. And hell, one day they might just have fun.
@@ -68,13 +77,13 @@ And you know what? I think you will too. Remember [Blaseball](https://en.wikiped
 ## Why this is hard
 There is a teeny, insignificant downside. I was really hoping this would be easy... but good games aren't simple. And it turns out this all got way harder than I expected.
 
-#### Scaffolding context of games
+#### Context and scaffolding in games
 
-If you have a friend who is "the board games person" in your friend group, then you'll be familiar with teh sinking feeling you get in your stomach when they pull out yet another gigantic, unfamiliar box filled with endless cardboard macguffins. I picked Risk because I figured it was the most simple of the complex games: it has scheming and diplomacy, but most you point at some maps and roll some die. There are cards, and dice, and that's kind of it.
+If you have a friend who is "the board games person" in your friend group, then you'll be familiar with the sinking feeling you get in your stomach when they pull out yet another gigantic, unfamiliar box filled with endless cardboard macguffins. I picked Risk because I figured it was the simplest of the complex games: it has scheming and diplomacy, but mostly you point at some maps and roll some die. There are cards, and dice, and the rest mostly sorts itself out.
 
-It turns out that is a _huge_ amount of context.
+It turns out that is a _huge_ amount of context, and it's really hard to convey *all that stuff*.
 
-It's also really hard to convey all of that *stuff*. I've not picked vision models (this is has already been a silly expensive week for a silly expensive side project), and conveying the status of each country, piece, and player is a lot of info to dump in text. And LLMs are _bad_ at that: drawing meaning from a bunch of numbers and data is really not where they shine, and it shows.
+I've not picked vision models (this is has already been a silly expensive week for a silly expensive side project), and conveying the status of each country, piece, and player is a lot of info to dump in text. And LLMs are _bad_ at that: drawing meaning from a bunch of numbers and data is really not where they shine, and it shows.
 
 The answer, as in [Claude Plays Pokemon](https://github.com/davidhershey/ClaudePlaysPokemonStarter), is to build "scaffolding": functions that help your models parse, play, and interact with the game (like letting it simply say "go to square A4" rather than having to push the buttons to navigate their tiny character across a screen). And it's tempting to [expand on those scaffolds](https://github.com/cicero225/llm_pokemon_scaffold), adding more and more shortcuts, so your agents can use as much of their intelligence "bandwidth" as possible _thinking_ rather than just processing how to play.
 
@@ -82,12 +91,18 @@ But that's part of the game, right? Figuring out new concepts and systems is a k
 
 There's a linked problem, though. Agents are still a pretty new thing. Building agents is hard, and the tools are pretty rough. And as far as LLMs are concerned, they may as well not exist.
 
-#### MCP, Tools, and Memory: Multi-Agent Frameworks Were Invented Yesterday
+::: {layout-ncol=2}
+![](assets/sample_3.png)
+
+![](assets/sample_4.png)
+:::
+
+#### MCP, Tools, Memory and Multi-Agent Frameworks: It was all invented yesterday
 
 A big part of what drove me to build this was to try out new tools: I wanted to build an MCP server and test out multi-agent orchestration.
 MCP is, in theory, quite a simple protocol: your server has a certain structure, and LLMs know how to call it. Turns out, there is a fair bit more to it, and loads I just didn't know. How do they even know what tools they can ask for? What structure should their outputs be? How do they actually make that connection? All this stuff can get pretty complicated, and the open-source ecosystem is growing, but young.
 
-And you know who definitely doesn't know how these things work? Your vibe coding assistant. Anybody who has tried vibe-coding on new and emerging technologies will be familiar with models hallucinating features and APIs, but the fact that these tools are just starting to be featured in the training data, and that they're so similar to existing tooling, led to some real weariness. [**Please, let's all adopt llms.txt already**.](https://github.com/AnswerDotAI/llms-txt)
+And you know who definitely doesn't know how these things work? Your vibe coding assistant. Anybody who has tried vibe-coding on new and emerging technologies will be familiar with models hallucinating features and APIs, but the fact that these tools are just starting to be featured in the training data, and that they're so similar to existing tooling, led to some real weariness - models *think* they know how to build an MCP server, up until they spiral into hallucinated madness. [**Please, let's all adopt llms.txt already**.](https://github.com/AnswerDotAI/llms-txt)
 
 I was really surprised by how much the LLM/agent orchestration ecosystem still feels nascent. OpenAI may have [a fancy Swarm protocol](https://github.com/openai/swarm), but at least to me, it all felt a little theoretical. I was expecting to be stumbling on excellent tutorials for this stuff, and there really aren't _that_ many.
 
