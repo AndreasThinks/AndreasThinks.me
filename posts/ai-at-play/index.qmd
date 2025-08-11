@@ -26,6 +26,17 @@ Earlier this year, Anthropic treated us to the delightful [Claude Plays Pokemon]
 Now, I don't work at Anthropic (and I definitely don't have as many credits as they do), but I do love games, and think they tell us something about the people playing them. So, inspired by Claude Plays Pokemon, I've built my own little experiment in LLM gaming: **[AIs at Risk](https://ai-at-play.online/)**, a cute, silly little benchmark that I think _might_ just tell us something meaningful.
 :::
 
+::: {.callout-note collapse="true"}
+
+## WHY2025 talk slides
+
+**This was a lightning talk at [WHY2025](https://why2025.org/)!** The slides are available below
+
+{{< revealjs "assets/presentation.html" >}}
+
+:::
+
+
 It's all [open-source, and you can view the code here](https://github.com/AndreasThinks/ai-at-risk). I'll be honest, it is a bit of a monster: there are quite a few *vibes* behind this codebase, and in places, it's all gotten a bit out of hand. But I've learned a fair bit, and I think it's kind of cool. So read on to hear the tale of my own little monster of a benchmark, why I think we need more language models playing games, and some technical lessons/mistakes I've picked up along the way.
 
 :::{.column-page}
