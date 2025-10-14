@@ -2,7 +2,7 @@
 title: "Public Sector Innovation - Module Guide"
 ---
 
-![](images/newspeak_house_logo.png){width=250px}
+![](images/newspeak_house_logo.png){width=250px style="background-color: white; padding: 15px; border-radius: 8px;"}
 
 This page contains the slide content for the Newspeak House [Public Sector Innovation module](https://docs.google.com/document/d/1qwU0hkx4lfD_NU5VuI5oxIhhxwV0WIBXCDrmQc02CTA/edit?usp=sharing).
 

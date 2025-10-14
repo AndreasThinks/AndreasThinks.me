@@ -18,7 +18,7 @@ format:
 
 # Evaluation & Impact in Civic Technology
 
-> *“If we can’t measure what matters, we’ll keep funding what’s loudest.”*
+> *"If we can't measure what matters, we'll keep funding what's loudest."*
 
 ---
 
@@ -30,8 +30,8 @@ format:
 - Translates innovation into **policy adoption**.
 
 ::: notes
-Open by asking: “Who here has had to prove impact to a funder or policymaker?”
-Emphasize that evaluation is about *learning* as much as *accountability*.
+Open by asking: "Who here has had to prove impact to a funder or policymaker?"
+Emphasize evaluation as *learning* + *accountability*.
 :::
 
 ---
@@ -40,13 +40,14 @@ Emphasize that evaluation is about *learning* as much as *accountability*.
 
 **Evaluation ≠ Reporting**
 
-| Reporting | Evaluation |
-|------------|-------------|
+| Reporting   | Evaluation              |
+| ----------- | ----------------------- |
 | What we did | What difference it made |
 
 **Levels:**
-- **Outputs** → activities or reach  
-- **Outcomes** → behavioural or system change  
+
+- **Outputs** → activities or reach
+- **Outcomes** → behavioural or system change
 - **Impact** → long-term societal effects
 
 > *Evaluation is the bridge from prototype → policy.*
@@ -57,33 +58,97 @@ Emphasize that evaluation is about *learning* as much as *accountability*.
 
 **Goal:** Understand if outcomes happened *because of* your intervention.
 
-- Correlation ≠ causation  
-- Counterfactuals matter — *what if the program didn’t exist?*
+- Correlation ≠ causation
+- Counterfactuals matter — *what if the program didn't exist?*
 
-**Example:**  
+**Example:**
 A civic app increases volunteer sign-ups — but so did a local festival that month. Which caused it?
+
+---
+
+## Designing Randomness In
+
+> For credible evaluation, you either **design randomness in** or **find it later**.
+
+**Prospective approaches (experimental):**
+
+- **RCTs**: randomized treatment/control groups
+- **A/B tests**: feature flags, phased rollouts
+- **Pre-registration**: analysis plans, power calculations, balance checks
+
+**Visual flow:**
+
+```
+Design Phase → Random Assignment → Measure Outcomes → Compare
+```
+
+**Key advantage:** Strong causal claims because you control the assignment
+
+::: notes
+Emphasize: if you can randomize, do it. It's the gold standard.
+:::
+
+---
+
+## Finding Randomness Later
+
+**Retrospective approaches (quasi-experimental):**
+
+- **Natural experiments**: staggered rollouts across councils
+- **Regression discontinuity**: eligibility thresholds (age, geography)
+- **Instrumental variables**: policy timing, external shocks
+
+**Visual flow:**
+
+```
+Existing Variation → Identify It → Exploit It → Measure → Compare
+```
+
+**Sanity checks needed:** parallel trends, placebo tests, robustness checks
+
+::: notes
+When randomization isn't possible, look for "as-if random" variation in the real world.
+:::
 
 ---
 
 ## Evaluation Approaches
 
-| Type | Description | Pros | Cons |
-|------|--------------|------|------|
-| **RCTs** | Randomly assign treatment/control | Strong causal inference | Costly, sometimes unethical |
-| **Quasi-experimental** | Natural variation or rollout timing | Often feasible | Harder to prove causality |
-| **Observational** | Compare existing data patterns | Easy, fast | Prone to bias |
-| **Qualitative / Participatory** | Interviews, ethnography, co-design | Context-rich | Hard to generalize |
+| Type                            | Description                         | Pros                    | Cons                        |
+| ------------------------------- | ----------------------------------- | ----------------------- | --------------------------- |
+| **RCTs**                        | Randomly assign treatment/control   | Strong causal inference | Costly, sometimes unethical |
+| **Quasi-experimental**          | Natural variation or rollout timing | Often feasible          | Harder to prove causality   |
+| **Observational**               | Compare existing data patterns      | Easy, fast              | Prone to bias               |
+| **Qualitative / Participatory** | Interviews, ethnography, co-design  | Context-rich            | Hard to generalize          |
 
 ::: notes
-Ask: “Which methods do you think most civic tech orgs *actually* use — and why?”
+Ask: "Which methods do you think most civic tech orgs *actually* use — and why?"
+:::
+
+---
+
+## Choosing Your Method: Decision Tree
+
+```mermaid
+graph TD
+    A[Can you randomize assignment?] -->|Yes| B[RCT / A-B Test]
+    A -->|No| C[Is there natural variation?]
+    C -->|Yes| D[Quasi-experimental<br/>Natural experiment, RD, IV]
+    C -->|No| E[Strong theory + controls?]
+    E -->|Yes| F[Observational<br/>with caution]
+    E -->|No| G[Qualitative / Mixed Methods<br/>Focus on mechanism]
+```
+
+::: notes
+Walk through the tree with a real example from the class.
 :::
 
 ---
 
 ## Case Study: Sure Start (UK)
 
-- Early evaluations: little measurable impact.  
-- Long-term follow-ups: strong benefits in education and health.  
+- Early evaluations: little measurable impact.
+- Long-term follow-ups: strong benefits in education and health.
 - Demonstrates **value of persistence and longitudinal data.**
 
 **Lesson:** Good programs take time to show impact.
@@ -94,8 +159,8 @@ Ask: “Which methods do you think most civic tech orgs *actually* use — and w
 
 ## Case Study: FixMyStreet (mySociety)
 
-- Evaluated via **behavioural data** (reports before/after launch).  
-- Found sustained increases in citizen engagement.  
+- Evaluated via **behavioural data** (reports before/after launch).
+- Found sustained increases in citizen engagement.
 - **Method:** Quasi-experimental (variation by council rollout).
 
 **Lesson:** Behavioural data can be powerful when context is understood.
@@ -106,8 +171,8 @@ Ask: “Which methods do you think most civic tech orgs *actually* use — and w
 
 ## Case Study: CitizenLab
 
-- Combines **platform analytics (quant)** + **partner interviews (qual)**.  
-- Found: engagement increases when participants see visible outcomes.  
+- Combines **platform analytics (quant)** + **partner interviews (qual)**.
+- Found: engagement increases when participants see visible outcomes.
 - Illustrates **value of mixed methods**.
 
 [CitizenLab Impact Report →](https://www.citizenlab.co)
@@ -116,8 +181,8 @@ Ask: “Which methods do you think most civic tech orgs *actually* use — and w
 
 ## Case Study: D.A.R.E. (US)
 
-- Popular anti-drug education program.  
-- Evaluations showed **no measurable effect** on drug use.  
+- Popular anti-drug education program.
+- Evaluations showed **no measurable effect** on drug use.
 - Yet widely funded for decades.
 
 **Lesson:** Popular ≠ effective — evidence must challenge assumptions.
@@ -128,32 +193,154 @@ Ask: “Which methods do you think most civic tech orgs *actually* use — and w
 
 ## Quantitative vs Qualitative
 
-| Quantitative | Qualitative |
-|---------------|-------------|
-| How much, how often | Why and how |
-| Numbers, patterns | Stories, meaning |
-| Scale | Context |
+| Quantitative        | Qualitative      |
+| ------------------- | ---------------- |
+| How much, how often | Why and how      |
+| Numbers, patterns   | Stories, meaning |
+| Scale               | Context          |
 
-> **Best practice:** Combine both —  
+> **Best practice:** Combine both —
 > Quant shows *pattern*, Qual explains *mechanism.*
+
+---
+
+## Theory of Change: The Foundation
+
+**Visual framework:**
+
+```
+Inputs → Activities → Outputs → Outcomes → Impact
+  ↓         ↓           ↓          ↓          ↓
+Staff,   Workshops,  # People   Behaviour  Long-term
+Funding  Platforms   Reached    Change     Societal
+                                           Change
+```
+
+**Example (civic tech):**
+
+- **Input:** Developer time, funding
+- **Activity:** Build reporting platform
+- **Output:** 1,000 reports submitted
+- **Outcome:** Council response time ↓ 40%
+- **Impact:** Improved local accountability
+
+::: notes
+Always start with theory of change before choosing metrics.
+:::
 
 ---
 
 ## Designing Meaningful Metrics
 
-**SMART** → Specific, Measurable, Achievable, Relevant, Time-bound.
+**Principles (beyond SMART):**
 
-Avoid **vanity metrics**:
-- App downloads ≠ engagement  
-- Workshops held ≠ behaviour change  
+- **Decision-linked**: if the metric moves, someone acts
+- **Behavioural**: measure revealed behaviours, not just attitudes
+- **Attributable**: plausibly tied to your intervention (via design/ID)
+- **Affordable**: feasible to collect reliably
 
-✅ **Better metrics:**
-- % of residents using civic data tools to contact councils  
-- % of participants reporting improved civic confidence  
+✅ **Examples:**
+
+- % of residents who resolve an issue via the platform (not just reports)
+- Response-time distribution by council before/after tool launch
+- Evidence of **policy uptake**: citations, budget lines, guidelines changed
 
 ::: notes
-Emphasize “outcomes not outputs” — behaviour change, policy shifts, etc.
+Push "outcomes, not outputs"; tie each metric to a use-case/decision.
 :::
+
+---
+
+## Finding the Right Metrics
+
+1. Start from **theory of change** → map inputs → activities → outputs → outcomes → impact
+2. Ask: *"If it worked, what would be observably different in 3, 6, 12 months?"*
+3. Prioritise **leading indicators** (early, sensitive) + a few **lagging indicators** (durable)
+
+**Sources:**
+
+- Product logs / admin data
+- Surveys (pre/post, panels)
+- Open data / FOI
+- Policy documents / Hansard / guidance changes
+
+---
+
+## Data Quality Challenges
+
+**Common issues:**
+
+- **Missingness**: incomplete records, dropout
+- **Duplicates**: same user, multiple accounts
+- **Bots & spam**: automated submissions
+- **Channel shifts**: users move between platforms
+- **Definition drift**: what counts as "engagement" changes over time
+
+**Mitigations:**
+
+- Instrument events early; pilot measures
+- Pre-register core outcomes; freeze queries
+- Track adoption & exposure (who actually saw the "treatment"?)
+
+---
+
+## Design & Ethics Challenges
+
+**Key considerations:**
+
+- **Ethics & consent**: DPIA, minimal data collection, retention policies
+- **Statistical power**: enough N to detect plausible effects (MDE thinking)
+- **Exposure tracking**: who actually experienced the intervention?
+- **Timing**: seasonality, external events affecting baseline
+
+**Best practices:**
+
+- Get ethical approval early
+- Calculate required sample sizes upfront
+- Document all design decisions
+- Plan for sensitivity analyses
+
+---
+
+## Communicating Findings
+
+**Why it matters:** Evidence without communication ≈ no impact.
+
+**Compare these:**
+
+::: {.columns}
+::: {.column width="50%"}
+❌ **Weak communication:**
+
+"500 people used our app and we got positive feedback."
+:::
+
+::: {.column width="50%"}
+✅ **Strong communication:**
+
+"Digital reporting reduced council response times by 40% (from 14 to 8 days, p<0.01, RCT with n=20 councils, 6-month follow-up)."
+:::
+:::
+
+**Key elements:** Outcome + magnitude + uncertainty + method + context
+
+---
+
+## Audience-First Packaging
+
+**Tailor your message:**
+
+- **Policymakers/Funders:** 2–3 page brief, counterfactual logic, cost/benefit, timing
+- **Practitioners:** playbooks, checklists, implementation notes
+- **Public/Media:** plain-language summary, visuals, examples
+
+**Do better than the PDF:**
+
+- One-pager + **open dataset** + reproducible notebook
+- **Accessible dashboards** with methods appendix
+- Share failures + "what we'd change next time"
+
+**Checklist:** headline, context, method (in one paragraph), 3 findings, limits, action items
 
 ---
 
@@ -161,60 +348,71 @@ Emphasize “outcomes not outputs” — behaviour change, policy shifts, etc.
 
 - Policymakers respond to **robust, communicable evidence**.
 - Civic tech influences policy when:
+
   - Evaluation aligns with **timing and priorities**.
-  - There’s a clear **theory of change**.
+  - There's a clear **theory of change**.
   - Results are **framed in actionable terms**.
 
-**Example:**  
-“Digital participation improves local accountability” > “Users liked our app.”
+**Example:**
+"Digital participation improves local accountability" > "Users liked our app."
 
 ---
 
 ## Common Pitfalls
 
-- Evaluating too early or too narrowly.  
-- Over-attributing success to tech layer.  
-- Ignoring social/economic context.  
+- Evaluating too early or too narrowly.
+- Over-attributing success to tech layer.
+- Ignoring social/economic context.
 - Treating evaluation as funder compliance, not learning.
 
 ---
 
-## Discussion: Designing Your Evaluation
+## Project: Design Your Evaluation
 
-🗣 **Group activity**
+**Task (in groups of 2-3):**
 
-1. Pick a civic-tech or policy project you know.  
-2. How could it *prove* or *improve* its impact?  
-3. What would be a good **metric** or **method**?
+1. Pick a civic-tech/policy project (real or planned)
+2. Sketch the **theory of change** (inputs → impact)
+3. Propose **one key metric** + **one identification strategy**
+   - Where's the randomness/variation?
+4. Draft **how you'll communicate** results
+   - Who's the audience? What format?
 
-> Share 2–3 examples with the group.
+**Deliverables:**
+
+- 5-minute presentation to class
+- One-page evaluation plan (template provided)
+
+::: notes
+Give 20 minutes for group work, then 2-3 groups present.
+:::
 
 ---
 
 ## Key Takeaways
 
-- Evaluation helps civic tech move from **experiment → evidence → policy**.  
-- Focus on **causality**: show not just what changed, but *why*.  
-- Combine **quant + qual**, rigor + storytelling.  
-- **Start small, but start measuring.**
+- Evaluation moves civic tech from **experiment → evidence → policy**.
+- You need **randomness or strong quasi-ID** for credible impact.
+- **Good metrics** are decision-linked and feasible to measure.
+- **Communication** is part of the science.
 
-> *“What gets measured gets improved — and what gets understood gets funded.”*
+> *"What gets measured gets improved — and what gets understood gets funded."*
 
 ---
 
 ## Further Reading
 
-- **Andrew Leigh**, *Randomistas: How Radical Researchers Changed the World*  
-- **Nesta**, *Standards of Evidence*  
-- **mySociety Research Reports*  
-- **Institute for Fiscal Studies**, *Sure Start Evaluations*  
+- **Andrew Leigh**, *Randomistas: How Radical Researchers Changed the World*
+- **Nesta**, *Standards of Evidence*
+- **mySociety Research Reports*
+- **Institute for Fiscal Studies**, *Sure Start Evaluations*
 - **What Works Digital**, *Evaluation Guidance for Digital Services (2024)*
 
 ---
 
 ## Q&A
 
-- How could you apply these approaches in your projects?  
-- What’s one evaluation challenge you’ve faced?
+- How could you apply these approaches in your projects?
+- What's one evaluation challenge you've faced?
 
 ---
