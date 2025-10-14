@@ -7,7 +7,8 @@ format:
   html:
     toc: true
     toc-title: "On this page"
-    theme: cosmo
+    theme: cyborg
+    css: ../../styles.css
     page-layout: article
 ---
 
