@@ -129,7 +129,7 @@ Ask: "Which methods do you think most civic tech orgs *actually* use — and why
 
 ## Choosing Your Method: Decision Tree
 
-```mermaid
+```{mermaid}
 graph TD
     A[Can you randomize assignment?] -->|Yes| B[RCT / A-B Test]
     A -->|No| C[Is there natural variation?]
@@ -153,7 +153,7 @@ Walk through the tree with a real example from the class.
 
 **Lesson:** Good programs take time to show impact.
 
-[Sure Start Impact Study →](https://ifs.org.uk/publications/sure-start-long-term-benefits)
+[Sure Start Impact Study →](https://ifs.org.uk/news/sure-starts-wide-ranging-and-long-lasting-benefits-highlight-impact-integrated-early-years)
 
 ---
 
@@ -175,7 +175,7 @@ Walk through the tree with a real example from the class.
 - Found: engagement increases when participants see visible outcomes.
 - Illustrates **value of mixed methods**.
 
-[CitizenLab Impact Report →](https://www.citizenlab.co)
+[CitizenLab Impact Report →](https://www.impact.citizenlab.co/)
 
 ---
 
@@ -188,7 +188,6 @@ Walk through the tree with a real example from the class.
 **Lesson:** Popular ≠ effective — evidence must challenge assumptions.
 
 [D.A.R.E. Evaluation →](https://www.drugabuse.gov/publications/preventing-drug-use-among-children-adolescents/chapter-3-prevention-intervention-programs/)
-
 ---
 
 ## Quantitative vs Qualitative
@@ -404,15 +403,8 @@ Give 20 minutes for group work, then 2-3 groups present.
 
 - **Andrew Leigh**, *Randomistas: How Radical Researchers Changed the World*
 - **Nesta**, *Standards of Evidence*
-- **mySociety Research Reports*
+- **mySociety Research Reports**
 - **Institute for Fiscal Studies**, *Sure Start Evaluations*
 - **What Works Digital**, *Evaluation Guidance for Digital Services (2024)*
-
----
-
-## Q&A
-
-- How could you apply these approaches in your projects?
-- What's one evaluation challenge you've faced?
 
 ---
