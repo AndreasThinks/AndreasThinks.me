@@ -1,0 +1,220 @@
+---
+title: "Evaluation & Impact in Civic Technology"
+subtitle: "Newspeak House 2025"
+author: "Andreas Varotsis"
+title-slide-attributes:
+  data-background-image: ../images/newspeak_house_logo.png
+  data-background-size: 10%
+  data-background-position: bottom
+format:
+  revealjs:
+    incremental: true
+    chalkboard: true
+    theme: [default, ../newspeak-theme.scss]
+    logo: ../images/newspeak_house_logo.png
+    footer: |
+      ![](../images/newspeak_house_logo.png){height=40px}
+---
+
+# Evaluation & Impact in Civic Technology
+
+> *“If we can’t measure what matters, we’ll keep funding what’s loudest.”*
+
+---
+
+## Why Evaluate?
+
+- Builds **credibility and trust** — essential in civic tech and policy.
+- Turns **stories into strategy** — bridges activism and evidence.
+- Ensures **resources go where impact is real**, not assumed.
+- Translates innovation into **policy adoption**.
+
+::: notes
+Open by asking: “Who here has had to prove impact to a funder or policymaker?”
+Emphasize that evaluation is about *learning* as much as *accountability*.
+:::
+
+---
+
+## What Counts as Evaluation?
+
+**Evaluation ≠ Reporting**
+
+| Reporting | Evaluation |
+|------------|-------------|
+| What we did | What difference it made |
+
+**Levels:**
+- **Outputs** → activities or reach  
+- **Outcomes** → behavioural or system change  
+- **Impact** → long-term societal effects
+
+> *Evaluation is the bridge from prototype → policy.*
+
+---
+
+## Causality 101
+
+**Goal:** Understand if outcomes happened *because of* your intervention.
+
+- Correlation ≠ causation  
+- Counterfactuals matter — *what if the program didn’t exist?*
+
+**Example:**  
+A civic app increases volunteer sign-ups — but so did a local festival that month. Which caused it?
+
+---
+
+## Evaluation Approaches
+
+| Type | Description | Pros | Cons |
+|------|--------------|------|------|
+| **RCTs** | Randomly assign treatment/control | Strong causal inference | Costly, sometimes unethical |
+| **Quasi-experimental** | Natural variation or rollout timing | Often feasible | Harder to prove causality |
+| **Observational** | Compare existing data patterns | Easy, fast | Prone to bias |
+| **Qualitative / Participatory** | Interviews, ethnography, co-design | Context-rich | Hard to generalize |
+
+::: notes
+Ask: “Which methods do you think most civic tech orgs *actually* use — and why?”
+:::
+
+---
+
+## Case Study: Sure Start (UK)
+
+- Early evaluations: little measurable impact.  
+- Long-term follow-ups: strong benefits in education and health.  
+- Demonstrates **value of persistence and longitudinal data.**
+
+**Lesson:** Good programs take time to show impact.
+
+[Sure Start Impact Study →](https://ifs.org.uk/publications/sure-start-long-term-benefits)
+
+---
+
+## Case Study: FixMyStreet (mySociety)
+
+- Evaluated via **behavioural data** (reports before/after launch).  
+- Found sustained increases in citizen engagement.  
+- **Method:** Quasi-experimental (variation by council rollout).
+
+**Lesson:** Behavioural data can be powerful when context is understood.
+
+[mySociety Research →](https://research.mysociety.org)
+
+---
+
+## Case Study: CitizenLab
+
+- Combines **platform analytics (quant)** + **partner interviews (qual)**.  
+- Found: engagement increases when participants see visible outcomes.  
+- Illustrates **value of mixed methods**.
+
+[CitizenLab Impact Report →](https://www.citizenlab.co)
+
+---
+
+## Case Study: D.A.R.E. (US)
+
+- Popular anti-drug education program.  
+- Evaluations showed **no measurable effect** on drug use.  
+- Yet widely funded for decades.
+
+**Lesson:** Popular ≠ effective — evidence must challenge assumptions.
+
+[D.A.R.E. Evaluation →](https://www.drugabuse.gov/publications/preventing-drug-use-among-children-adolescents/chapter-3-prevention-intervention-programs/)
+
+---
+
+## Quantitative vs Qualitative
+
+| Quantitative | Qualitative |
+|---------------|-------------|
+| How much, how often | Why and how |
+| Numbers, patterns | Stories, meaning |
+| Scale | Context |
+
+> **Best practice:** Combine both —  
+> Quant shows *pattern*, Qual explains *mechanism.*
+
+---
+
+## Designing Meaningful Metrics
+
+**SMART** → Specific, Measurable, Achievable, Relevant, Time-bound.
+
+Avoid **vanity metrics**:
+- App downloads ≠ engagement  
+- Workshops held ≠ behaviour change  
+
+✅ **Better metrics:**
+- % of residents using civic data tools to contact councils  
+- % of participants reporting improved civic confidence  
+
+::: notes
+Emphasize “outcomes not outputs” — behaviour change, policy shifts, etc.
+:::
+
+---
+
+## Linking Evaluation to Policy Impact
+
+- Policymakers respond to **robust, communicable evidence**.
+- Civic tech influences policy when:
+  - Evaluation aligns with **timing and priorities**.
+  - There’s a clear **theory of change**.
+  - Results are **framed in actionable terms**.
+
+**Example:**  
+“Digital participation improves local accountability” > “Users liked our app.”
+
+---
+
+## Common Pitfalls
+
+- Evaluating too early or too narrowly.  
+- Over-attributing success to tech layer.  
+- Ignoring social/economic context.  
+- Treating evaluation as funder compliance, not learning.
+
+---
+
+## Discussion: Designing Your Evaluation
+
+🗣 **Group activity**
+
+1. Pick a civic-tech or policy project you know.  
+2. How could it *prove* or *improve* its impact?  
+3. What would be a good **metric** or **method**?
+
+> Share 2–3 examples with the group.
+
+---
+
+## Key Takeaways
+
+- Evaluation helps civic tech move from **experiment → evidence → policy**.  
+- Focus on **causality**: show not just what changed, but *why*.  
+- Combine **quant + qual**, rigor + storytelling.  
+- **Start small, but start measuring.**
+
+> *“What gets measured gets improved — and what gets understood gets funded.”*
+
+---
+
+## Further Reading
+
+- **Andrew Leigh**, *Randomistas: How Radical Researchers Changed the World*  
+- **Nesta**, *Standards of Evidence*  
+- **mySociety Research Reports*  
+- **Institute for Fiscal Studies**, *Sure Start Evaluations*  
+- **What Works Digital**, *Evaluation Guidance for Digital Services (2024)*
+
+---
+
+## Q&A
+
+- How could you apply these approaches in your projects?  
+- What’s one evaluation challenge you’ve faced?
+
+---

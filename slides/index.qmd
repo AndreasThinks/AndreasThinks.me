@@ -1,0 +1,35 @@
+---
+title: "Public Sector Innovation - Module Guide"
+---
+
+![](images/newspeak_house_logo.png){width=250px}
+
+This page contains the slide content for the Newspeak House [Public Sector Innovation module](https://docs.google.com/document/d/1qwU0hkx4lfD_NU5VuI5oxIhhxwV0WIBXCDrmQc02CTA/edit?usp=sharing).
+
+## Module Slides
+
+### Core Module Content
+
+- **[Delivering Innovation in Public Institutions](intro/intro.qmd)**  
+  Introduction to the module covering implementation challenges, delivery obstacles, and how to navigate pushback when implementing innovation in public sector organizations.
+
+### Evaluation Sessions
+
+- **[Evaluation & Impact in Civic Technology](intro_to_evaluation/index.qmd)**  
+  Introduction to evaluation approaches in civic tech, covering causality, mixed methods, and designing meaningful metrics. Includes case studies from mySociety, CitizenLab, and Sure Start.
+
+- **[Evaluation Masterclass](evaluation_masterclass/index.qmd)**  
+  Deep dive into rigorous evaluation methods including RCTs, quasi-experimental designs, and treatment effects. Features case studies from Read Easy UK, Code Club, Skills for Life, and D.A.R.E.
+
+---
+
+## About the Module
+
+The Public Sector Innovation module focuses on **implementing and delivering innovation** in public institutions, rather than building innovation itself. Key themes include:
+
+- Implementation and delivery challenges
+- Managing internal and external pushback
+- Understanding incentives and resistance
+- Learning from both successes and failures
+
+For more information, see the [full module guide](https://docs.google.com/document/d/1qwU0hkx4lfD_NU5VuI5oxIhhxwV0WIBXCDrmQc02CTA/edit?usp=sharing).

@@ -1,7 +1,5 @@
 /.luarc.json
-.quarto
 .quarto/
-/.quarto/
 _site/
-/.quarto/
-/_site/
+_freeze/
+**/*.quarto_ipynb
