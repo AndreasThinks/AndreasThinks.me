@@ -1,0 +1,162 @@
+---
+title: "Evaluation & Impact in Civic Technology"
+subtitle: "Session Summary - Newspeak House Module 2025"
+author: "Andreas Varotsis"
+date: "2025-10-14"
+format:
+  html:
+    toc: true
+    toc-title: "On this page"
+    theme: cosmo
+    page-layout: article
+---
+
+::: {.callout-note icon=false}
+## 📅 Session Information
+
+**Date:** October 14, 2025  
+**Module:** Public Sector Innovation - Evaluation Track  
+**Slides:** [View the presentation →](index.qmd)
+:::
+
+# Evaluation & Impact in Civic Technology
+
+> *"If we can't measure what matters, we'll keep funding what's loudest."*
+
+This session introduced the fundamentals of **impact and evaluation in civic technology**, exploring how we measure what works, why rigorous evaluation matters, and how to communicate results effectively to policymakers and funders.
+
+---
+
+## Session Summary
+
+### 🧩 What Evaluation *Is*
+
+We defined evaluation as more than reporting — it's not just *what we did*, but *what difference it made*.
+
+::: {.callout-important}
+## Key Distinction
+**Reporting** tells you what happened.  
+**Evaluation** tells you what *caused* it to happen.
+:::
+
+Evaluation bridges experimentation and policy by showing **causal impact**, not just correlation.
+
+::: {.callout-tip icon=false}
+## 🍽️ Case Study: Ration Club
+
+Throughout the session, we used **Ration Club** as a practical example to explore evaluation concepts:
+
+**The Challenge:** How could we improve Ration Club? What does "improving" even look like, and how can we test it?
+
+**The Idea:** If we have an interesting idea to encourage people to pair up at Ration Club, how do we test whether it works?
+
+This real-world example helped us explore:
+- Defining meaningful metrics (number of interactions? number of people? quality of connections?)
+- Finding sources of randomness (randomize by people? by time? by pairs?)
+- Understanding what we're actually trying to measure
+:::
+
+---
+
+### 🎯 The Importance of Good Metrics
+
+We explored what makes a metric meaningful:
+
+- It must be **measurable**, **valid**, and **actionable**
+- We distinguished between **outputs** (activities) and **outcomes** (behavioural or systemic change)
+- We discussed types of **validity** and how to test whether a metric actually captures what matters
+
+::: {.callout-note}
+## Applying to Ration Club
+In our Ration Club context, we asked: Are we looking at number of interactions? Number of people? Duration of conversations? What are we actually trying to get right?
+:::
+
+---
+
+### 🎲 Randomness and Causality
+
+We looked at how **randomness or natural variation** allows us to identify true impact:
+
+- In **RCTs**, randomness is designed in (treatment vs. control)
+- In **observational studies**, we find randomness retrospectively (timing, geography, thresholds)
+- Without variation, we can describe patterns — but not prove cause and effect
+
+::: {.callout-warning}
+## The Randomization Challenge
+At Ration Club, we discussed randomizing by people, but identified how that could go wrong. Could we randomize by time, or pairs? How can we find the randomness we need to evaluate effectively?
+:::
+
+---
+
+### 🔢 Quantitative and Qualitative Balance
+
+Good evaluations combine numbers and stories:
+
+- **Quantitative** data reveals patterns and scale
+- **Qualitative** data explains mechanisms and meaning
+
+Together, they form a fuller picture of impact.
+
+::: {.callout-note}
+## Example
+If we find an approach that increases minutes of conversation at Ration Club, how do we know if it's because of the intervention or something else (like better food that night)? Qualitative data helps us understand the *why* behind the numbers.
+:::
+
+---
+
+### 📊 Communicating Findings
+
+We emphasized that **communication is part of the science**:
+
+- Findings only create change if they're shared clearly and credibly
+- Different audiences need different formats — policy briefs, dashboards, or public summaries
+- Transparent storytelling builds trust and invites collaboration
+
+::: {.callout-tip}
+## Communication Best Practices
+- Know your audience (policymakers vs. practitioners vs. public)
+- Lead with the outcome, not the method
+- Be transparent about limitations
+- Make data and methods accessible
+:::
+
+---
+
+## 🧪 Next Steps
+
+In the coming weeks, participants will:
+
+1. **Design their own evaluation project** — as a group first, then individually
+   - Define a theory of change
+   - Choose one good metric
+   - Identify potential sources of randomness or variation
+   - Plan how they'll communicate findings
+
+2. **Join the follow-up module: "Core Statistics 101 for Evaluation"**, covering key statistical tools for understanding uncertainty, significance, and effect size
+
+---
+
+## 📚 Further Reading
+
+### Essential Books
+
+- **[Randomistas: How Radical Researchers Changed Our World](https://www.andrewleigh.com/randomistas)** by Andrew Leigh  
+  An accessible introduction to randomized controlled trials and their impact on policy
+
+- **[Freakonomics: A Rogue Economist Explores the Hidden Side of Everything](https://freakonomics.com/)** by Steven D. Levitt and Stephen J. Dubner  
+  Explores how economic thinking and data can reveal surprising causal relationships
+
+### Online Resources
+
+- **[Causal Inference for the Brave and True](https://matheusfacure.github.io/python-causality-handbook/landing-page.html)** by Matheus Facure  
+  A comprehensive Python-based guide to causal inference methods (for those ready to dive deep into the technical details)
+
+- **[Nesta's Standards of Evidence](https://www.nesta.org.uk/toolkit/standards-of-evidence/)**  
+  Practical framework for assessing the strength of evidence in social innovation
+
+- **[mySociety Research](https://research.mysociety.org/)**  
+  Real-world civic tech evaluation examples and case studies
+
+---
+
+*Part of the Newspeak House 2025-26 series on Evidence, Impact & Innovation.*

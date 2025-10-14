@@ -15,7 +15,7 @@ This page contains the slide content for the Newspeak House [Public Sector Innov
 
 ### Evaluation Sessions
 
-- **[Evaluation & Impact in Civic Technology](intro_to_evaluation/index.qmd)**  
+- **[Evaluation & Impact in Civic Technology](intro_to_evaluation/index.qmd)** | [Session Summary (Oct 14, 2025)](intro_to_evaluation/summary.qmd)  
   Introduction to evaluation approaches in civic tech, covering causality, mixed methods, and designing meaningful metrics. Includes case studies from mySociety, CitizenLab, and Sure Start.
 
 - **[Evaluation Masterclass](evaluation_masterclass/index.qmd)**  

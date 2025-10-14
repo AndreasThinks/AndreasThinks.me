@@ -1,6 +1,6 @@
 ---
 title: "Evaluation & Impact in Civic Technology"
-subtitle: "Newspeak House 2025"
+subtitle: "Newspeak House 2025-26"
 author: "Andreas Varotsis"
 title-slide-attributes:
   data-background-image: ../images/newspeak_house_logo.png
