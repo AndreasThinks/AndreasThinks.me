@@ -1,0 +1,58 @@
+---
+title: "What I want from a National Data Library"
+subtitle: "Open data and vibe-coding"
+format: html
+date: "10-26-2025"
+toc: true
+categories: 
+    - govtech
+    - civic tech
+    - open-source  
+    - timed-post
+---
+
+::: {.callout-note appearance="minimal"}
+This was a timed post - I gave myself 60 minutes to write, and if I didn't finish in time, [it gets deleted](https://github.com/AndreasThinks/obsidian-timed-posts). You can read [all these posts here.](https://andreasthinks.me/#category=open-source)
+:::
+
+Once upon a time, I was a young neighbourhood police officer in London, and I loved it - I think it laid the groundwork for a lot of who I am today. But there was one, niggling, infuriating exception: ward panel meetings. Every month or so, your local cop sits in a community hall, supposedly to meet with the local community and discuss crime prevention issues. The sad reality is that it tends to be the same 12 people it's been forever, and nobody else hears about or engages with it. It's a depressing failure of civic engagement.
+
+So two weeks ago, when I had to contact my local neighbourhood team, I wondered when their next meeting was. I went to the website, looked up my postcode, etc.... and decided this process should be better. So in an hour of vibe-coding, sitting in a café in Montreal, I built [https://yourpolice.events/](https://yourpolice.events/), which automatically adds upcoming meetings to your calendar feed.
+
+At the risk of sounding grandiose, I kind of think that's wonderful: I saw a problem with how I could engage with government, and I took an hour to build a tool - just for me - and I "fixed" it. But that was only possible because of [an old, slightly fading API of public policing data](https://data.police.uk/), built while I was still stomping around South London in a silly top hat.
+
+I think vibe coding is going to help millions of people like me build millions of things, but **well maintained public data APIs will make those things collectively meaningful and useful**.
+
+Rather conveniently, the government has committed to launching a [National Data Library](https://www.gov.uk/government/publications/national-data-library/national-data-library), and I've got a sneaking suspicion they're still trying to figure out what that practically is. I don't know what it should be, but I think if you're going to launch a National Data Library, you could start by rejuvenating the public API landscape.
+
+## The Open Data Dream
+
+The Coalition years feel kind of weird to look back on now. In some ways, they kickstarted some of the trends that defined our world: Brexit. Austerity. Seemingly endless angry protests.
+
+And yet, looking back, part of it also feels slightly hopeful? From a tech perspective, it felt like that's the last time we really believed the bustling tech scene might transform government. The Big Society may have been naïve, but the open data movement that came with it was genuinely ambitious.
+
+It's hard to think back to now, but the vestiges of those golden years still litter the civic tech landscape, like so many crumbling ruins in a dystopian wasteland. Some I think are pretty much dead, their [skeletons poking out of the digital sand](https://www.data.gov.uk/). Some [limp along](https://data.police.uk/docs/), vestiges of their grand ambitions. Others have managed to [adapt to this new world](https://www.mysociety.org/).
+
+As I discovered in my moment of impromptu building, plenty of public APIs are definitely in the "limping along" bucket, and [data.police.uk](https://data.police.uk/) is a perfect example. Some forces reliably populate event data, others have mostly stopped bothering. Manchester Police [just stopped centrally reporting crime for awhile while it figured out its new IT system](https://www.bbc.co.uk/news/uk-england-manchester-68489297).
+
+I suspect if I checked a few more sources on [data.gov.uk](https://www.data.gov.uk/), I'd find a mostly similar story: open data is great, but when austerity bit and it fell out of the political spotlight, departments focused on core services over clean data. And you know what, I can hardly blame them: not _that_ many people knew those datasets even existed, let alone were building on them.
+
+## Restarting the Civic Tech Open-Data Dream
+
+Maybe I'm drinking the Kool-Aid, but I think LLMs and vibe-coding really are the enabler to kick-start the civic tech open-data revolution that never really happened. Building on APIs was actually quite hard - most normal humans never want to figure out what CURL is, or what the difference is between POST, GET, and PUT.
+
+Vibe coding really does shift part of that equation. Of course, you're not going to be writing production ready code, but if there was a central, well documented repository of public API data that LLMs knew how to query and use? The barrier for prototyping on it essentially becomes 0, and that could be _glorious_.
+
+So what would it take? I'd point to a few things off the top of my head.
+
+First, a funding model that makes departments build and maintain open-datasets - I'm not sure what the answer is, but we should recognise that public data is a public good, and no department should have to pick between investing in public data and front-line services (and of course, it shouldn't be acceptable to just _stop populating it_ without good reason).
+
+Secondly, and this is my hottest take, recognise that your main customer is LLM enabled, and may very well be LLM dependent - that means making it as easy as possible for models/agents to discover and use datasets. [LLMs.txt](https://llmstxt.org/) on everything. [MCP](https://modelcontextprotocol.io/docs/getting-started/intro) servers coming out of all the endpoints. Those fancy [new Claude skill packages](https://www.anthropic.com/news/skills). When I ask ChatGPT to help with _anything_ around building on public technology and data, I want that LLM to just _know_ what data is out there, and how to use it... But more critically, just good, clean, maintained machine readable documentation (the good news is building that is a fantastic investment, even if all LLMs were to disappear tomorrow).
+
+Finally, let's build a community: you want people to build on that data, and we should make it exciting, collective. Government data is _ours_, so make it feel that way! Run a million events and hackathons. Hire some goddamn librarians, and task them with building a thriving ecosystem! The [UK Data Service](https://ukdataservice.ac.uk/) has shown you _can actually do this_, with data conferences and such. Let's make playing with government data exciting.
+
+The NDL shouldn't just be a library... it should be _our_ library. A public good, which the public uses, and treasures. Not some dusty archive that government maintains out of obligation, but a living resource that sparks curiosity and enables action. When someone wonders about their neighbourhood, their council, their police - the NDL should be where they turn, and where they can actually _do_ something with what they find.
+
+And honestly? I think we're at a moment where this becomes genuinely transformative. As digital ID starts becoming a practical thing rather than a concept, we might move to a world where we all can authenticate and build on our own data. Imagine being able to prototype tools for checking your council tax, monitoring your kids' school performance data, or comparing local healthcare outcomes - not because you're a developer, but because you had a question and an LLM could help you answer it using secure, authenticated access to public services. That's when civic engagement stops being something 12 people do in a community hall, and becomes something woven into how we all interact with government.
+
+So my hot take on the NDL? **Turns out we had one all along.** We just need to show it a bit of love, give it the funding it deserves, and maybe teach it to speak fluent LLM. The infrastructure is there, rusting in the digital rain. Let's bring it back to life.

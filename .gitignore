@@ -15,3 +15,5 @@ index_cache/
 # Generated HTML files
 posts/**/*.html
 /*.html
+
+/.quarto/
