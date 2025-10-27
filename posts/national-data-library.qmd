@@ -1,6 +1,8 @@
 ---
 title: "What I want from a National Data Library"
-subtitle: "Open data and vibe-coding"
+subtitle: "Lots of robust, sustainable open-data, and vibe-coding"
+description: "I built a tool to fix my local police engagement problem in an hour of café coding. But that was only possible because of a fading public data API from years ago. Here's how the National Data Library could revive the open data dream."
+description: "Why "
 format: html
 date: "10-26-2025"
 toc: true
@@ -9,6 +11,14 @@ categories:
     - civic tech
     - open-source  
     - timed-post
+filters:
+  - open-social-comments
+mastodon_comments:
+  user: "AndreasThinks"
+  host: "fosstodon.org"
+  toot_id: "115446632147802507"
+bluesky_comments:
+  post_uri: "https://bsky.app/profile/andreasthinks.me/post/3m46ncyxnc22r"
 ---
 
 ::: {.callout-note title="Timed Post"}
