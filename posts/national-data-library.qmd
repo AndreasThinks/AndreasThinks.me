@@ -1,8 +1,7 @@
 ---
 title: "What I want from a National Data Library"
 subtitle: "Lots of robust, sustainable open-data, and vibe-coding"
-description: "I built a tool to fix my local police engagement problem in an hour of café coding. But that was only possible because of a fading public data API from years ago. Here's how the National Data Library could revive the open data dream."
-description: "Why "
+description: "I built a tool to fix my local police engagement problem in an hour of café coding. But that was only possible because of a fading public data API from years ago...let's revive the open data dream with the National Data Library!"
 format: html
 date: "10-26-2025"
 toc: true
