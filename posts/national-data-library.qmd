@@ -12,7 +12,7 @@ categories:
 ---
 
 ::: {.callout-note title="Timed Post"}
-*This was a timed post, a new approach I'm testing to post more often: I give myself 60 minutes to write a post, and if I don't finish it time, [it gets deleted](https://github.com/AndreasThinks/obsidian-timed-posts). You can read [all these posts here.*](https://andreasthinks.me/#category=timed-post)
+_This was a timed post, a new approach I'm testing to post more often: I give myself 60 minutes to write a post, and if I don't finish it in time, [it gets deleted](https://github.com/AndreasThinks/obsidian-timed-posts). You can read [all these posts here](https://andreasthinks.me/#category=timed-post)._
 :::
 
 Once upon a time, I was a young neighbourhood police officer in London, and I loved it - I think it laid the groundwork for a lot of who I am today. It wasn't perfect though, and one part made me specifically grump: ward panel meetings. Every month or so, your local cop sits in a community hall, supposedly to meet with the local community and discuss crime prevention issues. The sad reality is that it tends to be the same 12 people it's been forever, and nobody else hears about or engages with it. It's a depressing failure of civic engagement.
