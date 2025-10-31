@@ -12,14 +12,15 @@ listing:
 max-description-length: 300
 ---
 
-::: {.grid}
-::: {.g-col-3}
+::: {.intro-panel}
+::: {.intro-media}
 ![](images/round_me.png){.profile-pic}
 :::
-::: {.g-col-9}
+::: {.intro-copy}
 I'm Andreas, [a data scientist and public safety researcher working to improve the use of data and evidence in government](https://andreasthinks.me/about.html). I enjoy [coordinating exciting communities](https://lu.ma/ai-for-good), and working with [fantastic](https://newspeak.house/) [institutions](https://ai.gov.uk/) to build projects that improve the world, including [teaching on public sector innovation at Newspeak House](slides/index.qmd). You can read more about me [on my about page here](https://andreasthinks.me/about.html).
 
-If you'd like to discuss professional work or collaborating on a project, [please say hello!](mailto:andreas.varotsis@gmail.com) 
+If you'd like to discuss professional work or collaborating on a project, [please say hello!](mailto:andreas.varotsis@gmail.com)
+
 :::
 :::
 
@@ -27,5 +28,6 @@ If you'd like to discuss professional work or collaborating on a project, [pleas
 
 I use this blog to journal on what I've been learning about and building recently. If you'd like to see more of my formal work, you can see [a selection of my papers and writing here.](recent_work.qmd)
 
-::: {#blog-listings}
+::: {#blog-listings .post-list}
+
 :::
