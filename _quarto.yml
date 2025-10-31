@@ -37,5 +37,8 @@ website:
         href: index.xml
 format:
   html:
-    theme: cyborg
+    theme: darkly
     css: styles.css
+    toc: false
+    smooth-scroll: true
+    link-external-newwindow: true
