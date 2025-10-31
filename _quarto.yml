@@ -42,3 +42,5 @@ format:
     toc: false
     smooth-scroll: true
     link-external-newwindow: true
+    html-math-method: katex
+    page-layout: article
