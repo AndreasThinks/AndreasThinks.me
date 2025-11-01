@@ -84,13 +84,28 @@ li {
 a {
   color: var(--accent);
   text-decoration: none;
-  transition: color 0.2s ease, text-shadow 0.2s ease;
+  transition: color 0.2s ease, text-shadow 0.2s ease, border-bottom-color 0.2s ease;
+  border-bottom: 1px solid rgba(123, 252, 200, 0.3);
 }
 
 a:hover,
 a:focus {
   color: var(--accent-strong);
   text-shadow: 0 0 14px rgba(123, 252, 200, 0.5);
+  border-bottom-color: var(--accent-strong);
+}
+
+.intro-copy a {
+  color: var(--text-muted);
+  border-bottom: 1px solid rgba(123, 252, 200, 0.25);
+  font-weight: 500;
+}
+
+.intro-copy a:hover,
+.intro-copy a:focus {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  text-shadow: 0 0 10px rgba(123, 252, 200, 0.3);
 }
 
 .intro-panel {
