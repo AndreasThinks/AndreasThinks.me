@@ -296,6 +296,21 @@ hr {
 }
 
 @media (max-width: 600px) {
+  .navbar {
+    padding: 0.75rem 1rem;
+  }
+
+  .navbar .navbar-brand-container {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .navbar .navbar-title {
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-size: 1rem;
+  }
+
   .intro-panel {
     padding: 1.6rem 1.4rem;
   }
