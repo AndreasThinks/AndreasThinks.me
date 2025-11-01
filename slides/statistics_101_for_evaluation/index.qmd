@@ -1,0 +1,1503 @@
+---
+title: "Statistics 101 for Evaluation"
+subtitle: "Evidence and Impact Module 2025-26"
+author: "Andreas Varotsis"
+title-slide-attributes:
+  data-background-image: ../images/newspeak_house_logo.png
+  data-background-size: 10%
+  data-background-position: bottom
+format:
+  revealjs:
+    incremental: true
+    chalkboard: true
+    theme: [default, ../newspeak-theme.scss]
+    logo: ../images/newspeak_house_logo.png
+    footer: |
+      ![](../images/newspeak_house_logo.png){height=40px}
+---
+
+# Statistics 101 for Evaluation
+
+> *"Statistics is the grammar of uncertainty. Today, we learn to speak it."*
+
+---
+
+## Why Statistics in Evaluation?
+
+Statistics helps us answer the core question:
+
+**"Did our intervention cause the outcome we observed?"**
+
+Without stats, we can't distinguish:
+
+- Real effects from random noise
+- Causation from correlation
+- Meaningful change from measurement error
+
+> Statistics quantifies *uncertainty* and builds *credible causal claims*.
+
+::: notes
+Open by asking: "Has anyone ever looked at data from a project and wondered: is that real or just chance?"
+
+Emphasize: Today is foundational. When we later ask evaluation questions, stats is how we calibrate confidence.
+
+This isn't a full evaluation design session. It's the statistical spine that supports everything else.
+:::
+
+---
+
+## What We're Building Today
+
+**Our agenda:**
+
+1. **Uncertainty & Variability** — understanding noise vs signal
+2. **Probability Fundamentals** — the language of chance
+3. **Sampling & Randomness** — who we measure matters
+4. **Significance & Confidence** — interpreting statistical tests
+5. **Power & Sample Size** — planning for detection
+6. **Common Pitfalls** — avoiding false discoveries
+7. **Bayesian Perspective** — a different lens
+
+All grounded in **civic tech evaluation scenarios**.
+
+::: notes
+"We'll use examples throughout: service forms, outreach emails, dashboards, appointment reminders. Real evaluation contexts."
+
+Reassure: "This is theory-forward but practical. Each concept connects to evaluation work you'll do."
+:::
+
+---
+
+# Pillar 1: Uncertainty & Variability
+
+---
+
+## Everything Varies
+
+Even without any changes, measurements bounce around:
+
+- Daily form completions fluctuate
+- Response rates differ week to week
+- Complaint volumes vary by season
+
+**The challenge:** Separate *intervention effects* from *natural variability*.
+
+::: notes
+Draw on chalkboard: a horizontal line (the "true" average) with dots scattered above and below it.
+
+Ask: "What causes this scatter in your own projects?"
+:::
+
+---
+
+## Key Concepts: Variance & Standard Deviation
+
+**Variance (σ²):** Average squared distance from the mean
+
+- Measures spread in squared units
+- Always positive
+
+**Standard Deviation (σ):** Square root of variance
+
+- Same units as original measurement
+- Intuitive scale of "typical deviation"
+
+**Example:** Daily completions average 100, with σ = 15
+
+- Most days: 85–115 completions
+- Extreme days: 70–130 completions
+
+::: notes
+"Before testing anything, quantify the noise. If completion rates normally vary by ±15 per day, seeing 110 completions isn't evidence of success."
+
+Prompt: "Think of a metric in your project. What's a 'normal' amount of day-to-day bounce?"
+:::
+
+---
+
+## Signal vs Noise
+
+When evaluating an intervention:
+
+**Signal:** The real effect of your intervention
+
+**Noise:** Random variation, measurement error, external factors
+
+**Goal:** Detect signal *above* the noise level
+
+**Visualization:**
+
+```
+Without intervention: ████████████████ (noise only)
+With small effect:    ████████████████▲ (hard to see)
+With large effect:    ████████████████▲▲▲▲ (clear signal)
+```
+
+::: notes
+"Statistical methods help us ask: Is that bump signal or just noise?"
+
+Real example: "A council tweaks copy on a benefits form. Even without the change, completion rates vary. How do we know if +5% is real?"
+:::
+
+---
+
+## Worked Example: Service Form
+
+**Scenario:** You redesign an online reporting form for local council
+
+**Before redesign:** 
+
+- Average daily completions: 42
+- Standard deviation: 8
+- (Based on 60 days of data)
+
+**After redesign (first week):**
+
+- Average daily completions: 47
+- Is this meaningful or just noise?
+
+**Answer:** Difference is 5, which is less than 1 SD. Could easily be random variation.
+
+::: notes
+"This is why we need proper statistical tests. Eyeballing differences isn't enough."
+
+"Later we'll learn formal tests. For now: understand that noise is real and must be measured."
+:::
+
+---
+
+## Sources of Variation
+
+**Random (stochastic) variation:**
+
+- Natural fluctuations
+- Sampling error
+- Measurement error
+
+**Systematic variation:**
+
+- Seasonal patterns
+- Day-of-week effects
+- External events (holidays, weather, news)
+
+**Intervention effects:**
+
+- The thing we actually want to measure!
+
+> Good evaluation design isolates intervention effects from other sources.
+
+::: notes
+Ask class: "In your projects, what are two sources of noise you need to account for?"
+
+Give 2 minutes for them to write down answers.
+:::
+
+---
+
+# Pillar 2: Probability Fundamentals
+
+---
+
+## Probability: The Grammar of Uncertainty
+
+**Probability** expresses how likely events are:
+
+- 0 = impossible
+- 1 = certain
+- 0.5 = equally likely to happen or not
+
+In evaluation, we ask:
+
+> "If the intervention had *no effect*, what's the probability of seeing results this extreme?"
+
+::: notes
+"Probability lets us reason about what *could* happen in alternative worlds."
+
+"We'll keep this informal. Think: repeated experiments, long-run frequencies."
+:::
+
+---
+
+## Random Variables
+
+**Random variable:** A quantity whose value is determined by chance
+
+**Examples in evaluation:**
+
+- Whether someone completes a form (binary: yes/no)
+- Response time in days (continuous: 0.5, 1.3, 2.7...)
+- Number of reports submitted (count: 0, 1, 2, 3...)
+
+**Why it matters:** Different types of outcomes need different statistical approaches.
+
+::: notes
+"Your evaluation outcome is a random variable. Knowing its type shapes your analysis."
+
+Ask: "Is your main outcome binary, continuous, or a count?"
+:::
+
+---
+
+## Expected Value
+
+**Expected value (mean):** The long-run average
+
+If we could run the same scenario 1,000 times, what average would we see?
+
+**Example:** Rolling a fair die
+
+- Possible outcomes: 1, 2, 3, 4, 5, 6
+- Expected value: (1+2+3+4+5+6)/6 = 3.5
+
+**In evaluation:** If baseline complaint rate is 5%, we *expect* 50 complaints from 1,000 users (but might see 43 or 57).
+
+::: notes
+"Single observations can mislead. Expected value is about the central tendency across many trials."
+
+"This connects to sample size: larger samples get closer to expected value."
+:::
+
+---
+
+## Distributions Tell Stories
+
+**Distribution:** Pattern of how values spread out
+
+**Common patterns:**
+
+- **Normal (bell curve):** Many measurements cluster around mean
+- **Binomial:** Success/failure counts (e.g., survey responses)
+- **Poisson:** Rare events (e.g., complaints, accidents)
+
+**Evaluation implication:** Rare events need more data to detect changes reliably.
+
+::: notes
+Don't dwell on formulas. Visual intuition is enough.
+
+"If you're evaluating something rare (like fraud reports), you need a lot of observations to detect change."
+:::
+
+---
+
+## Tails and Rare Events
+
+**The tails:** Extreme, unusual values
+
+**Example:** Evaluating a new policing dashboard
+
+- Baseline: 2 complaints per month
+- After launch: 5 complaints in one month
+
+**Question:** Real increase or random spike?
+
+**Challenge:** With rare events, natural variation is large relative to mean. Hard to separate signal from noise quickly.
+
+::: notes
+"Rare event evaluations require patience and longer observation windows."
+
+"Or, you need to aggregate (multiple areas, longer time periods) to get enough events."
+:::
+
+---
+
+## Law of Large Numbers (Intuition)
+
+**Core idea:** As sample size increases, sample average converges to true average
+
+**Example:** Estimating form completion rate
+
+- 10 users: 60% complete (could be lucky)
+- 100 users: 52% complete (getting closer)
+- 1,000 users: 50.1% complete (very close to true 50%)
+
+> Larger samples are more stable and trustworthy.
+
+::: notes
+"This is why we care about sample size. Not for magic, but for stability."
+
+"Small samples are noisier. Large samples average out the randomness."
+:::
+
+---
+
+## Probability in Practice
+
+**Your turn:** Think about your project outcome.
+
+1. Is it binary, continuous, or count?
+2. What does the "expected value" mean operationally?
+3. Is it common or rare?
+
+**Example answers:**
+
+- Form completion (binary): Expected = % who complete in long run
+- Response time (continuous): Expected = average days
+- Reports submitted (count, rare if baseline is low)
+
+::: notes
+Give 3 minutes for silent reflection and writing.
+
+Ask 2–3 people to share their outcome type and what "expected value" means for them.
+:::
+
+---
+
+# Pillar 3: Sampling & Randomness
+
+---
+
+## Who You Measure Matters
+
+**Sampling:** Selecting a subset from a larger population
+
+**Why it matters:**
+
+- We rarely measure *everyone*
+- Sample must represent population
+- Bad sampling → biased conclusions
+
+> "Bias beats variance: a small unbiased sample > a large biased one."
+
+::: notes
+"You can't poll all residents, test all users, or observe all transactions."
+
+"So: who you choose to measure determines whether your results generalize."
+:::
+
+---
+
+## Random Sampling
+
+**Random sample:** Every member of population has known, non-zero probability of selection
+
+**Gold standard because:**
+
+- Eliminates systematic bias
+- Allows probability-based inference
+- Errors are *random* (average out) not *systematic* (don't)
+
+**Not random:** Convenience samples, volunteers, "whoever responds"
+
+::: notes
+"Random ≠ haphazard. It means using a formal process (like drawing from a list) where each person has equal chance."
+
+"Volunteers are biased: they care more, have more time, differ systematically."
+:::
+
+---
+
+## Sampling Frames & Coverage
+
+**Sampling frame:** The list from which you sample
+
+**Coverage issues:**
+
+- **Under-coverage:** Frame misses some population groups
+- **Over-coverage:** Frame includes non-target people
+
+**Example:** Using email list to sample residents
+
+- Under-coverage: People without email
+- Over-coverage: People who moved away
+
+::: notes
+"Before sampling, ask: Who's on my list? Who's missing?"
+
+"Digital-only samples often miss older, offline, or disadvantaged groups."
+:::
+
+---
+
+## Selection Bias
+
+**Selection bias:** When sample systematically differs from population
+
+**Common civic tech examples:**
+
+- **Office-hours bias:** Surveying users who access service 9–5 (miss shift workers)
+- **Early adopter bias:** Evaluating with first users (more tech-savvy, motivated)
+- **Response bias:** Only engaged residents reply to survey
+
+**Impact:** Results don't generalize to broader population.
+
+::: notes
+"This is the biggest threat to external validity."
+
+"You might have perfect internal validity (correct comparison) but if your sample is biased, findings don't generalize."
+:::
+
+---
+
+## Sampling Error vs Bias
+
+**Sampling error:** Random variation due to observing a sample instead of entire population
+
+- Reduces with larger sample
+- Quantifiable (confidence intervals)
+
+**Sampling bias:** Systematic deviation due to who's selected
+
+- Does *not* reduce with larger sample
+- Must be prevented through design
+
+::: notes
+"You can't fix bias with a bigger sample. Bias is directional and persistent."
+
+"Error is noise (gets smaller with n). Bias is systematic shift (stays no matter how large n)."
+:::
+
+---
+
+## Clustered Sampling
+
+**Cluster sampling:** Sampling groups (clusters) then individuals within them
+
+**Examples:**
+
+- Sampling councils, then residents within each
+- Sampling neighbourhoods, then households
+
+**Why it matters:**
+
+- People in same cluster are often similar
+- Reduces effective sample size
+- Standard errors need adjustment
+
+::: notes
+"If you sample 100 people all from the same neighbourhood, that's not as good as 100 people spread across the city."
+
+"Within-cluster correlation (intra-class correlation) matters for power calculations."
+:::
+
+---
+
+## Interactive Demo: Survey Sampling Simulator
+
+**Scenario:** Estimate citizen satisfaction with redesigned online reporting form
+
+**The tool lets you:**
+
+- Choose sampling mode:
+  - Truly random
+  - "Office hours only"
+  - "Mobile users only"
+  - "Early adopters only"
+- See sample mean vs true population mean
+- Observe sampling error across repeated draws
+
+**Key lesson:** Convenience samples can look precise but be wrong
+
+::: notes
+[This slide would link to or embed the interactive tool]
+
+"We'll run this live. I'll show random sampling first (notice results cluster around truth), then switch to office-hours-only (notice systematic upward bias)."
+
+Spend ~10 minutes here. Let people try different modes.
+:::
+
+---
+
+## Practical Sampling Advice
+
+**For evaluations:**
+
+1. **Define population clearly** — who are you trying to generalize to?
+2. **Get best possible frame** — voter rolls, service user lists, etc.
+3. **Randomize** — use random number generator, not "pick convenient people"
+4. **Document non-response** — track who didn't respond and why
+5. **Consider weights** — adjust for differential non-response by group
+
+**Reality check:** Perfect random samples are rare. Acknowledge limitations.
+
+::: notes
+"In real projects, you often can't get perfect random samples. That's okay."
+
+"What matters: (1) be transparent about sampling method, (2) consider who's missing, (3) discuss implications."
+:::
+
+---
+
+## Reflection: Your Sampling Approach
+
+**Consider:**
+
+- Who is your target population?
+- What's your sampling frame?
+- Are there coverage problems?
+- What mode of selection will you use?
+- Who might be systematically excluded?
+
+::: notes
+Give 2 minutes for silent reflection.
+
+"This is homework thinking. When you design your evaluation, come back to these questions."
+:::
+
+---
+
+# Pillar 4: Significance, p-values, Confidence Intervals
+
+---
+
+## The Core Evaluation Question
+
+> "Is the observed difference *real* (caused by intervention) or *chance* (random noise)?"
+
+**Statistical inference** gives us tools to answer this:
+
+- **Hypothesis testing** (p-values)
+- **Confidence intervals** (range of plausible effects)
+
+Both approaches quantify uncertainty around estimates.
+
+::: notes
+"This is where evaluation gets rigorous. We move from 'it looks different' to 'here's how confident we can be'."
+:::
+
+---
+
+## Null Hypothesis
+
+**Null hypothesis (H₀):** The "nothing happened" scenario
+
+- No intervention effect
+- No difference between groups
+- Status quo
+
+**Alternative hypothesis (H₁):** Something did happen
+
+- Intervention had an effect
+- Groups differ
+- Change from status quo
+
+**Testing logic:** Assume H₀ is true, then ask how surprising the data would be.
+
+::: notes
+"We don't 'prove' H₁. We try to reject H₀."
+
+"It's like a court trial: assume innocence (H₀), then see if evidence is strong enough to overturn that assumption."
+:::
+
+---
+
+## What is a p-value?
+
+**p-value:** Probability of seeing results *this extreme or more* if H₀ were true
+
+**Interpretation:**
+
+- p = 0.03 → "If intervention had no effect, we'd see this large a difference only 3% of the time"
+- Small p-value → data is surprising under H₀ → evidence against H₀
+
+**Common threshold:** p < 0.05 (but arbitrary!)
+
+::: notes
+"p-value is NOT the probability that H₀ is true."
+
+"It's the probability of your data (or more extreme) given H₀ is true."
+
+"Think of it as: How surprised should we be if nothing was happening?"
+:::
+
+---
+
+## Interpreting p-values
+
+**p < 0.05:**
+
+- Evidence against H₀
+- Often called "statistically significant"
+- Does NOT mean "large" or "important"
+
+**p > 0.05:**
+
+- Insufficient evidence against H₀
+- Does NOT mean "no effect exists"
+- Could be: real small effect, or not enough data
+
+> **Key insight:** Statistical significance ≠ practical importance
+
+::: notes
+"You can have statistically significant tiny effects (with huge samples) or miss real effects (with small samples)."
+
+"Always look at effect SIZE alongside p-value."
+:::
+
+---
+
+## Test Statistics
+
+**Test statistic:** A number summarizing how far data diverges from H₀
+
+**Common ones:**
+
+- **t-statistic:** For comparing means (assumes normal-ish distribution)
+- **z-statistic:** For proportions or large samples
+- **Chi-square:** For categorical data
+
+**General pattern:**
+
+$$
+\text{test statistic} = \frac{\text{observed difference}}{\text{standard error of difference}}
+$$
+
+::: notes
+Don't dwell on formulas. Point is: test statistic scales difference by its uncertainty.
+
+"Large test statistic → difference is many standard errors away from zero → small p-value."
+:::
+
+---
+
+## Type I and Type II Errors
+
+**Type I error (false positive):** Rejecting H₀ when it's actually true
+
+- Concluding intervention worked when it didn't
+- Probability = α (often 0.05)
+
+**Type II error (false negative):** Failing to reject H₀ when H₁ is true
+
+- Missing a real effect
+- Probability = β (power = 1 − β)
+
+**Trade-off:** Can't eliminate both. Lower α → higher β.
+
+::: notes
+"Type I: crying wolf. Type II: missing a wolf."
+
+"In evaluation, both matter. False positive → waste resources scaling ineffective thing. False negative → abandon something that works."
+:::
+
+---
+
+## Confidence Intervals (CIs)
+
+**Confidence interval:** Range of effect sizes compatible with data
+
+**95% CI interpretation:**
+
+> "If we repeated this study many times, 95% of calculated intervals would contain the true effect."
+
+**Example:** Completion rate increased by 6 percentage points (95% CI: 2 to 10)
+
+- We estimate +6pp
+- Plausible range: +2pp to +10pp
+- All positive → confident direction is upward
+
+::: notes
+"CIs are more informative than p-values alone."
+
+"They show magnitude and precision together."
+
+Common mistake: "95% chance true effect is in this interval." No—either it is or isn't. The 95% refers to the method, not the particular interval."
+:::
+
+---
+
+## Why CIs Beat p-values Alone
+
+**p-value tells you:** Is there evidence of an effect?
+
+**CI tells you:**
+
+- Is there evidence of an effect? (if interval excludes zero)
+- How big might the effect be? (range)
+- How uncertain is the estimate? (width)
+
+**Example:**
+
+- p = 0.04 could mean: +10pp effect (CI: +1 to +19) → uncertain!
+- Or: +2pp effect (CI: +0.1 to +3.9) in huge sample → precise but small
+
+::: notes
+"Always report CIs alongside p-values (or instead of)."
+
+"Policymakers care about: 'How much impact can we expect?' CIs answer that."
+:::
+
+---
+
+## Interactive Demo: A/B Testing Visualizer
+
+**Scenario:** Two outreach emails (A vs B) inviting residents to community safety survey
+
+**The tool:**
+
+- Set true effect size, sample size per arm, baseline response rate
+- Simulate many trials
+- See: distribution of p-values, proportion significant, estimated effects vs true effect
+
+**Key lessons:**
+
+- Small samples → p-values are noisy, significance is rare even for real effects
+- CIs often wide with small n
+- Statistical significance isn't destiny
+
+::: notes
+[Interactive tool demonstration]
+
+"I'll run 1000 simulated trials with true +3pp effect, n=200 per arm."
+
+"Notice: only ~40% come back significant. That's power!"
+
+Spend ~8 minutes here.
+:::
+
+---
+
+## Confidence Interval Explorer
+
+**Scenario:** Post-intervention completion rate: 42% → 48%
+
+**The tool:**
+
+- Input: number of successes and total trials per group
+- Output: estimated difference, 95% CI, visualization
+
+**Try:**
+
+- Small samples → wide CIs
+- Large samples → narrow CIs
+- What if interval includes zero?
+
+::: notes
+[Interactive tool]
+
+"Let's input: 42/100 before, 48/100 after. See the interval."
+
+"Then try: 420/1000 before, 480/1000 after. Much narrower."
+
+Spend ~6 minutes.
+:::
+
+---
+
+## Translating CIs to Plain Language
+
+**Practice interpreting:**
+
+**Example 1:** "Completion rate improved by 5pp (95% CI: −2 to +12)"
+
+**Plain language:** "We estimate a 5 percentage point improvement, but the data are consistent with anything from a 2pp decrease to a 12pp increase. Not conclusive."
+
+**Example 2:** "Response time decreased by 3 days (95% CI: 1.5 to 4.5)"
+
+**Plain language:** "We're confident response time improved—likely between 1.5 and 4.5 days faster."
+
+::: notes
+"This is how you communicate with non-technical stakeholders."
+
+"Frame uncertainty honestly. Don't oversell weak results."
+:::
+
+---
+
+## When "Not Significant" Matters
+
+**Scenario:** Large, well-powered study finds p = 0.42, CI includes zero
+
+**Implications:**
+
+- No evidence of effect
+- Could be genuinely no effect
+- Or effect too small to be practically meaningful
+
+**Don't say:** "The intervention doesn't work."
+
+**Do say:** "We found no detectable effect in this study. If there is an effect, it's likely smaller than X."
+
+::: notes
+"Absence of evidence ≠ evidence of absence."
+
+"But if study was well-powered, 'no effect detected' is informative."
+:::
+
+---
+
+# Pillar 5: Power & Sample Size
+
+---
+
+## Statistical Power
+
+**Power:** Probability of detecting an effect *if it exists*
+
+$$
+\text{Power} = 1 - \beta = P(\text{reject } H_0 | H_1 \text{ true})
+$$
+
+**Common target:** 80% power
+
+- If intervention has real +5pp effect, you'd detect it (p<0.05) in 80% of studies
+
+**Why it matters:** Underpowered studies waste resources and mislead.
+
+::: notes
+"Power is your study's 'sensitivity'."
+
+"Low power → might miss real effects → false negatives → abandon good interventions."
+:::
+
+---
+
+## What Affects Power?
+
+Power increases with:
+
+1. **Larger effect size** — easier to detect big effects
+2. **Larger sample size** — more data → less noise
+3. **Lower variance** — less noisy outcome → clearer signal
+4. **Higher α** — but raises false positive risk (don't do this)
+
+**You control:** Sample size (usually)
+
+**You don't control:** True effect size, outcome variance
+
+::: notes
+"In evaluation design, you choose n to achieve target power for a plausible effect size."
+
+"This requires upfront thinking: What effect size would matter operationally?"
+:::
+
+---
+
+## Minimum Detectable Effect (MDE)
+
+**MDE:** Smallest effect size your study can reliably detect
+
+Determined by:
+
+- Sample size
+- Variance
+- Power target
+- Significance level
+
+**Example:** With n=500 per arm, 80% power, α=0.05, you can detect MDE ≈ 4pp change in a 50% baseline rate
+
+**Implication:** If true effect is 2pp, you'll likely miss it.
+
+::: notes
+"Before running evaluation, calculate MDE."
+
+"Ask: Is that MDE operationally meaningful? If we can only detect 4pp changes, but 2pp would be valuable, we're underpowered."
+:::
+
+---
+
+## Planning Sample Size
+
+**Process:**
+
+1. Define meaningful effect size (policy judgment)
+2. Estimate baseline rate and variance (pilot data or literature)
+3. Choose power (typically 80%) and α (typically 0.05)
+4. Calculate required n using power formulas or online calculator
+
+**Example:** SMS reminder for missed appointments
+
+- Baseline no-show: 20%
+- Target: detect 3pp reduction (to 17%)
+- Power: 80%, α: 0.05
+- Required: ~2,200 per arm
+
+::: notes
+"Power calculation is planning, not an afterthought."
+
+"Underpowered studies are unethical: they waste participant time and resources for inconclusive results."
+:::
+
+---
+
+## Interactive: Power Slider
+
+**The tool:**
+
+- Adjust: baseline rate, MDE, sample size per arm
+- See: estimated power, power curve vs n
+
+**Experiments:**
+
+- Small n → low power
+- Large n → diminishing returns (going from 80% to 90% power requires a lot more n)
+- Smaller MDE → need more n
+
+::: notes
+[Interactive tool]
+
+"Play with this. Notice: doubling sample size doesn't double power."
+
+"There's a point where adding more participants gives little extra power—balance feasibility and rigor."
+
+Spend ~7 minutes.
+:::
+
+---
+
+## Diminishing Returns
+
+**Key insight:** Power increases with √n, not n
+
+**Example:**
+
+- n=100 per arm → 40% power
+- n=400 per arm → 80% power (4x sample → 2x power)
+- n=1600 per arm → ~95% power (16x sample for < 1.2x power)
+
+**Practical implication:** Past a certain point, more data helps little. Focus on good design instead.
+
+::: notes
+"Don't reflexively say 'we need more data'."
+
+"Better: reduce variance (better outcome measure), increase effect size (stronger intervention), or accept lower power if resources constrained."
+:::
+
+---
+
+## When Underpowered Studies Happen
+
+**Reality:** Many civic tech evaluations are underpowered due to:
+
+- Budget constraints
+- Limited user base
+- Short timeframes
+
+**What to do:**
+
+- Acknowledge power limitations upfront
+- Focus on effect sizes and CIs (not p-values)
+- Use findings as pilot evidence for larger study
+- Consider multiple small studies (meta-analysis later)
+
+::: notes
+"Underpowered ≠ useless. Just be transparent."
+
+"Report: 'This study had 40% power to detect a 5pp effect. Results are exploratory.'"
+:::
+
+---
+
+# Common Pitfalls
+
+---
+
+## Multiple Comparisons Problem
+
+**The issue:** Test many outcomes → some will be "significant" by chance
+
+**Example:** You measure 20 outcomes at α=0.05
+
+- Expect 1 false positive even if intervention has zero effect
+- Risk of cherry-picking the "significant" one
+
+**Mitigation:**
+
+- **Pre-specify** primary outcome
+- Adjust α for multiple tests (Bonferroni, FDR)
+- Report all tests, not just significant ones
+
+::: notes
+"This is rampant in evaluations: measure everything, then trumpet the one thing that worked."
+
+"Solution: decide what you're testing *before* you look at data."
+:::
+
+---
+
+## p-hacking & Researcher Degrees of Freedom
+
+**p-hacking:** Tweaking analysis until you get p<0.05
+
+**Examples:**
+
+- Trying different subgroups until one is significant
+- Adding/removing controls or outliers
+- Testing multiple time windows
+- Stopping data collection when p<0.05
+
+**Why it's bad:** Inflates false positives far above α=0.05
+
+**Protection:** Pre-analysis plan (PAP)
+
+::: notes
+"'Garden of forking paths': many analytic choices exist. If you explore until you find significance, you're p-hacking."
+
+"Pre-register your plan: outcomes, subgroups, method, sample size."
+:::
+
+---
+
+## The Garden of Forking Paths
+
+**Visualization:**
+
+```{mermaid}
+graph TD
+    A[Collect Data] --> B{Analyze as binary<br/>or continuous?}
+    B -->|Binary| C{Include outliers?}
+    B -->|Continuous| D{Transform variable?}
+    C -->|Yes| E{Control for age?}
+    C -->|No| F{Control for age?}
+    D -->|Log| G{Control for age?}
+    D -->|None| H{Control for age?}
+    E --> I[p=0.08]
+    F --> J[p=0.04]
+    G --> K[p=0.06]
+    H --> L[p=0.03]
+```
+
+**Result:** You find a "significant" path → false positive!
+
+::: notes
+"Each fork is a reasonable choice. But exploring all paths and reporting the best one is cheating."
+
+"Decide the path before looking at outcomes."
+:::
+
+---
+
+## Regression to the Mean
+
+**Phenomenon:** Extreme values tend to move toward average on re-measurement
+
+**Example:** Hotspot policing
+
+- Identify areas with highest crime last month
+- Intervene there
+- Crime drops next month
+
+**Is it the intervention?** Partly, but also: extreme months are often followed by less extreme months naturally.
+
+**Mitigation:** Use control areas, longer baselines, or regression discontinuity designs
+
+::: notes
+"This is subtle but pervasive."
+
+"Any time you select 'worst performers' then intervene, you'll see improvement—some of it is regression to mean."
+:::
+
+---
+
+## Measurement Drift
+
+**The issue:** Changing definitions or instruments mid-study
+
+**Examples:**
+
+- Redefining "engagement" after launch
+- Switching survey questions
+- Changing data collection process
+
+**Impact:** Pre/post comparisons are invalid
+
+**Prevention:** Lock in measurement approach at design phase; document any changes
+
+::: notes
+"If your thermometer changes midway, you can't tell if temperature changed or your measure did."
+
+"Consistency in measurement is crucial."
+:::
+
+---
+
+## Pre-Registration as Protection
+
+**Pre-analysis plan (PAP):** Document before seeing outcome data:
+
+- Primary and secondary outcomes
+- Subgroups of interest
+- Statistical methods
+- Sample size
+- Analysis code (where feasible)
+
+**Benefits:**
+
+- Prevents p-hacking
+- Builds credibility
+- Clarifies confirmatory vs exploratory
+
+::: notes
+"PAPs are standard in medical trials. Should be in policy evaluation too."
+
+"You can still do exploratory analysis—just label it as such."
+:::
+
+---
+
+# Bayesian Zoom-Out
+
+---
+
+## A Different Philosophical Frame
+
+**Frequentist (what we've been doing):**
+
+- Question: "How surprising is the data if H₀ were true?"
+- Outputs: p-values, CIs (based on imagined repeated sampling)
+- No direct probability about hypotheses
+
+**Bayesian:**
+
+- Question: "Given the data, how probable is H₁?"
+- Outputs: Posterior distributions, credible intervals
+- Direct probability statements about effects
+
+::: notes
+"We've used frequentist tools because they're standard in policy evaluation."
+
+"But Bayesian methods are increasingly popular. Here's a 10-minute tour."
+:::
+
+---
+
+## Bayes' Theorem (Intuition)
+
+**Core idea:** Update beliefs based on evidence
+
+$$
+\text{Posterior} \propto \text{Prior} \times \text{Likelihood}
+$$
+
+**Translation:**
+
+- **Prior:** What you believed before seeing data
+- **Likelihood:** How consistent data is with different effect sizes
+- **Posterior:** Updated belief after seeing data
+
+::: notes
+"Bayesian inference combines prior knowledge with new evidence."
+
+"Example: You think an intervention helps by 0–5pp (prior). After study, data shifts belief toward 3pp (posterior)."
+:::
+
+---
+
+## Bayesian vs Frequentist: Interpretation
+
+**Frequentist 95% CI:** "In repeated sampling, 95% of intervals would contain true effect"
+
+- Refers to the *method*, not the specific interval
+- Can't say "95% probability true effect is here"
+
+**Bayesian 95% Credible Interval:** "There's a 95% probability true effect lies in this range"
+
+- Direct probability statement about the parameter
+
+**Intuitive appeal:** Bayesian intervals say what people often *think* frequentist CIs say
+
+::: notes
+"This is why Bayesian methods are attractive: more intuitive interpretation."
+
+"But require specifying prior—can be subjective."
+:::
+
+---
+
+## Priors: Blessing or Curse?
+
+**Strength:** Incorporate existing evidence
+
+- Meta-analyses
+- Prior evaluations
+- Expert judgment
+
+**Concern:** Subjectivity
+
+- Different priors → different posteriors
+- Risk of bias
+
+**Response:** Sensitivity analysis—try different priors, see if conclusion robust
+
+::: notes
+"In practice, with enough data, prior matters less—data swamps prior."
+
+"With weak data, prior matters a lot."
+
+"Transparent priors + sensitivity checks = credible Bayesian analysis."
+:::
+
+---
+
+## When to Consider Bayesian Approaches
+
+**Good fits:**
+
+- Accumulating evidence across studies (Bayesian meta-analysis)
+- Small samples where prior info helps
+- Decision-making under uncertainty (expected value calculations)
+- Adaptive trials (update as data comes in)
+
+**Practical reality:** Most policy evaluation still uses frequentist methods
+
+- Familiarity
+- Standard in guidelines (Magenta Book, etc.)
+- Easier to explain to non-technical audiences
+
+::: notes
+"You don't need to become a Bayesian to do good evaluation."
+
+"But know it exists, and that it offers different (sometimes better) tools for certain problems."
+:::
+
+---
+
+## Further Learning
+
+**If interested in Bayesian methods:**
+
+- *Statistical Rethinking* by Richard McElreath (accessible)
+- *Doing Bayesian Data Analysis* by John Kruschke
+- Online: StatModeling blog (Andrew Gelman)
+
+**For evaluation work:** Frequentist methods remain standard and sufficient for most civic tech projects
+
+::: notes
+"Today's goal: awareness. You don't need to master Bayes now."
+
+"Takeaway: there are different statistical philosophies. Frequentist is dominant but not the only way."
+:::
+
+---
+
+# Bringing It All Together
+
+---
+
+## The Statistical Evaluation Toolkit
+
+**We've covered:**
+
+1. ✅ Uncertainty & variability — noise vs signal
+2. ✅ Probability — language of chance
+3. ✅ Sampling — who we measure
+4. ✅ Inference — p-values, CIs, interpretation
+5. ✅ Power — planning for detection
+6. ✅ Pitfalls — common errors to avoid
+7. ✅ Bayesian perspective — alternative lens
+
+**Next steps:** Apply these to real evaluation designs
+
+::: notes
+"This was the theory spine. Next sessions: designing randomized trials, quasi-experimental methods, measurement."
+
+"These stats concepts underpin all of that work."
+:::
+
+---
+
+## Decision Framework: Choosing Methods
+
+**When planning an evaluation, ask:**
+
+1. **Can I randomize?** → RCT with power analysis
+2. **Is there natural variation?** → Quasi-experimental, check balance
+3. **What's my outcome type?** → Determines test choice
+4. **How large is my sample?** → Power calculation, adjust expectations
+5. **What biases exist?** → Sampling strategy, measurement plan
+
+**Stats informs design, design enables stats.**
+
+::: notes
+"Statistics isn't separate from design. They're intertwined."
+
+"Good evaluation starts with: What's my question, who do I sample, how do I randomize (if possible), what's my power?"
+:::
+
+---
+
+## Communicating Statistical Results
+
+**What to include:**
+
+- **Effect size** (magnitude + direction)
+- **Uncertainty** (CI or SE)
+- **Sample size** and response rate
+- **Method** (in brief)
+- **Caveats** (limitations, assumptions)
+
+**What to avoid:**
+
+- P-values without context
+- "Marginally significant" weasel words
+- Overconfident causal language from weak designs
+
+**Audience matters:** Policymakers need the "so what?", not the t-statistic.
+
+::: notes
+"Your job: translate stats into decision-relevant language."
+
+"Example: Instead of 't=2.3, p=0.02', say 'Response time improved by an average of 3 days (95% CI: 0.5 to 5.5 days), a meaningful improvement for residents.'"
+:::
+
+---
+
+## Evaluation Integrity Checklist
+
+Before running analysis, confirm:
+
+- [ ] Pre-specified primary outcome
+- [ ] Sample size justified (power calc)
+- [ ] Sampling method documented
+- [ ] Randomization protocol (if applicable)
+- [ ] Measurement consistent pre/post
+- [ ] Analysis plan written down
+- [ ] Ethical approval obtained
+- [ ] Data quality checks planned
+
+**Integrity = Credibility**
+
+::: notes
+"This checklist prevents most pitfalls we discussed."
+
+"Treat it like a pilot's pre-flight checklist. Non-negotiable."
+:::
+
+---
+
+## Worked Example Revisited: Service Form
+
+**Recall our earlier question:**
+
+- Before: 42 completions/day (SD=8)
+- After: 47 completions/day (first week)
+
+**Now we can:**
+
+1. Calculate difference in means: +5
+2. Compute SE of difference: √(8²/60 + 8²/7) ≈ 3.2
+3. Test statistic: 5/3.2 = 1.56
+4. p-value ≈ 0.12 (two-tailed t-test)
+5. 95% CI: 5 ± 1.96(3.2) ≈ (−1.3, +11.3)
+
+**Interpretation:** Insufficient evidence of improvement. CI includes zero. Need more data or longer follow-up.
+
+::: notes
+"This is how the pieces fit together."
+
+"We quantified noise (SD=8), calculated uncertainty (SE), tested (p=0.12), and gave a range (CI)."
+
+"Conclusion: suggestive but not conclusive. Design a longer evaluation."
+:::
+
+---
+
+## Your Turn: Apply to Your Project
+
+**Reflection exercise (5 minutes):**
+
+1. What's your primary outcome?
+2. What's a plausible effect size worth detecting?
+3. What's your sampling strategy?
+4. What are the biggest threats to validity?
+5. What's one statistical pitfall you'll avoid?
+
+::: notes
+Give participants 5 minutes of silent writing time.
+
+Optional: Have 2–3 people share one insight.
+
+This cements learning through application.
+:::
+
+---
+
+## Key Takeaways
+
+✅ **Statistics quantifies uncertainty** — essential for credible evaluation
+
+✅ **Random sampling eliminates bias** — who you measure matters
+
+✅ **CIs > p-values alone** — always report effect sizes and ranges
+
+✅ **Power planning prevents wasted effort** — design for detection
+
+✅ **Pre-registration prevents p-hacking** — decide before you peek
+
+✅ **Communication is part of the science** — translate findings for action
+
+> *"Good statistics turns noise into knowledge and knowledge into policy."*
+
+---
+
+## Next Session Preview
+
+**Next up: Designing Randomized Evaluations**
+
+Building on today's stats foundation, we'll cover:
+
+- RCT design principles
+- Randomization mechanics
+- Balance checks
+- Compliance and attrition
+- Ethics and implementation
+
+**Prep:** Think about a project where randomization *might* be feasible.
+
+::: notes
+"Today gave you the statistical grammar. Next week: applying it to experimental design."
+:::
+
+---
+
+## Resources & Further Reading
+
+**Accessible:**
+
+- Angrist & Pischke, *Mastering 'Metrics*
+- Gertler et al., *Impact Evaluation in Practice* (World Bank, free PDF)
+- J-PAL Research Resources (online)
+
+**Technical:**
+
+- Imbens & Rubin, *Causal Inference for Statistics*
+- Gelman & Hill, *Data Analysis Using Regression*
+
+**UK policy:**
+
+- HM Treasury Magenta Book (evaluation guidance)
+- What Works Network resources
+
+::: notes
+"Don't feel you need to read all of these. Pick one that matches your level."
+
+"Mastering 'Metrics is fantastic and very readable."
+:::
+
+---
+
+## Questions?
+
+**Open floor for questions:**
+
+- Concepts unclear?
+- Specific evaluation scenarios?
+- Tool requests?
+
+**Office hours:** [Insert your availability]
+
+**Slack channel:** #evaluation-stats
+
+::: notes
+Take 5–10 minutes for Q&A.
+
+Encourage questions on their own projects.
+
+Remind: "No question is too basic. This stuff is hard!"
+:::
+
+---
+
+## Thank You!
+
+> *"Statistics is the science of learning from experience, especially experience that arrives a little bit at a time."*
+> — Frederick Mosteller
+
+**See you next session!**
+
+::: notes
+End on a positive, encouraging note.
+
+Remind them: statistical thinking is a skill, improves with practice.
+
+Thank them for engagement.
+:::

@@ -1,35 +1,25 @@
 ---
-title: "Public Sector Innovation - Module Guide"
+title: "Evidence and Impact - Module Guide"
 ---
 
 ![](images/newspeak_house_logo.png){width=250px style="background-color: white; padding: 15px; border-radius: 8px;"}
 
-This page contains the slide content for the Newspeak House [Public Sector Innovation module](https://docs.google.com/document/d/1qwU0hkx4lfD_NU5VuI5oxIhhxwV0WIBXCDrmQc02CTA/edit?usp=sharing).
+This page contains the slide content for the Newspeak House **Evidence and Impact** module (2025-26).
 
-## Module Slides
-
-### Core Module Content
-
-- **[Delivering Innovation in Public Institutions](intro/intro.qmd)**  
-  Introduction to the module covering implementation challenges, delivery obstacles, and how to navigate pushback when implementing innovation in public sector organizations.
-
-### Evaluation Sessions
+## Module Slides (2025-26)
 
 - **[Evaluation & Impact in Civic Technology](intro_to_evaluation/index.qmd)** | [Session Summary (Oct 14, 2025)](intro_to_evaluation/summary.qmd)  
   Introduction to evaluation approaches in civic tech, covering causality, mixed methods, and designing meaningful metrics. Includes case studies from mySociety, CitizenLab, and Sure Start.
 
-- **[Evaluation Masterclass](evaluation_masterclass/index.qmd)**  
-  Deep dive into rigorous evaluation methods including RCTs, quasi-experimental designs, and treatment effects. Features case studies from Read Easy UK, Code Club, Skills for Life, and D.A.R.E.
+- **[Statistics 101 for Evaluation](statistics_101_for_evaluation/index.qmd)** | Session: Nov 2, 2025  
+  Foundational statistics for rigorous evaluation: understanding uncertainty, probability, sampling, significance testing, confidence intervals, and statistical power. Includes interactive demonstrations and practical examples from civic tech contexts.
 
 ---
 
-## About the Module
+## Previous Year's Module: Public Sector Innovation (2024-25)
 
-The Public Sector Innovation module focuses on **implementing and delivering innovation** in public institutions, rather than building innovation itself. Key themes include:
+- **[Delivering Innovation in Public Institutions](intro/intro.qmd)**  
+  Introduction to the module covering implementation challenges, delivery obstacles, and how to navigate pushback when implementing innovation in public sector organizations.
 
-- Implementation and delivery challenges
-- Managing internal and external pushback
-- Understanding incentives and resistance
-- Learning from both successes and failures
-
-For more information, see the [full module guide](https://docs.google.com/document/d/1qwU0hkx4lfD_NU5VuI5oxIhhxwV0WIBXCDrmQc02CTA/edit?usp=sharing).
+- **[Evaluation Masterclass](evaluation_masterclass/index.qmd)**  
+  Deep dive into rigorous evaluation methods including RCTs, quasi-experimental designs, and treatment effects. Features case studies from Read Easy UK, Code Club, Skills for Life, and D.A.R.E.

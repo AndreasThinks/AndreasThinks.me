@@ -19,6 +19,8 @@ website:
         file: about.qmd
       - text: "Talks & Publications"
         file: recent_work.qmd
+      - text: "Teaching"
+        file: slides/index.qmd
     right:
       - text: "{{< fa brands mastodon size=xl >}}" 
         href: https://fosstodon.org/@AndreasThinks
