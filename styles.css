@@ -108,6 +108,18 @@ a:focus {
   text-shadow: 0 0 10px rgba(123, 252, 200, 0.3);
 }
 
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a,
+.listing-title a,
+.listing-subtitle a,
+.navbar a {
+  border-bottom: none;
+}
+
 .intro-panel {
   display: grid;
   grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
