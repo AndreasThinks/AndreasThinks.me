@@ -1,57 +1,97 @@
 const styles = `
-:root {
-  /* Inherit from Quarto theme where possible */
-  --font-color: var(--bs-body-color, #5d686f);
-  --font-size: var(--bs-body-font-size, 1rem);
-  --block-border-width: var(--bs-border-width, 1px);
-  --block-border-radius: var(--bs-border-radius, 0.375rem);
-  --block-border-color: var(--bs-border-color, rgba(0, 0, 0, 0.125));
-  --block-background-color: var(--bs-tertiary-bg, #f8f9fa);
-  --comment-indent: 40px;
-  
-  /* Platform-specific colors that maintain brand identity */
-  --mastodon-color: #563acc;
-  --bluesky-color: #0085ff;
-  
-  /* Interactive element colors */
-  --link-color: var(--bs-link-color, #0d6efd);
-  --link-hover-color: var(--bs-link-hover-color, #0a58ca);
-  --replies-active-color: var(--bs-primary, #0d6efd);
-  --reblogs-active-color: var(--bs-info, #0dcaf0);
-  --likes-active-color: var(--bs-warning, #ffc107);
+social-comments {
+  display: block;
+  margin-top: 3rem;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  color: var(--comment-font-color, var(--text-muted, #9ba9c6));
+  --comment-font-color: var(--text-muted, #9ba9c6);
+  --comment-heading-color: var(--text-primary, #f4f7ff);
+  --comment-background: var(--bg-panel, rgba(10, 15, 30, 0.72));
+  --comment-border-color: var(--border-soft, rgba(123, 252, 200, 0.18));
+  --comment-radius: var(--radius-md, 14px);
+  --comment-radius-sm: var(--radius-sm, 8px);
+  --comment-link: var(--accent, #7bfcca);
+  --comment-link-hover: var(--accent-strong, #32ffc7);
+  --mastodon-color: #8c85ff;
+  --bluesky-color: #00a2ff;
+  --comment-indent: 48px;
+}
+
+social-comments h2 {
+  color: var(--comment-heading-color);
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  margin-bottom: 0.75rem;
+}
+
+social-comments p {
+  color: var(--comment-font-color);
+  max-width: 640px;
+  line-height: 1.65;
+}
+
+social-comments a {
+  color: var(--comment-link);
+  text-decoration: none;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+social-comments a:hover,
+social-comments a:focus {
+  color: var(--comment-link-hover);
+  text-shadow: 0 0 12px rgba(123, 252, 200, 0.4);
 }
 
 #social-comments-list {
-  margin: 0 auto;
-  margin-top: 1rem;
+  margin-top: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.comments-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background: rgba(123, 252, 200, 0.08);
+  border: 1px solid rgba(123, 252, 200, 0.2);
+  border-radius: var(--comment-radius);
+  padding: 0.85rem 1.1rem;
+  box-shadow: var(--shadow-glow, 0 0 25px rgba(123, 252, 200, 0.15));
+}
+
+.comments-stats div {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--comment-font-color);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.comments-stats svg {
+  color: var(--comment-link);
 }
 
 .social-comment {
-  background-color: var(--block-background-color);
-  border-radius: var(--block-border-radius);
-  border: var(--block-border-width) var(--block-border-color) solid;
-  padding: 1rem;
-  margin-bottom: 1.5rem;
+  background: var(--comment-background);
+  border-radius: var(--comment-radius);
+  border: 1px solid var(--comment-border-color);
+  padding: 1.35rem;
   display: flex;
   flex-direction: column;
-  color: var(--font-color);
-  font-size: var(--font-size);
-  max-width: 100%;
-  box-sizing: border-box;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-}
-
-.social-comment p {
-  margin-bottom: 0px;
+  gap: 1.1rem;
+  color: var(--comment-font-color);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-glow, 0 0 25px rgba(123, 252, 200, 0.15));
 }
 
 .social-comment .author {
-  padding-top: 0;
   display: grid;
-  grid-template-columns: 48px 1fr auto;
+  grid-template-columns: 56px 1fr auto;
   grid-template-rows: auto auto;
-  gap: 0.5rem;
+  gap: 0.5rem 1rem;
   align-items: start;
 }
 
@@ -65,29 +105,32 @@ const styles = `
 }
 
 .social-comment .author .avatar img {
-  width: 48px;
-  height: 48px;
-  border-radius: 5px;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--comment-radius-sm);
+  border: 1px solid var(--comment-border-color);
+  box-shadow: 0 6px 16px rgba(5, 6, 13, 0.55);
 }
 
 .social-comment .author .details {
   grid-column: 2;
   grid-row: 1 / span 2;
-  display: grid;
-  grid-template-rows: auto auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
   min-width: 0;
 }
 
 .social-comment .author .details .name {
-  font-weight: bold;
-  grid-row: 1;
+  color: var(--comment-heading-color);
+  font-weight: 600;
 }
 
 .social-comment .author .details .user {
-  color: var(--font-color);
-  opacity: 0.8;
-  font-size: medium;
-  grid-row: 2;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--comment-font-color);
+  opacity: 0.7;
 }
 
 .social-comment .platform-indicator {
@@ -96,32 +139,46 @@ const styles = `
   display: flex;
   justify-content: flex-end;
   align-items: flex-start;
-  margin-bottom: 0.25rem;
+  font-size: 1rem;
+}
+
+.social-comment .platform-indicator i {
+  font-size: 1.2rem;
 }
 
 .social-comment .author .date {
   grid-column: 3;
   grid-row: 2;
-  font-size: x-small;
+  font-size: 0.75rem;
   text-align: right;
-  white-space: normal;
   line-height: 1.2;
+  color: var(--comment-font-color);
+  opacity: 0.65;
 }
 
 .social-comment .content {
-  margin: 0.75rem 0;
+  margin: 0;
   width: 100%;
+  line-height: 1.65;
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-word;
 }
 
+.social-comment .content p {
+  margin: 0 0 0.75rem;
+}
+
+.social-comment .content p:last-child {
+  margin-bottom: 0;
+}
+
 .social-comment .attachments {
-  margin: 0.5rem 0;
+  margin: 0;
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 .social-comment .attachments > * {
@@ -129,42 +186,75 @@ const styles = `
   max-width: 100%;
 }
 
-.social-comment .attachments img {
-  max-width: 100%;
+.social-comment .attachments img,
+.social-comment .attachments video,
+.social-comment .attachments audio {
+  border-radius: var(--comment-radius-sm);
+  border: 1px solid rgba(123, 252, 200, 0.18);
 }
 
-.social-comment .content p:first-child {
-  margin-top: 0;
-  margin-bottom: 0;
+.social-comment .status {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .social-comment .status > div {
-  display: inline-block;
-  margin-right: 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--comment-font-color);
+}
+
+.social-comment .status svg {
+  width: 16px;
+  height: 16px;
 }
 
 .social-comment .status a {
-  color: var(--font-color);
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   text-decoration: none;
 }
 
-.social-comment .status .replies.active a {
-  color: var(--replies-active-color);
-}
-
+.social-comment .status .replies.active a,
 .social-comment .status .reblogs.active a,
-.social-comment .status .reposts.active a {
-  color: var(--reblogs-active-color);
-}
-
+.social-comment .status .reposts.active a,
 .social-comment .status .favourites.active a,
 .social-comment .status .likes.active a {
-  color: var(--likes-active-color);
+  color: var(--comment-link);
 }
 
+@media (max-width: 600px) {
+  social-comments {
+    --comment-indent: 24px;
+  }
 
-.social-comment .platform-indicator i {
-  font-size: 16px;
+  .social-comment {
+    padding: 1.1rem;
+  }
+
+  .social-comment .author {
+    grid-template-columns: 48px 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 0.5rem;
+  }
+
+  .social-comment .platform-indicator {
+    grid-column: 2;
+    grid-row: 1;
+    justify-content: flex-start;
+  }
+
+  .social-comment .author .date {
+    grid-column: 2;
+    grid-row: 3;
+    text-align: left;
+  }
 }
 `;
 
@@ -293,17 +383,6 @@ class SocialComments extends HTMLElement {
         // Add stats container
         const statsContainer = document.createElement('div');
         statsContainer.className = 'comments-stats';
-        statsContainer.style.cssText = `
-          display: flex;
-          gap: 20px;
-          margin-bottom: 15px;
-          color: var(--font-color);
-          font-size: calc(var(--font-size) * 0.9);
-          padding: var(--bs-card-spacer-y, 1rem) var(--bs-card-spacer-x, 1rem);
-          background: var(--block-background-color);
-          border-radius: var(--block-border-radius);
-          border: var(--block-border-width) var(--block-border-color) solid;
-        `;
 
         // Add stats with icons
         statsContainer.innerHTML = `
