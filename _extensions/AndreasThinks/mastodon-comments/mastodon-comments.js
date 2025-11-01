@@ -1,45 +1,94 @@
 const styles = `
-:root {
-  --font-color: #5d686f;
-  --font-size: 1.0rem;
+mastodon-comments {
+  display: block;
+  margin-top: 3rem;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  color: var(--mastodon-font-color, var(--text-muted, #9ba9c6));
+  --mastodon-font-color: var(--text-muted, #9ba9c6);
+  --mastodon-heading-color: var(--text-primary, #f4f7ff);
+  --mastodon-background: var(--bg-panel, rgba(10, 15, 30, 0.72));
+  --mastodon-border-color: var(--border-soft, rgba(123, 252, 200, 0.18));
+  --mastodon-radius: var(--radius-md, 14px);
+  --mastodon-radius-sm: var(--radius-sm, 8px);
+  --mastodon-link: var(--accent, #7bfcca);
+  --mastodon-link-hover: var(--accent-strong, #32ffc7);
+  --comment-indent: 48px;
+}
 
-  --block-border-width: 1px;
-  --block-border-radius: 3px;
-  --block-border-color: #ededf0;
-  --block-background-color: #f7f8f8;
+mastodon-comments h2 {
+  color: var(--mastodon-heading-color);
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  margin-bottom: 0.75rem;
+}
 
-  --comment-indent: 40px;
+mastodon-comments p {
+  color: var(--mastodon-font-color);
+  max-width: 640px;
+  line-height: 1.65;
+}
+
+mastodon-comments a {
+  color: var(--mastodon-link);
+  text-decoration: none;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+mastodon-comments a:hover,
+mastodon-comments a:focus {
+  color: var(--mastodon-link-hover);
+  text-shadow: 0 0 12px rgba(123, 252, 200, 0.4);
 }
 
 #mastodon-stats {
-  text-align: center;
-  font-size: calc(var(--font-size) * 2)
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+#mastodon-stats > div {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.85rem;
+  background: rgba(123, 252, 200, 0.08);
+  border: 1px solid rgba(123, 252, 200, 0.2);
+  border-radius: var(--mastodon-radius-sm);
+  color: var(--mastodon-font-color);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+#mastodon-stats a {
+  color: inherit;
 }
 
 #mastodon-comments-list {
-  margin: 0 auto;
-  margin-top: 1rem;
+  margin-top: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
 }
 
 .mastodon-comment {
-  background-color: var(--block-background-color);
-  border-radius: var(--block-border-radius);
-  border: var(--block-border-width) var(--block-border-color) solid;
-  padding: 20px;
-  margin-bottom: 1.5rem;
+  background: var(--mastodon-background);
+  border-radius: var(--mastodon-radius);
+  border: 1px solid var(--mastodon-border-color);
+  padding: 1.35rem;
+  color: var(--mastodon-font-color);
   display: flex;
   flex-direction: column;
-  color: var(--font-color);
-  font-size: var(--font-size);
-}
-
-.mastodon-comment p {
-  margin-bottom: 0px;
+  gap: 1.1rem;
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-glow, 0 0 25px rgba(123, 252, 200, 0.15));
 }
 
 .mastodon-comment .author {
-  padding-top:0;
-  display:flex;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
 }
 
 .mastodon-comment .author a {
@@ -47,71 +96,123 @@ const styles = `
 }
 
 .mastodon-comment .author .avatar img {
-  margin-right:1rem;
-  min-width:60px;
-  border-radius: 5px;
+  width: 60px;
+  height: 60px;
+  border-radius: var(--mastodon-radius-sm);
+  border: 1px solid var(--mastodon-border-color);
+  box-shadow: 0 6px 16px rgba(5, 6, 13, 0.55);
 }
 
 .mastodon-comment .author .details {
   display: flex;
   flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
 }
 
 .mastodon-comment .author .details .name {
-  font-weight: bold;
+  color: var(--mastodon-heading-color);
+  font-weight: 600;
 }
 
 .mastodon-comment .author .details .user {
-  color: #5d686f;
-  font-size: medium;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--mastodon-font-color);
+  opacity: 0.7;
 }
 
 .mastodon-comment .author .date {
   margin-left: auto;
-  font-size: small;
+  font-size: 0.75rem;
+  color: var(--mastodon-font-color);
+  opacity: 0.65;
 }
 
 .mastodon-comment .content {
-  margin: 15px 20px;
+  line-height: 1.65;
+}
+
+.mastodon-comment .content p {
+  margin: 0 0 0.75rem;
+}
+
+.mastodon-comment .content p:last-child {
+  margin-bottom: 0;
 }
 
 .mastodon-comment .attachments {
-  margin: 0px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .mastodon-comment .attachments > * {
-  margin: 0px 10px;
-}
-
-.mastodon-comment .attachments img {
+  margin: 0;
   max-width: 100%;
 }
 
-.mastodon-comment .content p:first-child {
-  margin-top:0;
-  margin-bottom:0;
+.mastodon-comment .attachments img,
+.mastodon-comment .attachments video,
+.mastodon-comment .attachments audio {
+  border-radius: var(--mastodon-radius-sm);
+  border: 1px solid rgba(123, 252, 200, 0.18);
 }
 
-.mastodon-comment .status > div, #mastodon-stats > div {
-  display: inline-block;
-  margin-right: 15px;
+.mastodon-comment .status {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
 }
 
-.mastodon-comment .status a, #mastodon-stats a {
-  color: #5d686f;
-  text-decoration: none;
+.mastodon-comment .status > div {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--mastodon-font-color);
 }
 
-.mastodon-comment .status .replies.active a, #mastodon-stats .replies.active a {
-  color: #003eaa;
+.mastodon-comment .status a {
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
-.mastodon-comment .status .reblogs.active a, #mastodon-stats .reblogs.active a {
-  color: #8c8dff;
+.mastodon-comment .status svg,
+.mastodon-comment .status i {
+  width: 16px;
+  height: 16px;
 }
 
-.mastodon-comment .status .favourites.active a, #mastodon-stats .favourites.active a {
-  color: #ca8f04;
+.mastodon-comment .status .replies.active a,
+.mastodon-comment .status .reblogs.active a,
+.mastodon-comment .status .favourites.active a,
+#mastodon-stats .replies.active a,
+#mastodon-stats .reblogs.active a,
+#mastodon-stats .favourites.active a {
+  color: var(--mastodon-link);
+}
+
+@media (max-width: 600px) {
+  mastodon-comments {
+    --comment-indent: 24px;
+  }
+
+  .mastodon-comment {
+    padding: 1.1rem;
+  }
+
+  .mastodon-comment .author {
+    flex-wrap: wrap;
+  }
+
+  .mastodon-comment .author .date {
+    width: 100%;
+    margin-left: 0;
+  }
 }
 `;
 
@@ -142,7 +243,7 @@ class MastodonComments extends HTMLElement {
           href="https://${this.host}/@${this.user}/${this.tootId}">post</a>.
       </p>
       <div id="mastodon-stats"></div>
-      <p id="mastodon-comments-list"></p>
+      <div id="mastodon-comments-list"></div>
     `;
 
     const comments = document.getElementById("mastodon-comments-list");
