@@ -16,25 +16,47 @@ format:
       ![](../images/newspeak_house_logo.png){height=40px}
 ---
 
-# Statistics 101 for Evaluation
+# Statistics 101 for Evaluation {data-background-color="#1e3a5f"}
 
+::: {.r-fit-text}
 > *"Statistics is the grammar of uncertainty. Today, we learn to speak it."*
+:::
 
 ---
 
-## Why Statistics in Evaluation?
+## Why Statistics in Evaluation? {.smaller}
 
-Statistics helps us answer the core question:
+::: {.columns}
+::: {.column width="50%"}
+### {{< fa bullseye >}} The Core Question
 
 **"Did our intervention cause the outcome we observed?"**
 
-Without stats, we can't distinguish:
+::: {.callout-important appearance="minimal"}
+## Without Statistics...
+We can't distinguish:
 
-- Real effects from random noise
-- Causation from correlation
+- Real effects from random noise  
+- Causation from correlation  
 - Meaningful change from measurement error
+:::
+:::
 
-> Statistics quantifies *uncertainty* and builds *credible causal claims*.
+::: {.column width="50%"}
+### {{< fa chart-line >}} The Solution
+
+Statistics provides:
+
+- {{< fa check-circle >}} Quantification of *uncertainty*
+- {{< fa check-circle >}} Building *credible causal claims*
+- {{< fa check-circle >}} Evidence-based decisions
+
+::: {.callout-tip appearance="minimal"}
+## Key Insight
+Statistics is how we separate **signal** from **noise**
+:::
+:::
+:::
 
 ::: notes
 Open by asking: "Has anyone ever looked at data from a project and wondered: is that real or just chance?"
@@ -48,17 +70,40 @@ This isn't a full evaluation design session. It's the statistical spine that sup
 
 ## What We're Building Today
 
-**Our agenda:**
+::: {.r-fit-text}
+**Seven Pillars of Statistical Evaluation**
+:::
 
-1. **Uncertainty & Variability** — understanding noise vs signal
-2. **Probability Fundamentals** — the language of chance
-3. **Sampling & Randomness** — who we measure matters
-4. **Significance & Confidence** — interpreting statistical tests
-5. **Power & Sample Size** — planning for detection
-6. **Common Pitfalls** — avoiding false discoveries
-7. **Bayesian Perspective** — a different lens
+::: {.columns}
+::: {.column width="50%"}
+1. {{< fa wave-square >}} **Uncertainty & Variability**  
+   Understanding noise vs signal
 
-All grounded in **civic tech evaluation scenarios**.
+2. {{< fa dice >}} **Probability Fundamentals**  
+   The language of chance
+
+3. {{< fa users >}} **Sampling & Randomness**  
+   Who we measure matters
+
+4. {{< fa magnifying-glass-chart >}} **Significance & Confidence**  
+   Interpreting statistical tests
+:::
+
+::: {.column width="50%"}
+5. {{< fa battery-three-quarters >}} **Power & Sample Size**  
+   Planning for detection
+
+6. {{< fa triangle-exclamation >}} **Common Pitfalls**  
+   Avoiding false discoveries
+
+7. {{< fa brain >}} **Bayesian Perspective**  
+   A different lens
+:::
+:::
+
+::: {.callout-note appearance="simple"}
+All grounded in **civic tech evaluation scenarios** — service forms, outreach emails, dashboards, appointment reminders
+:::
 
 ::: notes
 "We'll use examples throughout: service forms, outreach emails, dashboards, appointment reminders. Real evaluation contexts."
@@ -68,19 +113,44 @@ Reassure: "This is theory-forward but practical. Each concept connects to evalua
 
 ---
 
-# Pillar 1: Uncertainty & Variability
+# Pillar 1: Uncertainty & Variability {data-background-color="#2c5f2d"}
+
+::: {.r-fit-text}
+{{< fa wave-square >}}
+:::
 
 ---
 
-## Everything Varies
+## Everything Varies {.smaller}
+
+::: {.columns}
+::: {.column width="40%"}
+### {{< fa chart-line >}} Natural Fluctuation
 
 Even without any changes, measurements bounce around:
 
+::: {.incremental}
 - Daily form completions fluctuate
-- Response rates differ week to week
+- Response rates differ week to week  
 - Complaint volumes vary by season
+:::
+:::
 
-**The challenge:** Separate *intervention effects* from *natural variability*.
+::: {.column width="60%"}
+### {{< fa crosshairs >}} The Challenge
+
+::: {.callout-warning}
+## Separate Signal from Noise
+How do we distinguish **intervention effects** from **natural variability**?
+
+This is the fundamental problem of evaluation.
+:::
+
+::: {.fragment}
+**Answer:** We need to *quantify* the noise first, then detect signal above that level.
+:::
+:::
+:::
 
 ::: notes
 Draw on chalkboard: a horizontal line (the "true" average) with dots scattered above and below it.
@@ -90,22 +160,44 @@ Ask: "What causes this scatter in your own projects?"
 
 ---
 
-## Key Concepts: Variance & Standard Deviation
+## Key Concepts: Variance & Standard Deviation {.smaller}
 
-**Variance (σ²):** Average squared distance from the mean
+::: {.columns}
+::: {.column width="50%"}
+### {{< fa square-root-alt >}} Variance (σ²)
 
+Average squared distance from the mean
+
+::: {.incremental}
 - Measures spread in squared units
 - Always positive
+- Hard to interpret directly
+:::
+:::
 
-**Standard Deviation (σ):** Square root of variance
+::: {.column width="50%"}
+### {{< fa ruler >}} Standard Deviation (σ)
 
+Square root of variance
+
+::: {.incremental}
 - Same units as original measurement
 - Intuitive scale of "typical deviation"
+- **This is what we use for interpretation**
+:::
+:::
+:::
 
-**Example:** Daily completions average 100, with σ = 15
+::: {.fragment}
+::: {.callout-note icon="false"}
+## {{< fa clipboard-check >}} Example: Service Form Completions
 
-- Most days: 85–115 completions
-- Extreme days: 70–130 completions
+**Daily completions average 100, with σ = 15**
+
+- **Typical days:** 85–115 completions (±1 SD)
+- **Extreme days:** 70–130 completions (±2 SD)
+:::
+:::
 
 ::: notes
 "Before testing anything, quantify the noise. If completion rates normally vary by ±15 per day, seeing 110 completions isn't evidence of success."
@@ -115,23 +207,47 @@ Prompt: "Think of a metric in your project. What's a 'normal' amount of day-to-d
 
 ---
 
-## Signal vs Noise
+## Signal vs Noise {.smaller}
 
-When evaluating an intervention:
+::: {.columns}
+::: {.column width="30%"}
+### {{< fa bullseye >}} Definitions
 
 **Signal:** The real effect of your intervention
 
 **Noise:** Random variation, measurement error, external factors
+:::
 
-**Goal:** Detect signal *above* the noise level
+::: {.column width="70%"}
+### {{< fa chart-line >}} Visual Comparison
 
-**Visualization:**
-
+::: {.fragment}
+**Without intervention:** Background noise only
 ```
-Without intervention: ████████████████ (noise only)
-With small effect:    ████████████████▲ (hard to see)
-With large effect:    ████████████████▲▲▲▲ (clear signal)
+█████████████████████████
 ```
+:::
+
+::: {.fragment}
+**Small effect:** Hard to distinguish from noise
+```
+█████████████████████████▲
+```
+:::
+
+::: {.fragment}
+**Large effect:** Clear signal above noise
+```
+█████████████████████████▲▲▲▲▲
+```
+:::
+
+::: {.callout-tip appearance="minimal"}
+## Goal
+Detect signal **above** the noise level
+:::
+:::
+:::
 
 ::: notes
 "Statistical methods help us ask: Is that bump signal or just noise?"
@@ -141,22 +257,43 @@ Real example: "A council tweaks copy on a benefits form. Even without the change
 
 ---
 
-## Worked Example: Service Form
+## Worked Example: Service Form {.smaller}
 
-**Scenario:** You redesign an online reporting form for local council
+::: {.callout-note icon="false"}
+## {{< fa file-alt >}} Scenario
+You redesign an online reporting form for local council
+:::
 
-**Before redesign:** 
+::: {.columns}
+::: {.column width="50%"}
+### {{< fa calendar-xmark >}} Before Redesign
 
-- Average daily completions: 42
-- Standard deviation: 8
-- (Based on 60 days of data)
+- **Average daily completions:** 42
+- **Standard deviation:** 8
+- **Data period:** 60 days
 
-**After redesign (first week):**
+::: {.fragment}
+**Typical range:** 34–50 completions/day
+:::
+:::
 
-- Average daily completions: 47
-- Is this meaningful or just noise?
+::: {.column width="50%"}
+### {{< fa calendar-check >}} After Redesign (Week 1)
 
-**Answer:** Difference is 5, which is less than 1 SD. Could easily be random variation.
+- **Average daily completions:** 47
+- **Difference:** +5 completions
+
+::: {.fragment}
+### {{< fa question-circle >}} Is this meaningful?
+:::
+
+::: {.fragment}
+::: {.callout-warning appearance="simple"}
+**Answer:** Difference is 5, which is **less than 1 SD**. Could easily be random variation.
+:::
+:::
+:::
+:::
 
 ::: notes
 "This is why we need proper statistical tests. Eyeballing differences isn't enough."
@@ -166,25 +303,55 @@ Real example: "A council tweaks copy on a benefits form. Even without the change
 
 ---
 
-## Sources of Variation
+## Sources of Variation {.smaller}
 
-**Random (stochastic) variation:**
+::: {.columns}
+::: {.column width="33%"}
+### {{< fa dice >}} Random Variation
 
+::: {.incremental}
 - Natural fluctuations
 - Sampling error
 - Measurement error
+:::
 
-**Systematic variation:**
+::: {.fragment}
+::: {.callout-note appearance="minimal"}
+Unpredictable, averages out
+:::
+:::
+:::
 
+::: {.column width="33%"}
+### {{< fa calendar-alt >}} Systematic Variation
+
+::: {.incremental}
 - Seasonal patterns
 - Day-of-week effects
-- External events (holidays, weather, news)
+- External events
+- Holidays, weather, news
+:::
 
-**Intervention effects:**
+::: {.fragment}
+::: {.callout-note appearance="minimal"}
+Predictable, needs accounting
+:::
+:::
+:::
 
-- The thing we actually want to measure!
+::: {.column width="34%"}
+### {{< fa bullseye >}} Intervention Effects
 
-> Good evaluation design isolates intervention effects from other sources.
+The thing we **actually want to measure!**
+
+::: {.fragment}
+::: {.callout-important appearance="minimal"}
+## The Goal
+Isolate intervention effects from other sources
+:::
+:::
+:::
+:::
 
 ::: notes
 Ask class: "In your projects, what are two sources of noise you need to account for?"
@@ -194,21 +361,44 @@ Give 2 minutes for them to write down answers.
 
 ---
 
-# Pillar 2: Probability Fundamentals
+# Pillar 2: Probability Fundamentals {data-background-color="#5d3a8f"}
+
+::: {.r-fit-text}
+{{< fa dice >}}
+:::
 
 ---
 
-## Probability: The Grammar of Uncertainty
+## Probability: The Grammar of Uncertainty {.smaller}
 
-**Probability** expresses how likely events are:
+::: {.columns}
+::: {.column width="40%"}
+### {{< fa ruler-horizontal >}} The Scale
 
-- 0 = impossible
-- 1 = certain
-- 0.5 = equally likely to happen or not
+::: {.incremental}
+- **0** = impossible
+- **0.5** = equally likely
+- **1** = certain
+:::
 
-In evaluation, we ask:
+::: {.fragment}
+All probabilities fall between these bounds
+:::
+:::
 
-> "If the intervention had *no effect*, what's the probability of seeing results this extreme?"
+::: {.column width="60%"}
+### {{< fa question-circle >}} In Evaluation
+
+::: {.callout-tip appearance="minimal"}
+## The Key Question
+"If the intervention had **no effect**, what's the probability of seeing results this extreme?"
+:::
+
+::: {.fragment}
+This is the foundation of **hypothesis testing**
+:::
+:::
+:::
 
 ::: notes
 "Probability lets us reason about what *could* happen in alternative worlds."
@@ -218,17 +408,56 @@ In evaluation, we ask:
 
 ---
 
-## Random Variables
+## Random Variables {.smaller}
 
-**Random variable:** A quantity whose value is determined by chance
+::: {.callout-note icon="false"}
+## {{< fa random >}} Definition
+A quantity whose value is determined by chance
+:::
 
-**Examples in evaluation:**
+::: {.columns}
+::: {.column width="33%"}
+### {{< fa toggle-on >}} Binary
 
-- Whether someone completes a form (binary: yes/no)
-- Response time in days (continuous: 0.5, 1.3, 2.7...)
-- Number of reports submitted (count: 0, 1, 2, 3...)
+**Yes/No outcomes**
 
-**Why it matters:** Different types of outcomes need different statistical approaches.
+::: {.incremental}
+- Form completed?
+- Email opened?
+- Complaint filed?
+:::
+:::
+
+::: {.column width="34%"}
+### {{< fa chart-line >}} Continuous
+
+**Measured quantities**
+
+::: {.incremental}
+- Response time (days)
+- Satisfaction score
+- Wait time (minutes)
+:::
+:::
+
+::: {.column width="33%"}
+### {{< fa hashtag >}} Count
+
+**Number of events**
+
+::: {.incremental}
+- Reports submitted
+- Visits to website
+- Complaints received
+:::
+:::
+:::
+
+::: {.fragment}
+::: {.callout-important appearance="simple"}
+**Why it matters:** Different types need different statistical approaches
+:::
+:::
 
 ::: notes
 "Your evaluation outcome is a random variable. Knowing its type shapes your analysis."
@@ -342,21 +571,43 @@ Ask 2–3 people to share their outcome type and what "expected value" means for
 
 ---
 
-# Pillar 3: Sampling & Randomness
+# Pillar 3: Sampling & Randomness {data-background-color="#c75d30"}
+
+::: {.r-fit-text}
+{{< fa users >}}
+:::
 
 ---
 
-## Who You Measure Matters
+## Who You Measure Matters {.smaller}
 
-**Sampling:** Selecting a subset from a larger population
+::: {.columns}
+::: {.column width="40%"}
+### {{< fa users-viewfinder >}} Sampling Defined
 
-**Why it matters:**
+**Selecting a subset from a larger population**
 
+::: {.incremental}
 - We rarely measure *everyone*
 - Sample must represent population
 - Bad sampling → biased conclusions
+:::
+:::
+
+::: {.column width="60%"}
+::: {.callout-important}
+## {{< fa scale-balanced >}} The Iron Law
 
 > "Bias beats variance: a small unbiased sample > a large biased one."
+
+A perfectly random sample of 100 > a biased convenience sample of 10,000
+:::
+
+::: {.fragment}
+**Takeaway:** Who you choose determines whether results generalize
+:::
+:::
+:::
 
 ::: notes
 "You can't poll all residents, test all users, or observe all transactions."
@@ -366,17 +617,42 @@ Ask 2–3 people to share their outcome type and what "expected value" means for
 
 ---
 
-## Random Sampling
+## Random Sampling {.smaller}
 
-**Random sample:** Every member of population has known, non-zero probability of selection
+::: {.callout-note icon="false"}
+## {{< fa shuffle >}} Definition
+Every member of population has **known, non-zero** probability of selection
+:::
 
-**Gold standard because:**
+::: {.columns}
+::: {.column width="50%"}
+### {{< fa check-circle >}} Gold Standard
 
+::: {.incremental}
 - Eliminates systematic bias
 - Allows probability-based inference
-- Errors are *random* (average out) not *systematic* (don't)
+- Errors are *random* (average out)
+- Not *systematic* (don't average out)
+:::
+:::
 
-**Not random:** Convenience samples, volunteers, "whoever responds"
+::: {.column width="50%"}
+### {{< fa times-circle >}} Not Random
+
+::: {.incremental}
+- Convenience samples
+- Volunteers
+- "Whoever responds"
+- First 100 users
+:::
+
+::: {.fragment}
+::: {.callout-warning appearance="simple"}
+These introduce **systematic bias**
+:::
+:::
+:::
+:::
 
 ::: notes
 "Random ≠ haphazard. It means using a formal process (like drawing from a list) where each person has equal chance."
@@ -386,19 +662,39 @@ Ask 2–3 people to share their outcome type and what "expected value" means for
 
 ---
 
-## Sampling Frames & Coverage
+## Sampling Frames & Coverage {.smaller}
 
-**Sampling frame:** The list from which you sample
+::: {.callout-note icon="false"}
+## {{< fa list >}} Sampling Frame
+The list from which you sample
+:::
 
-**Coverage issues:**
+::: {.columns}
+::: {.column width="50%"}
+### {{< fa triangle-exclamation >}} Coverage Issues
 
-- **Under-coverage:** Frame misses some population groups
-- **Over-coverage:** Frame includes non-target people
+**Under-coverage:** Frame misses some groups
 
-**Example:** Using email list to sample residents
+**Over-coverage:** Frame includes non-targets
+:::
 
-- Under-coverage: People without email
-- Over-coverage: People who moved away
+::: {.column width="50%"}
+### {{< fa envelope >}} Example: Email List
+
+::: {.fragment}
+**Under-coverage:**
+- People without email
+- Older residents
+- Digitally excluded
+:::
+
+::: {.fragment}
+**Over-coverage:**
+- People who moved away
+- Duplicate entries
+:::
+:::
+:::
 
 ::: notes
 "Before sampling, ask: Who's on my list? Who's missing?"
@@ -408,17 +704,44 @@ Ask 2–3 people to share their outcome type and what "expected value" means for
 
 ---
 
-## Selection Bias
+## Selection Bias {.smaller}
 
-**Selection bias:** When sample systematically differs from population
+::: {.callout-warning icon="false"}
+## {{< fa user-slash >}} Definition
+When sample systematically differs from population
+:::
 
-**Common civic tech examples:**
+::: {.columns}
+::: {.column width="50%"}
+### {{< fa triangle-exclamation >}} Common Examples
 
-- **Office-hours bias:** Surveying users who access service 9–5 (miss shift workers)
-- **Early adopter bias:** Evaluating with first users (more tech-savvy, motivated)
-- **Response bias:** Only engaged residents reply to survey
+::: {.incremental}
+- **Office-hours bias**  
+  Surveying 9–5 users (miss shift workers)
 
-**Impact:** Results don't generalize to broader population.
+- **Early adopter bias**  
+  First users (more tech-savvy)
+
+- **Response bias**  
+  Only engaged residents reply
+:::
+:::
+
+::: {.column width="50%"}
+### {{< fa chart-line-down >}} Impact
+
+::: {.fragment}
+Results **don't generalize** to broader population
+:::
+
+::: {.fragment}
+::: {.callout-important appearance="minimal"}
+## Biggest Threat
+This is the **#1 threat** to external validity
+:::
+:::
+:::
+:::
 
 ::: notes
 "This is the biggest threat to external validity."
@@ -428,17 +751,51 @@ Ask 2–3 people to share their outcome type and what "expected value" means for
 
 ---
 
-## Sampling Error vs Bias
+## Sampling Error vs Bias {.smaller}
 
-**Sampling error:** Random variation due to observing a sample instead of entire population
+::: {.columns}
+::: {.column width="50%"}
+### {{< fa dice >}} Sampling Error
 
-- Reduces with larger sample
-- Quantifiable (confidence intervals)
+**Random variation** from using a sample
 
-**Sampling bias:** Systematic deviation due to who's selected
+::: {.incremental}
+- {{< fa arrow-down >}} Reduces with larger sample
+- {{< fa ruler >}} Quantifiable (CIs)
+- {{< fa check >}} Acceptable & expected
+:::
 
-- Does *not* reduce with larger sample
-- Must be prevented through design
+::: {.fragment}
+::: {.callout-note appearance="minimal"}
+**Nature:** Noise that averages out
+:::
+:::
+:::
+
+::: {.column width="50%"}
+### {{< fa arrow-trend-down >}} Sampling Bias
+
+**Systematic deviation** from selection
+
+::: {.incremental}
+- {{< fa times >}} Does NOT reduce with larger n
+- {{< fa ban >}} Must prevent through design
+- {{< fa exclamation-triangle >}} Fatal flaw
+:::
+
+::: {.fragment}
+::: {.callout-warning appearance="minimal"}
+**Nature:** Directional & persistent
+:::
+:::
+:::
+:::
+
+::: {.fragment}
+::: {.callout-important appearance="simple"}
+**Key Insight:** You can't fix bias with a bigger sample!
+:::
+:::
 
 ::: notes
 "You can't fix bias with a bigger sample. Bias is directional and persistent."
@@ -535,20 +892,51 @@ Give 2 minutes for silent reflection.
 
 ---
 
-# Pillar 4: Significance, p-values, Confidence Intervals
+# Pillar 4: Significance, p-values, Confidence Intervals {data-background-color="#1e5f8f"}
+
+::: {.r-fit-text}
+{{< fa magnifying-glass-chart >}}
+:::
 
 ---
 
-## The Core Evaluation Question
+## The Core Evaluation Question {.smaller}
 
-> "Is the observed difference *real* (caused by intervention) or *chance* (random noise)?"
+::: {.r-fit-text}
+> "Is the observed difference **real** (caused by intervention) or **chance** (random noise)?"
+:::
 
-**Statistical inference** gives us tools to answer this:
+::: {.columns}
+::: {.column width="50%"}
+### {{< fa vial >}} Hypothesis Testing
 
-- **Hypothesis testing** (p-values)
-- **Confidence intervals** (range of plausible effects)
+Using **p-values** to assess evidence
 
-Both approaches quantify uncertainty around estimates.
+::: {.fragment}
+- Assumes null hypothesis
+- Calculates probability
+- Tests for significance
+:::
+:::
+
+::: {.column width="50%"}
+### {{< fa ruler-horizontal >}} Confidence Intervals
+
+Range of **plausible effects**
+
+::: {.fragment}
+- Shows magnitude
+- Displays precision
+- Indicates direction
+:::
+:::
+:::
+
+::: {.fragment}
+::: {.callout-tip appearance="simple"}
+Both approaches **quantify uncertainty** around estimates
+:::
+:::
 
 ::: notes
 "This is where evaluation gets rigorous. We move from 'it looks different' to 'here's how confident we can be'."
@@ -556,21 +944,49 @@ Both approaches quantify uncertainty around estimates.
 
 ---
 
-## Null Hypothesis
+## Null Hypothesis {.smaller}
 
-**Null hypothesis (H₀):** The "nothing happened" scenario
+::: {.columns}
+::: {.column width="50%"}
+### {{< fa circle-xmark >}} Null Hypothesis (H₀)
 
+**The "nothing happened" scenario**
+
+::: {.incremental}
 - No intervention effect
 - No difference between groups
-- Status quo
+- Status quo continues
+:::
 
-**Alternative hypothesis (H₁):** Something did happen
+::: {.fragment}
+::: {.callout-note appearance="minimal"}
+**Assumed true** until evidence suggests otherwise
+:::
+:::
+:::
 
+::: {.column width="50%"}
+### {{< fa circle-check >}} Alternative Hypothesis (H₁)
+
+**Something did happen**
+
+::: {.incremental}
 - Intervention had an effect
 - Groups differ
 - Change from status quo
+:::
 
-**Testing logic:** Assume H₀ is true, then ask how surprising the data would be.
+::: {.fragment}
+::: {.callout-tip appearance="minimal"}
+**What we test for** (but don't "prove")
+:::
+:::
+:::
+:::
+
+::: {.fragment}
+**Testing logic:** Assume H₀ is true, then ask how surprising the data would be
+:::
 
 ::: notes
 "We don't 'prove' H₁. We try to reject H₀."
@@ -580,16 +996,44 @@ Both approaches quantify uncertainty around estimates.
 
 ---
 
-## What is a p-value?
+## What is a p-value? {.smaller}
 
-**p-value:** Probability of seeing results *this extreme or more* if H₀ were true
+::: {.callout-note icon="false"}
+## {{< fa percentage >}} Definition
+Probability of seeing results **this extreme or more** if H₀ were true
+:::
 
-**Interpretation:**
+::: {.columns}
+::: {.column width="60%"}
+### {{< fa book-open >}} Interpretation
 
-- p = 0.03 → "If intervention had no effect, we'd see this large a difference only 3% of the time"
-- Small p-value → data is surprising under H₀ → evidence against H₀
+::: {.fragment}
+**p = 0.03** means:
 
-**Common threshold:** p < 0.05 (but arbitrary!)
+"If intervention had **no effect**, we'd see this large a difference only **3% of the time**"
+:::
+
+::: {.fragment}
+**Logic:**
+- Small p-value → Data surprising under H₀
+- Surprising data → Evidence against H₀
+:::
+:::
+
+::: {.column width="40%"}
+### {{< fa sliders >}} Common Threshold
+
+::: {.fragment}
+**p < 0.05**
+:::
+
+::: {.fragment}
+::: {.callout-warning appearance="minimal"}
+This is **arbitrary**! Traditional, not magical.
+:::
+:::
+:::
+:::
 
 ::: notes
 "p-value is NOT the probability that H₀ is true."
@@ -649,19 +1093,55 @@ Don't dwell on formulas. Point is: test statistic scales difference by its uncer
 
 ---
 
-## Type I and Type II Errors
+## Type I and Type II Errors {.smaller}
 
-**Type I error (false positive):** Rejecting H₀ when it's actually true
+::: {.columns}
+::: {.column width="50%"}
+### {{< fa circle-exclamation >}} Type I Error
 
-- Concluding intervention worked when it didn't
+**False Positive**
+
+Rejecting H₀ when it's actually true
+
+::: {.incremental}
+- Concluding intervention **worked** when it didn't
+- **Crying wolf**
 - Probability = α (often 0.05)
+:::
 
-**Type II error (false negative):** Failing to reject H₀ when H₁ is true
+::: {.fragment}
+::: {.callout-warning appearance="minimal"}
+**Risk:** Waste resources scaling ineffective intervention
+:::
+:::
+:::
 
-- Missing a real effect
+::: {.column width="50%"}
+### {{< fa circle-xmark >}} Type II Error
+
+**False Negative**
+
+Failing to reject H₀ when H₁ is true
+
+::: {.incremental}
+- **Missing** a real effect
+- **Missing the wolf**
 - Probability = β (power = 1 − β)
+:::
 
-**Trade-off:** Can't eliminate both. Lower α → higher β.
+::: {.fragment}
+::: {.callout-warning appearance="minimal"}
+**Risk:** Abandon something that works
+:::
+:::
+:::
+:::
+
+::: {.fragment}
+::: {.callout-important appearance="simple"}
+**Trade-off:** Can't eliminate both. Lower α → higher β
+:::
+:::
 
 ::: notes
 "Type I: crying wolf. Type II: missing a wolf."
@@ -815,23 +1295,53 @@ Spend ~6 minutes.
 
 ---
 
-# Pillar 5: Power & Sample Size
+# Pillar 5: Power & Sample Size {data-background-color="#8f5d3a"}
+
+::: {.r-fit-text}
+{{< fa battery-three-quarters >}}
+:::
 
 ---
 
-## Statistical Power
+## Statistical Power {.smaller}
 
-**Power:** Probability of detecting an effect *if it exists*
+::: {.callout-note icon="false"}
+## {{< fa bolt >}} Definition
+Probability of detecting an effect **if it exists**
 
 $$
 \text{Power} = 1 - \beta = P(\text{reject } H_0 | H_1 \text{ true})
 $$
+:::
 
-**Common target:** 80% power
+::: {.columns}
+::: {.column width="50%"}
+### {{< fa bullseye >}} Common Target
 
-- If intervention has real +5pp effect, you'd detect it (p<0.05) in 80% of studies
+**80% power**
 
-**Why it matters:** Underpowered studies waste resources and mislead.
+::: {.fragment}
+If intervention has real +5pp effect, you'd **detect it** (p<0.05) in 80% of studies
+:::
+:::
+
+::: {.column width="50%"}
+### {{< fa triangle-exclamation >}} Why It Matters
+
+::: {.fragment}
+::: {.callout-warning}
+## Underpowered Studies
+- Waste resources
+- Mislead decisions
+- Miss real effects
+:::
+:::
+:::
+:::
+
+::: {.fragment}
+**Power is your study's "sensitivity"**
+:::
 
 ::: notes
 "Power is your study's 'sensitivity'."
@@ -841,18 +1351,46 @@ $$
 
 ---
 
-## What Affects Power?
+## What Affects Power? {.smaller}
 
-Power increases with:
+::: {.columns}
+::: {.column width="60%"}
+### {{< fa arrow-up >}} Power Increases With:
 
-1. **Larger effect size** — easier to detect big effects
-2. **Larger sample size** — more data → less noise
-3. **Lower variance** — less noisy outcome → clearer signal
-4. **Higher α** — but raises false positive risk (don't do this)
+::: {.incremental}
+1. {{< fa expand >}} **Larger effect size**  
+   Easier to detect big effects
 
-**You control:** Sample size (usually)
+2. {{< fa users >}} **Larger sample size**  
+   More data → less noise
 
-**You don't control:** True effect size, outcome variance
+3. {{< fa arrow-down >}} **Lower variance**  
+   Less noisy outcome → clearer signal
+
+4. {{< fa ban >}} **Higher α**  
+   But raises false positive risk (**don't do this**)
+:::
+:::
+
+::: {.column width="40%"}
+### {{< fa sliders >}} What You Control
+
+::: {.fragment}
+::: {.callout-tip appearance="minimal"}
+## You CAN control
+**Sample size** (usually)
+:::
+:::
+
+::: {.fragment}
+::: {.callout-note appearance="minimal"}
+## You CANNOT control
+- True effect size
+- Outcome variance
+:::
+:::
+:::
+:::
 
 ::: notes
 "In evaluation design, you choose n to achieve target power for a plausible effect size."
@@ -977,24 +1515,55 @@ Spend ~7 minutes.
 
 ---
 
-# Common Pitfalls
+# Common Pitfalls {data-background-color="#8f3a3a"}
+
+::: {.r-fit-text}
+{{< fa triangle-exclamation >}}
+:::
 
 ---
 
-## Multiple Comparisons Problem
+## Multiple Comparisons Problem {.smaller}
 
-**The issue:** Test many outcomes → some will be "significant" by chance
+::: {.callout-warning icon="false"}
+## {{< fa chart-column >}} The Issue
+Test many outcomes → some will be "significant" **by chance**
+:::
 
-**Example:** You measure 20 outcomes at α=0.05
+::: {.columns}
+::: {.column width="50%"}
+### {{< fa calculator >}} Example
 
-- Expect 1 false positive even if intervention has zero effect
-- Risk of cherry-picking the "significant" one
+You measure **20 outcomes** at α=0.05
 
-**Mitigation:**
+::: {.fragment}
+- Expect **1 false positive** even if intervention has zero effect
+- Risk of **cherry-picking** the "significant" one
+:::
 
-- **Pre-specify** primary outcome
-- Adjust α for multiple tests (Bonferroni, FDR)
-- Report all tests, not just significant ones
+::: {.fragment}
+::: {.callout-danger appearance="minimal"}
+This is **rampant** in evaluations
+:::
+:::
+:::
+
+::: {.column width="50%"}
+### {{< fa shield-halved >}} Mitigation
+
+::: {.incremental}
+1. {{< fa file-contract >}} **Pre-specify** primary outcome
+2. {{< fa wrench >}} Adjust α for multiple tests
+3. {{< fa list >}} Report **all** tests, not just significant ones
+:::
+
+::: {.fragment}
+::: {.callout-tip appearance="minimal"}
+Decide what you're testing **before** looking at data
+:::
+:::
+:::
+:::
 
 ::: notes
 "This is rampant in evaluations: measure everything, then trumpet the one thing that worked."
@@ -1004,20 +1573,50 @@ Spend ~7 minutes.
 
 ---
 
-## p-hacking & Researcher Degrees of Freedom
+## p-hacking & Researcher Degrees of Freedom {.smaller}
 
-**p-hacking:** Tweaking analysis until you get p<0.05
+::: {.callout-danger icon="false"}
+## {{< fa user-secret >}} p-hacking
+Tweaking analysis until you get **p<0.05**
+:::
 
-**Examples:**
+::: {.columns}
+::: {.column width="50%"}
+### {{< fa list-check >}} Examples
 
-- Trying different subgroups until one is significant
-- Adding/removing controls or outliers
-- Testing multiple time windows
-- Stopping data collection when p<0.05
+::: {.incremental}
+- {{< fa users-slash >}} Trying different **subgroups**
+- {{< fa sliders >}} Adding/removing **controls**
+- {{< fa trash >}} Removing **outliers**
+- {{< fa clock >}} Testing multiple **time windows**
+- {{< fa stop >}} Stopping collection when p<0.05
+:::
+:::
 
-**Why it's bad:** Inflates false positives far above α=0.05
+::: {.column width="50%"}
+### {{< fa exclamation-triangle >}} Why It's Bad
 
-**Protection:** Pre-analysis plan (PAP)
+::: {.fragment}
+**Inflates false positives** far above α=0.05
+:::
+
+::: {.fragment}
+::: {.callout-danger appearance="minimal"}
+The "garden of forking paths"
+:::
+:::
+
+::: {.fragment}
+### {{< fa shield >}} Protection
+
+::: {.callout-tip appearance="minimal"}
+**Pre-analysis plan (PAP)**
+
+Pre-register your outcomes, subgroups, method, sample size
+:::
+:::
+:::
+:::
 
 ::: notes
 "'Garden of forking paths': many analytic choices exist. If you explore until you find significance, you're p-hacking."
@@ -1259,23 +1858,53 @@ $$
 
 ---
 
-# Bringing It All Together
+# Bringing It All Together {data-background-color="#1e3a5f"}
+
+::: {.r-fit-text}
+{{< fa puzzle-piece >}}
+:::
 
 ---
 
-## The Statistical Evaluation Toolkit
+## The Statistical Evaluation Toolkit {.smaller}
 
-**We've covered:**
+::: {.r-fit-text}
+**Seven Pillars Complete** {{< fa check-circle >}}
+:::
 
-1. ✅ Uncertainty & variability — noise vs signal
-2. ✅ Probability — language of chance
-3. ✅ Sampling — who we measure
-4. ✅ Inference — p-values, CIs, interpretation
-5. ✅ Power — planning for detection
-6. ✅ Pitfalls — common errors to avoid
-7. ✅ Bayesian perspective — alternative lens
+::: {.columns}
+::: {.column width="50%"}
+1. {{< fa wave-square >}} **Uncertainty & variability**  
+   Noise vs signal
 
-**Next steps:** Apply these to real evaluation designs
+2. {{< fa dice >}} **Probability**  
+   Language of chance
+
+3. {{< fa users >}} **Sampling**  
+   Who we measure
+
+4. {{< fa magnifying-glass-chart >}} **Inference**  
+   p-values, CIs, interpretation
+:::
+
+::: {.column width="50%"}
+5. {{< fa battery-three-quarters >}} **Power**  
+   Planning for detection
+
+6. {{< fa triangle-exclamation >}} **Pitfalls**  
+   Common errors to avoid
+
+7. {{< fa brain >}} **Bayesian perspective**  
+   Alternative lens
+:::
+:::
+
+::: {.fragment}
+::: {.callout-tip appearance="simple"}
+## Next Steps
+Apply these to **real evaluation designs**
+:::
+:::
 
 ::: notes
 "This was the theory spine. Next sessions: designing randomized trials, quasi-experimental methods, measurement."
@@ -1285,17 +1914,44 @@ $$
 
 ---
 
-## Decision Framework: Choosing Methods
+## Decision Framework: Choosing Methods {.smaller}
 
-**When planning an evaluation, ask:**
+::: {.callout-note icon="false"}
+## {{< fa map >}} When Planning an Evaluation
+:::
 
-1. **Can I randomize?** → RCT with power analysis
-2. **Is there natural variation?** → Quasi-experimental, check balance
-3. **What's my outcome type?** → Determines test choice
-4. **How large is my sample?** → Power calculation, adjust expectations
-5. **What biases exist?** → Sampling strategy, measurement plan
+::: {.columns}
+::: {.column width="50%"}
+### {{< fa list-check >}} Key Questions
 
+::: {.incremental}
+1. {{< fa shuffle >}} **Can I randomize?**  
+   → RCT with power analysis
+
+2. {{< fa chart-scatter >}} **Is there natural variation?**  
+   → Quasi-experimental, check balance
+
+3. {{< fa clipboard-question >}} **What's my outcome type?**  
+   → Determines test choice
+:::
+:::
+
+::: {.column width="50%"}
+::: {.incremental style="margin-top: 60px;"}
+4. {{< fa users >}} **How large is my sample?**  
+   → Power calculation, adjust expectations
+
+5. {{< fa triangle-exclamation >}} **What biases exist?**  
+   → Sampling strategy, measurement plan
+:::
+:::
+:::
+
+::: {.fragment}
+::: {.callout-important appearance="simple"}
 **Stats informs design, design enables stats.**
+:::
+:::
 
 ::: notes
 "Statistics isn't separate from design. They're intertwined."
@@ -1305,23 +1961,37 @@ $$
 
 ---
 
-## Communicating Statistical Results
+## Communicating Statistical Results {.smaller}
 
-**What to include:**
+::: {.columns}
+::: {.column width="50%"}
+### {{< fa check-circle >}} What to Include
 
-- **Effect size** (magnitude + direction)
-- **Uncertainty** (CI or SE)
-- **Sample size** and response rate
-- **Method** (in brief)
-- **Caveats** (limitations, assumptions)
+::: {.incremental}
+- {{< fa ruler-combined >}} **Effect size** (magnitude + direction)
+- {{< fa chart-simple >}} **Uncertainty** (CI or SE)
+- {{< fa users >}} **Sample size** and response rate
+- {{< fa flask >}} **Method** (in brief)
+- {{< fa triangle-exclamation >}} **Caveats** (limitations, assumptions)
+:::
+:::
 
-**What to avoid:**
+::: {.column width="50%"}
+### {{< fa times-circle >}} What to Avoid
 
-- P-values without context
-- "Marginally significant" weasel words
-- Overconfident causal language from weak designs
+::: {.incremental}
+- {{< fa ban >}} P-values without context
+- {{< fa face-grimace >}} "Marginally significant" weasel words
+- {{< fa exclamation >}} Overconfident causal language from weak designs
+:::
 
-**Audience matters:** Policymakers need the "so what?", not the t-statistic.
+::: {.fragment}
+::: {.callout-tip appearance="minimal"}
+**Audience matters:** Policymakers need the "so what?", not the t-statistic
+:::
+:::
+:::
+:::
 
 ::: notes
 "Your job: translate stats into decision-relevant language."
@@ -1331,20 +2001,39 @@ $$
 
 ---
 
-## Evaluation Integrity Checklist
+## Evaluation Integrity Checklist {.smaller}
 
-Before running analysis, confirm:
+::: {.callout-important icon="false"}
+## {{< fa clipboard-check >}} Before Running Analysis
+Confirm these items:
+:::
 
-- [ ] Pre-specified primary outcome
-- [ ] Sample size justified (power calc)
-- [ ] Sampling method documented
-- [ ] Randomization protocol (if applicable)
-- [ ] Measurement consistent pre/post
-- [ ] Analysis plan written down
-- [ ] Ethical approval obtained
-- [ ] Data quality checks planned
+::: {.columns}
+::: {.column width="50%"}
+::: {.incremental}
+- [ ] {{< fa file-contract >}} Pre-specified primary outcome
+- [ ] {{< fa calculator >}} Sample size justified (power calc)
+- [ ] {{< fa list >}} Sampling method documented
+- [ ] {{< fa shuffle >}} Randomization protocol (if applicable)
+:::
+:::
 
+::: {.column width="50%"}
+::: {.incremental}
+- [ ] {{< fa ruler >}} Measurement consistent pre/post
+- [ ] {{< fa file-alt >}} Analysis plan written down
+- [ ] {{< fa gavel >}} Ethical approval obtained
+- [ ] {{< fa magnifying-glass >}} Data quality checks planned
+:::
+:::
+:::
+
+::: {.fragment}
+::: {.callout-tip appearance="simple"}
+## {{< fa shield-halved >}} Remember
 **Integrity = Credibility**
+:::
+:::
 
 ::: notes
 "This checklist prevents most pitfalls we discussed."
@@ -1354,22 +2043,45 @@ Before running analysis, confirm:
 
 ---
 
-## Worked Example Revisited: Service Form
+## Worked Example Revisited: Service Form {.smaller}
 
-**Recall our earlier question:**
+::: {.callout-note icon="false"}
+## {{< fa rotate-left >}} Recall Our Earlier Question
+- **Before:** 42 completions/day (SD=8)
+- **After:** 47 completions/day (first week)
+:::
 
-- Before: 42 completions/day (SD=8)
-- After: 47 completions/day (first week)
+::: {.columns}
+::: {.column width="50%"}
+### {{< fa calculator >}} Now We Can:
 
-**Now we can:**
+::: {.incremental}
+1. Calculate difference: **+5**
+2. Compute SE: **≈ 3.2**
+3. Test statistic: **1.56**
+4. p-value: **≈ 0.12**
+5. 95% CI: **(−1.3, +11.3)**
+:::
+:::
 
-1. Calculate difference in means: +5
-2. Compute SE of difference: √(8²/60 + 8²/7) ≈ 3.2
-3. Test statistic: 5/3.2 = 1.56
-4. p-value ≈ 0.12 (two-tailed t-test)
-5. 95% CI: 5 ± 1.96(3.2) ≈ (−1.3, +11.3)
+::: {.column width="50%"}
+### {{< fa lightbulb >}} Interpretation
 
-**Interpretation:** Insufficient evidence of improvement. CI includes zero. Need more data or longer follow-up.
+::: {.fragment}
+::: {.callout-warning}
+**Insufficient evidence** of improvement
+
+- CI includes zero
+- p > 0.05
+- Need more data or longer follow-up
+:::
+:::
+
+::: {.fragment}
+**This is how the pieces fit together!**
+:::
+:::
+:::
 
 ::: notes
 "This is how the pieces fit together."
@@ -1381,15 +2093,31 @@ Before running analysis, confirm:
 
 ---
 
-## Your Turn: Apply to Your Project
+## Your Turn: Apply to Your Project {.smaller}
 
-**Reflection exercise (5 minutes):**
+::: {.callout-tip icon="false"}
+## {{< fa pen-to-square >}} Reflection Exercise (5 minutes)
+:::
 
-1. What's your primary outcome?
-2. What's a plausible effect size worth detecting?
-3. What's your sampling strategy?
-4. What are the biggest threats to validity?
-5. What's one statistical pitfall you'll avoid?
+::: {.columns}
+::: {.column width="50%"}
+::: {.incremental}
+1. {{< fa bullseye >}} What's your **primary outcome**?
+
+2. {{< fa ruler >}} What's a plausible **effect size** worth detecting?
+
+3. {{< fa users >}} What's your **sampling strategy**?
+:::
+:::
+
+::: {.column width="50%"}
+::: {.incremental}
+4. {{< fa triangle-exclamation >}} What are the biggest **threats to validity**?
+
+5. {{< fa shield >}} What's one **statistical pitfall** you'll avoid?
+:::
+:::
+:::
 
 ::: notes
 Give participants 5 minutes of silent writing time.
@@ -1401,37 +2129,64 @@ This cements learning through application.
 
 ---
 
-## Key Takeaways
+## Key Takeaways {.smaller}
 
-✅ **Statistics quantifies uncertainty** — essential for credible evaluation
+::: {.r-fit-text}
+**The Essential Six** {{< fa star >}}
+:::
 
-✅ **Random sampling eliminates bias** — who you measure matters
+::: {.incremental}
+- {{< fa chart-line >}} **Statistics quantifies uncertainty** — essential for credible evaluation
 
-✅ **CIs > p-values alone** — always report effect sizes and ranges
+- {{< fa users >}} **Random sampling eliminates bias** — who you measure matters
 
-✅ **Power planning prevents wasted effort** — design for detection
+- {{< fa ruler-horizontal >}} **CIs > p-values alone** — always report effect sizes and ranges
 
-✅ **Pre-registration prevents p-hacking** — decide before you peek
+- {{< fa battery-three-quarters >}} **Power planning prevents wasted effort** — design for detection
 
-✅ **Communication is part of the science** — translate findings for action
+- {{< fa file-contract >}} **Pre-registration prevents p-hacking** — decide before you peek
 
+- {{< fa comments >}} **Communication is part of the science** — translate findings for action
+:::
+
+::: {.fragment}
+::: {.r-fit-text}
 > *"Good statistics turns noise into knowledge and knowledge into policy."*
+:::
+:::
 
 ---
 
-## Next Session Preview
+## Next Session Preview {.smaller}
 
-**Next up: Designing Randomized Evaluations**
+::: {.callout-note icon="false"}
+## {{< fa forward >}} Next Up: Designing Randomized Evaluations
+:::
 
-Building on today's stats foundation, we'll cover:
+::: {.columns}
+::: {.column width="50%"}
+### {{< fa book >}} Building on Today
 
-- RCT design principles
-- Randomization mechanics
-- Balance checks
-- Compliance and attrition
-- Ethics and implementation
+::: {.incremental}
+- {{< fa flask >}} RCT design principles
+- {{< fa shuffle >}} Randomization mechanics
+- {{< fa balance-scale >}} Balance checks
+:::
+:::
 
-**Prep:** Think about a project where randomization *might* be feasible.
+::: {.column width="50%"}
+::: {.incremental style="margin-top: 60px;"}
+- {{< fa user-check >}} Compliance and attrition
+- {{< fa gavel >}} Ethics and implementation
+:::
+
+::: {.fragment}
+::: {.callout-tip appearance="minimal"}
+**Prep:** Think about a project where randomization *might* be feasible
+:::
+:::
+:::
+:::
 
 ::: notes
 "Today gave you the statistical grammar. Next week: applying it to experimental design."
