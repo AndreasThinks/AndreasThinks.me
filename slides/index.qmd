@@ -11,8 +11,8 @@ This page contains the slide content for the Newspeak House **Evidence and Impac
 - **[Evaluation & Impact in Civic Technology](intro_to_evaluation/index.qmd)** | [Session Summary (Oct 14, 2025)](intro_to_evaluation/summary.qmd)  
   Introduction to evaluation approaches in civic tech, covering causality, mixed methods, and designing meaningful metrics. Includes case studies from mySociety, CitizenLab, and Sure Start.
 
-- **[Statistics 101 for Evaluation](statistics_101_for_evaluation/index.qmd)** | Session: Nov 2, 2025  
-  Foundational statistics for rigorous evaluation: understanding uncertainty, probability, sampling, significance testing, confidence intervals, and statistical power. Includes interactive demonstrations and practical examples from civic tech contexts.
+- **[Statistics 101 for Evaluation](statistics_101_for_evaluation/index.qmd)** | [Session Summary (Nov 2, 2025)](statistics_101_for_evaluation/summary.qmd)
+  Foundational statistics for rigorous evaluation: understanding distributions, sample sizes and variance; using p-values and confidence intervals in experiments; planning with power calculations; interpreting regressions; and understanding Bayesian approaches to inference.
 
 ---
 
