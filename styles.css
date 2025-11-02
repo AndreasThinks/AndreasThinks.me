@@ -41,8 +41,8 @@ main {
   border-bottom: 1px solid var(--border-soft);
   font-family: 'IBM Plex Mono', monospace;
   padding: 0.85rem 1.2rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  text-transform: none;
+  letter-spacing: 0.02em;
 }
 
 .navbar .navbar-brand,
@@ -50,6 +50,7 @@ main {
   color: var(--text-muted) !important;
   transition: color 0.2s ease, text-shadow 0.2s ease;
   font-weight: 500;
+  text-transform: none;
 }
 
 .navbar .navbar-brand:hover,
@@ -57,6 +58,36 @@ main {
 .navbar .nav-link:focus {
   color: var(--accent) !important;
   text-shadow: 0 0 12px rgba(123, 252, 200, 0.45);
+}
+
+.navbar .navbar-brand-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar .navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 1.05rem;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  color: var(--text-primary) !important;
+  margin-right: 1.5rem;
+  padding: 0;
+  white-space: nowrap;
+  line-height: 1.1;
+}
+
+.navbar .navbar-nav .nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.95rem;
+  opacity: 0.92;
 }
 
 .navbar .navbar-nav .nav-link.active {
@@ -301,14 +332,15 @@ hr {
   }
 
   .navbar .navbar-brand-container {
-    flex: 1;
-    min-width: 0;
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;
   }
 
-  .navbar .navbar-title {
-    text-transform: none;
-    letter-spacing: 0.02em;
-    font-size: 1rem;
+  .navbar .navbar-brand {
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    margin-right: 0;
   }
 
   .intro-panel {
