@@ -1,0 +1,311 @@
+---
+title: "Statistics 101 for Evaluation"
+subtitle: "Session Summary - Newspeak House Module 2025"
+author: "Andreas Varotsis"
+date: "2025-11-02"
+format:
+  html:
+    toc: true
+    toc-title: "On this page"
+    theme: cyborg
+    css: ../../styles.css
+    page-layout: article
+---
+
+::: {.callout-note icon=false}
+## 📅 Session Information
+
+**Date:** November 2, 2025
+**Module:** Evidence and Impact - Evaluation Track
+**Slides:** [View the presentation →](index.qmd)
+:::
+
+# Statistics 101 for Evaluation
+
+> *"Understanding uncertainty is the foundation of credible impact measurement."*
+
+This session built statistical intuition for evaluation, exploring how to **design rigorous studies**, **interpret results correctly**, and **communicate findings confidently**. Rather than memorizing formulas, we developed mental models that connect directly to decisions you'll make in civic tech evaluation.
+
+---
+
+## Session Summary
+
+### 📊 Distributions, Sample Sizes & Variance
+
+We explored why **variation is normal** and how understanding distributions helps distinguish signal from noise.
+
+::: {.callout-important}
+## Key Insight: The Law of Large Numbers
+As sample size grows, your estimate gets more stable and accurate.
+
+**Formula:** Uncertainty ∝ 1/√n
+
+This means to cut uncertainty in half, you need 4× more data.
+:::
+
+**What we covered:**
+
+- **Distributions** describe how outcomes vary across repeated observations
+- **Sample size** determines how confident we are about the true value
+- **Variance** (σ²) measures spread — higher variance means more data needed
+- The **Central Limit Theorem** explains why averages tend to look Normal, enabling inference
+
+::: {.callout-tip icon=false}
+## 💡 Practical Example
+A council launches a redesigned service form. Daily completion rates bounce between 38-56%. Is this noise or signal?
+
+**Answer:** Without understanding the distribution and sample size, you can't tell. You need to collect enough data for the sampling distribution to stabilize.
+:::
+
+**Interactive Demo:** We used the **Sampling Distribution Explorer** to see how the sampling distribution tightens as n increases, demonstrating the √n scaling relationship.
+
+---
+
+### 🎯 P-Values, Confidence Intervals & Significance
+
+We learned how to formally test whether an observed difference is real, and why **confidence intervals are better than p-values** alone.
+
+::: {.callout-important}
+## Key Distinction
+**p-value:** If the null hypothesis were true, how surprising is this data?
+**Confidence interval:** A range of plausible effect sizes, showing both magnitude and precision.
+:::
+
+**What we covered:**
+
+- The **null hypothesis** (H₀) is your skeptical starting point
+- **Standard error** measures uncertainty in your estimate
+- **Type I errors** (false positives, α) vs **Type II errors** (false negatives, β)
+- **95% confidence intervals** tell you the range of plausible effects
+
+::: {.callout-warning}
+## The Danger of p-Hacking
+With α = 0.05, pure chance gives you 1 false positive per 20 tests!
+
+**Common forms:**
+- Testing many outcomes, reporting only "significant" ones
+- Analyzing by multiple subgroups until something "works"
+- Stopping data collection when p < 0.05
+
+**Prevention:** Pre-register your analysis plan before collecting data.
+:::
+
+**Interactive Demo:** The **A/B Testing Simulator** showed how Type I error (false positives) and statistical power (true positives) change with sample size and effect size.
+
+**Key Takeaway:** Report effect sizes with confidence intervals, not just p-values. A "significant" effect might be too small to matter; a "non-significant" effect might be important but underpowered.
+
+---
+
+### ⚡ Power Calculations & Study Design
+
+We explored how to **design studies with enough power** to detect real effects, and why this planning must happen **before** data collection.
+
+::: {.callout-important}
+## What Is Power?
+**Statistical power:** Probability you'll detect a real effect if it exists (1 - β)
+
+**Common target:** 80% power
+
+**The relationship:**
+- Smaller effects → need larger sample size
+- Higher power → need larger sample size
+- Lower α → need larger sample size
+:::
+
+**What we covered:**
+
+- **Minimum Detectable Effect (MDE):** The smallest effect your study can reliably detect
+- **Power-sample size relationship:** n grows with 1/(effect size)² — half the effect = 4× the sample
+- **Design principle:** Match your MDE to your practical significance threshold
+- What to do when sample size is **constrained** (reduce variance, adjust design, be honest about limitations)
+
+::: {.callout-tip icon=false}
+## 💡 Practical Example
+You plan an SMS reminder to reduce missed appointments (currently 42%). Goal: detect a −3pp improvement.
+
+**Question:** How many people per arm do we need?
+**Answer:** ~1,370 per arm (2,740 total) for 80% power at α=0.05
+
+This surprises many people! Small effects need large samples.
+:::
+
+**Interactive Demo:** The **Power & Sample Size Calculator** showed how required n changes with different MDE, power, and α settings.
+
+**Key Takeaway:** Don't run underpowered studies. Calculate required sample size for the minimum effect that would change your decision, and be transparent about what effects you can and cannot detect.
+
+---
+
+### 📈 Regression & Looking Backwards
+
+We learned how **regression helps control for confounders** and estimate adjusted treatment effects, allowing us to understand what happened in observational data.
+
+::: {.callout-important}
+## What Is Regression?
+Regression models the relationship between an outcome and predictor variables, estimating the effect of each variable while holding others constant.
+
+**Formula:** y = β₀ + β₁·Treatment + β₂·Age + β₃·Mobile + ε
+
+**β₁** = effect of treatment, adjusting for age and device
+:::
+
+**What we covered:**
+
+- **Interpreting coefficients:** Each β is the effect of that variable, assuming all others stay the same
+- **Key assumptions:** Linearity, exogeneity (no unmeasured confounders), no collinearity, homoskedasticity
+- **Robust standard errors:** Use clustered SEs when outcomes within groups are correlated
+- **Diagnostics:** Check residual plots, Q-Q plots, and leverage to validate assumptions
+- **R² measures fit, not validity:** Focus on β estimates and their precision, not R²
+- **Interactions:** When treatment effects differ by subgroup
+
+::: {.callout-warning}
+## The Confounding Problem
+Regression only adjusts for variables you **include**. If there's an unmeasured confounder (e.g., motivation, prior interest), your estimate can still be biased.
+
+**Solution:** Better study design (RCT), natural experiments, or transparent acknowledgment of limitations.
+:::
+
+**Key Takeaway:** Regression is a powerful tool for observational data and improving precision in experiments, but it's not a substitute for good design. Always be transparent about potential unmeasured confounders.
+
+---
+
+### 🔄 Bayesian Approaches to Inference
+
+We explored how **Bayesian statistics offers a different paradigm** for thinking about uncertainty and evidence.
+
+::: {.callout-important}
+## The Paradigm Shift
+**Frequentist:** "Given a true parameter, what's the probability of this data?"
+**Bayesian:** "Given this data, what's the probability distribution of the parameter?"
+
+This enables direct probability statements about parameters.
+:::
+
+**What we covered:**
+
+- **Bayes' Theorem:** Prior belief + new evidence → updated belief
+- **Posterior = Prior × Likelihood / Evidence**
+- **Credible intervals** (Bayesian) vs **confidence intervals** (frequentist)
+- **Prior selection:** Uninformative, weakly informative, or informative priors
+- **When Bayesian helps:** Small samples, sequential testing, decision analysis, complex models
+
+::: {.callout-tip icon=false}
+## 💡 Key Difference
+**95% Confidence Interval (frequentist):**
+"If we repeated the study many times, 95% of intervals would contain the true parameter"
+
+**95% Credible Interval (Bayesian):**
+"There's a 95% probability the parameter is in this interval, given our data and prior"
+
+The Bayesian interpretation is what most people intuitively want!
+:::
+
+**Key Takeaway:** Both paradigms have strengths. Use frequentist for standard evaluations where methods are established. Use Bayesian when you have good priors, small samples, or need direct decision probabilities.
+
+---
+
+## 🎓 Cross-Cutting Lessons
+
+### Common Evaluation Pitfalls
+
+1. **Multiple comparisons** without correction → inflated false positive rate
+2. **p-hacking** → testing many things, only reporting "significant" ones
+3. **Regression to the mean** → targeting worst performers who improve anyway
+4. **Measurement drift** → definition changes over time
+5. **Ignoring clustering** → standard errors too small, false positives
+
+**Prevention:** Pre-register analysis plans, use robust methods, be transparent.
+
+---
+
+### Good Practice Checklist
+
+✅ **Design phase:**
+- Pre-register primary outcomes and analysis plan
+- Calculate required sample size (power analysis)
+- Plan for covariates to adjust for
+
+✅ **Analysis phase:**
+- Report effect sizes with confidence intervals
+- Use robust/clustered SEs where appropriate
+- Check diagnostics (residual plots, balance checks)
+- Don't p-hack (stick to pre-specified analyses)
+
+✅ **Reporting phase:**
+- Transparent about limitations
+- Share data and code where possible
+- Plain-language interpretation
+- Acknowledge what you DON'T know
+
+---
+
+## 🧪 Next Steps
+
+Participants can now:
+
+1. **Calculate required sample sizes** for their own evaluations using power analysis
+2. **Interpret p-values and confidence intervals** correctly
+3. **Use regression** to adjust for confounders and improve precision
+4. **Avoid common pitfalls** like p-hacking and ignoring clustering
+5. **Communicate findings** using effect sizes and CIs, not just significance tests
+
+**Apply these tools to your civic tech projects!** The interactive demos (Sampling Distribution Explorer, A/B Testing Simulator, Power Calculator, P-Hacking Simulator) are available for your own use.
+
+---
+
+## 📚 Further Reading
+
+### Essential Books
+
+- **[Regression and Other Stories](https://avehtari.github.io/ROS-Examples/)** by Gelman, Hill & Vehtari
+  The best applied regression book. Very practical, with R code.
+
+- **[Statistical Rethinking](https://xcelab.net/rm/statistical-rethinking/)** by Richard McElreath
+  Outstanding introduction to Bayesian thinking. Comes with Stan/R code.
+
+- **[Field Experiments: Design, Analysis, and Interpretation](https://wwnorton.com/books/9780393979954)** by Gerber & Green
+  Gold standard for RCTs in social science and policy evaluation.
+
+### Online Resources
+
+- **[mySociety Research Methods Documentation](https://research.mysociety.org/)**
+  Specific to civic tech, very applied, with lots of examples
+
+- **[Statistical Power and Sample Size Calculators](https://www.stat.ubc.ca/~rollin/stats/ssize/)** (various)
+  Online tools for power analysis
+
+- **[Understanding Statistical Power and Significance Testing](https://rpsychologist.com/d3/nhst/)** by Kristoffer Magnusson
+  Interactive visualization of hypothesis testing concepts
+
+- **[Seeing Theory: A Visual Introduction to Probability and Statistics](https://seeing-theory.brown.edu/)**
+  Beautiful interactive visualizations of statistical concepts
+
+### Software & Tools
+
+**R packages:**
+- `tidyverse` — data manipulation and visualization
+- `fixest` — fast regression with robust/clustered SEs
+- `brms` — Bayesian regression using Stan
+- `pwr` — power analysis
+
+**Python packages:**
+- `statsmodels` — regression and statistical tests
+- `PyMC` — Bayesian inference
+- `scikit-learn` — machine learning and prediction
+
+---
+
+## 💬 Key Quotes from the Session
+
+> "Variation is normal. Without understanding the distribution and sample size, you can't distinguish signal from noise."
+
+> "p-values tell you if an effect is surprising under the null. Confidence intervals tell you how big it might be. Always report both."
+
+> "Power determines whether you can reliably detect real effects. Design your sample size for the minimum effect that would change your decision."
+
+> "Regression estimates treatment effects while adjusting for confounders. Always interpret coefficients in context, check assumptions, and use robust SEs when appropriate."
+
+> "Good statistics makes good evaluation possible. Good evaluation makes good decisions possible."
+
+---
+
+*Part of the Newspeak House 2025-26 series on Evidence, Impact & Innovation.*
