@@ -10,4 +10,5 @@ dependencies = [
     "pandas>=2.1.0",
     "scipy>=1.11.0",
     "jupyter>=1.0.0",
+    "panel>=1.4.0",
 ]
