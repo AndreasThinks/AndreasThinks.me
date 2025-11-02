@@ -759,58 +759,124 @@ Prevention is key: pre-registration!
 # P-Hacking demonstration: running NULL tests and seeing false positives
 np.random.seed(123)
 
-num_outcomes = 5
-num_subgroups = 4
-n_per_test = 100
-alpha = 0.05
-total_tests = num_outcomes * num_subgroups
+# Parameter ranges for interactivity
+outcomes_range = [2, 3, 5, 8, 10]
+subgroups_range = [2, 3, 4, 6, 8]
+n_range = [50, 100, 200]
+alpha_range = [0.01, 0.05, 0.10]
 
-results = []
-
-for test_num in range(total_tests):
-    # Generate two groups with NO real difference (both from same distribution)
-    group1 = np.random.binomial(n_per_test, 0.5) / n_per_test
-    group2 = np.random.binomial(n_per_test, 0.5) / n_per_test
-    
-    # Run two-proportion test
-    pooled_p = (group1 + group2) / 2
-    se = np.sqrt(2 * pooled_p * (1 - pooled_p) / n_per_test)
-    diff = np.abs(group2 - group1)
-    z_stat = diff / se if se > 0 else 0
-    p_value = 2 * (1 - stats.norm.cdf(z_stat))
-    
-    results.append({
-        'test_num': test_num + 1,
-        'p_value': p_value,
-        'significant': p_value < alpha
-    })
-
-# Count significant results
-num_sig = sum(1 for r in results if r['significant'])
-
-# Create plot
 fig = go.Figure()
 
-# Add p-value points
-colors = ['steelblue' if r['significant'] else 'lightgray' for r in results]
-fig.add_trace(go.Scatter(
-    x=[r['test_num'] for r in results],
-    y=[r['p_value'] for r in results],
-    mode='markers',
-    marker=dict(color=colors, size=8),
-    name='p-values',
-    showlegend=False,
-    hovertemplate='Test %{x}<br>p-value: %{y:.4f}<extra></extra>'
-))
+# Pre-generate results for all combinations
+all_traces = []
+for outcomes in outcomes_range:
+    for subgroups in subgroups_range:
+        for n_per_test in n_range:
+            for alpha in alpha_range:
+                total_tests = outcomes * subgroups
+                results = []
+                
+                # Run simulation
+                for test_num in range(total_tests):
+                    group1 = np.random.binomial(n_per_test, 0.5) / n_per_test
+                    group2 = np.random.binomial(n_per_test, 0.5) / n_per_test
+                    
+                    pooled_p = (group1 + group2) / 2
+                    se = np.sqrt(2 * pooled_p * (1 - pooled_p) / n_per_test)
+                    diff = np.abs(group2 - group1)
+                    z_stat = diff / se if se > 0 else 0
+                    p_value = 2 * (1 - stats.norm.cdf(z_stat))
+                    
+                    results.append({
+                        'test_num': test_num + 1,
+                        'p_value': p_value,
+                        'significant': p_value < alpha
+                    })
+                
+                num_sig = sum(1 for r in results if r['significant'])
+                
+                # Create trace
+                colors = ['steelblue' if r['significant'] else 'lightgray' for r in results]
+                trace_data = {
+                    'x': [r['test_num'] for r in results],
+                    'y': [r['p_value'] for r in results],
+                    'colors': colors,
+                    'num_sig': num_sig,
+                    'total_tests': total_tests,
+                    'alpha': alpha,
+                    'outcomes': outcomes,
+                    'subgroups': subgroups,
+                    'n': n_per_test
+                }
+                all_traces.append(trace_data)
+
+# Add all traces (start with outcomes=5, subgroups=4, n=100, alpha=0.05)
+default_idx = None
+for idx, trace in enumerate(all_traces):
+    visible = (trace['outcomes'] == 5 and trace['subgroups'] == 4 and 
+               trace['n'] == 100 and trace['alpha'] == 0.05)
+    if visible:
+        default_idx = idx
+    
+    fig.add_trace(go.Scatter(
+        x=trace['x'],
+        y=trace['y'],
+        mode='markers',
+        marker=dict(color=trace['colors'], size=8),
+        showlegend=False,
+        visible=visible,
+        hovertemplate='Test %{x}<br>p-value: %{y:.4f}<extra></extra>'
+    ))
+
+# Create slider steps
+steps = []
+for idx, trace in enumerate(all_traces):
+    visibility = [i == idx for i in range(len(all_traces))]
+    
+    step = dict(
+        method="update",
+        args=[
+            {"visible": visibility},
+            {
+                "title.text": (
+                    f"P-Hacking Demo: {trace['num_sig']}/{trace['total_tests']} significant "
+                    f"({100*trace['num_sig']/trace['total_tests']:.0f}%) | "
+                    f"Expected: ~{trace['alpha']*trace['total_tests']:.1f}<br>"
+                    f"<sub>All NULL (no effect) | {trace['outcomes']} outcomes × {trace['subgroups']} subgroups × n={trace['n']}/test</sub>"
+                ),
+                "annotations[0].text": (
+                    f"⚠️ Blue dots = false positives! | Bonferroni: α = {trace['alpha']/trace['total_tests']:.4f}"
+                )
+            }
+        ],
+        label=f"Out={trace['outcomes']} Sub={trace['subgroups']} n={trace['n']} α={trace['alpha']}"
+    )
+    steps.append(step)
+
+# Create slider
+sliders = [dict(
+    active=default_idx if default_idx is not None else 0,
+    currentvalue={"prefix": "Settings: ", "font": {"size": 11}},
+    pad={"t": 30},
+    steps=steps
+)]
 
 # Add alpha threshold line
-fig.add_hline(y=alpha, line_dash="dash", line_color="red",
-              annotation_text=f"α = {alpha:.2f}", annotation_position="left")
+default_trace = all_traces[default_idx] if default_idx is not None else all_traces[0]
+fig.add_hline(
+    y=default_trace['alpha'], 
+    line_dash="dash", 
+    line_color="red",
+    annotation_text=f"α = {default_trace['alpha']:.2f}", 
+    annotation_position="left"
+)
 
 fig.update_layout(
     title=dict(
-        text=f"P-Hacking Demo: {num_sig}/{total_tests} significant ({100*num_sig/total_tests:.0f}%) | Expected: ~{alpha*total_tests:.0f}<br>" +
-             f"<sub>All tests are NULL (no real effect) | 5 outcomes × 4 subgroups × n=100/test</sub>",
+        text=f"P-Hacking Demo: {default_trace['num_sig']}/{default_trace['total_tests']} significant "
+             f"({100*default_trace['num_sig']/default_trace['total_tests']:.0f}%) | "
+             f"Expected: ~{default_trace['alpha']*default_trace['total_tests']:.1f}<br>"
+             f"<sub>All NULL (no effect) | {default_trace['outcomes']} outcomes × {default_trace['subgroups']} subgroups × n={default_trace['n']}/test</sub>",
         font=dict(size=13)
     ),
     xaxis_title="Test number",
@@ -818,12 +884,13 @@ fig.update_layout(
     template="plotly_white",
     height=420,
     width=750,
-    margin=dict(t=70, b=50, l=50, r=20),
+    margin=dict(t=70, b=90, l=50, r=20),
+    sliders=sliders,
     annotations=[
         dict(
-            text=f"⚠️ Blue dots are 'significant' by chance! | Bonferroni correction: α = {alpha/total_tests:.4f}",
+            text=f"⚠️ Blue dots = false positives! | Bonferroni: α = {default_trace['alpha']/default_trace['total_tests']:.4f}",
             xref="paper", yref="paper",
-            x=0.5, y=-0.12,
+            x=0.5, y=-0.15,
             showarrow=False,
             font=dict(size=11, color="#856404")
         )
@@ -833,7 +900,7 @@ fig.update_layout(
 fig.show()
 ```
 
-**Key insight:** With 20 tests at α=0.05, we expect ~1 false positive even when nothing is real. Here we got {num_sig}. This is p-hacking in action!
+**Key insight:** Adjust the parameters to see how testing multiple hypotheses inflates false positives. With more tests, you're almost guaranteed to find "significant" results by pure chance!
 
 ::: notes
 This visualization powerfully demonstrates p-hacking in action.
