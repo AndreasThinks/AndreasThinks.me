@@ -600,99 +600,173 @@ Pro tip: always show the distribution, not just the p-value. Helps people unders
 
 ```{python}
 #| echo: false
-#| fig-width: 10
-#| fig-height: 5
 
-# A/B Test demonstration showing power and Type I error
+# A/B Test demonstration showing power and Type I error with interactive controls
 np.random.seed(42)
 
-# Two scenarios: null case (no effect) and alternative case (real effect)
+# Parameter ranges for interactivity
+n_per_arm_range = [50, 100, 200, 400, 800]
+true_uplift_range = [0.0, 0.01, 0.02, 0.03, 0.05]
+alpha_range = [0.01, 0.05, 0.10]
+n_trials_range = [100, 250, 500, 1000]
+
+baseline_p = 0.12
+
 fig = go.Figure()
 
-# Scenario 1: Null hypothesis is TRUE (no real difference)
-baseline_p = 0.12
-true_uplift_null = 0.0
-n_per_arm = 400
-alpha = 0.05
-n_trials = 500
+# Pre-generate results for all combinations
+all_traces = []
+for n_per_arm in n_per_arm_range:
+    for true_uplift in true_uplift_range:
+        for alpha in alpha_range:
+            for n_trials in n_trials_range:
+                # Run simulation
+                samples = []
+                for _ in range(n_trials):
+                    successes_a = np.random.binomial(n_per_arm, baseline_p)
+                    successes_b = np.random.binomial(n_per_arm, baseline_p + true_uplift)
+                    
+                    p_hat_a = successes_a / n_per_arm
+                    p_hat_b = successes_b / n_per_arm
+                    diff = p_hat_b - p_hat_a
+                    
+                    # Calculate p-value
+                    pooled_p = (successes_a + successes_b) / (2 * n_per_arm)
+                    se = np.sqrt(2 * pooled_p * (1 - pooled_p) / n_per_arm)
+                    z_stat = np.abs(diff) / se if se > 0 else 0
+                    p_value = 2 * (1 - stats.norm.cdf(z_stat))
+                    
+                    samples.append({'diff': diff, 'significant': p_value < alpha})
+                
+                sig_rate = np.mean([s['significant'] for s in samples])
+                
+                # Determine if this is null or alternative scenario
+                scenario_type = "Null" if true_uplift == 0.0 else "Alt"
+                metric_name = "Type I" if true_uplift == 0.0 else "Power"
+                color = 'lightcoral' if true_uplift == 0.0 else 'steelblue'
+                
+                trace_data = {
+                    'diffs': [s['diff'] for s in samples],
+                    'sig_rate': sig_rate,
+                    'n_per_arm': n_per_arm,
+                    'true_uplift': true_uplift,
+                    'alpha': alpha,
+                    'n_trials': n_trials,
+                    'scenario_type': scenario_type,
+                    'metric_name': metric_name,
+                    'color': color
+                }
+                all_traces.append(trace_data)
 
-samples_null = []
-for _ in range(n_trials):
-    successes_a = np.random.binomial(n_per_arm, baseline_p)
-    successes_b = np.random.binomial(n_per_arm, baseline_p + true_uplift_null)
+# Add all traces (start with n=400, uplift=0.03, alpha=0.05, trials=500)
+default_idx = None
+for idx, trace in enumerate(all_traces):
+    visible = (trace['n_per_arm'] == 400 and trace['true_uplift'] == 0.03 and 
+               trace['alpha'] == 0.05 and trace['n_trials'] == 500)
+    if visible and default_idx is None:
+        default_idx = idx
     
-    p_hat_a = successes_a / n_per_arm
-    p_hat_b = successes_b / n_per_arm
-    diff = p_hat_b - p_hat_a
+    fig.add_trace(go.Histogram(
+        x=trace['diffs'],
+        name=f"{trace['scenario_type']} ({trace['metric_name']} = {trace['sig_rate']:.1%})",
+        marker_color=trace['color'],
+        opacity=0.6,
+        nbinsx=30,
+        showlegend=True,
+        visible=visible
+    ))
+
+# Group traces by scenario (null vs alt) for each parameter combination
+# We need to show both null and alt for each setting
+trace_groups = {}
+for idx, trace in enumerate(all_traces):
+    key = (trace['n_per_arm'], trace['true_uplift'], trace['alpha'], trace['n_trials'])
+    if key not in trace_groups:
+        trace_groups[key] = []
+    trace_groups[key].append(idx)
+
+# Create slider steps
+steps = []
+for key in sorted(trace_groups.keys()):
+    n_per_arm, true_uplift, alpha, n_trials = key
     
-    # Calculate p-value
-    pooled_p = (successes_a + successes_b) / (2 * n_per_arm)
-    se = np.sqrt(2 * pooled_p * (1 - pooled_p) / n_per_arm)
-    z_stat = np.abs(diff) / se if se > 0 else 0
-    p_value = 2 * (1 - stats.norm.cdf(z_stat))
+    # Skip if true_uplift is 0 (we'll show null separately)
+    if true_uplift == 0.0:
+        continue
     
-    samples_null.append({'diff': diff, 'significant': p_value < alpha})
-
-# Scenario 2: Alternative hypothesis is TRUE (real effect exists)
-true_uplift_alt = 0.035
-samples_alt = []
-for _ in range(n_trials):
-    successes_a = np.random.binomial(n_per_arm, baseline_p)
-    successes_b = np.random.binomial(n_per_arm, baseline_p + true_uplift_alt)
+    # Find the null trace for this configuration
+    null_key = (n_per_arm, 0.0, alpha, n_trials)
     
-    p_hat_a = successes_a / n_per_arm
-    p_hat_b = successes_b / n_per_arm
-    diff = p_hat_b - p_hat_a
+    visibility = [False] * len(all_traces)
     
-    # Calculate p-value
-    pooled_p = (successes_a + successes_b) / (2 * n_per_arm)
-    se = np.sqrt(2 * pooled_p * (1 - pooled_p) / n_per_arm)
-    z_stat = np.abs(diff) / se if se > 0 else 0
-    p_value = 2 * (1 - stats.norm.cdf(z_stat))
-    samples_alt.append({'diff': diff, 'significant': p_value < alpha})
+    # Show null trace
+    if null_key in trace_groups:
+        for idx in trace_groups[null_key]:
+            visibility[idx] = True
+    
+    # Show alternative trace
+    for idx in trace_groups[key]:
+        visibility[idx] = True
+    
+    # Get statistics for title
+    null_trace = all_traces[trace_groups[null_key][0]] if null_key in trace_groups else None
+    alt_trace = all_traces[trace_groups[key][0]]
+    
+    step = dict(
+        method="update",
+        args=[
+            {"visible": visibility},
+            {
+                "title.text": (
+                    f"A/B Testing Simulation: n={n_per_arm}/arm, effect={true_uplift*100:.1f}pp, α={alpha:.2f}, trials={n_trials}<br>"
+                    f"<sub>Null Type I = {null_trace['sig_rate']:.1%} | Alt Power = {alt_trace['sig_rate']:.1%}</sub>"
+                ),
+                "annotations": [
+                    dict(x=0, xref="x", y=0, yref="paper", 
+                         text="Null = 0", showarrow=False, yshift=-40),
+                    dict(x=true_uplift, xref="x", y=0, yref="paper",
+                         text=f"True effect = {true_uplift:.1%}", showarrow=False, yshift=-40)
+                ]
+            }
+        ],
+        label=f"n={n_per_arm} eff={true_uplift*100:.0f}pp α={alpha:.2f} N={n_trials}"
+    )
+    steps.append(step)
 
-# Calculate statistics
-null_sig_rate = np.mean([s['significant'] for s in samples_null])
-alt_sig_rate = np.mean([s['significant'] for s in samples_alt])
+# Create slider
+sliders = [dict(
+    active=next((i for i, s in enumerate(steps) if "n=400 eff=3pp α=0.05 N=500" in s['label']), 0),
+    currentvalue={"prefix": "Settings: ", "font": {"size": 11}},
+    pad={"t": 30},
+    steps=steps
+)]
 
-# Create comparison plot
-fig.add_trace(go.Histogram(
-    x=[s['diff'] for s in samples_null],
-    name=f'Null (Type I = {null_sig_rate:.1%})',
-    marker_color='lightcoral',
-    opacity=0.6,
-    nbinsx=30
-))
-
-fig.add_trace(go.Histogram(
-    x=[s['diff'] for s in samples_alt],
-    name=f'Alt (Power = {alt_sig_rate:.1%})',
-    marker_color='steelblue',
-    opacity=0.6,
-    nbinsx=30
-))
-
-# Add reference lines
-fig.add_vline(x=0, line_dash="dash", line_color="black",
-              annotation_text="Null = 0")
-fig.add_vline(x=true_uplift_alt, line_dash="dash", line_color="red",
-              annotation_text=f"True effect = {true_uplift_alt:.1%}")
+# Add reference lines for default view
+default_trace = all_traces[default_idx] if default_idx is not None else all_traces[0]
+fig.add_vline(x=0, line_dash="dash", line_color="black")
+fig.add_vline(x=default_trace['true_uplift'], line_dash="dash", line_color="red")
 
 fig.update_layout(
-    title="A/B Testing Simulation: Type I Error vs Power",
+    title=dict(
+        text=f"A/B Testing Simulation: n={default_trace['n_per_arm']}/arm, effect={default_trace['true_uplift']*100:.1f}pp, α={default_trace['alpha']:.2f}, trials={default_trace['n_trials']}<br>"
+             f"<sub>Explore how sample size, effect size, and alpha affect Type I error and Power</sub>",
+        font=dict(size=13)
+    ),
     xaxis_title="Observed Difference (p_B - p_A)",
     yaxis_title="Frequency",
     barmode='overlay',
     showlegend=True,
     template="plotly_white",
     height=450,
-    margin=dict(t=80, b=60, l=60, r=40)
+    width=750,
+    margin=dict(t=80, b=90, l=60, r=40),
+    sliders=sliders
 )
 
 fig.show()
 ```
 
-**Key insight:** When null is true (coral), ~5% are falsely significant (Type I error). When effect exists (blue), power determines detection rate.
+**Key insight:** Use the slider to explore how sample size, effect size, and alpha affect Type I error (null scenario, coral) and statistical power (alternative scenario, blue). Larger samples increase power while maintaining Type I error control.
 
 ::: notes
 This is a powerful teaching tool. The simulation shows:
@@ -924,27 +998,24 @@ Prevention: Pre-register ONE primary outcome before collecting data.
 
 ---
 
-## Preventing p-Hacking
+## Preventing p-Hacking: Pre-Registration
 
-**The solution: Pre-registration**
+**The gold standard: Pre-register your analysis plan**
 
 Before collecting data:
 
 1. **Specify ONE primary outcome**
-2. **Define your analysis plan**
+2. **Define your analysis plan** (method, covariates, sample size)
 3. **Register it publicly** (OSF, AsPredicted, clinical trials registry)
 
-**If you must test multiple outcomes:**
+**Why this works:**
 
-- **Bonferroni correction:** Divide α by number of tests
-- **False Discovery Rate (FDR) control:** More powerful alternative
-- **Report ALL tests,** not just significant ones
+- Removes researcher degrees of freedom
+- Makes deviations transparent
+- Increases trust in findings
+- Prevents fooling yourself
 
-**Red flags to watch for:**
-
-- "We found that X worked for [oddly specific subgroup]"
-- No pre-registered analysis plan
-- Only reporting significant results from many tests
+**Example:** Clinical trials must pre-register to prevent selective reporting
 
 ::: notes
 Pre-registration is the gold standard for credible evaluation.
@@ -965,11 +1036,46 @@ Real example: Clinical trials MUST pre-register. Why? Because pharmaceutical com
 Civic tech should adopt these standards!
 
 Exploratory analysis is fine - just label it: "Pre-registered primary outcome: no effect. Exploratory analysis suggests effect for subgroup X, but this needs confirmation in a new study."
+:::
 
+---
+
+## Dealing with Multiple Comparisons
+
+**If you must test multiple outcomes:**
+
+::: {.nonincremental}
+- **Bonferroni correction:** Divide α by number of tests
+  - Testing 20 outcomes? Use α = 0.05/20 = 0.0025
+- **False Discovery Rate (FDR):** More powerful alternative (Benjamini-Hochberg)
+- **Report ALL tests,** not just significant ones
+:::
+
+**Red flags to watch for:**
+
+- "We found X worked for [oddly specific subgroup]"
+- No pre-registered analysis plan
+- Only reporting significant results
+
+**Bottom line:** p-hacking is easy to do accidentally. Pre-registration prevents it.
+
+::: notes
 Multiple comparisons correction:
-- Bonferroni: very conservative, divide α by number of tests
-- Benjamini-Hochberg (FDR): less conservative, controls expected proportion of false discoveries
-- Both implemented in standard statistical software
+- Bonferroni: very conservative, divide α by number of tests. If testing 20 hypotheses at α=0.05, use α=0.0025 for each test. This controls family-wise error rate.
+- Benjamini-Hochberg (FDR): less conservative, controls expected proportion of false discoveries rather than probability of any false discovery
+- Both implemented in standard statistical software (R, Python, Stata)
+
+When to use:
+- If you have ONE pre-specified primary outcome → no correction needed
+- If you're testing multiple secondary outcomes → use correction OR clearly label as exploratory
+- If doing post-hoc subgroup analyses → definitely label as exploratory, needs replication
+
+Red flags in papers/reports:
+- "We tested many things and found this one significant result in this specific subgroup"
+- No mention of how many tests were run
+- Suspiciously specific findings that weren't pre-specified
+
+Best practice: Pre-register ONE primary outcome. If you do exploratory analyses, be transparent: "Pre-registered outcome showed no effect. Exploratory analysis suggests effect for subgroup X, but this is hypothesis-generating and needs confirmation."
 
 Bottom line: p-hacking is easy to do accidentally. Pre-registration prevents it.
 :::
@@ -2257,35 +2363,4 @@ You don't need to be a statistician to do good evaluation. But you do need:
 These principles apply whether you're evaluating a civic tech tool, a policy intervention, or your own organization's work.
 
 Thank everyone. Share slides and tools. Encourage follow-up questions via email/Slack.
-:::
-
----
-
-## Thank You!
-
-**Contact:** [Your email/website]
-
-**Slides & tools:** [Link to materials]
-
-**Next session:** [Preview of what's next in the course]
-
-> *Questions? Reach out anytime!*
-
-::: notes
-Close with warmth and openness.
-
-Mention:
-- Slides will be shared via [platform]
-- Tools are open-source at [GitHub link or similar]
-- Office hours or follow-up session if needed
-- Connect on social media / professional networks
-
-Encourage continued learning:
-- Practice on your own data
-- Share your evaluations with the community
-- Ask questions in [Slack/forum/etc]
-
-Final thought: "You now have the foundations to design and interpret evaluations rigorously. The best way to learn is by doing. Go evaluate something, make mistakes, and iterate. That's how we all improve."
-
-Applause, thanks, exit!
 :::
