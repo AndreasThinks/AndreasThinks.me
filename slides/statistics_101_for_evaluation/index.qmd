@@ -325,7 +325,7 @@ sampling_distribution_demo = pn.Row(
     height=560,
 )
 
-sampling_distribution_demo
+sampling_distribution_demo.servable()
 ```
 
 **Key insight:** Notice how n=200 (coral) is ~2× narrower than n=50 (blue). This demonstrates **√n** scaling: 4× more data → 2× less uncertainty.
@@ -731,7 +731,7 @@ ab_testing_demo = pn.Row(
     height=600,
 )
 
-ab_testing_demo
+ab_testing_demo.servable()
 ```
 
 **Key insight:** Use the 4 sliders to explore how sample size, effect size, alpha, and number of trials affect Type I error (null scenario, coral) and statistical power (alternative scenario, blue).
@@ -898,7 +898,7 @@ phacking_demo = pn.Row(
     height=600,
 )
 
-phacking_demo
+phacking_demo.servable()
 ```
 
 **Key insight:** Use the 4 sliders to explore how testing multiple hypotheses inflates false positives. Even when there are NO real effects, you'll find "significant" results by pure chance!
@@ -1371,7 +1371,7 @@ power_demo = pn.Row(
     height=600,
 )
 
-power_demo
+power_demo.servable()
 ```
 
 **Key insight:** Move the slider to see how MDE affects required sample size. Smaller effects (1pp) need huge samples; larger effects (10pp) are detectable with modest samples.
