@@ -13,13 +13,13 @@ website:
   open-graph: true
   navbar:
     left:
-      - text: "Home"
+      - text: "home"
         file: index.qmd
-      - text: "About"
+      - text: "about"
         file: about.qmd
-      - text: "Talks & Publications"
+      - text: "talks & publications"
         file: recent_work.qmd
-      - text: "Teaching"
+      - text: "teaching"
         file: slides/index.qmd
     right:
       - text: "{{< fa brands mastodon size=xl >}}" 
