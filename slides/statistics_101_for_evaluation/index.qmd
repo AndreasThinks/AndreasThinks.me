@@ -24,10 +24,12 @@ import plotly.express as px
 import plotly.io as pio
 import numpy as np
 import pandas as pd
+import panel as pn
 from scipy import stats
 
 # Configure Plotly for revealjs presentations
 pio.templates.default = "plotly_white"
+pn.extension("plotly", sizing_mode="stretch_width")
 ```
 
 # Statistics 101 for Evaluation
@@ -237,120 +239,93 @@ If you have time, sketch these on the board. The sampling distribution is the mo
 #| echo: false
 
 true_p = 0.45
-num_samples = 1000
+num_samples = 2000
 
-# Generate data for multiple sample sizes
-n1_values = [20, 50, 100, 150, 200]
-n2_values = [50, 100, 200, 300, 400, 500]
+n1_slider = pn.widgets.IntSlider(name="Sample size n₁", start=20, end=200, step=10, value=50)
+n2_slider = pn.widgets.IntSlider(name="Sample size n₂", start=50, end=500, step=50, value=200)
 
-# Default values
-default_n1 = 50
-default_n2 = 200
 
-# Pre-generate all data combinations
-all_data = {}
-for n1 in n1_values:
-    for n2 in n2_values:
-        samples_n1 = np.random.binomial(n1, true_p, num_samples) / n1
-        samples_n2 = np.random.binomial(n2, true_p, num_samples) / n2
-        se_n1 = np.sqrt(true_p * (1 - true_p) / n1)
-        se_n2 = np.sqrt(true_p * (1 - true_p) / n2)
-        all_data[(n1, n2)] = {
-            'samples_n1': samples_n1,
-            'samples_n2': samples_n2,
-            'se_n1': se_n1,
-            'se_n2': se_n2
-        }
+def sampling_distribution_fig(n1: int, n2: int):
+    rng = np.random.default_rng(42)
+    samples_n1 = rng.binomial(n1, true_p, num_samples) / n1
+    samples_n2 = rng.binomial(n2, true_p, num_samples) / n2
 
-# Create figure
-fig = go.Figure()
+    se_n1 = np.sqrt(true_p * (1 - true_p) / n1)
+    se_n2 = np.sqrt(true_p * (1 - true_p) / n2)
 
-# Add initial traces (n1=50, n2=200)
-initial_data = all_data[(default_n1, default_n2)]
-fig.add_trace(go.Histogram(
-    x=initial_data['samples_n1'],
-    name=f'n₁={default_n1} (SE={initial_data["se_n1"]:.4f})',
-    marker_color='steelblue',
-    opacity=0.6,
-    nbinsx=35,
-    histnorm='probability',
-    visible=True
-))
-
-fig.add_trace(go.Histogram(
-    x=initial_data['samples_n2'],
-    name=f'n₂={default_n2} (SE={initial_data["se_n2"]:.4f})',
-    marker_color='coral',
-    opacity=0.6,
-    nbinsx=35,
-    histnorm='probability',
-    visible=True
-))
-
-# Add true p line
-fig.add_vline(x=true_p, line_dash="dash", line_color="red", 
-              annotation_text=f"True p = {true_p}")
-
-# Create 2 separate sliders vertically stacked on the right
-sliders = [
-    # Slider 1: n₁ (top right)
-    dict(
-        active=n1_values.index(default_n1),
-        currentvalue={"prefix": "n₁: ", "font": {"size": 11}},
-        pad={"t": 10, "b": 10, "l": 20, "r": 10},
-        len=0.18,
-        x=0.78,
-        y=0.70,
-        steps=[
-            dict(
-                method="restyle",
-                args=[{
-                    "x": [all_data[(n1, default_n2)]['samples_n1'],
-                          all_data[(n1, default_n2)]['samples_n2']],
-                    "name": [f'n₁={n1} (SE={all_data[(n1, default_n2)]["se_n1"]:.4f})',
-                            f'n₂={default_n2} (SE={all_data[(n1, default_n2)]["se_n2"]:.4f})']
-                }],
-                label=str(n1)
-            ) for n1 in n1_values
-        ]
-    ),
-    # Slider 2: n₂ (bottom right)
-    dict(
-        active=n2_values.index(default_n2),
-        currentvalue={"prefix": "n₂: ", "font": {"size": 11}},
-        pad={"t": 10, "b": 10, "l": 20, "r": 10},
-        len=0.18,
-        x=0.78,
-        y=0.30,
-        steps=[
-            dict(
-                method="restyle",
-                args=[{
-                    "x": [all_data[(default_n1, n2)]['samples_n1'],
-                          all_data[(default_n1, n2)]['samples_n2']],
-                    "name": [f'n₁={default_n1} (SE={all_data[(default_n1, n2)]["se_n1"]:.4f})',
-                            f'n₂={n2} (SE={all_data[(default_n1, n2)]["se_n2"]:.4f})']
-                }],
-                label=str(n2)
-            ) for n2 in n2_values
-        ]
+    fig = go.Figure()
+    fig.add_histogram(
+        x=samples_n1,
+        name=f"n₁={n1} (SE={se_n1:.4f})",
+        marker_color="steelblue",
+        opacity=0.55,
+        nbinsx=35,
+        histnorm="probability",
     )
-]
+    fig.add_histogram(
+        x=samples_n2,
+        name=f"n₂={n2} (SE={se_n2:.4f})",
+        marker_color="coral",
+        opacity=0.55,
+        nbinsx=35,
+        histnorm="probability",
+    )
+    fig.add_vline(
+        x=true_p,
+        line_dash="dash",
+        line_color="red",
+        annotation_text=f"True p = {true_p:.2f}",
+        annotation_position="top left",
+    )
+    fig.update_layout(
+        barmode="overlay",
+        title=dict(text="Sampling Distribution vs Sample Size", font=dict(size=16)),
+        xaxis_title="Sample proportion",
+        yaxis_title="Probability density",
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5),
+        height=520,
+        margin=dict(t=70, b=60, l=60, r=40),
+    )
+    return fig, se_n1, se_n2
 
-fig.update_layout(
-    title=dict(text="Sampling Distribution vs Sample Size", font=dict(size=14)),
-    xaxis=dict(title="Sample Proportion", domain=[0, 0.75]),
-    yaxis_title="Probability Density",
-    barmode='overlay',
-    showlegend=True,
-    template="plotly_white",
-    height=450,
-    width=900,
-    margin=dict(t=50, b=50, l=50, r=220),
-    sliders=sliders
+
+@pn.depends(n1=n1_slider, n2=n2_slider)
+def sampling_distribution_view(n1, n2):
+    fig, se_n1, se_n2 = sampling_distribution_fig(n1, n2)
+    summary = pn.pane.Markdown(
+        f"**Standard error:** n₁={n1} → {se_n1:.4f} | n₂={n2} → {se_n2:.4f}",
+        align="center",
+        sizing_mode="stretch_width",
+    )
+    return pn.Column(
+        pn.pane.Plotly(fig, config={"responsive": True}, height=520, sizing_mode="stretch_width"),
+        pn.Spacer(height=10),
+        summary,
+        sizing_mode="stretch_width",
+    )
+
+
+sampling_distribution_demo = pn.Row(
+    pn.Column(
+        pn.pane.Markdown(
+            "### Try it out\nAdjust the sample sizes to see how the sampling distribution tightens."
+        ),
+        n1_slider,
+        n2_slider,
+        sizing_mode="stretch_height",
+        width=280,
+        styles={"background": "#f8f9fa", "padding": "12px", "border-radius": "10px"},
+        margin=(0, 24, 0, 0),
+    ),
+    pn.Column(
+        sampling_distribution_view,
+        sizing_mode="stretch_both",
+    ),
+    sizing_mode="stretch_width",
+    height=560,
 )
 
-fig.show()
+sampling_distribution_demo
 ```
 
 **Key insight:** Notice how n=200 (coral) is ~2× narrower than n=50 (blue). This demonstrates **√n** scaling: 4× more data → 2× less uncertainty.
@@ -629,224 +604,134 @@ Pro tip: always show the distribution, not just the p-value. Helps people unders
 ```{python}
 #| echo: false
 
-# A/B Test demonstration showing power and Type I error with interactive controls
-np.random.seed(42)
-
-# Parameter ranges for interactivity
-n_per_arm_range = [50, 100, 200, 400, 800]
-true_uplift_range = [0.0, 0.01, 0.02, 0.03, 0.05]
-alpha_range = [0.01, 0.05, 0.10]
-n_trials_range = [100, 250, 500, 1000]
-
-# Default values
-default_n = 400
-default_uplift = 0.03
-default_alpha = 0.05
-default_trials = 500
-
 baseline_p = 0.12
 
-fig = go.Figure()
+n_per_arm_slider = pn.widgets.IntSlider(name="Sample size per arm", start=50, end=1000, step=50, value=400)
+true_uplift_slider = pn.widgets.FloatSlider(
+    name="True uplift",
+    start=0.0,
+    end=0.08,
+    step=0.01,
+    value=0.03,
+    format="0%",
+)
+ab_alpha_selector = pn.widgets.RadioButtonGroup(
+    name="α (significance level)",
+    options={"1%": 0.01, "5%": 0.05, "10%": 0.10},
+    value=0.05,
+)
+n_trials_slider = pn.widgets.IntSlider(name="Simulated experiments", start=100, end=1000, step=50, value=500)
 
-# Pre-generate results for all combinations
-all_traces = {}
-for n_per_arm in n_per_arm_range:
-    for true_uplift in true_uplift_range:
-        for alpha in alpha_range:
-            for n_trials in n_trials_range:
-                # Run simulation
-                samples = []
-                for _ in range(n_trials):
-                    successes_a = np.random.binomial(n_per_arm, baseline_p)
-                    successes_b = np.random.binomial(n_per_arm, baseline_p + true_uplift)
-                    
-                    p_hat_a = successes_a / n_per_arm
-                    p_hat_b = successes_b / n_per_arm
-                    diff = p_hat_b - p_hat_a
-                    
-                    # Calculate p-value
-                    pooled_p = (successes_a + successes_b) / (2 * n_per_arm)
-                    se = np.sqrt(2 * pooled_p * (1 - pooled_p) / n_per_arm)
-                    z_stat = np.abs(diff) / se if se > 0 else 0
-                    p_value = 2 * (1 - stats.norm.cdf(z_stat))
-                    
-                    samples.append({'diff': diff, 'significant': p_value < alpha})
-                
-                sig_rate = np.mean([s['significant'] for s in samples])
-                
-                # Determine if this is null or alternative scenario
-                scenario_type = "Null" if true_uplift == 0.0 else "Alt"
-                metric_name = "Type I" if true_uplift == 0.0 else "Power"
-                color = 'lightcoral' if true_uplift == 0.0 else 'steelblue'
-                
-                all_traces[(n_per_arm, true_uplift, alpha, n_trials)] = {
-                    'diffs': [s['diff'] for s in samples],
-                    'sig_rate': sig_rate,
-                    'scenario_type': scenario_type,
-                    'metric_name': metric_name,
-                    'color': color,
-                    'true_uplift': true_uplift
-                }
 
-# Add initial traces (null and alternative)
-null_key = (default_n, 0.0, default_alpha, default_trials)
-alt_key = (default_n, default_uplift, default_alpha, default_trials)
+def _ab_test_diffs(successes_a, successes_b, n_per_arm):
+    p_hat_a = successes_a / n_per_arm
+    p_hat_b = successes_b / n_per_arm
+    diff = p_hat_b - p_hat_a
+    pooled = (successes_a + successes_b) / (2 * n_per_arm)
+    se = np.sqrt(2 * pooled * (1 - pooled) / n_per_arm)
+    z = np.divide(np.abs(diff), se, out=np.zeros_like(diff), where=se > 0)
+    p_values = 2 * (1 - stats.norm.cdf(z))
+    return diff, p_values
 
-for key in [null_key, alt_key]:
-    trace = all_traces[key]
-    fig.add_trace(go.Histogram(
-        x=trace['diffs'],
-        name=f"{trace['scenario_type']} ({trace['metric_name']} = {trace['sig_rate']:.1%})",
-        marker_color=trace['color'],
-        opacity=0.6,
+
+def simulate_ab_results(n_per_arm, true_uplift, alpha, n_trials):
+    rng_null = np.random.default_rng(2024)
+    successes_a_null = rng_null.binomial(n_per_arm, baseline_p, size=n_trials)
+    successes_b_null = rng_null.binomial(n_per_arm, baseline_p, size=n_trials)
+    diff_null, p_null = _ab_test_diffs(successes_a_null, successes_b_null, n_per_arm)
+
+    uplift = min(max(true_uplift, 0.0), 0.5)
+    rng_alt = np.random.default_rng(2025)
+    successes_a_alt = rng_alt.binomial(n_per_arm, baseline_p, size=n_trials)
+    successes_b_alt = rng_alt.binomial(n_per_arm, min(baseline_p + uplift, 0.999), size=n_trials)
+    diff_alt, p_alt = _ab_test_diffs(successes_a_alt, successes_b_alt, n_per_arm)
+
+    type_i_rate = float((p_null < alpha).mean())
+    power_rate = float((p_alt < alpha).mean())
+
+    fig = go.Figure()
+    fig.add_histogram(
+        x=diff_null,
+        name=f"Null (Type I = {type_i_rate:.1%})",
+        marker_color="#c44e52",
+        opacity=0.55,
         nbinsx=30,
-        showlegend=True,
-        hovertemplate='Difference: %{x:.3f}<extra></extra>'
-    ))
-
-# Add reference lines
-fig.add_vline(x=0, line_dash="dash", line_color="black", 
-              annotation_text="Null = 0", annotation_position="top left")
-fig.add_vline(x=default_uplift, line_dash="dash", line_color="red",
-              annotation_text=f"True effect = {default_uplift:.1%}", annotation_position="top right")
-
-# Create 4 sliders vertically stacked on the right
-sliders = [
-    # Slider 1: Sample size per arm (top)
-    dict(
-        active=n_per_arm_range.index(default_n),
-        currentvalue={"prefix": "n/arm: ", "font": {"size": 10}},
-        pad={"t": 10, "b": 10, "l": 20, "r": 10},
-        len=0.18,
-        x=0.78,
-        y=0.85,
-        steps=[
-            dict(
-                method="update",
-                args=[
-                    {
-                        "x": [all_traces[(n, 0.0, default_alpha, default_trials)]['diffs'],
-                              all_traces[(n, default_uplift, default_alpha, default_trials)]['diffs']],
-                        "name": [f"{all_traces[(n, 0.0, default_alpha, default_trials)]['scenario_type']} ({all_traces[(n, 0.0, default_alpha, default_trials)]['metric_name']} = {all_traces[(n, 0.0, default_alpha, default_trials)]['sig_rate']:.1%})",
-                                f"{all_traces[(n, default_uplift, default_alpha, default_trials)]['scenario_type']} ({all_traces[(n, default_uplift, default_alpha, default_trials)]['metric_name']} = {all_traces[(n, default_uplift, default_alpha, default_trials)]['sig_rate']:.1%})"]
-                    },
-                    {
-                        "title.text": f"A/B Testing: n={n}/arm, effect={default_uplift*100:.1f}pp, α={default_alpha:.2f}, trials={default_trials}<br>"
-                                     f"<sub>Null Type I = {all_traces[(n, 0.0, default_alpha, default_trials)]['sig_rate']:.1%} | "
-                                     f"Alt Power = {all_traces[(n, default_uplift, default_alpha, default_trials)]['sig_rate']:.1%}</sub>"
-                    }
-                ],
-                label=str(n)
-            ) for n in n_per_arm_range
-        ]
-    ),
-    # Slider 2: True effect size
-    dict(
-        active=true_uplift_range.index(default_uplift),
-        currentvalue={"prefix": "Effect: ", "font": {"size": 10}},
-        pad={"t": 10, "b": 10, "l": 20, "r": 10},
-        len=0.18,
-        x=0.78,
-        y=0.60,
-        steps=[
-            dict(
-                method="update",
-                args=[
-                    {
-                        "x": [all_traces[(default_n, 0.0, default_alpha, default_trials)]['diffs'],
-                              all_traces[(default_n, uplift, default_alpha, default_trials)]['diffs']],
-                        "name": [f"{all_traces[(default_n, 0.0, default_alpha, default_trials)]['scenario_type']} ({all_traces[(default_n, 0.0, default_alpha, default_trials)]['metric_name']} = {all_traces[(default_n, 0.0, default_alpha, default_trials)]['sig_rate']:.1%})",
-                                f"{all_traces[(default_n, uplift, default_alpha, default_trials)]['scenario_type']} ({all_traces[(default_n, uplift, default_alpha, default_trials)]['metric_name']} = {all_traces[(default_n, uplift, default_alpha, default_trials)]['sig_rate']:.1%})"]
-                    },
-                    {
-                        "title.text": f"A/B Testing: n={default_n}/arm, effect={uplift*100:.1f}pp, α={default_alpha:.2f}, trials={default_trials}<br>"
-                                     f"<sub>Null Type I = {all_traces[(default_n, 0.0, default_alpha, default_trials)]['sig_rate']:.1%} | "
-                                     f"Alt Power = {all_traces[(default_n, uplift, default_alpha, default_trials)]['sig_rate']:.1%}</sub>",
-                        "shapes[1].x0": uplift,
-                        "shapes[1].x1": uplift,
-                        "shapes[1].label.text": f"True effect = {uplift:.1%}"
-                    }
-                ],
-                label=f"{uplift*100:.0f}pp"
-            ) for uplift in true_uplift_range if uplift > 0
-        ]
-    ),
-    # Slider 3: Alpha level
-    dict(
-        active=alpha_range.index(default_alpha),
-        currentvalue={"prefix": "α: ", "font": {"size": 10}},
-        pad={"t": 10, "b": 10, "l": 20, "r": 10},
-        len=0.18,
-        x=0.78,
-        y=0.35,
-        steps=[
-            dict(
-                method="update",
-                args=[
-                    {
-                        "x": [all_traces[(default_n, 0.0, a, default_trials)]['diffs'],
-                              all_traces[(default_n, default_uplift, a, default_trials)]['diffs']],
-                        "name": [f"{all_traces[(default_n, 0.0, a, default_trials)]['scenario_type']} ({all_traces[(default_n, 0.0, a, default_trials)]['metric_name']} = {all_traces[(default_n, 0.0, a, default_trials)]['sig_rate']:.1%})",
-                                f"{all_traces[(default_n, default_uplift, a, default_trials)]['scenario_type']} ({all_traces[(default_n, default_uplift, a, default_trials)]['metric_name']} = {all_traces[(default_n, default_uplift, a, default_trials)]['sig_rate']:.1%})"]
-                    },
-                    {
-                        "title.text": f"A/B Testing: n={default_n}/arm, effect={default_uplift*100:.1f}pp, α={a:.2f}, trials={default_trials}<br>"
-                                     f"<sub>Null Type I = {all_traces[(default_n, 0.0, a, default_trials)]['sig_rate']:.1%} | "
-                                     f"Alt Power = {all_traces[(default_n, default_uplift, a, default_trials)]['sig_rate']:.1%}</sub>"
-                    }
-                ],
-                label=f"{a:.2f}"
-            ) for a in alpha_range
-        ]
-    ),
-    # Slider 4: Number of trials
-    dict(
-        active=n_trials_range.index(default_trials),
-        currentvalue={"prefix": "Trials: ", "font": {"size": 10}},
-        pad={"t": 10, "b": 10, "l": 20, "r": 10},
-        len=0.18,
-        x=0.78,
-        y=0.10,
-        steps=[
-            dict(
-                method="update",
-                args=[
-                    {
-                        "x": [all_traces[(default_n, 0.0, default_alpha, trials)]['diffs'],
-                              all_traces[(default_n, default_uplift, default_alpha, trials)]['diffs']],
-                        "name": [f"{all_traces[(default_n, 0.0, default_alpha, trials)]['scenario_type']} ({all_traces[(default_n, 0.0, default_alpha, trials)]['metric_name']} = {all_traces[(default_n, 0.0, default_alpha, trials)]['sig_rate']:.1%})",
-                                f"{all_traces[(default_n, default_uplift, default_alpha, trials)]['scenario_type']} ({all_traces[(default_n, default_uplift, default_alpha, trials)]['metric_name']} = {all_traces[(default_n, default_uplift, default_alpha, trials)]['sig_rate']:.1%})"]
-                    },
-                    {
-                        "title.text": f"A/B Testing: n={default_n}/arm, effect={default_uplift*100:.1f}pp, α={default_alpha:.2f}, trials={trials}<br>"
-                                     f"<sub>Null Type I = {all_traces[(default_n, 0.0, default_alpha, trials)]['sig_rate']:.1%} | "
-                                     f"Alt Power = {all_traces[(default_n, default_uplift, default_alpha, trials)]['sig_rate']:.1%}</sub>"
-                    }
-                ],
-                label=str(trials)
-            ) for trials in n_trials_range
-        ]
     )
-]
+    fig.add_histogram(
+        x=diff_alt,
+        name=f"Alt (Power = {power_rate:.1%})",
+        marker_color="#4c78a8",
+        opacity=0.55,
+        nbinsx=30,
+    )
+    fig.add_vline(x=0, line_dash="dash", line_color="black", annotation_text="No effect")
+    if uplift > 0:
+        fig.add_vline(
+            x=uplift,
+            line_dash="dot",
+            line_color="red",
+            annotation_text=f"True uplift = {uplift:.1%}",
+            annotation_position="top right",
+        )
+    fig.update_layout(
+        barmode="overlay",
+        title=dict(text="A/B Testing: Distribution of observed uplifts", font=dict(size=16)),
+        xaxis_title="Observed uplift (B − A)",
+        yaxis_title="Count",
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5),
+        height=520,
+        margin=dict(t=70, b=60, l=60, r=40),
+    )
+    return fig, type_i_rate, power_rate
 
-fig.update_layout(
-    title=dict(
-        text=f"A/B Testing: n={default_n}/arm, effect={default_uplift*100:.1f}pp, α={default_alpha:.2f}, trials={default_trials}<br>"
-             f"<sub>Null Type I = {all_traces[null_key]['sig_rate']:.1%} | Alt Power = {all_traces[alt_key]['sig_rate']:.1%}</sub>",
-        font=dict(size=13)
+
+@pn.depends(
+    n_per_arm=n_per_arm_slider,
+    true_uplift=true_uplift_slider,
+    alpha=ab_alpha_selector,
+    n_trials=n_trials_slider,
+)
+def ab_testing_view(n_per_arm, true_uplift, alpha, n_trials):
+    fig, type_i_rate, power_rate = simulate_ab_results(n_per_arm, true_uplift, alpha, n_trials)
+    metrics = pn.pane.Markdown(
+        (
+            f"**Type I error:** {type_i_rate:.1%} (null true)  "
+            f"\n**Power:** {power_rate:.1%} (true uplift {true_uplift:.1%})  "
+            f"\nn/arm = {n_per_arm:,} | α = {alpha:.2f} | simulations = {n_trials}"
+        ),
+        sizing_mode="stretch_width",
+    )
+    return pn.Column(
+        pn.pane.Plotly(fig, config={"responsive": True}, height=520, sizing_mode="stretch_width"),
+        pn.Spacer(height=10),
+        metrics,
+        sizing_mode="stretch_width",
+    )
+
+
+ab_testing_demo = pn.Row(
+    pn.Column(
+        pn.pane.Markdown(
+            "### Controls\nExperiment with assumptions to see how Type I error and power change."
+        ),
+        n_per_arm_slider,
+        true_uplift_slider,
+        ab_alpha_selector,
+        n_trials_slider,
+        sizing_mode="stretch_height",
+        width=320,
+        styles={"background": "#f8f9fa", "padding": "12px", "border-radius": "10px"},
+        margin=(0, 24, 0, 0),
     ),
-    xaxis=dict(title="Observed Difference (p_B - p_A)", domain=[0, 0.75]),
-    yaxis_title="Frequency",
-    barmode='overlay',
-    showlegend=True,
-    template="plotly_white",
-    height=380,
-    width=750,
-    margin=dict(t=70, b=50, l=60, r=220),
-    sliders=sliders
+    pn.Column(
+        ab_testing_view,
+        sizing_mode="stretch_both",
+    ),
+    sizing_mode="stretch_width",
+    height=600,
 )
 
-fig.show()
+ab_testing_demo
 ```
 
 **Key insight:** Use the 4 sliders to explore how sample size, effect size, alpha, and number of trials affect Type I error (null scenario, coral) and statistical power (alternative scenario, blue).
@@ -913,201 +798,107 @@ Prevention is key: pre-registration!
 ```{python}
 #| echo: false
 
-# P-Hacking demonstration: running NULL tests and seeing false positives
-np.random.seed(123)
-
-# Parameter ranges for interactivity
-outcomes_range = [2, 3, 5, 8, 10]
-subgroups_range = [2, 3, 4, 6, 8]
-n_range = [50, 100, 200]
-alpha_range = [0.01, 0.05, 0.10]
-
-# Default values
-default_outcomes = 5
-default_subgroups = 4
-default_n = 100
-default_alpha = 0.05
-
-fig = go.Figure()
-
-# Pre-generate results for all combinations
-all_traces = {}
-for outcomes in outcomes_range:
-    for subgroups in subgroups_range:
-        for n_per_test in n_range:
-            for alpha in alpha_range:
-                total_tests = outcomes * subgroups
-                results = []
-                
-                # Run simulation
-                for test_num in range(total_tests):
-                    group1 = np.random.binomial(n_per_test, 0.5) / n_per_test
-                    group2 = np.random.binomial(n_per_test, 0.5) / n_per_test
-                    
-                    pooled_p = (group1 + group2) / 2
-                    se = np.sqrt(2 * pooled_p * (1 - pooled_p) / n_per_test)
-                    diff = np.abs(group2 - group1)
-                    z_stat = diff / se if se > 0 else 0
-                    p_value = 2 * (1 - stats.norm.cdf(z_stat))
-                    
-                    results.append({
-                        'test_num': test_num + 1,
-                        'p_value': p_value,
-                        'significant': p_value < alpha
-                    })
-                
-                num_sig = sum(1 for r in results if r['significant'])
-                colors = ['steelblue' if r['significant'] else 'lightgray' for r in results]
-                
-                all_traces[(outcomes, subgroups, n_per_test, alpha)] = {
-                    'x': [r['test_num'] for r in results],
-                    'y': [r['p_value'] for r in results],
-                    'colors': colors,
-                    'num_sig': num_sig,
-                    'total_tests': total_tests,
-                    'alpha': alpha
-                }
-
-# Add initial trace
-initial_key = (default_outcomes, default_subgroups, default_n, default_alpha)
-initial_trace = all_traces[initial_key]
-
-fig.add_trace(go.Scatter(
-    x=initial_trace['x'],
-    y=initial_trace['y'],
-    mode='markers',
-    marker=dict(color=initial_trace['colors'], size=8),
-    showlegend=False,
-    hovertemplate='Test %{x}<br>p-value: %{y:.4f}<extra></extra>'
-))
-
-# Add alpha threshold line
-fig.add_hline(
-    y=default_alpha, 
-    line_dash="dash", 
-    line_color="red",
-    annotation_text=f"α = {default_alpha:.2f}", 
-    annotation_position="left"
+outcomes_slider = pn.widgets.IntSlider(name="Outcomes tested", start=2, end=12, step=1, value=5)
+subgroups_slider = pn.widgets.IntSlider(name="Subgroups analyzed", start=1, end=8, step=1, value=4)
+n_slider = pn.widgets.IntSlider(name="Sample size per test", start=50, end=400, step=50, value=100)
+ph_alpha_selector = pn.widgets.RadioButtonGroup(
+    name="α (per-test)",
+    options={"1%": 0.01, "5%": 0.05, "10%": 0.10},
+    value=0.05,
 )
 
-# Create 4 sliders vertically stacked on the right
-sliders = [
-    # Slider 1: Number of outcomes (top)
-    dict(
-        active=outcomes_range.index(default_outcomes),
-        currentvalue={"prefix": "Outcomes: ", "font": {"size": 10}},
-        pad={"t": 10, "b": 10, "l": 20, "r": 10},
-        len=0.18,
-        x=0.78,
-        y=0.85,
-        steps=[
-            dict(
-                method="restyle",
-                args=[{
-                    "x": [all_traces[(out, default_subgroups, default_n, default_alpha)]['x']],
-                    "y": [all_traces[(out, default_subgroups, default_n, default_alpha)]['y']],
-                    "marker.color": [all_traces[(out, default_subgroups, default_n, default_alpha)]['colors']]
-                }],
-                label=str(out)
-            ) for out in outcomes_range
-        ]
-    ),
-    # Slider 2: Number of subgroups
-    dict(
-        active=subgroups_range.index(default_subgroups),
-        currentvalue={"prefix": "Subgroups: ", "font": {"size": 10}},
-        pad={"t": 10, "b": 10, "l": 20, "r": 10},
-        len=0.18,
-        x=0.78,
-        y=0.60,
-        steps=[
-            dict(
-                method="restyle",
-                args=[{
-                    "x": [all_traces[(default_outcomes, sub, default_n, default_alpha)]['x']],
-                    "y": [all_traces[(default_outcomes, sub, default_n, default_alpha)]['y']],
-                    "marker.color": [all_traces[(default_outcomes, sub, default_n, default_alpha)]['colors']]
-                }],
-                label=str(sub)
-            ) for sub in subgroups_range
-        ]
-    ),
-    # Slider 3: Sample size
-    dict(
-        active=n_range.index(default_n),
-        currentvalue={"prefix": "n/test: ", "font": {"size": 10}},
-        pad={"t": 10, "b": 10, "l": 20, "r": 10},
-        len=0.18,
-        x=0.78,
-        y=0.35,
-        steps=[
-            dict(
-                method="restyle",
-                args=[{
-                    "x": [all_traces[(default_outcomes, default_subgroups, n, default_alpha)]['x']],
-                    "y": [all_traces[(default_outcomes, default_subgroups, n, default_alpha)]['y']],
-                    "marker.color": [all_traces[(default_outcomes, default_subgroups, n, default_alpha)]['colors']]
-                }],
-                label=str(n)
-            ) for n in n_range
-        ]
-    ),
-    # Slider 4: Alpha level
-    dict(
-        active=alpha_range.index(default_alpha),
-        currentvalue={"prefix": "α: ", "font": {"size": 10}},
-        pad={"t": 10, "b": 10, "l": 20, "r": 10},
-        len=0.18,
-        x=0.78,
-        y=0.10,
-        steps=[
-            dict(
-                method="update",
-                args=[
-                    {
-                        "x": [all_traces[(default_outcomes, default_subgroups, default_n, a)]['x']],
-                        "y": [all_traces[(default_outcomes, default_subgroups, default_n, a)]['y']],
-                        "marker.color": [all_traces[(default_outcomes, default_subgroups, default_n, a)]['colors']]
-                    },
-                    {
-                        "shapes[0].y0": a,
-                        "shapes[0].y1": a,
-                        "shapes[0].label.text": f"α = {a:.2f}"
-                    }
-                ],
-                label=f"{a:.2f}"
-            ) for a in alpha_range
-        ]
-    )
-]
 
-fig.update_layout(
-    title=dict(
-        text=f"P-Hacking Demo: {initial_trace['num_sig']}/{initial_trace['total_tests']} tests significant "
-             f"({100*initial_trace['num_sig']/initial_trace['total_tests']:.0f}%)<br>"
-             f"<sub>All NULL (no real effects) | Expected false positives: {initial_trace['alpha']*initial_trace['total_tests']:.1f}</sub>",
-        font=dict(size=13)
-    ),
-    xaxis=dict(title="Test number (each dot = one hypothesis test)", domain=[0, 0.75]),
-    yaxis_title="p-value",
-    template="plotly_white",
-    height=380,
-    width=750,
-    margin=dict(t=70, b=50, l=60, r=220),
-    sliders=sliders,
-    annotations=[
-        dict(
-            text="⚠️ Blue dots = false positives from random chance!",
-            xref="paper", yref="paper",
-            x=0.38, y=-0.12,
-            showarrow=False,
-            font=dict(size=11, color="#856404"),
-            xanchor="center"
+def simulate_phacking(outcomes, subgroups, n_per_test, alpha):
+    total_tests = max(outcomes * subgroups, 1)
+    rng = np.random.default_rng(7)
+    group1 = rng.binomial(n_per_test, 0.5, size=total_tests) / n_per_test
+    group2 = rng.binomial(n_per_test, 0.5, size=total_tests) / n_per_test
+    pooled = (group1 + group2) / 2
+    se = np.sqrt(2 * pooled * (1 - pooled) / n_per_test)
+    diff = np.abs(group2 - group1)
+    z = np.divide(diff, se, out=np.zeros_like(diff), where=se > 0)
+    p_values = 2 * (1 - stats.norm.cdf(z))
+    significant = p_values < alpha
+
+    fig = go.Figure()
+    fig.add_trace(
+        go.Scatter(
+            x=np.arange(1, total_tests + 1),
+            y=p_values,
+            mode="markers",
+            marker=dict(
+                color=np.where(significant, "#4c78a8", "#ced4da"),
+                size=9,
+            ),
+            hovertemplate="Test %{x}<br>p-value: %{y:.4f}<extra></extra>",
         )
-    ]
+    )
+    fig.add_hline(
+        y=alpha,
+        line_dash="dash",
+        line_color="#d62728",
+        annotation_text=f"α = {alpha:.2f}",
+        annotation_position="left",
+    )
+    fig.update_layout(
+        title=dict(
+            text="P-Hacking Simulator: False positives accumulate",
+            font=dict(size=16),
+        ),
+        xaxis_title="Hypothesis test number",
+        yaxis_title="p-value",
+        yaxis=dict(range=[0, 1]),
+        height=520,
+        margin=dict(t=70, b=60, l=60, r=40),
+    )
+
+    expected_false = alpha * total_tests
+    summary = (
+        f"**False positives:** {int(significant.sum())} of {total_tests} tests ({significant.mean():.1%})\n"
+        f"Expected at α={alpha:.2f}: {expected_false:.1f}"
+    )
+    return fig, summary
+
+
+@pn.depends(
+    outcomes=outcomes_slider,
+    subgroups=subgroups_slider,
+    n_per_test=n_slider,
+    alpha=ph_alpha_selector,
+)
+def phacking_view(outcomes, subgroups, n_per_test, alpha):
+    fig, summary = simulate_phacking(outcomes, subgroups, n_per_test, alpha)
+    return pn.Column(
+        pn.pane.Plotly(fig, config={"responsive": True}, height=520, sizing_mode="stretch_width"),
+        pn.Spacer(height=10),
+        pn.pane.Markdown(summary, sizing_mode="stretch_width"),
+        sizing_mode="stretch_width",
+    )
+
+
+phacking_demo = pn.Row(
+    pn.Column(
+        pn.pane.Markdown(
+            "### Controls\nSee how quickly spurious results appear when you keep testing."
+        ),
+        outcomes_slider,
+        subgroups_slider,
+        n_slider,
+        ph_alpha_selector,
+        sizing_mode="stretch_height",
+        width=320,
+        styles={"background": "#f8f9fa", "padding": "12px", "border-radius": "10px"},
+        margin=(0, 24, 0, 0),
+    ),
+    pn.Column(
+        phacking_view,
+        sizing_mode="stretch_both",
+    ),
+    sizing_mode="stretch_width",
+    height=600,
 )
 
-fig.show()
+phacking_demo
 ```
 
 **Key insight:** Use the 4 sliders to explore how testing multiple hypotheses inflates false positives. Even when there are NO real effects, you'll find "significant" results by pure chance!
@@ -1426,119 +1217,161 @@ Show where your planned study sits on these curves.
 ```{python}
 #| echo: false
 
-def calculate_sample_size(baseline_p, mde, alpha, power):
-    """Calculate required sample size per arm"""
-    p2 = baseline_p - mde
-    p_bar = (baseline_p + p2) / 2
-    
-    z_alpha = stats.norm.ppf(1 - alpha / 2)
-    z_beta = stats.norm.ppf(power)
-    
-    numerator = (z_alpha * np.sqrt(2 * p_bar * (1 - p_bar)) + 
-                 z_beta * np.sqrt(baseline_p * (1 - baseline_p) + p2 * (1 - p2))) ** 2
-    denominator = mde ** 2
-    
-    return int(np.ceil(numerator / denominator))
-
-# Generate power curves for different MDE values
-baseline_p = 0.42
-alpha = 0.05
-power = 0.80
-mde_values = [0.01, 0.02, 0.03, 0.05, 0.08, 0.10]
-
-fig = go.Figure()
-
-# Create traces for each MDE value (3 traces per MDE: curve, power line, marker)
-for i, mde in enumerate(mde_values):
-    required_n = calculate_sample_size(baseline_p, mde, alpha, power)
-    
-    # Generate power curve
-    max_n = int(max(3000, required_n * 1.5))
-    n_values = np.arange(50, max_n, 50)
-    p2 = baseline_p - mde
-    p_bar = (baseline_p + p2) / 2
-    z_alpha = stats.norm.ppf(1 - alpha / 2)
-    
-    power_values = []
-    for n in n_values:
-        se = np.sqrt(2 * p_bar * (1 - p_bar) / n)
-        z_stat = mde / se
-        power_values.append(1 - stats.norm.cdf(z_alpha - z_stat))
-    
-    # Default to showing MDE=0.03
-    visible = True if i == 2 else False
-    
-    # Add power curve
-    fig.add_trace(go.Scatter(
-        x=n_values, y=power_values,
-        mode='lines', line=dict(color='steelblue', width=3),
-        name=f'MDE={mde*100:.0f}pp',
-        visible=visible,
-        hovertemplate='n=%{x}<br>Power=%{y:.1%}<extra></extra>'
-    ))
-    
-    # Add target power line
-    fig.add_trace(go.Scatter(
-        x=[50, max_n], y=[power, power],
-        mode='lines', line=dict(color='red', dash='dash', width=2),
-        visible=visible,
-        showlegend=False,
-        hoverinfo='skip'
-    ))
-    
-    # Add required n marker
-    fig.add_trace(go.Scatter(
-        x=[required_n], y=[power],
-        mode='markers+text',
-        marker=dict(color='red', size=12),
-        text=[f'n={required_n:,}'],
-        textposition='top center',
-        visible=visible,
-        showlegend=False,
-        hovertemplate=f'Required: {required_n:,}/arm ({required_n*2:,} total)<extra></extra>'
-    ))
-
-# Create slider steps
-steps = []
-for i, mde in enumerate(mde_values):
-    required_n = calculate_sample_size(baseline_p, mde, alpha, power)
-    
-    # Create visibility array (3 traces per MDE value)
-    visibility = [False] * (len(mde_values) * 3)
-    visibility[i*3] = True      # Power curve
-    visibility[i*3 + 1] = True  # Power line
-    visibility[i*3 + 2] = True  # Marker
-    
-    step = dict(
-        method="update",
-        args=[{"visible": visibility}],
-        label=f"MDE={mde*100:.0f}pp"
-    )
-    steps.append(step)
-
-sliders = [dict(
-    active=2,  # Default to MDE=0.03
-    currentvalue={"prefix": "Minimum Detectable Effect: "},
-    steps=steps
-)]
-
-fig.update_layout(
-    title=dict(
-        text=f"Power Analysis: Sample Size vs MDE<br>" +
-             f"<sub>Baseline={baseline_p*100:.0f}% | Target power={power*100:.0f}% | α={alpha:.2f}</sub>",
-        font=dict(size=14)
-    ),
-    xaxis_title="Sample size per arm (n)",
-    yaxis_title="Statistical Power",
-    yaxis=dict(tickformat='.0%', range=[0, 1]),
-    template="plotly_white",
-    height=420,
-    width=750,
-    margin=dict(t=70, b=90, l=50, r=20),
-    sliders=sliders
+baseline_slider = pn.widgets.FloatSlider(
+    name="Baseline rate",
+    start=0.1,
+    end=0.9,
+    step=0.01,
+    value=0.42,
+    format="0%",
+)
+mde_slider = pn.widgets.FloatSlider(
+    name="Minimum detectable effect",
+    start=0.01,
+    end=0.10,
+    step=0.005,
+    value=0.03,
+    format="0%",
+)
+power_alpha_slider = pn.widgets.FloatSlider(
+    name="α (two-sided)",
+    start=0.01,
+    end=0.10,
+    step=0.01,
+    value=0.05,
+    format="0.0%",
+)
+power_slider = pn.widgets.FloatSlider(
+    name="Target power",
+    start=0.60,
+    end=0.95,
+    step=0.05,
+    value=0.80,
+    format="0%",
 )
 
-fig.show()
+
+def calculate_sample_size(baseline_p, mde, alpha, power):
+    p2 = np.clip(baseline_p - mde, 1e-4, 1 - 1e-4)
+    p_bar = (baseline_p + p2) / 2
+    z_alpha = stats.norm.ppf(1 - alpha / 2)
+    z_beta = stats.norm.ppf(power)
+    numerator = (
+        z_alpha * np.sqrt(2 * p_bar * (1 - p_bar))
+        + z_beta * np.sqrt(baseline_p * (1 - baseline_p) + p2 * (1 - p2))
+    ) ** 2
+    denominator = max(mde ** 2, 1e-6)
+    return int(np.ceil(numerator / denominator))
+
+
+def build_power_curve(baseline, mde, alpha, target_power):
+    required_n = calculate_sample_size(baseline, mde, alpha, target_power)
+    n_max = max(2000, required_n * 2)
+    n_values = np.arange(50, n_max + 1, 25)
+
+    p2 = np.clip(baseline - mde, 1e-4, 1 - 1e-4)
+    p_bar = (baseline + p2) / 2
+    z_alpha = stats.norm.ppf(1 - alpha / 2)
+    power_vals = []
+    for n in n_values:
+        se = np.sqrt(2 * p_bar * (1 - p_bar) / n)
+        z_stat = mde / max(se, 1e-6)
+        power_vals.append(1 - stats.norm.cdf(z_alpha - z_stat))
+
+    fig = go.Figure()
+    fig.add_trace(
+        go.Scatter(
+            x=n_values,
+            y=power_vals,
+            mode="lines",
+            line=dict(color="#4c78a8", width=3),
+            name="Power curve",
+            hovertemplate="n=%{x}<br>Power=%{y:.1%}<extra></extra>",
+        )
+    )
+    fig.add_trace(
+        go.Scatter(
+            x=[n_values.min(), n_values.max()],
+            y=[target_power, target_power],
+            mode="lines",
+            line=dict(color="#d62728", dash="dash", width=2),
+            showlegend=False,
+            hoverinfo="skip",
+        )
+    )
+    fig.add_trace(
+        go.Scatter(
+            x=[required_n],
+            y=[target_power],
+            mode="markers+text",
+            marker=dict(color="#d62728", size=12),
+            text=[f"n/arm = {required_n:,}"],
+            textposition="top center",
+            showlegend=False,
+            hovertemplate=f"Required sample size: {required_n:,}/arm<extra></extra>",
+        )
+    )
+    fig.update_layout(
+        title=dict(
+            text=(
+                "Power & Sample Size Planner" "<br>"
+                f"<sub>Baseline={baseline:.0%} | MDE={mde:.1%} | α={alpha:.2f} | Target power={target_power:.0%}</sub>"
+            ),
+            font=dict(size=16),
+        ),
+        xaxis_title="Sample size per arm (n)",
+        yaxis_title="Power",
+        yaxis=dict(range=[0, 1], tickformat=".0%"),
+        height=520,
+        margin=dict(t=80, b=70, l=70, r=40),
+    )
+
+    summary = (
+        f"**Recommended n:** {required_n:,} per arm ({required_n * 2:,} total)\n"
+        "Smaller effects demand disproportionately larger samples."
+    )
+    return fig, summary
+
+
+@pn.depends(
+    baseline=baseline_slider,
+    mde=mde_slider,
+    alpha=power_alpha_slider,
+    target_power=power_slider,
+)
+def power_view(baseline, mde, alpha, target_power):
+    fig, summary = build_power_curve(baseline, mde, alpha, target_power)
+    return pn.Column(
+        pn.pane.Plotly(fig, config={"responsive": True}, height=520, sizing_mode="stretch_width"),
+        pn.Spacer(height=10),
+        pn.pane.Markdown(summary, sizing_mode="stretch_width"),
+        sizing_mode="stretch_width",
+    )
+
+
+power_demo = pn.Row(
+    pn.Column(
+        pn.pane.Markdown(
+            "### Controls\nTune the assumptions to see how sample size requirements change."
+        ),
+        baseline_slider,
+        mde_slider,
+        power_alpha_slider,
+        power_slider,
+        sizing_mode="stretch_height",
+        width=320,
+        styles={"background": "#f8f9fa", "padding": "12px", "border-radius": "10px"},
+        margin=(0, 24, 0, 0),
+    ),
+    pn.Column(
+        power_view,
+        sizing_mode="stretch_both",
+    ),
+    sizing_mode="stretch_width",
+    height=600,
+)
+
+power_demo
 ```
 
 **Key insight:** Move the slider to see how MDE affects required sample size. Smaller effects (1pp) need huge samples; larger effects (10pp) are detectable with modest samples.
