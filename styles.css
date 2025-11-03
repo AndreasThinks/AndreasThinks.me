@@ -332,15 +332,20 @@ hr {
   }
 
   .navbar .navbar-brand-container {
-    justify-content: space-between;
+    justify-content: center;
     gap: 0.5rem;
-    width: 100%;
+    width: auto;
   }
 
   .navbar .navbar-brand {
     font-size: 0.95rem;
     letter-spacing: 0.04em;
-    margin-right: 0;
+    margin: 0;
+    text-align: center;
+  }
+
+  .navbar .navbar-brand-logo {
+    display: none;
   }
 
   .intro-panel {
