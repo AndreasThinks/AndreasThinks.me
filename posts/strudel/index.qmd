@@ -3,6 +3,7 @@ title: "Live coding with Strudel in Quarto"
 description: "A lightweight plugin to drop Strudel patterns straight into this site, complete with play and stop controls."
 date: "2025-03-02"
 format: html
+draft: true
 filters:
   - strudel
 categories: [quarto, music, livecoding]
