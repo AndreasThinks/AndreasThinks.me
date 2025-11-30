@@ -138,6 +138,18 @@
       await loadScript();
     } catch (err) {
       console.error("Failed to load Strudel REPL:", err);
+      blocks.forEach((block) => {
+        const pre = block.closest("pre");
+        if (!pre) return;
+
+        if (pre.nextElementSibling?.classList.contains("strudel-warning")) return;
+
+        const warning = document.createElement("div");
+        warning.className = "strudel-warning";
+        warning.textContent = "Strudel REPL failed to load. Showing original code.";
+
+        pre.insertAdjacentElement("afterend", warning);
+      });
       return;
     }
 
