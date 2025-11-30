@@ -45,6 +45,28 @@ Quarto will place the extension in `_extensions/AndreasThinks/strudel`. If you p
 
 3. Render the page. Each `strudel` block will be transformed into an interactive REPL where readers can edit the code and play it.
 
+### Choosing the Strudel REPL version
+
+You can pin or override the Strudel REPL version that the filter loads via document metadata. By default the filter pulls the `latest` release from the unpkg CDN.
+
+```yaml
+filters: [strudel]
+strudel:
+  repl-version: latest  # default
+```
+
+To pin a specific release, set `repl-version` to the desired tag:
+
+```yaml
+strudel:
+  repl-version: 1.5.0
+```
+
+Notes:
+
+- The version is used to build the CDN URL (e.g., `https://unpkg.com/@strudel/repl@<version>`). If the CDN cache is stale, bumping the version (or switching back to `latest`) will bust the cache.
+- If a release isn't yet available on the CDN, use `latest` or a known published version.
+
 ## How it works
 
 The extension uses [`@strudel/repl`](https://www.npmjs.com/package/@strudel/repl) which provides the `<strudel-editor>` web component. When the page loads:
