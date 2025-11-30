@@ -1,0 +1,66 @@
+.strudel-player {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.5rem;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  box-shadow: 0 0 20px rgba(0, 255, 170, 0.15);
+}
+
+.strudel-controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.strudel-label {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #8ef5c8;
+}
+
+.strudel-button {
+  background: linear-gradient(120deg, #10c469, #0a8f5c);
+  border: none;
+  color: #04130d;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+.strudel-button:hover,
+.strudel-button:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(16, 196, 105, 0.35);
+}
+
+.strudel-button.stop {
+  background: linear-gradient(120deg, #ff6b6b, #c41c1c);
+  color: #ffeaea;
+}
+
+.strudel-status {
+  margin-left: auto;
+  font-family: "Fira Code", "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.9rem;
+  color: #cdeae0;
+}
+
+.strudel-status[data-state="error"] {
+  color: #ff7b7b;
+}
+
+.strudel-status[data-state="loading"] {
+  color: #f2d16b;
+}
+
+.strudel-status[data-state="active"] {
+  color: #8ef5c8;
+}
