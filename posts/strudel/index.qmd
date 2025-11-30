@@ -20,10 +20,82 @@ I wanted a way to sprinkle Strudel's browser-based live coding on this site with
 
 Here's a quick pattern demo to try:
 
-```strudel
+```{.strudel data-title="Arp drift"}
 every(3, rev, note("c4 g4 e4 a4").fast(2))
   .sometimesBy(0.4, jux(rev))
   .slow(1.5)
+```
+
+## More demo patterns
+
+A few ready-to-play sketches to hear how the extension behaves with different Strudel idioms.
+
+### Minimal pulse with filter sweeps
+
+```{.strudel data-title="Hypno kick"}
+s("bd bd*2")
+  .fast(1.5)
+  .struct("t(<0 1 0 0 1 0>,4)")
+  .shape(0.2)
+  .gain(0.9)
+  .lp(<4000 900>)
+  .slow(2)
+```
+
+### Shuffled chords with polyrhythms
+
+```{.strudel data-title="Polyrhythm pads"}
+note("c'maj7 g'maj7 f'maj7")
+  .chop(8)
+  .sometimesBy(0.3, rev)
+  .euclid(5, 8)
+  .room(0.6)
+  .orbit(1)
+  .slow(1.25)
+```
+
+### Euclidean hats with fills
+
+```{.strudel data-title="Shifting hats"}
+s("hc*4? hc*3? hc*5?")
+  .euclid(11, 16)
+  .sometimesBy(0.25, fast(2))
+  .sometimesBy(0.35, struct("t(0 0 0 1 0 0 1 0 0 1, 16)"))
+  .gain(0.85)
+  .hp(4000)
+```
+
+### Plucked arps with wobble
+
+```{.strudel data-title="Shimmer arp"}
+stack([
+  note("c4 e4 g4 b4")
+    .arp("updown")
+    .fast(1.5)
+    .shape(0.15)
+    .tremolo(8, 0.3),
+  note("c3 g3 f3")
+    .degradeBy(0.3)
+    .vib(0.15, 6)
+    .gain(0.7)
+])
+  .room(0.5)
+  .orbit(2)
+```
+
+### One-shot sampler call
+
+You can still call `evaluate` directly to load samples or use functions not covered by the helper. The extension stays out of the way while keeping the player UI consistent.
+
+```{.strudel data-title="Custom sample"}
+evaluate(`
+  loadSample("bd", "https://cdn.jsdelivr.net/gh/tidalcycles/dirt-samples@master/808bd/BD0000.WAV").then(() =>
+    s("bd*2")
+      .gain(0.8)
+      .struct("t(3 1 2,8)")
+      .slow(1.2)
+  );
+`)
 ```
 
 If you want to load in your own samples or do something more elaborate, you can still call `evaluate` directly from a `strudel` block—the extension simply gives you a friendly wrapper and makes sure Strudel is initialized once per page.
