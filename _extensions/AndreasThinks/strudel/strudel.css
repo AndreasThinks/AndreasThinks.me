@@ -58,10 +58,9 @@
 .strudel-status {
   margin-left: auto;
   font-family: "Fira Code", "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #888;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
 }
 
 .strudel-status[data-state="idle"] {
@@ -70,47 +69,11 @@
 
 .strudel-status[data-state="active"] {
   color: #10c469;
+  font-weight: 600;
 }
 
 .strudel-status[data-state="error"] {
   color: #e74c3c;
-}
-
-/* Editor container - holds both overlay and editor */
-.strudel-editor-container {
-  position: relative;
-}
-
-/* Overlay for idle state */
-.strudel-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background: linear-gradient(135deg, rgba(16, 196, 105, 0.15) 0%, rgba(0, 0, 0, 0.4) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  transition: opacity 0.3s ease, height 0.3s ease;
-  border-bottom: 1px solid rgba(16, 196, 105, 0.2);
-}
-
-.strudel-overlay.hidden {
-  opacity: 0;
-  pointer-events: none;
-  height: 0;
-}
-
-.strudel-overlay-text {
-  color: #10c469;
-  font-family: "Fira Code", "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
-  font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  opacity: 0.9;
 }
 
 /* The strudel-editor component */

@@ -57,26 +57,14 @@
 
     controls.append(playBtn, stopBtn, status);
 
-    // Create the editor container with overlay
-    const editorContainer = document.createElement("div");
-    editorContainer.className = "strudel-editor-container";
-
-    // Create overlay for idle state
-    const overlay = document.createElement("div");
-    overlay.className = "strudel-overlay";
-    overlay.innerHTML = '<span class="strudel-overlay-text">▶ Click Play to start</span>';
-
     // Create the strudel-editor element
     const editor = document.createElement("strudel-editor");
     
     // The code must be wrapped in HTML comments per Strudel docs
     editor.innerHTML = `<!--\n${code}\n-->`;
 
-    editorContainer.appendChild(overlay);
-    editorContainer.appendChild(editor);
-
     wrapper.appendChild(controls);
-    wrapper.appendChild(editorContainer);
+    wrapper.appendChild(editor);
     parent.replaceChild(wrapper, pre);
 
     // Set up controls once the editor is ready
@@ -88,16 +76,15 @@
           
           playBtn.disabled = false;
           stopBtn.disabled = false;
-          status.textContent = "Ready";
+          status.textContent = "Ready — click Play ▶";
           status.dataset.state = "idle";
 
           playBtn.addEventListener("click", async () => {
             try {
-              // Show visualisation and hide overlay
+              // Show visualisation
               wrapper.classList.add("playing");
-              overlay.classList.add("hidden");
               
-              status.textContent = "Playing";
+              status.textContent = "▶ Playing";
               status.dataset.state = "active";
               await editor.editor.evaluate();
             } catch (err) {
@@ -111,11 +98,10 @@
             try {
               editor.editor.stop();
               
-              // Hide visualisation and show overlay
+              // Hide visualisation
               wrapper.classList.remove("playing");
-              overlay.classList.remove("hidden");
               
-              status.textContent = "Stopped";
+              status.textContent = "Stopped — click Play ▶";
               status.dataset.state = "idle";
             } catch (err) {
               console.error("Strudel stop error:", err);
