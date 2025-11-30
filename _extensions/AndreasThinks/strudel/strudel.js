@@ -1,29 +1,99 @@
 (() => {
-  const STRUDEL_REPL_SOURCE = "https://unpkg.com/@strudel/repl@latest";
-  let scriptLoaded = false;
+  const DEFAULT_VERSION = "latest";
+  const STRUDEL_REPL_BASE = "https://unpkg.com/@strudel/repl@";
+  const currentScript = document.currentScript;
+
+  const normalizeVersion = (value) => {
+    if (typeof value !== "string") {
+      return { version: DEFAULT_VERSION, reason: value === undefined ? "missing" : "not a string" };
+    }
+
+    const trimmed = value.trim();
+    if (!trimmed) {
+      return { version: DEFAULT_VERSION, reason: "empty" };
+    }
+
+    if (!/^[-\w.]+$/.test(trimmed)) {
+      return { version: DEFAULT_VERSION, reason: "invalid format" };
+    }
+
+    return { version: trimmed };
+  };
+
+  const { version: resolvedVersion, reason: versionProblem } = normalizeVersion(
+    currentScript?.dataset?.strudelVersion
+  );
+
+  if (versionProblem && currentScript?.dataset?.strudelVersion !== undefined) {
+    console.warn(
+      `Strudel REPL version '${currentScript.dataset.strudelVersion}' is ${versionProblem}; falling back to '${DEFAULT_VERSION}'.`
+    );
+  }
+
+  const STRUDEL_REPL_SOURCE = `${STRUDEL_REPL_BASE}${resolvedVersion}`;
+  const GLOBAL_LOADER_KEY = "__strudelReplLoader";
+
+  const attachLoader = (scriptEl, versionLabel) => {
+    const promise = new Promise((resolve, reject) => {
+      if (scriptEl.dataset.strudelReplLoaded === "true") {
+        resolve();
+        return;
+      }
+
+      scriptEl.addEventListener(
+        "load",
+        () => {
+          scriptEl.dataset.strudelReplLoaded = "true";
+          resolve();
+        },
+        { once: true }
+      );
+
+      scriptEl.addEventListener(
+        "error",
+        () => reject(new Error(`Unable to load Strudel REPL from CDN (${versionLabel})`)),
+        { once: true }
+      );
+    });
+
+    window[GLOBAL_LOADER_KEY] = { version: versionLabel, promise };
+    return promise;
+  };
 
   const loadScript = () => {
-    return new Promise((resolve, reject) => {
-      if (scriptLoaded) {
-        resolve();
-        return;
+    const existingLoader = window[GLOBAL_LOADER_KEY];
+    if (existingLoader) {
+      if (existingLoader.version !== resolvedVersion) {
+        console.warn(
+          `Strudel REPL already loading version '${existingLoader.version}', requested '${resolvedVersion}'. Using the existing script.`,
+        );
       }
-      const existing = document.querySelector(`script[src="${STRUDEL_REPL_SOURCE}"]`);
-      if (existing) {
-        scriptLoaded = true;
-        resolve();
-        return;
+      return existingLoader.promise;
+    }
+
+    const existingScript =
+      document.querySelector("script[data-strudel-repl-loader]") ||
+      document.querySelector(`script[src^="${STRUDEL_REPL_BASE}"]`);
+
+    if (existingScript) {
+      const scriptVersion = existingScript.dataset.strudelReplVersion || resolvedVersion;
+      if (scriptVersion !== resolvedVersion) {
+        console.warn(
+          `Strudel REPL already present with version '${scriptVersion}', requested '${resolvedVersion}'. Using the existing script.`,
+        );
       }
-      const script = document.createElement("script");
-      script.src = STRUDEL_REPL_SOURCE;
-      script.async = true;
-      script.onload = () => {
-        scriptLoaded = true;
-        resolve();
-      };
-      script.onerror = () => reject(new Error("Unable to load Strudel REPL from CDN"));
-      document.head.appendChild(script);
-    });
+      return attachLoader(existingScript, scriptVersion);
+    }
+
+    const script = document.createElement("script");
+    script.src = STRUDEL_REPL_SOURCE;
+    script.async = true;
+    script.dataset.strudelReplLoader = "true";
+    script.dataset.strudelReplVersion = resolvedVersion;
+
+    const promise = attachLoader(script, resolvedVersion);
+    document.head.appendChild(script);
+    return promise;
   };
 
   const transformBlock = (codeBlock, index) => {
@@ -59,7 +129,7 @@
 
     // Create the strudel-editor element
     const editor = document.createElement("strudel-editor");
-    
+
     // The code must be wrapped in HTML comments per Strudel docs
     editor.innerHTML = `<!--\n${code}\n-->`;
 
@@ -73,7 +143,7 @@
       const checkEditor = setInterval(() => {
         if (editor.editor) {
           clearInterval(checkEditor);
-          
+
           playBtn.disabled = false;
           stopBtn.disabled = false;
           status.textContent = "Ready — click Play ▶";
@@ -83,7 +153,7 @@
             try {
               // Show visualisation
               wrapper.classList.add("playing");
-              
+
               status.textContent = "▶ Playing";
               status.dataset.state = "active";
               await editor.editor.evaluate();
@@ -97,10 +167,10 @@
           stopBtn.addEventListener("click", () => {
             try {
               editor.editor.stop();
-              
+
               // Hide visualisation
               wrapper.classList.remove("playing");
-              
+
               status.textContent = "Stopped — click Play ▶";
               status.dataset.state = "idle";
             } catch (err) {
