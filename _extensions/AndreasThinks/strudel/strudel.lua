@@ -8,6 +8,9 @@ local function ensureHtmlDeps()
 end
 
 function Meta(m)
+  if not quarto.doc.isFormat("html") then
+    return m
+  end
   ensureHtmlDeps()
   return m
 end
