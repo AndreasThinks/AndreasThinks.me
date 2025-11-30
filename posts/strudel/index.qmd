@@ -1,0 +1,29 @@
+---
+title: "Live coding with Strudel in Quarto"
+description: "A lightweight plugin to drop Strudel patterns straight into this site, complete with play and stop controls."
+date: "2025-03-02"
+format: html
+draft: true
+filters:
+  - strudel
+categories: [quarto, music, livecoding]
+freeze: false
+---
+
+I wanted a way to sprinkle Strudel's browser-based live coding on this site without hand-wiring scripts on every post. The result is a tiny Quarto extension that automatically loads Strudel from the CDN, wraps any `strudel` code blocks with play/stop buttons, and keeps the cyberpunk styling intact.
+
+## Using the Strudel extension
+
+1. Add `- strudel` to the page filters (the header of this post shows the YAML needed).
+2. Write a code block with the `strudel` language. The extension will attach controls and call `evaluate(...)` under the hood when someone hits play.
+3. Click play to initialize Strudel (per browser autoplay rules this needs a user gesture) and enjoy the pattern; hit stop to hush everything.
+
+Here's a quick pattern demo to try:
+
+```strudel
+every(3, rev, note("c4 g4 e4 a4").fast(2))
+  .sometimesBy(0.4, jux(rev))
+  .slow(1.5)
+```
+
+If you want to load in your own samples or do something more elaborate, you can still call `evaluate` directly from a `strudel` block—the extension simply gives you a friendly wrapper and makes sure Strudel is initialized once per page.
