@@ -124,6 +124,36 @@ li {
   color: var(--text-muted);
 }
 
+main.content {
+  display: block;
+}
+
+main.content p,
+main.content li {
+  font-size: 1.08rem;
+  line-height: 1.85;
+  letter-spacing: 0.01em;
+}
+
+main.content p {
+  margin-bottom: 1.1rem;
+}
+
+main.content ol,
+main.content ul {
+  padding-left: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+main.content h2,
+main.content h3,
+main.content h4 {
+  margin-top: 1.6rem;
+  margin-bottom: 0.6rem;
+}
+
 a {
   color: var(--accent);
   text-decoration: none;
@@ -320,6 +350,29 @@ footer.nav-footer a:hover {
 hr {
   border-color: rgba(123, 252, 200, 0.15);
   margin: 2.5rem 0;
+}
+
+@media (max-width: 780px) {
+  :root {
+    --content-gutter: 1.4rem;
+  }
+
+  main.content {
+    padding-top: 2.4rem;
+  }
+
+  main.content p,
+  main.content li {
+    font-size: 1.12rem;
+    line-height: 1.95;
+  }
+
+  main.content h2,
+  main.content h3,
+  main.content h4 {
+    margin-top: 1.4rem;
+    margin-bottom: 0.55rem;
+  }
 }
 
 @media (max-width: 900px) {
