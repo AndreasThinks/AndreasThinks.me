@@ -1,18 +1,32 @@
+
 .strudel-player {
+  display: block;
+  width: min(100%, 760px);
+  margin: 1.5rem auto;
+  padding: 1.1rem;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 0.5rem;
-  margin: 1.5rem 0;
-  padding: 1rem;
+  border-radius: 0.75rem;
   box-shadow: 0 0 20px rgba(0, 255, 170, 0.15);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.strudel-player pre {
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  box-sizing: border-box;
 }
 
 .strudel-controls {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.65rem;
   align-items: center;
-  margin-top: 0.75rem;
+  margin-top: 0.85rem;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .strudel-label {
@@ -20,6 +34,13 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: #8ef5c8;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.65rem;
+  background: rgba(142, 245, 200, 0.12);
+  border: 1px solid rgba(142, 245, 200, 0.28);
+  border-radius: 999px;
 }
 
 .strudel-button {
@@ -51,6 +72,7 @@
   font-family: "Fira Code", "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: 0.9rem;
   color: #cdeae0;
+  white-space: nowrap;
 }
 
 .strudel-status[data-state="error"] {
@@ -63,4 +85,31 @@
 
 .strudel-status[data-state="active"] {
   color: #8ef5c8;
+}
+
+@media (max-width: 640px) {
+  .strudel-player {
+    width: 100%;
+    margin: 1.25rem auto;
+  }
+
+  .strudel-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.4rem;
+  }
+
+  .strudel-button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .strudel-status {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .strudel-status {
+    white-space: normal;
+  }
 }
