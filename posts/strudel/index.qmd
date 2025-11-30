@@ -1,6 +1,6 @@
 ---
 title: "Live coding with Strudel in Quarto"
-description: "A lightweight plugin to drop Strudel patterns straight into this site, complete with play and stop controls."
+description: "A Quarto extension that embeds the full Strudel REPL—with visualisation and live editing—directly into your posts."
 date: "2025-03-02"
 format: html
 draft: true
@@ -10,20 +10,70 @@ categories: [quarto, music, livecoding]
 freeze: false
 ---
 
-I wanted a way to sprinkle Strudel's browser-based live coding on this site without hand-wiring scripts on every post. The result is a tiny Quarto extension that automatically loads Strudel from the CDN, wraps any `strudel` code blocks with play/stop buttons, and keeps the cyberpunk styling intact.
+I wanted to embed [Strudel's](https://strudel.cc/) browser-based live coding environment directly into this site. The result is a Quarto extension that loads the full Strudel REPL—complete with the CodeMirror editor, waveform visualisation, and all the interactive controls.
 
 ## Using the Strudel extension
 
-1. Add `- strudel` to the page filters (the header of this post shows the YAML needed).
-2. Write a code block with the `strudel` language. The extension will attach controls and call `evaluate(...)` under the hood when someone hits play.
-3. Click play to initialize Strudel (per browser autoplay rules this needs a user gesture) and enjoy the pattern; hit stop to hush everything.
+1. Add `- strudel` to the page filters (see the YAML header of this post).
+2. Write a code block with the `strudel` language identifier.
+3. The extension transforms it into a fully interactive Strudel REPL where you can edit the code, hit play, and see the visualisation.
 
-Here's a quick pattern demo to try:
+## Try it out
+
+Here's an interactive pattern—feel free to modify the code and experiment:
 
 ```strudel
-every(3, rev, note("c4 g4 e4 a4").fast(2))
-  .sometimesBy(0.4, jux(rev))
-  .slow(1.5)
+note("c3 eb3 g3 bb3")
+  .s("sawtooth")
+  .cutoff(sine.range(200, 2000).slow(4))
+  .room(0.5)
+  .gain(0.6)
 ```
 
-If you want to load in your own samples or do something more elaborate, you can still call `evaluate` directly from a `strudel` block—the extension simply gives you a friendly wrapper and makes sure Strudel is initialized once per page.
+Try changing the notes, the waveform (try `"triangle"` or `"square"`), or tweak the `.slow()` value to alter the filter sweep speed.
+
+## A second pattern: rhythmic variation
+
+```strudel
+every(3, rev, note("<c4 e4 g4 b4>*4"))
+  .s("gm_electric_piano_1")
+  .jux(x => x.add(note(7)))
+  .room(0.4)
+  .delay(0.25)
+```
+
+This one uses `every(3, rev, ...)` to reverse the pattern every third cycle, creating evolving variations. The `.jux()` function plays the original in one stereo channel and a transposed version in the other.
+
+## How it works
+
+The extension uses [`@strudel/repl`](https://www.npmjs.com/package/@strudel/repl), which provides the `<strudel-editor>` web component. This gives you:
+
+- **Full CodeMirror editor** — syntax highlighting, bracket matching, the works
+- **Visualisation** — see your patterns rendered in real-time
+- **Interactive controls** — play, stop, and all the REPL features
+- **Version pinning** — the extension locks to a specific Strudel version so your patterns won't break when Strudel updates
+
+Because it's not an iframe, it integrates cleanly with your page's styling and loads efficiently.
+
+## One more example: ambient textures
+
+```strudel
+note("c2 g2 c3 e3".slow(2))
+  .s("sawtooth")
+  .cutoff(perlin.range(100, 800).slow(8))
+  .decay(0.5)
+  .sustain(0.3)
+  .room(0.8)
+  .orbit(1)
+  .stack(
+    note("c5 e5 g5".slow(4))
+      .s("triangle")
+      .gain(0.3)
+      .delay(0.5)
+      .room(0.6)
+  )
+```
+
+This combines a bass line with upper harmonics, using `.stack()` to layer patterns. The perlin noise slowly modulates the filter for an evolving ambient texture.
+
+Go on—edit any of these patterns and make them your own!

@@ -1,66 +1,143 @@
-.strudel-player {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* Wrapper for Strudel REPL */
+.strudel-repl-wrapper {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 0.5rem;
   margin: 1.5rem 0;
-  padding: 1rem;
-  box-shadow: 0 0 20px rgba(0, 255, 170, 0.15);
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
+/* Controls bar */
 .strudel-controls {
   display: flex;
   gap: 0.5rem;
   align-items: center;
-  margin-top: 0.75rem;
-  flex-wrap: wrap;
+  padding: 0.75rem 1rem;
+  background: rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.strudel-label {
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #8ef5c8;
-}
-
+/* Play/Stop buttons */
 .strudel-button {
   background: linear-gradient(120deg, #10c469, #0a8f5c);
   border: none;
   color: #04130d;
-  padding: 0.35rem 0.9rem;
+  padding: 0.4rem 1rem;
   border-radius: 999px;
   font-weight: 700;
+  font-size: 0.85rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.03em;
   cursor: pointer;
-  transition: transform 0.1s ease, box-shadow 0.2s ease;
+  transition: transform 0.1s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
 
-.strudel-button:hover,
-.strudel-button:focus {
+.strudel-button:hover:not(:disabled),
+.strudel-button:focus:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(16, 196, 105, 0.35);
+  box-shadow: 0 6px 16px rgba(16, 196, 105, 0.35);
+}
+
+.strudel-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .strudel-button.stop {
-  background: linear-gradient(120deg, #ff6b6b, #c41c1c);
-  color: #ffeaea;
+  background: linear-gradient(120deg, #e74c3c, #c0392b);
+  color: #fff;
 }
 
+.strudel-button.stop:hover:not(:disabled),
+.strudel-button.stop:focus:not(:disabled) {
+  box-shadow: 0 6px 16px rgba(231, 76, 60, 0.35);
+}
+
+/* Status indicator */
 .strudel-status {
   margin-left: auto;
-  font-family: "Fira Code", "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size: 0.9rem;
-  color: #cdeae0;
+  font-family: "Fira Code", "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-.strudel-status[data-state="error"] {
-  color: #ff7b7b;
-}
-
-.strudel-status[data-state="loading"] {
-  color: #f2d16b;
+.strudel-status[data-state="idle"] {
+  color: #888;
 }
 
 .strudel-status[data-state="active"] {
-  color: #8ef5c8;
+  color: #10c469;
+}
+
+.strudel-status[data-state="error"] {
+  color: #e74c3c;
+}
+
+/* Editor container - holds both overlay and editor */
+.strudel-editor-container {
+  position: relative;
+}
+
+/* Overlay for idle state */
+.strudel-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(135deg, rgba(16, 196, 105, 0.15) 0%, rgba(0, 0, 0, 0.4) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: opacity 0.3s ease, height 0.3s ease;
+  border-bottom: 1px solid rgba(16, 196, 105, 0.2);
+}
+
+.strudel-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+  height: 0;
+}
+
+.strudel-overlay-text {
+  color: #10c469;
+  font-family: "Fira Code", "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+/* The strudel-editor component */
+.strudel-repl-wrapper strudel-editor {
+  display: block;
+}
+
+/* Hide the visualisation canvas when not playing */
+.strudel-repl-wrapper strudel-editor canvas {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+/* Show visualisation when playing */
+.strudel-repl-wrapper.playing strudel-editor canvas {
+  max-height: 200px;
+}
+
+/* Style adjustments for the editor inside */
+.strudel-repl-wrapper .cm-editor {
+  font-size: 14px;
+  background: transparent;
+}
+
+/* Ensure canvas styling */
+.strudel-repl-wrapper canvas {
+  display: block;
+  width: 100%;
 }
