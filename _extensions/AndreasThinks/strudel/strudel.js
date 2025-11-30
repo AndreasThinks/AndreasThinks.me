@@ -105,7 +105,7 @@
       .map((pre) => pre.querySelector("code"))
       .filter(Boolean);
 
-    const blocks = Array.from(new Set([...codeBlocks, ...preBlocks]));
+    const blocks = [...codeBlocks, ...preBlocks].filter((block, idx, arr) => arr.indexOf(block) === idx);
     if (!blocks.length) return;
 
     blocks.forEach((block, idx) => {
