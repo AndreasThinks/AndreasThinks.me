@@ -146,7 +146,7 @@
 
           playBtn.disabled = false;
           stopBtn.disabled = false;
-          status.textContent = "Ready — click Play ▶";
+          status.textContent = "Ready to play";
           status.dataset.state = "idle";
 
           playBtn.addEventListener("click", async () => {
@@ -171,7 +171,7 @@
               // Hide visualisation
               wrapper.classList.remove("playing");
 
-              status.textContent = "Stopped — click Play ▶";
+              status.textContent = "Stopped. Tap Play";
               status.dataset.state = "idle";
             } catch (err) {
               console.error("Strudel stop error:", err);
