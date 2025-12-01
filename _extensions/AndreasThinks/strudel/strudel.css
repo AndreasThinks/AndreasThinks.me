@@ -23,10 +23,13 @@
   background: linear-gradient(120deg, #10c469, #0a8f5c);
   border: none;
   color: #04130d;
-  padding: 0.4rem 1rem;
+  padding: 0.85rem 1.4rem;
+  min-height: 44px;
+  min-width: 44px;
   border-radius: 999px;
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
+  line-height: 1.2;
   text-transform: uppercase;
   letter-spacing: 0.03em;
   cursor: pointer;

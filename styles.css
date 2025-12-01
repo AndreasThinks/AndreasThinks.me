@@ -284,7 +284,11 @@ footer.nav-footer a:hover {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   border-radius: 999px;
-  padding: 0.55rem 1.6rem;
+  padding: 0.85rem 1.6rem;
+  min-height: 44px;
+  min-width: 44px;
+  font-size: 0.95rem;
+  line-height: 1.2;
   border: 1px solid var(--border-strong);
   background: transparent;
   color: var(--accent);
