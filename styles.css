@@ -206,6 +206,30 @@ h6 {
   color: var(--text-primary);
 }
 
+@media (prefers-color-scheme: light) {
+  #title-block-header .title,
+  #title-block-header .subtitle,
+  #title-block-header .quarto-title-meta,
+  #title-block-header .quarto-title-meta-heading,
+  #title-block-header .quarto-title-meta-contents,
+  .callout .callout-header,
+  .callout .callout-title-container,
+  .callout .callout-title {
+    color: var(--text-primary);
+  }
+}
+
+:root[data-theme="light"] #title-block-header .title,
+:root[data-theme="light"] #title-block-header .subtitle,
+:root[data-theme="light"] #title-block-header .quarto-title-meta,
+:root[data-theme="light"] #title-block-header .quarto-title-meta-heading,
+:root[data-theme="light"] #title-block-header .quarto-title-meta-contents,
+:root[data-theme="light"] .callout .callout-header,
+:root[data-theme="light"] .callout .callout-title-container,
+:root[data-theme="light"] .callout .callout-title {
+  color: var(--text-primary);
+}
+
 p,
 li {
   font-size: 1.05rem;
