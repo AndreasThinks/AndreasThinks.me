@@ -7,6 +7,14 @@ toc: true
 categories: 
     - policing
     - current affairs
+filters:
+  - open-social-comments
+mastodon_comments:
+  user: "AndreasThinks"
+  host: "fosstodon.org"
+  toot_id: "115956648436539488"
+bluesky_comments:
+  post_uri: "https://bsky.app/profile/andreasthinks.me/post/3mdb54jwtrs2b"
 ---
 
 And so we come to another turning of the wheel of time, and it is time to announce, once more, [the creation of Britain's FBI. ](https://www.bbc.co.uk/news/articles/cm2yr95md71o)
