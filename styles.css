@@ -286,6 +286,7 @@ a:focus {
   border: 1px solid transparent;
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   align-items: stretch;
+  color: var(--text-primary);
 }
 
 .post-list .quarto-post .thumbnail:has(.listing-item-img-placeholder) {
@@ -331,10 +332,23 @@ a:focus {
   color: var(--text-primary);
 }
 
+.post-list .listing-title a {
+  color: var(--text-primary);
+}
+
 .post-list .listing-subtitle,
 .post-list .listing-description {
   color: var(--text-muted);
   margin-bottom: 0.6rem;
+}
+
+.post-list .listing-subtitle a,
+.post-list .listing-description a {
+  color: var(--text-muted);
+}
+
+.post-list .quarto-post .metadata a {
+  color: var(--text-meta);
 }
 
 .post-list .quarto-post .metadata {
