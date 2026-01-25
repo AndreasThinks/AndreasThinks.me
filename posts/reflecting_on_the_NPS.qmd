@@ -1,0 +1,58 @@
+---
+title: "Reflecting on the National Police Service"
+subtitle: "So we're doing this again..."
+format: html
+date: "01-25-2026"
+toc: true
+categories: 
+    - policing
+    - current affairs
+---
+
+And so we come to another turning of the wheel of time, and it is time to announce, once more, [the creation of Britain's FBI. ](https://www.bbc.co.uk/news/articles/cm2yr95md71o)
+
+For those who haven't been following policing for the last couple of decades, we have in fact been here before. Will this one be the one that sticks? Who knows. But reflecting on the myriad of [previous](https://en.wikipedia.org/wiki/Serious_Organised_Crime_Agency) [iterations](https://en.wikipedia.org/wiki/National_Crime_Agency), my takeaway is that for the implementation to succeed, it needs to build on the pretty unique and largely misunderstood strengths of the existing policing system... and as with most misunderstood things, those strengths are quite easy to overlook.
+
+
+## Attract the best to the jobs that matter most
+Through some historical fluke, we've ended up with a nqational policing model that leads to most our best cops spending a meaningful amount of time in challenging, front-line operational roles, and often stay there for quite a while. The NPS could very easily break that.
+
+From the outside, it's tempting to talk of policing recruitment like any other job (or at least, broadly like the civil service) - the College of Policing once remarked how few people left or returned to policing, noting the lack of "healthy churn". But police recruitment *isn't* like most jobs: most people don't want to become cops, and  the people who do (e.g., me) tend to be, by definition, weird in some distinctive ways. If you cut off the existing flow of  weirdos (for example, by introducing [elaborate language requirements](https://www.theguardian.com/uk-news/2015/jul/20/police-constables-second-language-metropolitan-pilot-scheme)), there is no easily available substitute waiting to leap into uniform. We have at times[ scraped the barrel](https://www.london.gov.uk/who-we-are/what-london-assembly-does/questions-mayor/find-an-answer/mets-recruitment-and-retention) of even that existing labour force.
+
+So how does that pool of labour work (in very broad brush, stereotypical ways)? Most cops know they want to be cops - they tend to be from outer London or further afield, often with policing families, and have grown up pretty confident this is a thing they want to do. Then, in their early 20s, like thousands of other 20 year olds, they leave to the twinkling/smoggy/depressing dream of London, attracted by the lure of the biggest force in the country, episodes of The Bill/the Sweeney, and its rather plump London weighting salary bump.
+For ten or so years, they'll learn their craft in the most challenging, diverse policing environment in the country. They'll grow up, they'll probably meet another copper, fall in love and get a dog, and maybe a divorce or two along the way. Some will specialise and find their way out of the hard bits of policing and into the comfort of "elite units" like CT or firearms, but some will stay on response or neighbourhoods. And eventually, when London becomes just too cold, tough, expensive and lonely a place to raise a family, they'll transfer back home, bringing along experience and family and everything they've learnt. Maybe they'll bring their firearm or surveillance ticket, and join a ROCU. But that cycle, mad as it sounds, has served UK policing really well. It's already being frayed as London becomes more expensive. The NPS might just break it.
+
+There is also one other caricature worth making: the hotshot graduates, the weirdest of the weirdoes. In every Oxford and Cambridge graduate class, there is a potential [Cressida Dick](https://en.wikipedia.org/wiki/Cressida_Dick),[ Ian Blair](https://en.wikipedia.org/wiki/Ian_Blair) or [Paul Condon](https://en.wikipedia.org/wiki/Paul_Condon,_Baron_Condon), that decides that rather than going to the myriad of consultancies, investment banks or whatever is hip for graduates these days, they want to be a copper... and historically, they only had one choice: the same one as everyone else, to the twinkling dream of London, pounding the metaphorical cobbles and rising through the ranks. A few decades later, once they've proven they can be a borough commander, they'll take a chief officer job somewhere. Policing will get cops (and leaders) it wouldn't otherwise have got, but they've all learnt policing on the front-lines, along with everyone else.
+
+Schemes like [Police Now](https://www.policenow.org.uk/) stretched that model, but kept its fundamentals. Direct entry DCs pushed further, giving ambitious graduates the chance to join policing through a totally parallel career path, skipping the grotty bits. The National Police Service might just shatter that equilibrium. Our policing model (and specifically, the Met) through some happy accident, created a direct path for everyone to the sexiest policing jobs, and that path cuts straight through core policing work: response, neighbourhoods, working with colleagues and Londoners from everywhere. 
+
+We got lucky that both SOCA and the NCA managed to not shatter that fragile equilibrium, because they forgot they were meant to be cops (instead imagining themselves to be intelligence officers or civil servants respectively). But the NPS feels like it might just break that model. I really hope it recognises the weight of what it's responsible for.
+
+
+::: {.callout-tip title="What I'd do"}
+- Police Officers in the NPS should only be able to join on secondment, rather than direct employment (maybe a 4 year initial term, that can be extend to 6 in exceptional circumstances). That secondment could come with a small pay boost, to reflect skills and responsibilities, but the expectation is that you do a "tour of duty" in the NPS before returning to proper policing
+ - Maintain a requirement for NPS-seconded officers to have completed a minimum period (say, 5 years) in front-line territorial policing before becoming eligible
+:::
+
+
+
+## All the Data, None of the Access
+There's one other pretty critical dependency for the NPS, and that's data. People have enormously high, depressingly unrealistic, expectations from how policing data is shared: I can already picture the TV series of Britain's FBI with their giant ops room, trawling through data from all over the country like a more civilised Jack Bauer. 
+
+That's mostly nonsense. There is a reason we have [ROCUs](https://www.rocu.police.uk/) (Regional Organised Crime Units): if you're dealing with the cross-border crime between 3 forces, the easiest solution is often to grab 3 laptops and stick them all on one desk.  If you're *really* lucky, you might have something vaguely interoperable you can share data between, but more often than not, you'd better buy a bigger bag.  Police forces own their data, the vast majority of it isn't shared: that's why the often delayed [NLEDs](https://www.nao.org.uk/press-releases/the-national-law-enforcement-data-programme/) is so critical, and why ROCUs *have* to be regional. It's also why seemingly good ideas like a[ Grooming Gangs Taskforce](https://www.gov.uk/government/news/grooming-gangs-taskforce-arrests-hundreds-in-first-year) is so bloody difficult: a national body really can't help you investigate if it only appears after you call them asking for help. 
+
+A big part of that is that forces buy their own kit, and define their own data. But the *general shape* is the same: everyone has suspects, everyone makes arrests, everyone has modus operandi and "dets" for crimes. That's how the Home Office does aggregate analysis... and if the NPS is going to work, it needs that data, *live*. It's high time the Home Office dictated a national ontology or data model for policing, so that the NPS can proactively identify problems and dive in.
+
+::: {.callout-tip title="What I'd do"}
+- Build a shared "Policing Data Ontology", that would define key fields to be shared with the NPS in real time.
+ - Pass legislation to overcome any data sharing hurdles, enabling the NPS to investigate proactively anywhere in the country
+ - Allow for a step by step transition, adding mandatory data fields to the ontology over a ten year period, culminating in perfect data sharing by the end
+ - Add robust financial penalties for forces that fail to share (eg, no "[we can't share because our computer is a bit rubbish](https://www.theoldhamtimes.co.uk/news/23016468.transparency-concerns-police-publish-no-oldham-crime-data-3-years/)")
+:::
+
+
+
+## On the License
+The NPS proposals also include a national licensing scheme for police officers. I didn't really want to discuss this, but I thought it worth flagging how *incredibly hard* it's been to get this idea right historically. [PCDA](https://www.met.police.uk/police-forces/metropolitan-police/areas/c/careers/police-officer-roles/police-constable/overview/entry-routes/police-constable-degree-apprenticeship-pcda/). [ARC](https://www.college.police.uk/career-learning/career-development/arc). [CRTP](https://www.bbc.co.uk/news/uk-21032595). Policing is *littered* with the graveyards of opaque, well meaning acronyms, all meaning to tackle this idea, and all absolutely crash-landing into the reality of policing dynamics and culture. Every single time, we get lots of bureaucracy, and very little of value... and even if it's clearly not working, that bureaucracy just aggregates.
+
+It's tempted to want to treat policing like medicine, but it isn't. The police are the public and the public are the police, and *the public are not doctors*. The police are ["members of the public who are **paid to give full time attention to duties which are incumbent on every citizen** in the interests of community welfare and existence](https://www.tandfonline.com/doi/full/10.1080/10439463.2024.2436078#:~:text=(7)%20To%20maintain%20at%20all,every%20citizen%20in%20the%20interests)", and that's why policing is inclusive, and open to the public: everyone is allowed an opinion (even if they're often wrong), and it's at its best when it's a collective endeavour - that's why we get volunteers and specials. The more we professionalise policing, the more we separate cops from everyone else. Peel's seventh principle exists for a reason: the police *are* the public. We should only erode that if we really, really need to... and I'm not convinced we do.
