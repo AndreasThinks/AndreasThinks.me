@@ -42,6 +42,8 @@ format:
   html:
     theme: darkly
     css: styles.css
+    include-after-body:
+      - includes/theme-toggle.html
     toc: false
     smooth-scroll: true
     link-external-newwindow: true
