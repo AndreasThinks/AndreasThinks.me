@@ -500,3 +500,20 @@ hr {
     padding: 1.3rem 1.4rem;
   }
 }
+
+@media (max-width: 576px) {
+  .navbar {
+    position: relative;
+  }
+
+  .quarto-navbar-tools {
+    position: absolute;
+    top: 0.65rem;
+    right: 0.75rem;
+  }
+
+  .theme-toggle-button {
+    padding: 0.2rem;
+    font-size: 1.1rem;
+  }
+}
