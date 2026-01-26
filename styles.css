@@ -490,6 +490,13 @@ hr {
     display: none;
   }
 
+  .theme-toggle-button {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0.5rem;
+    font-size: 1.35rem;
+  }
+
   .intro-panel {
     padding: 1.6rem 1.4rem;
   }
