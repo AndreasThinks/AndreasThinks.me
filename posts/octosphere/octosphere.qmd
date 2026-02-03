@@ -20,8 +20,6 @@ mastodon_comments:
   toot_id: "116007652613588035"
 bluesky_comments:
   post_uri: "https://bsky.app/profile/andreasthinks.me/post/3mdxrwtmzdt2d"
-social_comments_options:
-  hide_author_replies: true
 ---
 
 So, I really don't like the scientific publishing ecosystem. I used to find the idea deeply inspiring and faintly aspirational, and then I had to actually interact with it, and came away with some confused blend of angry and profoundly disappointed.
