@@ -16,9 +16,9 @@ categories:
 
 So, I really don't like the scientific publishing ecosystem. I used to find the idea deeply inspiring and faintly aspirational, and then I had to actually interact with it, and came away with some confused blend of angry and profoundly disappointed.
 
-Thankfully, I think two quite exciting technologies have appeared in the last few years that might just change it all: [Octopus](https://octopus.ac/), which changes publishing from a stuffy old format to something slightly more from the current century, and federated social media — ActivityPub and ATProto — which let anyone build decentralised social media networks.
+I think we can do better, and the good news is that a lot of the heavy lifting has already been done: [Octopus](https://octopus.ac/) reimagines scientific publishing in a way that's modular and open. [ATProto](https://atproto.com/) lets you build social networks on top of the open protocol that powers Bluesky. And I kind of think that if we bring those two ideas together, we might just be able to fix everything.
 
-I kind of think that if you bring those two ideas together, we might just be able to fix it. And then I went to a meetup last week and got excited, so I built **[Octosphere](https://octosphere.social/)**, a web app that bridges your Octopus publications to the ATProtocol "Atmosphere".
+So last week, I got far too excited after an [ATProto meetup](https://luma.com/4dj8iiaw?tk=1NSQO0) and built a thing: **[Octosphere](https://octosphere.social/)**, a web app that bridges your Octopus publications to the ATProtocol "Atmosphere," turning your research into distributed, permanent, social records.
 
 It's a bit of an experiment, and I'm not sure how useful it actually is, but I think it might help share a vision of science the way I'd like to see it: collaborative, distributed, resilient, and approachable — a big digital public square where we're all invited, where new ideas are always welcome, but robustly challenged. (It was built with _a lot_ of vibes and will absolutely fall over quite soon, but I hope it gets you thinking about how we can do science better.)
 
@@ -26,11 +26,9 @@ It's a bit of an experiment, and I'm not sure how useful it actually is, but I t
 
 The _idea_ of science is deeply compelling to me — everywhere, we should all be thinking and sharing new ideas (or hypotheses), which everyone should be able to test, and share their reactions — creating a global feedback loop of idea, theory, test, and findings, that constantly generates new, evaluated knowledge. Peer review is continuous, built in, and welcome.
 
-That's the idea. The reality is miles away, and I put the blame firmly at the door of one specific culprit: the goddamn paper. I _hate_ the academic paper format. Most papers are long, static, stuffy exercises in self-indulgence, written fully in the knowledge of their own intellectual snobbishness, and my god we should do better.
+That's the idea. The reality is miles away, and I put the blame firmly at the door of one specific culprit: the goddamn paper. I _hate_ the academic paper format. Most papers are long, static, stuffy exercises in self-indulgence, written fully in the knowledge of their own intellectual snobbishness, and my god we should do better. (This varies by field—medicine is leaner, machine learning has largely moved to open preprints—but the core dysfunction remains.)
 
 Once upon a time, papers made sense. If I was a physician in 1803, sharing my ideas with a colleague contemplating some grand new theory, of course I'd write a long paper — we may very well not have read the same books or have the same base knowledge, and frankly, it's going to take a while for my damn letter to reach them anyway. Once I've finished that paper, it's published, and we can all move on.
-
-Now, it's worth mentioning my critique isn't universal: criminology really suffers from this (I think probably because writing a billion pages is seen as the mark of "proper" academia), but other fields suffer less — medicine doesn't feel the need for pages of lit reviews, and machine learning has largely moved to open records like arXiv.
 
 But it still absolutely doesn't fix the core problems, and we can do so much better!
 
@@ -53,7 +51,7 @@ Octopus is great. But it's also centralised, and doesn't feel hugely approachabl
 I'm very far from an ATProto expert, so I'm not going to go too deep into it, but in essence: each user has a PDS (Personal Data Server), which hosts their identity and their content. For most people, that's Bluesky, but you can just as well host your own PDS. The magic is that once you've got a PDS, it becomes part of the network — your content is shared across a network of relays, so everyone can see everything, without relying on any one person.
 
 ::: {.callout-note title="Why not the fediverse/ActivityPub?"}
-I really like it, but it's a lot less "whole lift" — it doesn't handle auth, or the backend. You absolutely could build this, but as a quick "spin up your social network," ATProto just worked.
+I really like ActivityPub, but it doesn't give you as much out of the box—you'd need to handle authentication, data storage, and more yourself. You could absolutely build this on the fediverse, but for a quick "spin up a social network and see what happens" experiment, ATProto just worked.
 :::
 
 And the really cool thing? That data can take any shape at all. In the ATProto world, the shape of your data is defined by a Lexicon — think of it as a schema that describes what a piece of content looks like, what fields it has, and how other applications should interact with it. It acts as data structure, API schema, and validation all at once. If you want to store a blog post, you define a Lexicon for blog posts. If you want to store a scientific publication, you define one for that. You can read [my lexicon for Octopus publications here](https://pdsls.dev/at://did:plc:j5c7tjpwzeqtspmeyviq2eag/com.atproto.lexicon.schema/social.octosphere.publication).
@@ -68,8 +66,10 @@ A few things, actually.
 
 First, your publications become eternal and distributed. They're not locked behind a paywall, not sitting on a single server, and not dependent on any one organisation keeping the lights on. If Octopus goes down tomorrow, the ATProto records survive across the network's relays. That's a meaningful resilience improvement over the status quo, where decades of research can vanish if a publisher changes its business model or a university cancels a subscription.
 
-Second, it puts science where people already are. Most researchers already have a Bluesky account. Cross-posting publications to that feed means your work reaches people in the spaces they're already checking every day, rather than sitting in a database that only gets visited when someone has a very specific search query. It lowers the barrier between "doing science" and "sharing science" to almost nothing.
+Second, it puts science where people increasingly are. A growing number of researchers have moved to Bluesky, especially as other platforms have become less hospitable. Cross-posting publications to that feed means your work reaches people in spaces they're already checking daily, rather than sitting in a database that only gets visited for very specific searches. It lowers the barrier between "doing science" and "sharing science" to almost nothing.
 
-Third — and this is the part I'm most excited about — it's a proof of concept for something much bigger. Octosphere is just one app reading one type of record. But because it's built on ATProto, anyone else can build on top of the same data. Someone could build a better visualisation layer, or a recommendation engine, or a peer review tool that references the same publication records. The data is open, the protocol is open, and the ecosystem can grow without anyone's permission.
+Third (and this is the cool bit) it's a proof of concept for something much bigger. Octosphere is just one app reading one type of record. But because it's built on ATProto, anyone else can build on top of the same data. Someone could build a better visualisation layer, or a recommendation engine that surfaces related work across disciplines, or a peer review tool where critiques are threaded directly to the publication record they're responding to — persistent, attributable, and impossible to quietly ignore. The data is open, the protocol is open, and the ecosystem can grow without anyone's permission.
 
-I'm not sure whether this is the future of science, but I love the notion of science as decentralised, distributed, and collaborative — hell, that's what science _should_ be like. The tools to make it happen are here. So next time you're publishing, consider sharing on ATProto rather than a dusty journal — and if you want to try Octosphere out, just don't blame me when it falls over.
+I'm not sure whether this is the future of science. But I love the idea of research as something decentralised, distributed, and genuinely collaborative (which, honestly, is what science was always supposed to be). The tools to make it real are here. Octosphere is a small experiment in that direction: a bit rough, probably temporary, but hopefully enough to get you thinking about how we could do this better.
+
+I hope you give it a shot!
