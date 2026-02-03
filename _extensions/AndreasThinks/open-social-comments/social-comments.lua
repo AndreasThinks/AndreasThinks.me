@@ -12,18 +12,16 @@ function Meta(m)
   -- Initialize variables for both platforms
   local has_comments = false
   local social_html = '<social-comments'
-  local js_vars = '<script type="text/javascript">\n'
 
-  -- Handle Mastodon configuration
+  -- Handle Mastodon configuration via data attributes
   if m.mastodon_comments and m.mastodon_comments.user and m.mastodon_comments.toot_id and m.mastodon_comments.host then
       local user = pandoc.utils.stringify(m.mastodon_comments.user)
       local toot_id = pandoc.utils.stringify(m.mastodon_comments.toot_id)
       local host = pandoc.utils.stringify(m.mastodon_comments.host)
 
-      js_vars = js_vars ..
-      'var mastodonHost = "' .. host .. '";\n' ..
-      'var mastodonUser = "' .. user .. '";\n' ..
-      'var mastodonTootId = "' .. toot_id .. '";\n'
+      social_html = social_html .. ' data-mastodon-host="' .. host .. '"'
+      social_html = social_html .. ' data-mastodon-user="' .. user .. '"'
+      social_html = social_html .. ' data-mastodon-toot-id="' .. toot_id .. '"'
 
       has_comments = true
   end
@@ -35,16 +33,16 @@ function Meta(m)
       has_comments = true
   end
 
-  -- Handle hide_author_replies option (can be set globally or per-platform)
-  local hide_author_replies = false
+  -- Handle hide_author_replies option via data attribute
   if m.social_comments_options and m.social_comments_options.hide_author_replies then
-      hide_author_replies = pandoc.utils.stringify(m.social_comments_options.hide_author_replies) == "true"
+      local hide_author_replies = pandoc.utils.stringify(m.social_comments_options.hide_author_replies)
+      if hide_author_replies == "true" then
+          social_html = social_html .. ' data-hide-author-replies="true"'
+      end
   end
-  js_vars = js_vars .. 'var hideAuthorReplies = ' .. tostring(hide_author_replies) .. ';\n'
 
   social_html = social_html .. '></social-comments>'
-  js_vars = js_vars .. '</script>'
-  
+
   if has_comments then
       -- JavaScript to inject social comments into a specific div
       local inject_script = [[
@@ -62,6 +60,6 @@ document.addEventListener('DOMContentLoaded', function() {
       local script_html = '<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.1/purify.min.js" integrity="sha512-uHOKtSfJWScGmyyFr2O2+efpDx2nhwHU2v7MVeptzZoiC7bdF6Ny/CmZhN2AwIK1oCFiVQQ5DA/L9FSzyPNu6Q==" crossorigin="anonymous"></script>'
 
       -- Insert these elements in the document's head
-      quarto.doc.includeText("in-header", script_html .. inject_script .. js_vars)
+      quarto.doc.includeText("in-header", script_html .. inject_script)
   end
 end
