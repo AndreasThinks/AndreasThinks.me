@@ -18,7 +18,7 @@ So, I really don't like the scientific publishing ecosystem. I used to find the 
 
 I think we can do better, and the good news is that a lot of the heavy lifting has already been done: [Octopus](https://octopus.ac/) reimagines scientific publishing in a way that's modular and open. [ATProto](https://atproto.com/) lets you build social networks on top of the open protocol that powers Bluesky. And I kind of think that if we bring those two ideas together, we might just be able to fix everything.
 
-So last week, I got far too excited after an [ATProto meetup](https://luma.com/4dj8iiaw?tk=1NSQO0) and built a thing: **[Octosphere](https://octosphere.social/)**, a web app that bridges your Octopus publications to the ATProtocol "Atmosphere," turning your research into distributed, permanent, social records.
+**So last week, I got far too excited after an [ATProto meetup](https://luma.com/4dj8iiaw?tk=1NSQO0) and built a thing: **[Octosphere](https://octosphere.social/)**, a web app that bridges your Octopus publications to the ATProtocol "Atmosphere," turning your research into distributed, permanent, social records.**
 
 It's a bit of an experiment, and I'm not sure how useful it actually is, but I think it might help share a vision of science the way I'd like to see it: collaborative, distributed, resilient, and approachable — a big digital public square where we're all invited, where new ideas are always welcome, but robustly challenged. (It was built with _a lot_ of vibes and will absolutely fall over quite soon, but I hope it gets you thinking about how we can do science better.)
 
