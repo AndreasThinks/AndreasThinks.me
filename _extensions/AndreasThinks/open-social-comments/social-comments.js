@@ -239,21 +239,40 @@ social-comments a:focus {
   }
 
   .social-comment .author {
-    grid-template-columns: 48px 1fr;
-    grid-template-rows: auto auto auto;
-    gap: 0.5rem;
+    grid-template-columns: 48px 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 0.4rem 0.75rem;
+  }
+
+  .social-comment .author .avatar img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .social-comment .author .details {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    min-width: 0;
+  }
+
+  .social-comment .author .details .name,
+  .social-comment .author .details .user {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .social-comment .platform-indicator {
-    grid-column: 2;
+    grid-column: 3;
     grid-row: 1;
-    justify-content: flex-start;
+    justify-content: flex-end;
+    align-items: flex-start;
   }
 
   .social-comment .author .date {
-    grid-column: 2;
-    grid-row: 3;
-    text-align: left;
+    grid-column: 3;
+    grid-row: 2;
+    text-align: right;
   }
 }
 `;
@@ -301,8 +320,12 @@ class SocialComments extends HTMLElement {
     // Convert normal URL to API format if needed
     this.blueskyPostUri = blueskyUrl ? this.convertBlueskyUrl(blueskyUrl) : null;
 
+    // Option to hide author's own replies
+    this.hideAuthorReplies = (typeof hideAuthorReplies !== 'undefined') ? hideAuthorReplies : false;
+
     this.commentsLoaded = false;
     this.allComments = [];
+    this.originalAuthors = new Set(); // Track original post authors
 
     const styleElem = document.createElement("style");
     styleElem.innerHTML = styles;
@@ -362,8 +385,21 @@ class SocialComments extends HTMLElement {
 
       // Filter out original posts for display but include their stats in total
       const originalPosts = this.allComments.filter(comment => comment.isOriginalPost);
-      const replies = this.allComments.filter(comment => !comment.isOriginalPost);
-      
+
+      // Collect original post author handles for filtering
+      originalPosts.forEach(post => {
+        this.originalAuthors.add(post.author.handle.toLowerCase());
+      });
+
+      // Filter replies - optionally exclude author's own replies
+      let replies = this.allComments.filter(comment => !comment.isOriginalPost);
+
+      if (this.hideAuthorReplies) {
+        replies = replies.filter(comment =>
+          !this.originalAuthors.has(comment.author.handle.toLowerCase())
+        );
+      }
+
       // Sort replies by date
       replies.sort((a, b) => new Date(a.date) - new Date(b.date));
 

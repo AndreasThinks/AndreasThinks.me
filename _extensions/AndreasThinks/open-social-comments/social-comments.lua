@@ -8,33 +8,40 @@ end
 
 function Meta(m)
   ensureHtmlDeps()
-  
+
   -- Initialize variables for both platforms
   local has_comments = false
   local social_html = '<social-comments'
   local js_vars = '<script type="text/javascript">\n'
-  
+
   -- Handle Mastodon configuration
   if m.mastodon_comments and m.mastodon_comments.user and m.mastodon_comments.toot_id and m.mastodon_comments.host then
       local user = pandoc.utils.stringify(m.mastodon_comments.user)
       local toot_id = pandoc.utils.stringify(m.mastodon_comments.toot_id)
       local host = pandoc.utils.stringify(m.mastodon_comments.host)
-      
+
       js_vars = js_vars ..
       'var mastodonHost = "' .. host .. '";\n' ..
       'var mastodonUser = "' .. user .. '";\n' ..
       'var mastodonTootId = "' .. toot_id .. '";\n'
-      
+
       has_comments = true
   end
-  
+
   -- Handle Bluesky configuration
   if m.bluesky_comments and m.bluesky_comments.post_uri then
       local post_uri = pandoc.utils.stringify(m.bluesky_comments.post_uri)
       social_html = social_html .. ' bluesky-post="' .. post_uri .. '"'
       has_comments = true
   end
-  
+
+  -- Handle hide_author_replies option (can be set globally or per-platform)
+  local hide_author_replies = false
+  if m.social_comments_options and m.social_comments_options.hide_author_replies then
+      hide_author_replies = pandoc.utils.stringify(m.social_comments_options.hide_author_replies) == "true"
+  end
+  js_vars = js_vars .. 'var hideAuthorReplies = ' .. tostring(hide_author_replies) .. ';\n'
+
   social_html = social_html .. '></social-comments>'
   js_vars = js_vars .. '</script>'
   
