@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Andreas Varotsis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-fadc7197feb5b0cc1514f5252acd9486.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-blog-listings .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-date','listing-title','listing-author','listing-subtitle','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description","listing-categories"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-blog-listings'] = new List('listing-blog-listings', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=GG-378MDZNVX4"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'GG-378MDZNVX4', { 'anonymize_ip': true});
+</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+<link rel="alternate" type="application/rss+xml" title="Andreas Varotsis" href="index.xml" data-external="1"><meta property="og:title" content="Andreas Varotsis">
+<meta property="og:description" content="Personal website for Andreas Varotsis">
+<meta property="og:image" content="https://andreasthinks.me/images/round_me.png">
+<meta property="og:site_name" content="Andreas Varotsis">
+<meta property="og:image:height" content="563">
+<meta property="og:image:width" content="570">
+<meta name="twitter:title" content="Andreas Varotsis">
+<meta name="twitter:description" content="Personal website for Andreas Varotsis">
+<meta name="twitter:image" content="https://andreasthinks.me/images/round_me.png">
+<meta name="twitter:image-height" content="563">
+<meta name="twitter:image-width" content="570">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Andreas Varotsis</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./recent_work.html"> 
+<span class="menu-text">talks &amp; publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./slides/index.html"> 
+<span class="menu-text">teaching</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://fosstodon.org/@AndreasThinks" rel="me"> 
+<span class="menu-text"><i class="fa-brands fa-mastodon fa-xl" aria-label="mastodon"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://bsky.app/profile/andreasthinks.me"> 
+<span class="menu-text"><i class="fa-brands fa-bluesky fa-xl" aria-label="bluesky"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://twitter.com/AndreasThinks"> 
+<span class="menu-text"><i class="fa-brands fa-twitter fa-xl" aria-label="twitter"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/AndreasThinks"> 
+<span class="menu-text"><i class="fa-brands fa-github fa-xl" aria-label="github"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://www.linkedin.com/in/avarotsis/"> 
+<span class="menu-text"><i class="fa-brands fa-linkedin fa-xl" aria-label="linkedin"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="mailto:andreas.varotsis@gmail.com"> 
+<span class="menu-text"><i class="fa-solid fa-envelope fa-xl" aria-label="envelope"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./index.xml"> 
+<span class="menu-text"><i class="fa-solid fa-rss fa-xl" aria-label="rss"></i></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(20)</span></div><div class="category" data-category="YWk=">ai <span class="quarto-category-count">(5)</span></div><div class="category" data-category="YXRwcm90bw==">atproto <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Y2l2aWMlMjB0ZWNo">civic tech <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Y3JpbWU=">crime <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Y3VycmVudCUyMGFmZmFpcnM=">current affairs <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZGF0YS1zY2llbmNl">data-science <span class="quarto-category-count">(7)</span></div><div class="category" data-category="ZXhwZXJpbWVudA==">experiment <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Zm9yZWNhc3Rpbmc=">forecasting <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Z2FtZXM=">games <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Z2Vvc3BhdGlhbA==">geospatial <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Z292dGVjaA==">govtech <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bWV0YXNjaWVuY2U=">metascience <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bmV3cw==">news <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bmxw">nlp <span class="quarto-category-count">(1)</span></div><div class="category" data-category="b3Blbi1zb3VyY2U=">open-source <span class="quarto-category-count">(6)</span></div><div class="category" data-category="cGVyc29uYWw=">personal <span class="quarto-category-count">(5)</span></div><div class="category" data-category="cG9saWNpbmc=">policing <span class="quarto-category-count">(5)</span></div><div class="category" data-category="dGVjaG5vbG9neQ==">technology <span class="quarto-category-count">(4)</span></div><div class="category" data-category="dGltZWQtcG9zdA==">timed-post <span class="quarto-category-count">(1)</span></div><div class="category" data-category="d2Vi">web <span class="quarto-category-count">(1)</span></div><div class="category" data-category="d2ViLWRldmVsb3BtZW50">web-development <span class="quarto-category-count">(1)</span></div><div class="category" data-category="d2Vlay1ub3Rlcw==">week-notes <span class="quarto-category-count">(2)</span></div><div class="category" data-category="d29yay1pbi1wcm9ncmVzcw==">work-in-progress <span class="quarto-category-count">(1)</span></div></div></div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+<div class="intro-panel">
+<div class="intro-media">
+<p><img src="images/round_me.png" class="profile-pic img-fluid"></p>
+</div>
+<div class="intro-copy">
+<p>I’m Andreas, <a href="https://andreasthinks.me/about.html">a data scientist and public safety researcher working to improve the use of data and evidence in government</a>. I enjoy <a href="https://lu.ma/ai-for-good">coordinating exciting communities</a>, and working with <a href="https://newspeak.house/">fantastic</a> <a href="https://ai.gov.uk/">institutions</a> to build projects that improve the world, including <a href="./slides/index.html">teaching on public sector innovation at Newspeak House</a>. You can read more about me <a href="https://andreasthinks.me/about.html">on my about page here</a>.</p>
+<p>If you’d like to discuss professional work or collaborating on a project, <a href="mailto:andreas.varotsis@gmail.com">please say hello!</a></p>
+</div>
+</div>
+<section id="blog-feed" class="level2">
+<h2 class="anchored" data-anchor-id="blog-feed">📮 Blog Feed</h2>
+<p>I use this blog to journal on what I’ve been learning about and building recently. If you’d like to see more of my formal work, you can see <a href="./recent_work.html">a selection of my papers and writing here.</a></p>
+<div id="listing-blog-listings" class="post-list quarto-listing quarto-listing-container-default">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="ZXhwZXJpbWVudCUyQ21ldGFzY2llbmNlJTJDd2ViJTJDYXRwcm90byUyQ2NpdmljJTIwdGVjaCUyQ29wZW4tc291cmNl" data-listing-date-sort="1769990400000" data-listing-file-modified-sort="1771278567243" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1481">
+<div class="thumbnail"><a href="./posts/octosphere/octosphere.html" class="no-external">
+
+<img loading="lazy" src="./posts/octosphere/octo_wide.jpg" class="thumbnail-image" style="height: 0;">
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/octosphere/octosphere.html" class="no-external">Octosphere, an experiment in decentralised science with ATProto</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/octosphere/octosphere.html" class="no-external">Bridging Octopus and the Atmosphere with lots of vibes</a>
+</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('ZXhwZXJpbWVudA=='); return false;">experiment</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWV0YXNjaWVuY2U='); return false;">metascience</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('d2Vi'); return false;">web</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('YXRwcm90bw=='); return false;">atproto</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Y2l2aWMlMjB0ZWNo'); return false;">civic tech</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('b3Blbi1zb3VyY2U='); return false;">open-source</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/octosphere/octosphere.html" class="no-external">
+So, I really don’t like the scientific publishing ecosystem. I used to find the idea deeply inspiring and faintly aspirational, and then I had to actually interact with it…
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/octosphere/octosphere.html" class="no-external">
+<div class="listing-date">
+Feb 2, 2026
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="cG9saWNpbmclMkNjdXJyZW50JTIwYWZmYWlycw==" data-listing-date-sort="1769299200000" data-listing-file-modified-sort="1771278567243" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1469">
+<div class="thumbnail"><a href="./posts/reflecting_on_the_NPS.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" style="height: 0;">&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/reflecting_on_the_NPS.html" class="no-external">Reflecting on the National Police Service</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/reflecting_on_the_NPS.html" class="no-external">So we’re doing this again…</a>
+</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('cG9saWNpbmc='); return false;">policing</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Y3VycmVudCUyMGFmZmFpcnM='); return false;">current affairs</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/reflecting_on_the_NPS.html" class="no-external">
+And so we come to another turning of the wheel of time, and it is time to announce, once more, the creation of Britain’s FBI.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/reflecting_on_the_NPS.html" class="no-external">
+<div class="listing-date">
+Jan 25, 2026
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-categories="Z292dGVjaCUyQ2NpdmljJTIwdGVjaCUyQ29wZW4tc291cmNlJTJDdGltZWQtcG9zdA==" data-listing-date-sort="1761436800000" data-listing-file-modified-sort="1771278567241" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1226">
+<div class="thumbnail"><a href="./posts/national-data-library.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" style="height: 0;">&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/national-data-library.html" class="no-external">What I want from a National Data Library</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/national-data-library.html" class="no-external">Lots of robust, sustainable open-data, and vibe-coding</a>
+</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('Z292dGVjaA=='); return false;">govtech</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Y2l2aWMlMjB0ZWNo'); return false;">civic tech</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('b3Blbi1zb3VyY2U='); return false;">open-source</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('dGltZWQtcG9zdA=='); return false;">timed-post</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/national-data-library.html" class="no-external">
+<p>I built a tool to fix my local police engagement problem in an hour of café coding. But that was only possible because of a fading public data API from years ago…let’s revive the open data dream with the National Data Library!</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/national-data-library.html" class="no-external">
+<div class="listing-date">
+Oct 26, 2025
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="3" data-categories="cGVyc29uYWwlMkN0ZWNobm9sb2d5JTJDYWklMkNvcGVuLXNvdXJjZSUyQ2dhbWVz" data-listing-date-sort="1754092800000" data-listing-file-modified-sort="1771278566875" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1951">
+<div class="thumbnail"><a href="./posts/ai-at-play/index.html" class="no-external">
+
+<p class="card-img-top"><img src="posts/ai-at-play/assets/overview.png" style="height: 0;"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/ai-at-play/index.html" class="no-external">AI at Play - Lessons from a silly benchmark</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/ai-at-play/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('cGVyc29uYWw='); return false;">personal</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('dGVjaG5vbG9neQ=='); return false;">technology</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('YWk='); return false;">ai</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('b3Blbi1zb3VyY2U='); return false;">open-source</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Z2FtZXM='); return false;">games</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/ai-at-play/index.html" class="no-external">
+Earlier this year, Anthropic treated us to the delightful Claude Plays Pokemon: a wonderful way of watching some poor AI model get lost forever in Mt Moon, fighting a swarm…
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/ai-at-play/index.html" class="no-external">
+<div class="listing-date">
+Aug 2, 2025
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="4" data-listing-date-sort="1736640000000" data-listing-file-modified-sort="1771278567243" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="204">
+<div class="thumbnail"><a href="./posts/quarto_comments/open-social.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" style="height: 0;">&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/quarto_comments/open-social.html" class="no-external">Quarto comments, by the open social web</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/quarto_comments/open-social.html" class="no-external"></a>
+</div>
+<div class="delink listing-description"><a href="./posts/quarto_comments/open-social.html" class="no-external">
+<p>All the comments, all the time, on all the networks? Sure, we can do that.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/quarto_comments/open-social.html" class="no-external">
+<div class="listing-date">
+Jan 12, 2025
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="5" data-categories="cGVyc29uYWwlMkNvcGVuLXNvdXJjZQ==" data-listing-date-sort="1735430400000" data-listing-file-modified-sort="1771278567256" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="733">
+<div class="thumbnail"><a href="./posts/share-crappy-fiddles.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" style="height: 0;">&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/share-crappy-fiddles.html" class="no-external">My 2025 resolution: share more crappy fiddles (and unfinished research)</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/share-crappy-fiddles.html" class="no-external">…and why you should too</a>
+</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('cGVyc29uYWw='); return false;">personal</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('b3Blbi1zb3VyY2U='); return false;">open-source</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/share-crappy-fiddles.html" class="no-external">
+I’m a big believer of “working in the open” - open-source, open science, open communication, that sort of thing. It’s not just that I think this stuff is ethnical or <em>right</em> (t…
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/share-crappy-fiddles.html" class="no-external">
+<div class="listing-date">
+Dec 29, 2024
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="6" data-categories="YWklMkNwb2xpY2luZyUyQ2RhdGEtc2NpZW5jZSUyQ3dvcmstaW4tcHJvZ3Jlc3M=" data-listing-date-sort="1734739200000" data-listing-file-modified-sort="1771278566897" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="24" data-listing-word-count-sort="4738">
+<div class="thumbnail"><a href="./posts/copbot_analysis/analysis.html" class="no-external">
+
+<p class="card-img-top"><img src="posts/copbot_analysis/analysis_files/figure-html/fig-model-comparison-arena-output-1.png" style="height: 0;"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/copbot_analysis/analysis.html" class="no-external">Paper in Progress: Variance in AI Perceptions of Risk</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/copbot_analysis/analysis.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('YWk='); return false;">ai</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('cG9saWNpbmc='); return false;">policing</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YS1zY2llbmNl'); return false;">data-science</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('d29yay1pbi1wcm9ncmVzcw=='); return false;">work-in-progress</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/copbot_analysis/analysis.html" class="no-external">
+This is a research paper in progress: it’s unfinished, messy, and maybe nonsensical, but feedback is always very welcome.
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/copbot_analysis/analysis.html" class="no-external">
+<div class="listing-date">
+Dec 21, 2024
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="7" data-categories="d2Vlay1ub3Rlcw==" data-listing-date-sort="1725148800000" data-listing-file-modified-sort="1771278567258" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="622">
+<div class="thumbnail"><a href="./posts/week-notes/Weeknote - 2024-W35.html" class="no-external">
+
+<div class="listing-item-img-placeholder card-img-top" style="height: 0;">&nbsp;</div>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/week-notes/Weeknote - 2024-W35.html" class="no-external">Weeknote - 2024-W35</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/week-notes/Weeknote - 2024-W35.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('d2Vlay1ub3Rlcw=='); return false;">week-notes</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/week-notes/Weeknote - 2024-W35.html" class="no-external">
+<p>Reflections on post-holiday productivity slumps and UK’s AI education gaps. Exploring tools for converting scientific papers to HTML and AI-powered front-end development. Thoughts on social media disinformation, crime perception, and the allure of new note-taking apps. Plus, intriguing reads on slow productivity and necromancers in space.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/week-notes/Weeknote - 2024-W35.html" class="no-external">
+<div class="listing-date">
+Sep 1, 2024
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="8" data-categories="d2Vlay1ub3Rlcw==" data-listing-date-sort="1724457600000" data-listing-file-modified-sort="1771278567256" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="554">
+<div class="thumbnail"><a href="./posts/week-notes/Weeknote - 2024-W34 (2024-08-19).html" class="no-external">
+
+<p class="card-img-top"><img src="posts/week-notes/assets/france.jpg" style="height: 0;"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/week-notes/Weeknote - 2024-W34 (2024-08-19).html" class="no-external">Weeknote - 2024-W34 (2024-08-19)</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/week-notes/Weeknote - 2024-W34 (2024-08-19).html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('d2Vlay1ub3Rlcw=='); return false;">week-notes</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/week-notes/Weeknote - 2024-W34 (2024-08-19).html" class="no-external">
+<p>On productivity during holidays, sharing thoughts on Copbot Online, FastHTML, and a new Obsidian plugin. Plus, interesting reads on Llama 3 models and the challenges of “deliverism” in government.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/week-notes/Weeknote - 2024-W34 (2024-08-19).html" class="no-external">
+<div class="listing-date">
+Aug 24, 2024
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="9" data-categories="cG9saWNpbmclMkNhaSUyQ3dlYi1kZXZlbG9wbWVudA==" data-listing-date-sort="1724198400000" data-listing-file-modified-sort="1771278566905" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1079">
+<div class="thumbnail"><a href="./posts/copbot_online/index.html" class="no-external">
+
+<p class="card-img-top"><img src="posts/copbot_online/images/copbot_featured.png" style="height: 0;"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/copbot_online/index.html" class="no-external">Copbot Online: bias and variance in AI perceptions of risk</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/copbot_online/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('cG9saWNpbmc='); return false;">policing</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('YWk='); return false;">ai</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('d2ViLWRldmVsb3BtZW50'); return false;">web-development</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/copbot_online/index.html" class="no-external">
+<p>I built a website to look at whether language models could help articulate (or maybe even predict) police risk assessments for missing people. The conclusion? Eeeeh. Maybe. Ish?</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/copbot_online/index.html" class="no-external">
+<div class="listing-date">
+Aug 21, 2024
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="10" data-categories="cGVyc29uYWwlMkN0ZWNobm9sb2d5JTJDb3Blbi1zb3VyY2U=" data-listing-date-sort="1713830400000" data-listing-file-modified-sort="1771278567243" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="251">
+<div class="thumbnail"><a href="./posts/quarto_comments/index.html" class="no-external">
+
+<p class="card-img-top"><img src="posts/quarto_comments/wordmark-white-text.svg" style="height: 0;"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/quarto_comments/index.html" class="no-external">Quarto Comments, Powered by the Fediverse</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/quarto_comments/index.html" class="no-external">I built a Quarto extension!</a>
+</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('cGVyc29uYWw='); return false;">personal</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('dGVjaG5vbG9neQ=='); return false;">technology</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('b3Blbi1zb3VyY2U='); return false;">open-source</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/quarto_comments/index.html" class="no-external">
+<p>I built an extension, and now my blog has fancy comments (and yours can too!)</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/quarto_comments/index.html" class="no-external">
+<div class="listing-date">
+Apr 23, 2024
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="11" data-categories="cGVyc29uYWwlMkN0ZWNobm9sb2d5JTJDb3Blbi1zb3VyY2UlMkNnZW9zcGF0aWFs" data-listing-date-sort="1703030400000" data-listing-file-modified-sort="1771278566818" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="462">
+<div class="thumbnail"><a href="./posts/OSM_for_christmas/osm_for_xmas.html" class="no-external">
+
+<p class="card-img-top"><img src="posts/OSM_for_christmas/atms.png" style="height: 0;"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/OSM_for_christmas/osm_for_xmas.html" class="no-external">Why I’m Contributing to OpenStreetMap for Christmas…</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/OSM_for_christmas/osm_for_xmas.html" class="no-external">…and maybe you should too!</a>
+</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('cGVyc29uYWw='); return false;">personal</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('dGVjaG5vbG9neQ=='); return false;">technology</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('b3Blbi1zb3VyY2U='); return false;">open-source</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Z2Vvc3BhdGlhbA=='); return false;">geospatial</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/OSM_for_christmas/osm_for_xmas.html" class="no-external">
+In the eternal words of The Thick of it, everything that happens in the world has to happen somewhere. It sounds obvious, but so many good pieces of research or analysis…<strong></strong>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/OSM_for_christmas/osm_for_xmas.html" class="no-external">
+<div class="listing-date">
+Dec 20, 2023
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="12" data-categories="cG9saWNpbmclMkNhaSUyQ2RhdGEtc2NpZW5jZQ==" data-listing-date-sort="1679184000000" data-listing-file-modified-sort="1771278566813" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1027">
+<div class="thumbnail"><a href="./posts/Copbot/explainer.html" class="no-external">
+
+<p class="card-img-top"><img src="posts/Copbot/images/cop_bot.png" style="height: 0;"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/Copbot/explainer.html" class="no-external">Teaching OpenAI to assess risk, with CopBot!</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/Copbot/explainer.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('cG9saWNpbmc='); return false;">policing</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('YWk='); return false;">ai</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YS1zY2llbmNl'); return false;">data-science</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/Copbot/explainer.html" class="no-external">
+<strong>Looking for the new Copbot Online? Read about it here!</strong>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/Copbot/explainer.html" class="no-external">
+<div class="listing-date">
+Mar 19, 2023
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="13" data-categories="cG9saWNpbmclMkNjcmltZSUyQ2RhdGEtc2NpZW5jZQ==" data-listing-date-sort="1672272000000" data-listing-file-modified-sort="1771278566891" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2811">
+<div class="thumbnail"><a href="./posts/burglary_attendance/index.html" class="no-external">
+
+<p class="card-img-top"><img src="posts/burglary_attendance/severity-plot.png" style="height: 0;"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/burglary_attendance/index.html" class="no-external">What’s Happened to Burglary, and does Attending Help?</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/burglary_attendance/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('cG9saWNpbmc='); return false;">policing</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Y3JpbWU='); return false;">crime</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YS1zY2llbmNl'); return false;">data-science</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/burglary_attendance/index.html" class="no-external">
+It’s nearly 2023, and in the true spirit of Christmas, I’ve used the cheese/wine filled nowhere time between the holidays to pick up an analytical side-project that’s been…
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/burglary_attendance/index.html" class="no-external">
+<div class="listing-date">
+Dec 29, 2022
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="14" data-categories="bmV3cw==" data-listing-date-sort="1664236800000" data-listing-file-modified-sort="1771278567235" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="313">
+<div class="thumbnail"><a href="./posts/migrated_to_quarto/index.html" class="no-external">
+
+<p class="card-img-top"><img src="posts/migrated_to_quarto/unsplash.jpg" alt="A picture of a red computer chip." style="height: 0;"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/migrated_to_quarto/index.html" class="no-external">I’ve migrated to Quarto!</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/migrated_to_quarto/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('bmV3cw=='); return false;">news</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/migrated_to_quarto/index.html" class="no-external">
+<p>I’ve migrated to a fancy new technical writing platform, and I’m a little in love with it</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/migrated_to_quarto/index.html" class="no-external">
+<div class="listing-date">
+Sep 27, 2022
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="15" data-categories="cGVyc29uYWwlMkN0ZWNobm9sb2d5JTJDYWklMkNkYXRhLXNjaWVuY2U=" data-listing-date-sort="1660953600000" data-listing-file-modified-sort="1771278566894" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="577">
+<div class="thumbnail"><a href="./posts/cccamp23/index.html" class="no-external">
+
+<p class="card-img-top"><img src="posts/cccamp23/magnet_bus.jpg" style="height: 0;"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/cccamp23/index.html" class="no-external">Hackers aren’t excited about AI (and other bits from CCCamp23)</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/cccamp23/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('cGVyc29uYWw='); return false;">personal</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('dGVjaG5vbG9neQ=='); return false;">technology</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('YWk='); return false;">ai</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YS1zY2llbmNl'); return false;">data-science</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/cccamp23/index.html" class="no-external">
+So I’m sitting in Berlin airport, waiting to get home from Chaos Communication Camp 2023. It was, to put it bluntly, bloody fabulous… and my god, I’ve missed hanging out…
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/cccamp23/index.html" class="no-external">
+<div class="listing-date">
+Aug 20, 2022
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="16" data-categories="Y3JpbWUlMkNnZW9zcGF0aWFs" data-listing-date-sort="1647043200000" data-listing-file-modified-sort="1771278567256" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1987">
+<div class="thumbnail"><a href="./posts/robbery_and_searches_in_space/robbery_and_searches_in_space.html" class="no-external">
+
+<p class="card-img-top"><img src="posts/robbery_and_searches_in_space/robbery_and_searches_in_space_files/figure-html/cell-19-output-1.png" style="height: 0;"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/robbery_and_searches_in_space/robbery_and_searches_in_space.html" class="no-external">Learning GIS in Python - Robbery and Police Searches in Space</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/robbery_and_searches_in_space/robbery_and_searches_in_space.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('Y3JpbWU='); return false;">crime</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Z2Vvc3BhdGlhbA=='); return false;">geospatial</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/robbery_and_searches_in_space/robbery_and_searches_in_space.html" class="no-external">
+<p>Using Python GIS libraries to explore the spatial distribution of robberies in London</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/robbery_and_searches_in_space/robbery_and_searches_in_space.html" class="no-external">
+<div class="listing-date">
+Mar 12, 2022
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="17" data-categories="ZGF0YS1zY2llbmNlJTJDZm9yZWNhc3RpbmclMkNjcmltZSUyQ2dlb3NwYXRpYWw=" data-listing-date-sort="1621641600000" data-listing-file-modified-sort="1771278566926" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="28" data-listing-word-count-sort="5570">
+<div class="thumbnail"><a href="./posts/lockdown_effect/index.html" class="no-external">
+
+<p class="card-img-top"><img src="posts/lockdown_effect/index_files/figure-html/unnamed-chunk-4-1.png" style="height: 0;"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/lockdown_effect/index.html" class="no-external">Learning R - Exploring the COVID Crime Effect in London</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/lockdown_effect/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YS1zY2llbmNl'); return false;">data-science</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Zm9yZWNhc3Rpbmc='); return false;">forecasting</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Y3JpbWU='); return false;">crime</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Z2Vvc3BhdGlhbA=='); return false;">geospatial</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/lockdown_effect/index.html" class="no-external">
+<p>I use public London crime data on robbery and burglary to examine where this COVID crime shift was strongest, and whether any specific drivers or correlates can be identified.</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/lockdown_effect/index.html" class="no-external">
+<div class="listing-date">
+May 22, 2021
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="18" data-categories="ZGF0YS1zY2llbmNlJTJDZm9yZWNhc3RpbmclMkNjcmltZQ==" data-listing-date-sort="1604534400000" data-listing-file-modified-sort="1771278566926" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="217">
+<div class="thumbnail"><a href="./posts/lapd_and_prophet/lapd_and_prophet.html" class="no-external">
+
+<p class="card-img-top"><img src="posts/lapd_and_prophet/lapd_and_prophet_files/figure-html/cell-9-output-1.png" style="height: 0;"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/lapd_and_prophet/lapd_and_prophet.html" class="no-external">LAPD Call Prediction for Fun (and Prophet)</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/lapd_and_prophet/lapd_and_prophet.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YS1zY2llbmNl'); return false;">data-science</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Zm9yZWNhc3Rpbmc='); return false;">forecasting</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('Y3JpbWU='); return false;">crime</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/lapd_and_prophet/lapd_and_prophet.html" class="no-external">
+<p>Predicting LAPD police call demand using the Prophet time series forecasting library</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/lapd_and_prophet/lapd_and_prophet.html" class="no-external">
+<div class="listing-date">
+Nov 5, 2020
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="19" data-categories="ZGF0YS1zY2llbmNlJTJDbmxw" data-listing-date-sort="1599696000000" data-listing-file-modified-sort="1771278566813" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="655">
+<div class="thumbnail"><a href="./posts/FastAI_Twitter_Sentiment_Analysis_Tutorial/FastAI_Twitter_Sentiment_Analysis_Tutorial.html" class="no-external">
+
+<p class="card-img-top"><img src="posts/FastAI_Twitter_Sentiment_Analysis_Tutorial/FastAI_Twitter_Sentiment_Analysis_Tutorial_files/figure-html/cell-14-output-2.png" style="height: 0;"  class="thumbnail-image card-img"/></p>
+
+</a></div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/FastAI_Twitter_Sentiment_Analysis_Tutorial/FastAI_Twitter_Sentiment_Analysis_Tutorial.html" class="no-external">Twitter Sentiment Analysis with FastAI</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/FastAI_Twitter_Sentiment_Analysis_Tutorial/FastAI_Twitter_Sentiment_Analysis_Tutorial.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('ZGF0YS1zY2llbmNl'); return false;">data-science</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('bmxw'); return false;">nlp</div>
+
+</div>
+<div class="delink listing-description"><a href="./posts/FastAI_Twitter_Sentiment_Analysis_Tutorial/FastAI_Twitter_Sentiment_Analysis_Tutorial.html" class="no-external">
+<p>Using open source twitter data to explore sentiment in public debate</p>
+</a></div>
+</div>
+<div class="metadata">
+<a href="./posts/FastAI_Twitter_Sentiment_Analysis_Tutorial/FastAI_Twitter_Sentiment_Analysis_Tutorial.html" class="no-external">
+<div class="listing-date">
+Sep 10, 2020
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">No matching items</div>
+</div>
+
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+  const themeStorageKey = "theme-preference";
+  const themeButtonClass = "theme-toggle-button";
+
+  const root = document.documentElement;
+
+  const getStoredTheme = () => {
+    const stored = localStorage.getItem(themeStorageKey);
+    return stored === "light" || stored === "dark" ? stored : null;
+  };
+
+  const getSystemTheme = () =>
+    window.matchMedia("(prefers-color-scheme: light)").matches
+      ? "light"
+      : "dark";
+
+  const setBootstrapTheme = (theme) => {
+    document.querySelectorAll("[data-bs-theme]").forEach((element) => {
+      element.setAttribute("data-bs-theme", theme);
+    });
+  };
+
+  const updateButtonLabel = (theme) => {
+    const button = document.querySelector(`.${themeButtonClass}`);
+    if (!button) {
+      return;
+    }
+    const nextThemeLabel =
+      theme === "light" ? "Switch to dark mode" : "Switch to light mode";
+    button.setAttribute("aria-label", nextThemeLabel);
+    button.setAttribute("title", nextThemeLabel);
+    button.setAttribute("aria-pressed", theme === "light");
+    button.dataset.theme = theme;
+  };
+
+  const applyTheme = (theme, source) => {
+    root.setAttribute("data-theme", theme);
+    root.setAttribute("data-theme-source", source);
+    setBootstrapTheme(theme);
+    updateButtonLabel(theme);
+  };
+
+  const toggleTheme = () => {
+    const currentTheme = root.getAttribute("data-theme") || getSystemTheme();
+    const nextTheme = currentTheme === "light" ? "dark" : "light";
+    localStorage.setItem(themeStorageKey, nextTheme);
+    applyTheme(nextTheme, "user");
+  };
+
+  const createToggleButton = () => {
+    if (document.querySelector(`.${themeButtonClass}`)) {
+      return;
+    }
+    const container =
+      document.querySelector(".quarto-navbar-tools") ||
+      document.querySelector(".navbar .navbar-nav.ms-auto");
+    if (!container) {
+      return;
+    }
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = themeButtonClass;
+    button.innerHTML = '<span aria-hidden="true">◐</span>';
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      toggleTheme();
+    });
+
+    container.appendChild(button);
+  };
+
+  const initTheme = () => {
+    const storedTheme = getStoredTheme();
+    if (storedTheme) {
+      applyTheme(storedTheme, "user");
+      return;
+    }
+    applyTheme(getSystemTheme(), "system");
+  };
+
+  const onReady = () => {
+    createToggleButton();
+    initTheme();
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", onReady);
+  } else {
+    onReady();
+  }
+
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: light)");
+  mediaQuery.addEventListener("change", (event) => {
+    if (getStoredTheme()) {
+      return;
+    }
+    applyTheme(event.matches ? "light" : "dark", "system");
+  });
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/andreasthinks\.me");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

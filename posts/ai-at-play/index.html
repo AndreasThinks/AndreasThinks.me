@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-08-02">
+
+<title>AI at Play - Lessons from a silly benchmark – Andreas Varotsis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-fadc7197feb5b0cc1514f5252acd9486.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-contrib/open-social-comments-1.0.0/social-comments.js"></script>
+<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=GG-378MDZNVX4"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'GG-378MDZNVX4', { 'anonymize_ip': true});
+</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.1/purify.min.js" integrity="sha512-uHOKtSfJWScGmyyFr2O2+efpDx2nhwHU2v7MVeptzZoiC7bdF6Ny/CmZhN2AwIK1oCFiVQQ5DA/L9FSzyPNu6Q==" crossorigin="anonymous"></script><script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+  var div = document.getElementById('quarto-content');
+  if(div) {
+    div.innerHTML += `<social-comments bluesky-post="https://bsky.app/profile/andreasthinks.me/post/3lvfvzoej322p"></social-comments>`;
+  }
+});
+</script>
+<script type="text/javascript">
+var mastodonHost = "fosstodon.org";
+var mastodonUser = "AndreasThinks";
+var mastodonTootId = "114958602908444442";
+</script>
+ 
+  <style>
+  .slide-deck {
+      border: 3px solid #dee2e6;
+      width: 100%;
+  }
+  </style>
+  
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="AI at Play - Lessons from a silly benchmark – Andreas Varotsis">
+<meta property="og:description" content="Personal website for Andreas Varotsis">
+<meta property="og:image" content="https://andreasthinks.me/posts/ai-at-play/assets/overview.png">
+<meta property="og:site_name" content="Andreas Varotsis">
+<meta property="og:image:height" content="570">
+<meta property="og:image:width" content="1401">
+<meta name="twitter:title" content="AI at Play - Lessons from a silly benchmark – Andreas Varotsis">
+<meta name="twitter:description" content="Personal website for Andreas Varotsis">
+<meta name="twitter:image" content="https://andreasthinks.me/posts/ai-at-play/assets/overview.png">
+<meta name="twitter:image-height" content="570">
+<meta name="twitter:image-width" content="1401">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Andreas Varotsis</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../recent_work.html"> 
+<span class="menu-text">talks &amp; publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../slides/index.html"> 
+<span class="menu-text">teaching</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://fosstodon.org/@AndreasThinks" rel="me"> 
+<span class="menu-text"><i class="fa-brands fa-mastodon fa-xl" aria-label="mastodon"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://bsky.app/profile/andreasthinks.me"> 
+<span class="menu-text"><i class="fa-brands fa-bluesky fa-xl" aria-label="bluesky"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://twitter.com/AndreasThinks"> 
+<span class="menu-text"><i class="fa-brands fa-twitter fa-xl" aria-label="twitter"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/AndreasThinks"> 
+<span class="menu-text"><i class="fa-brands fa-github fa-xl" aria-label="github"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://www.linkedin.com/in/avarotsis/"> 
+<span class="menu-text"><i class="fa-brands fa-linkedin fa-xl" aria-label="linkedin"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="mailto:andreas.varotsis@gmail.com"> 
+<span class="menu-text"><i class="fa-solid fa-envelope fa-xl" aria-label="envelope"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.xml"> 
+<span class="menu-text"><i class="fa-solid fa-rss fa-xl" aria-label="rss"></i></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">AI at Play - Lessons from a silly benchmark</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">personal</div>
+                <div class="quarto-category">technology</div>
+                <div class="quarto-category">ai</div>
+                <div class="quarto-category">open-source</div>
+                <div class="quarto-category">games</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 2, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#wait-what" id="toc-wait-what" class="nav-link active" data-scroll-target="#wait-what">Wait, what?</a>
+  <ul class="collapse">
+  <li><a href="#so-what-does-it-tell-us" id="toc-so-what-does-it-tell-us" class="nav-link" data-scroll-target="#so-what-does-it-tell-us">So what does it tell us?</a></li>
+  </ul></li>
+  <li><a href="#games-make-great-benchmarks-make-more-of-them" id="toc-games-make-great-benchmarks-make-more-of-them" class="nav-link" data-scroll-target="#games-make-great-benchmarks-make-more-of-them">Games make great benchmarks: make more of them</a></li>
+  <li><a href="#why-this-is-hard" id="toc-why-this-is-hard" class="nav-link" data-scroll-target="#why-this-is-hard">Why this is hard</a></li>
+  <li><a href="#thanks" id="toc-thanks" class="nav-link" data-scroll-target="#thanks">Thanks!</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
+
+
+
+
+<div id="description-meta">
+<p>Earlier this year, Anthropic treated us to the delightful <a href="https://www.twitch.tv/claudeplayspokemon">Claude Plays Pokemon</a>: a wonderful way of watching some poor AI model get lost forever in Mt Moon, fighting a swarm of Zubats, and presumably hating it just as much as we once did.</p>
+<p>Now, I don’t work at Anthropic (and I definitely don’t have as many credits as they do), but I do love games, and think they tell us something about the people playing them. So, inspired by Claude Plays Pokemon, I’ve built my own little experiment in LLM gaming: <strong><a href="https://ai-at-play.online/">AIs at Risk</a></strong>, a cute, silly little benchmark that I think <em>might</em> just tell us something meaningful.</p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>WHY2025 talk slides
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>This was a lightning talk at <a href="https://why2025.org/">WHY2025</a>!</strong> The slides are available below</p>
+    <p><a href="assets/presentation.html" target="_blank">View slides in full screen</a></p>
+       <div>
+      <iframe class="slide-deck" src="assets/presentation.html" height="475px"></iframe>
+    </div>
+  
+</div>
+</div>
+</div>
+<p>It’s all <a href="https://github.com/AndreasThinks/ai-at-risk">open-source, and you can view the code here</a>. I’ll be honest, it is a bit of a monster: there are quite a few <em>vibes</em> behind this codebase, and in places, it’s all gotten a bit out of hand. But I’ve learned a fair bit, and I think it’s kind of cool. So read on to hear the tale of my own little monster of a benchmark, why I think we need more language models playing games, and some technical lessons/mistakes I’ve picked up along the way.</p>
+<div class="column-page">
+<p><a href="assets/overview.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="assets/overview.png" class="img-fluid"></a></p>
+</div>
+<section id="wait-what" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="wait-what">Wait, what?</h2>
+<p>In AI at Risk, four LLM-powered agents compete in the classic (and not actually very-good) board game <a href="https://en.wikipedia.org/wiki/Risk_(game)">Risk</a>. The whole thing is actually running on a single Python server, which handles both the game state (with endpoints for taking turns, sending messages, etc.) and coordinating the agents, with each agent being prompted to take an action whenever it’s their turn - each option, like placing armies, is actually a tool made available to the agent via MCP (thanks to the very nifty <a href="https://github.com/tadata-org/fastapi_mcp">fastapi_mcp library</a>). There are a few helper functions and scaffolding to help present the game status to each agent as the game progresses (more on this later), but the logic running the game is actually rather simple.</p>
+<p>Each agent is then assigned a character ranging from the serious (Sun Tzu) to the very silly (“a risk meeple 🧩”), at which point they’ll scheme, strategize, send each other messages, backstab, and generally recreate all the nefarious family fun you’ve probably had to suffer through at some once-upon-a-time family Christmas gathering. Then, an hour later (because Risk lasts a million years and I don’t have infinite money), the game ends, a winner is called, and we get to see <em>some stats</em>.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><a href="assets/sample_1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="assets/sample_1.png" class="img-fluid"></a></p>
+</div></div><p>By itself, it’s really rather fun: Alexander will duke it out with Cleopatra, Boris Johnson, and Spock for control of Northern America, exchanging diplomatic missives and barbs like the pilot for some long lost Sci-Fi show that never quite made the grade. But the really nifty bit is that we randomly assign a model to each character at the start of each and every game… and thanks to <a href="https://matheusfacure.github.io/python-causality-handbook/landing-page.html">the magic of randomisation</a>, we can pick out interesting behaviours that seem to be driven by the underlying model. In essence, we’ve created a Randomised Control Trial (with a tiny sprinkling of Battle Royale).</p>
+<section id="so-what-does-it-tell-us" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="so-what-does-it-tell-us">So what does it tell us?</h3>
+<p>Well, let’s look at the figures. Since I started this silly experiment a couple of weeks ago, we’ve had 264 hour-long games of Risk. 10 models competed, each playing around 30 games each, with the exception of <a href="https://openrouter.ai/z-ai/glm-4.5">GLM-4.5</a> and the mysterious <a href="https://openrouter.ai/openrouter/horizon-alpha">Horizon Alpha</a>, which were added after their release (we slightly over-weight new models to ensure they get a chance to play). And what have we learnt?</p>
+<p><a href="assets/benchmark.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="assets/benchmark.png" class="img-fluid"></a></p>
+<p>You’ll probably notice I haven’t got the really big boy models on here: they’re not cheap, and there is a limit to how much of my paycheck I’m willing to splurge letting LLM models have more fun than me. The other thing you’ll probably notice? <em>Horizon Alpha is kicking some serious ass</em>. This is a “cloaked” model, dumped on OpenRouter by some mysterious lab to see how it plays, and well, it plays pretty darn well.</p>
+<p>The other models perform <em>broadly</em> as you’d expect on more general benchmarks, although you do notice some weird quirks: Mistral Nemo just seems totally incapable of using the tools for some reason I can’t quite diagnose, and Grok-3-mini is just… doing something weird (I have a sneaking suspicion these might be driven by some combination of OpenRouter and tool use.) All in all, Risk looks to mostly work as a basic benchmark: some models do well, and others struggle. But the really cool bit isn’t when you watch whether models win… it’s when you watch <em>how they play</em>.</p>
+<p>To try and figure that out, we can take a look at model <em>preferences</em> - how likely they are to use a particular tool on any one turn.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="assets/per_game.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Model preferences per turn"><img src="assets/per_game.png" class="img-fluid figure-img" alt="Model preferences per turn"></a></p>
+<figcaption>Model preferences per turn</figcaption>
+</figure>
+</div>
+<p>To help figure out what’s also going on (and also because 💫statistics💫), I’ve pulled out the 95% confidence intervals. It’s not the most robust approach in the world, but it lets us see which models seem to be behaving meaningfully differently… and we do actually see some interesting bits. Horizon Alpha isn’t just one hell of a Risk player: it’s a violent marauder that attacks every chance it bloody gets.</p>
+<p>Looking beyond messages, you see some other interesting tidbits: Qwen-3 isn’t just a committed pacifist, it’s also an utter chatterbox which messages other players at every opportunity it gets.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><a href="assets/sample_2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="assets/sample_2.png" class="img-fluid"></a></p>
+</div></div><p>Now, some of this is likely just a reflection around how the models are trained, and their capacity with instruction following and tool-use…but it’s also clearly affectign how they behave. So sure, maybe it’s a model quirk influencing what the stochastic parrot is repeating… but also, it’s kind of affecting how they “<em>think</em>”. Which is kind of nifty: if a model plays risk as some psychopathic visigoth, I kind of want to know about it. So I think more people should run this sort of thing (I’m looking at you, <a href="https://www.aisi.gov.uk/">AISI</a>.)</p>
+</section>
+</section>
+<section id="games-make-great-benchmarks-make-more-of-them" class="level2">
+<h2 class="anchored" data-anchor-id="games-make-great-benchmarks-make-more-of-them">Games make great benchmarks: make more of them</h2>
+<p>At the risk of sounding like an utter tit, a good game contains multitudes. It’s visual, it’s artistic, it’s systematic, it’s full of choices and opportunities. Whether or not you expect AGI to be around the corner, we should all recognize that intelligence is a complex and fickle thing: taking a single measure of quality, a single binary for intelligence, is blinding yourself to the endless variety of options we’re presented with in each and every second of our lives. We should make AI play games: we’ll learn a lot about them. And hell, one day they might just have fun.</p>
+<p>And you know what? I think you will too. Remember <a href="https://en.wikipedia.org/wiki/Blaseball">Blaseball</a>? Blaseball was frigging great. We watched tiny make-believe people run around horrifying, cursed imaginary fields of our collective fanfiction, and it was glorious.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/Y5t8DwnDE1k" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</section>
+<section id="why-this-is-hard" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-is-hard">Why this is hard</h2>
+<p>There is a teeny, insignificant downside. I was really hoping this would be easy… but good games aren’t simple. And it turns out this all got way harder than I expected.</p>
+<section id="context-and-scaffolding-in-games" class="level4">
+<h4 class="anchored" data-anchor-id="context-and-scaffolding-in-games">Context and scaffolding in games</h4>
+<p>If you have a friend who is “the board games person” in your friend group, then you’ll be familiar with the sinking feeling you get in your stomach when they pull out yet another gigantic, unfamiliar box filled with endless cardboard macguffins. I picked Risk because I figured it was the simplest of the complex games: it has scheming and diplomacy, but mostly you point at some maps and roll some die. There are cards, and dice, and the rest mostly sorts itself out.</p>
+<p>It turns out that is a <em>huge</em> amount of context, and it’s really hard to convey <em>all that stuff</em>.</p>
+<p>I’ve not picked vision models (this is has already been a silly expensive week for a silly expensive side project), and conveying the status of each country, piece, and player is a lot of info to dump in text. And LLMs are <em>bad</em> at that: drawing meaning from a bunch of numbers and data is really not where they shine, and it shows.</p>
+<p>The answer, as in <a href="https://github.com/davidhershey/ClaudePlaysPokemonStarter">Claude Plays Pokemon</a>, is to build “scaffolding”: functions that help your models parse, play, and interact with the game (like letting it simply say “go to square A4” rather than having to push the buttons to navigate their tiny character across a screen). And it’s tempting to <a href="https://github.com/cicero225/llm_pokemon_scaffold">expand on those scaffolds</a>, adding more and more shortcuts, so your agents can use as much of their intelligence “bandwidth” as possible <em>thinking</em> rather than just processing how to play.</p>
+<p>But that’s part of the game, right? Figuring out new concepts and systems is a key part of intelligence, and so there’s a real compromise to be made around how much you help your agent along, and what you can learn by watching them strive. I’ve built a fair bit of scaffolding here: agents are told when to play and what phase they’re in, as well as what options they can take, but I’ve tried to keep it relatively minimal. It’s far from perfect, but I think it’s…okay.</p>
+<p>There’s a linked problem, though. Agents are still a pretty new thing. Building agents is hard, and the tools are pretty rough. And as far as LLMs are concerned, they may as well not exist.</p>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><a href="assets/sample_3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="assets/sample_3.png" class="img-fluid"></a></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><a href="assets/sample_4.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="assets/sample_4.png" class="img-fluid"></a></p>
+</div>
+</div>
+</div>
+</section>
+<section id="mcp-tools-memory-and-multi-agent-frameworks-it-was-all-invented-yesterday" class="level4">
+<h4 class="anchored" data-anchor-id="mcp-tools-memory-and-multi-agent-frameworks-it-was-all-invented-yesterday">MCP, Tools, Memory and Multi-Agent Frameworks: It was all invented yesterday</h4>
+<p>A big part of what drove me to build this was to try out new tools: I wanted to build an MCP server and test out multi-agent orchestration. MCP is, in theory, quite a simple protocol: your server has a certain structure, and LLMs know how to call it. Turns out, there is a fair bit more to it, and loads I just didn’t know. How do they even know what tools they can ask for? What structure should their outputs be? How do they actually make that connection? All this stuff can get pretty complicated, and the open-source ecosystem is growing, but young.</p>
+<p>And you know who definitely doesn’t know how these things work? Your vibe coding assistant. Anybody who has tried vibe-coding on new and emerging technologies will be familiar with models hallucinating features and APIs, but the fact that these tools are just starting to be featured in the training data, and that they’re so similar to existing tooling, led to some real weariness - models <em>think</em> they know how to build an MCP server, up until they spiral into hallucinated madness. <a href="https://github.com/AnswerDotAI/llms-txt"><strong>Please, let’s all adopt llms.txt already</strong>.</a></p>
+<p>I was really surprised by how much the LLM/agent orchestration ecosystem still feels nascent. OpenAI may have <a href="https://github.com/openai/swarm">a fancy Swarm protocol</a>, but at least to me, it all felt a little theoretical. I was expecting to be stumbling on excellent tutorials for this stuff, and there really aren’t <em>that</em> many.</p>
+<p>Hell, at its most basic, figuring out memory for this project was… harder than it should have been. I’ve used Langchain and Langgraph for much of the agent handling and was really expecting memory to work “out of the box,” and it is <a href="https://langchain-ai.github.io/langgraph/concepts/memory/#manage-short-term-memory">most definitely not that</a>. Anyone who has done any serious vibe-coding knows that managing your context to avoid the dreaded “context rot” is key to maintaining models that can really <em>think</em>… so I’m kind of shocked this stuff doesn’t just work by now.</p>
+<p>Oh, and to end on the obvious note, this stuff really isn’t cheap yet. It takes quite a few characters to describe a single turn of Risk, so handling four agents who are effectively storing a whole game each can mean a whole bunch of context. My wallet has not had a good few weeks.</p>
+</section>
+</section>
+<section id="thanks" class="level2">
+<h2 class="anchored" data-anchor-id="thanks">Thanks!</h2>
+<p>I had a shocking amount of fun building this nonsense. If you got this far, thanks for reading about it (and go build something cool!)</p>
+<p>And if you’re feeling particularly invested, <a href="https://ai-at-play.online/support_me.html">help me keep AI at Risk alive</a>!</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+  const themeStorageKey = "theme-preference";
+  const themeButtonClass = "theme-toggle-button";
+
+  const root = document.documentElement;
+
+  const getStoredTheme = () => {
+    const stored = localStorage.getItem(themeStorageKey);
+    return stored === "light" || stored === "dark" ? stored : null;
+  };
+
+  const getSystemTheme = () =>
+    window.matchMedia("(prefers-color-scheme: light)").matches
+      ? "light"
+      : "dark";
+
+  const setBootstrapTheme = (theme) => {
+    document.querySelectorAll("[data-bs-theme]").forEach((element) => {
+      element.setAttribute("data-bs-theme", theme);
+    });
+  };
+
+  const updateButtonLabel = (theme) => {
+    const button = document.querySelector(`.${themeButtonClass}`);
+    if (!button) {
+      return;
+    }
+    const nextThemeLabel =
+      theme === "light" ? "Switch to dark mode" : "Switch to light mode";
+    button.setAttribute("aria-label", nextThemeLabel);
+    button.setAttribute("title", nextThemeLabel);
+    button.setAttribute("aria-pressed", theme === "light");
+    button.dataset.theme = theme;
+  };
+
+  const applyTheme = (theme, source) => {
+    root.setAttribute("data-theme", theme);
+    root.setAttribute("data-theme-source", source);
+    setBootstrapTheme(theme);
+    updateButtonLabel(theme);
+  };
+
+  const toggleTheme = () => {
+    const currentTheme = root.getAttribute("data-theme") || getSystemTheme();
+    const nextTheme = currentTheme === "light" ? "dark" : "light";
+    localStorage.setItem(themeStorageKey, nextTheme);
+    applyTheme(nextTheme, "user");
+  };
+
+  const createToggleButton = () => {
+    if (document.querySelector(`.${themeButtonClass}`)) {
+      return;
+    }
+    const container =
+      document.querySelector(".quarto-navbar-tools") ||
+      document.querySelector(".navbar .navbar-nav.ms-auto");
+    if (!container) {
+      return;
+    }
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = themeButtonClass;
+    button.innerHTML = '<span aria-hidden="true">◐</span>';
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      toggleTheme();
+    });
+
+    container.appendChild(button);
+  };
+
+  const initTheme = () => {
+    const storedTheme = getStoredTheme();
+    if (storedTheme) {
+      applyTheme(storedTheme, "user");
+      return;
+    }
+    applyTheme(getSystemTheme(), "system");
+  };
+
+  const onReady = () => {
+    createToggleButton();
+    initTheme();
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", onReady);
+  } else {
+    onReady();
+  }
+
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: light)");
+  mediaQuery.addEventListener("change", (event) => {
+    if (getStoredTheme()) {
+      return;
+    }
+    applyTheme(event.matches ? "light" : "dark", "system");
+  });
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/andreasthinks\.me");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

@@ -1,0 +1,27 @@
+[
+  {
+    "listing": "/index.html",
+    "items": [
+      "/posts/octosphere/octosphere.html",
+      "/posts/reflecting_on_the_NPS.html",
+      "/posts/national-data-library.html",
+      "/posts/ai-at-play/index.html",
+      "/posts/quarto_comments/open-social.html",
+      "/posts/share-crappy-fiddles.html",
+      "/posts/copbot_analysis/analysis.html",
+      "/posts/week-notes/Weeknote - 2024-W35.html",
+      "/posts/week-notes/Weeknote - 2024-W34 (2024-08-19).html",
+      "/posts/copbot_online/index.html",
+      "/posts/quarto_comments/index.html",
+      "/posts/OSM_for_christmas/osm_for_xmas.html",
+      "/posts/Copbot/explainer.html",
+      "/posts/burglary_attendance/index.html",
+      "/posts/migrated_to_quarto/index.html",
+      "/posts/cccamp23/index.html",
+      "/posts/robbery_and_searches_in_space/robbery_and_searches_in_space.html",
+      "/posts/lockdown_effect/index.html",
+      "/posts/lapd_and_prophet/lapd_and_prophet.html",
+      "/posts/FastAI_Twitter_Sentiment_Analysis_Tutorial/FastAI_Twitter_Sentiment_Analysis_Tutorial.html"
+    ]
+  }
+]

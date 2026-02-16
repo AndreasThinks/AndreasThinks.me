@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-10-26">
+<meta name="description" content="I built a tool to fix my local police engagement problem in an hour of café coding. But that was only possible because of a fading public data API from years ago…let’s revive the open data dream with the National Data Library!">
+
+<title>What I want from a National Data Library – Andreas Varotsis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-fadc7197feb5b0cc1514f5252acd9486.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<script src="../site_libs/quarto-contrib/open-social-comments-1.0.0/social-comments.js"></script>
+<link href="../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=GG-378MDZNVX4"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'GG-378MDZNVX4', { 'anonymize_ip': true});
+</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.1/purify.min.js" integrity="sha512-uHOKtSfJWScGmyyFr2O2+efpDx2nhwHU2v7MVeptzZoiC7bdF6Ny/CmZhN2AwIK1oCFiVQQ5DA/L9FSzyPNu6Q==" crossorigin="anonymous"></script><script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+  var div = document.getElementById('quarto-content');
+  if(div) {
+    div.innerHTML += `<social-comments bluesky-post="https://bsky.app/profile/andreasthinks.me/post/3m46ncyxnc22r"></social-comments>`;
+  }
+});
+</script>
+<script type="text/javascript">
+var mastodonHost = "fosstodon.org";
+var mastodonUser = "AndreasThinks";
+var mastodonTootId = "115446632147802507";
+</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="What I want from a National Data Library – Andreas Varotsis">
+<meta property="og:description" content="I built a tool to fix my local police engagement problem in an hour of café coding. But that was only possible because of a fading public data API from years ago…let’s revive the open data dream with the National Data Library!">
+<meta property="og:site_name" content="Andreas Varotsis">
+<meta name="twitter:title" content="What I want from a National Data Library – Andreas Varotsis">
+<meta name="twitter:description" content="I built a tool to fix my local police engagement problem in an hour of café coding. But that was only possible because of a fading public data API from years ago…let’s revive the open data dream with the National Data Library!">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Andreas Varotsis</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../recent_work.html"> 
+<span class="menu-text">talks &amp; publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../slides/index.html"> 
+<span class="menu-text">teaching</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://fosstodon.org/@AndreasThinks" rel="me"> 
+<span class="menu-text"><i class="fa-brands fa-mastodon fa-xl" aria-label="mastodon"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://bsky.app/profile/andreasthinks.me"> 
+<span class="menu-text"><i class="fa-brands fa-bluesky fa-xl" aria-label="bluesky"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://twitter.com/AndreasThinks"> 
+<span class="menu-text"><i class="fa-brands fa-twitter fa-xl" aria-label="twitter"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/AndreasThinks"> 
+<span class="menu-text"><i class="fa-brands fa-github fa-xl" aria-label="github"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://www.linkedin.com/in/avarotsis/"> 
+<span class="menu-text"><i class="fa-brands fa-linkedin fa-xl" aria-label="linkedin"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="mailto:andreas.varotsis@gmail.com"> 
+<span class="menu-text"><i class="fa-solid fa-envelope fa-xl" aria-label="envelope"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../index.xml"> 
+<span class="menu-text"><i class="fa-solid fa-rss fa-xl" aria-label="rss"></i></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">What I want from a National Data Library</h1>
+            <p class="subtitle lead">Lots of robust, sustainable open-data, and vibe-coding</p>
+                  <div>
+        <div class="description">
+          I built a tool to fix my local police engagement problem in an hour of café coding. But that was only possible because of a fading public data API from years ago…let’s revive the open data dream with the National Data Library!
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">govtech</div>
+                <div class="quarto-category">civic tech</div>
+                <div class="quarto-category">open-source</div>
+                <div class="quarto-category">timed-post</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">October 26, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-open-data-dream" id="toc-the-open-data-dream" class="nav-link active" data-scroll-target="#the-open-data-dream">The Open Data Dream</a></li>
+  <li><a href="#restarting-the-civic-tech-open-data-dream" id="toc-restarting-the-civic-tech-open-data-dream" class="nav-link" data-scroll-target="#restarting-the-civic-tech-open-data-dream">Restarting the Civic Tech Open-Data Dream</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<div class="callout callout-style-default callout-note callout-titled" title="Timed Post">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Timed Post
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><em>This was a timed post, a new approach I’m testing to post more often: I give myself 60 minutes to write a post, and if I don’t finish it in time, <a href="https://github.com/AndreasThinks/obsidian-timed-posts">it gets deleted</a>. You can read <a href="https://andreasthinks.me/#category=timed-post">all these posts here</a>.</em></p>
+</div>
+</div>
+<p>Once upon a time, I was a young neighbourhood police officer in London, and I loved it - I think it laid the groundwork for a lot of who I am today. It wasn’t perfect though, and one part made me specifically grump: ward panel meetings. Every month or so, your local cop sits in a community hall, supposedly to meet with the local community and discuss crime prevention issues. The sad reality is that it tends to be the same 12 people it’s been forever, and nobody else hears about or engages with it. It’s a depressing failure of civic engagement.</p>
+<p>So two weeks ago, when I had to contact my local neighbourhood team, I wondered when their next meeting was. I went to the website, looked up my postcode, etc…. and decided this process should be better. So in an hour of vibe-coding, sitting in a café in Montreal, I built <a href="https://yourpolice.events/">https://yourpolice.events/</a>, which automatically adds upcoming meetings to your calendar feed.</p>
+<p>At the risk of sounding grandiose, I kind of think that’s wonderful: I saw a problem with how I could engage with government, and I took an hour to build a tool - just for me - and I “fixed” it. But that was only possible because of <a href="https://data.police.uk/">an old, slightly fading API of public policing data</a>, built while I was still stomping around South London in a silly top hat.</p>
+<p>I think vibe coding is going to help millions of people like me build millions of things, but <strong>well maintained public data APIs will make those things collectively meaningful and useful</strong>.</p>
+<p>Rather conveniently, the government has committed to launching a <a href="https://www.gov.uk/government/publications/national-data-library/national-data-library">National Data Library</a>, and I’ve got a sneaking suspicion they’re still trying to figure out what that practically is. I don’t know what it should be, but I think if you’re going to launch a National Data Library, you could start by rejuvenating the public API landscape.</p>
+<section id="the-open-data-dream" class="level2">
+<h2 class="anchored" data-anchor-id="the-open-data-dream">The Open Data Dream</h2>
+<p>The Coalition years feel kind of weird to look back on now. In some ways, they kickstarted some of the trends that defined our world: Brexit. Austerity. Seemingly endless angry protests.</p>
+<p>And yet, looking back, part of it also feels slightly hopeful? From a tech perspective, it felt like that’s the last time we really believed the bustling tech scene might transform government. The Big Society may have been naïve, but the open data movement that came with it was genuinely ambitious.</p>
+<p>It’s hard to think back to now, but the vestiges of those golden years still litter the civic tech landscape, like so many crumbling ruins in a dystopian wasteland. Some I think are pretty much dead, their <a href="https://www.data.gov.uk/">skeletons poking out of the digital sand</a>. Some <a href="https://data.police.uk/docs/">limp along</a>, vestiges of their grand ambitions. Others have managed to <a href="https://www.mysociety.org/">adapt to this new world</a>.</p>
+<p>As I discovered in my moment of impromptu building, plenty of public APIs are definitely in the “limping along” bucket, and <a href="https://data.police.uk/">data.police.uk</a> is a perfect example. Some forces reliably populate event data, others have mostly stopped bothering. Manchester Police <a href="https://www.bbc.co.uk/news/uk-england-manchester-68489297">just stopped centrally reporting crime for awhile while it figured out its new IT system</a>.</p>
+<p>I suspect if I checked a few more sources on <a href="https://www.data.gov.uk/">data.gov.uk</a>, I’d find a mostly similar story: open data is great, but when austerity bit and it fell out of the political spotlight, departments focused on core services over clean data. And you know what, I can hardly blame them: not <em>that</em> many people knew those datasets even existed, let alone were building on them.</p>
+</section>
+<section id="restarting-the-civic-tech-open-data-dream" class="level2">
+<h2 class="anchored" data-anchor-id="restarting-the-civic-tech-open-data-dream">Restarting the Civic Tech Open-Data Dream</h2>
+<p>Maybe I’m drinking the Kool-Aid, but I think LLMs and vibe-coding really are the enabler to kick-start the civic tech open-data revolution that never really happened. Building on APIs was actually quite hard - most normal humans never want to figure out what CURL is, or what the difference is between POST, GET, and PUT.</p>
+<p>Vibe coding really does shift part of that equation. Of course, you’re not going to be writing production ready code, but if there was a central, well documented repository of public API data that LLMs knew how to query and use? The barrier for prototyping on it essentially becomes 0, and that could be <em>glorious</em>.</p>
+<p>So what would it take? I’d point to a few things off the top of my head.</p>
+<p>First, a funding model that makes departments build and maintain open-datasets - I’m not sure what the answer is, but we should recognise that public data is a public good, and no department should have to pick between investing in public data and front-line services (and of course, it shouldn’t be acceptable to just <em>stop populating it</em> without good reason).</p>
+<p>Secondly, and this is my hottest take, recognise that your main customer is LLM enabled, and may very well be LLM dependent - that means making it as easy as possible for models/agents to discover and use datasets. <a href="https://llmstxt.org/">LLMs.txt</a> on everything. <a href="https://modelcontextprotocol.io/docs/getting-started/intro">MCP</a> servers coming out of all the endpoints. Those fancy <a href="https://www.anthropic.com/news/skills">new Claude skill packages</a>. When I ask ChatGPT to help with <em>anything</em> around building on public technology and data, I want that LLM to just <em>know</em> what data is out there, and how to use it… But more critically, just good, clean, maintained machine readable documentation (the good news is building that is a fantastic investment, even if all LLMs were to disappear tomorrow).</p>
+<p>Finally, let’s build a community: you want people to build on that data, and we should make it exciting, collective. Government data is <em>ours</em>, so make it feel that way! Run a million events and hackathons. Hire some goddamn librarians, and task them with building a thriving ecosystem! The <a href="https://ukdataservice.ac.uk/">UK Data Service</a> has shown you <em>can actually do this</em>, with data conferences and such. Let’s make playing with government data exciting.</p>
+<p>The NDL shouldn’t just be a library… it should be <em>our</em> library. A public good, which the public uses, and treasures. Not some dusty archive that government maintains out of obligation, but a living resource that sparks curiosity and enables action. When someone wonders about their neighbourhood, their council, their police - the NDL should be where they turn, and where they can actually <em>do</em> something with what they find.</p>
+<p>And honestly? I think we’re at a moment where this becomes genuinely transformative. As digital ID starts becoming a practical thing rather than a concept, we might move to a world where we all can authenticate and build on our own data. Imagine being able to prototype tools for checking your council tax, monitoring your kids’ school performance data, or comparing local healthcare outcomes - not because you’re a developer, but because you had a question and an LLM could help you answer it using secure, authenticated access to public services. That’s when civic engagement stops being something 12 people do in a community hall, and becomes something woven into how we all interact with government.</p>
+<p>So my hot take on the NDL? <strong>Turns out we had one all along.</strong> We just need to show it a bit of love, give it the funding it deserves, and maybe teach it to speak fluent LLM. The infrastructure is there, rusting in the digital rain. Let’s bring it back to life.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+  const themeStorageKey = "theme-preference";
+  const themeButtonClass = "theme-toggle-button";
+
+  const root = document.documentElement;
+
+  const getStoredTheme = () => {
+    const stored = localStorage.getItem(themeStorageKey);
+    return stored === "light" || stored === "dark" ? stored : null;
+  };
+
+  const getSystemTheme = () =>
+    window.matchMedia("(prefers-color-scheme: light)").matches
+      ? "light"
+      : "dark";
+
+  const setBootstrapTheme = (theme) => {
+    document.querySelectorAll("[data-bs-theme]").forEach((element) => {
+      element.setAttribute("data-bs-theme", theme);
+    });
+  };
+
+  const updateButtonLabel = (theme) => {
+    const button = document.querySelector(`.${themeButtonClass}`);
+    if (!button) {
+      return;
+    }
+    const nextThemeLabel =
+      theme === "light" ? "Switch to dark mode" : "Switch to light mode";
+    button.setAttribute("aria-label", nextThemeLabel);
+    button.setAttribute("title", nextThemeLabel);
+    button.setAttribute("aria-pressed", theme === "light");
+    button.dataset.theme = theme;
+  };
+
+  const applyTheme = (theme, source) => {
+    root.setAttribute("data-theme", theme);
+    root.setAttribute("data-theme-source", source);
+    setBootstrapTheme(theme);
+    updateButtonLabel(theme);
+  };
+
+  const toggleTheme = () => {
+    const currentTheme = root.getAttribute("data-theme") || getSystemTheme();
+    const nextTheme = currentTheme === "light" ? "dark" : "light";
+    localStorage.setItem(themeStorageKey, nextTheme);
+    applyTheme(nextTheme, "user");
+  };
+
+  const createToggleButton = () => {
+    if (document.querySelector(`.${themeButtonClass}`)) {
+      return;
+    }
+    const container =
+      document.querySelector(".quarto-navbar-tools") ||
+      document.querySelector(".navbar .navbar-nav.ms-auto");
+    if (!container) {
+      return;
+    }
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = themeButtonClass;
+    button.innerHTML = '<span aria-hidden="true">◐</span>';
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      toggleTheme();
+    });
+
+    container.appendChild(button);
+  };
+
+  const initTheme = () => {
+    const storedTheme = getStoredTheme();
+    if (storedTheme) {
+      applyTheme(storedTheme, "user");
+      return;
+    }
+    applyTheme(getSystemTheme(), "system");
+  };
+
+  const onReady = () => {
+    createToggleButton();
+    initTheme();
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", onReady);
+  } else {
+    onReady();
+  }
+
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: light)");
+  mediaQuery.addEventListener("change", (event) => {
+    if (getStoredTheme()) {
+      return;
+    }
+    applyTheme(event.matches ? "light" : "dark", "system");
+  });
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/andreasthinks\.me");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
