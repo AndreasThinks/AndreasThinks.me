@@ -5,7 +5,7 @@ about:
   template: trestles
 ---
 
-I'm Andreas Varotsis, a data scientist and public safety researcher working to improve the use of data and evidence in government.I try to use an empirical approach and multi-disciplinary, quantitative tools to understand, diagnose, and build solutions for critical problems around public cohesion, society and public safety.
+I'm Andreas Varotsis. I work to improve how governments use data and evidence to address critical challenges in public safety and social cohesion. As a data scientist and public safety researcher, I draw on empirical, multi-disciplinary, and quantitative approaches to understand and build solutions for these problems. Since 2025, I've been doing this work at [Palantir](https://www.palantir.com), focused on government and public sector initiatives.
 
 I also enjoy [coordinating exciting communities](https://lu.ma/ai-for-good), and working with [fantastic](https://newspeak.house/) [institutions](https://ai.gov.uk/) to build projects that improve the world.
 
