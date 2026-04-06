@@ -524,3 +524,30 @@ hr {
     font-size: 1.1rem;
   }
 }
+
+/* ── Theme-adaptive figures ───────────────────────────────────────────────── */
+
+/* Hide the wrong variant based on active theme */
+html[data-theme="light"] .dark-fig  { display: none !important; }
+html[data-theme="dark"]  .light-fig { display: none !important; }
+
+/* Fallback: honour system preference when no explicit theme is set */
+@media (prefers-color-scheme: light) {
+  html:not([data-theme="dark"]) .dark-fig  { display: none !important; }
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .light-fig { display: none !important; }
+}
+
+/* For embedded code-cell plot outputs (blog post): invert dark figures in light mode.
+   CSS class "dark-plot" is applied via Quarto cell option  # | classes: dark-plot  */
+html[data-theme="light"] .dark-plot img {
+  filter: invert(0.91) hue-rotate(180deg) saturate(0.85) brightness(0.97);
+  border-radius: 4px;
+}
+@media (prefers-color-scheme: light) {
+  html:not([data-theme="dark"]) .dark-plot img {
+    filter: invert(0.91) hue-rotate(180deg) saturate(0.85) brightness(0.97);
+    border-radius: 4px;
+  }
+}
