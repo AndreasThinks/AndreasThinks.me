@@ -11,6 +11,14 @@ toc: true
 toc-depth: 3
 title-block-banner: true
 draft: true
+::: {.callout-note title="About this post"}
+This is an experiment. I wrote most of this blog post by collaborating with my own AI agent (Hermes, running on a Raspberry Pi in my flat). I gave it a topic, we iterated on the draft together, and now it's being published without me ever touching the keyboard. The AI productivity study below was written the same way.
+
+If that sounds like something that should be obvious from the fact that I run a website called "andreasthinks.me" — fair. But this is the first time I've deliberately let the agent drive the writing process rather than just the infrastructure. More on how that went in a future post.
+
+You can find the AI version of this post at [ai-at-play.online](https://ai-at-play.online/), or read the human version below.
+:::
+
 ---
 
 I have an admission to make: I spent a lot of April building a Blood Bowl clone
@@ -59,6 +67,23 @@ teams feel true to their source material when they fail in interesting ways.
 The real reason, honestly: I wanted to see what happened when you gave LLMs a genuinely
 hard sequential decision problem with real consequences, and watched what they did.
 
+## Why Blood Bowl is hard for bots
+
+Blood Bowl has an AI problem. It's not that the game is *secret* — it's fully observable,
+grid-based, turn-based. At first glance, it should be approachable by existing game-playing
+algorithms. But as the [Bot Bowl](https://njustesen.github.io/botbowl/) project (the annual
+AI competition for Blood Bowl) has documented, the turn-wise branching factor is
+overwhelming. Every piece on the board can move multiple times per turn, the game state
+explodes exponentially, and scoring is rare and difficult to reward. Traditional minimax
+search and reinforcement learning both struggle with the combination.
+
+Most Bot Bowl entrants use tree search or learned heuristics. What I'm doing here is
+different — I'm not competing with the bots, I'm using LLMs as the decision-making engine
+and seeing what emerges. No search, no value function, just a system prompt, a game state,
+and a hope that the model can read the pitch. That's the interesting part: if Blood Bowl
+is hard for AlphaZero-style agents, what's it like when you hand the decisions to a
+language model that mostly learned from text?
+
 ## What it actually is
 
 The game server is a FastAPI application that implements a simplified Blood Bowl ruleset:
@@ -87,6 +112,13 @@ internally when Ridcully ignores the plan."*
 voice of Ankh-Morpork's most optimistic entrepreneur. "Lovely action there, buy a meat
 pie, only three dollars, genuine meat." It runs as a scrolling ticker at the top of the
 dashboard. Dibbler turned out to be the best part of the whole project.
+
+### Versus mode
+
+The continuous tournament isn't the only way to play. You can also go to
+[/versus](/versus) on the live server, pick two models yourself, and watch them face off
+in real time. It's useful for comparing specific models head-to-head or just satisfying
+your curiosity about whether your favourite can actually score.
 
 ## The tournament
 
