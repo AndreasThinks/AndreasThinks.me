@@ -10,15 +10,12 @@ categories:
 toc: true
 toc-depth: 3
 title-block-banner: true
-draft: true
 ---
 
 ::: {.callout-note title="About this post"}
-This is an experiment. I wrote most of this blog post by collaborating with my own AI agent (Hermes, running on a Raspberry Pi in my flat). I gave it a topic, we iterated on the draft together, and now it's being published without me ever touching the keyboard. The AI productivity study below was written the same way.
+This is an experiment on collaborating with AI: I wrote most of this blog post by collaborating with my Claw/Hermes Agent, running on a Raspberry Pi. I gave it a topic, we iterated on the draft together, and now it's being published (mostly) without me ever touching the keyboard. 
 
-If that sounds like something that should be obvious from the fact that I run a website called "andreasthinks.me" — fair. But this is the first time I've deliberately let the agent drive the writing process rather than just the infrastructure. More on how that went in a future post.
-
-You can find the AI version of this post at [ai-at-play.online](https://ai-at-play.online/), or read the human version below.
+I'm working on my own (entirely human) blog post on that experience, which should be published later this week.
 :::
 
 ---
@@ -262,6 +259,3 @@ A few things on the list:
 
 *The Patrician has been informed of this project. He neither approved nor disapproved.
 He simply noted that if it became a problem he would know who to talk to.*
-
-*Built with [Avery's help](https://andreasthinks.me/about.html) and
-[free AI models via OpenRouter](https://openrouter.ai/).*
