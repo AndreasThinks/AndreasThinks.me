@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-04-07">
+
+<title>I made ten AI models play Blood Bowl against each other (in the Discworld) – Andreas Varotsis</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-e42cdf836f9b904b02dd19a7390dd244.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=GG-378MDZNVX4"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'GG-378MDZNVX4', { 'anonymize_ip': true});
+</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="I made ten AI models play Blood Bowl against each other (in the Discworld) – Andreas Varotsis">
+<meta property="og:description" content="What happens when you let LLMs loose on a fantasy sports pitch">
+<meta property="og:site_name" content="Andreas Varotsis">
+<meta name="twitter:title" content="I made ten AI models play Blood Bowl against each other (in the Discworld) – Andreas Varotsis">
+<meta name="twitter:description" content="What happens when you let LLMs loose on a fantasy sports pitch">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Andreas Varotsis</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../recent_work.html"> 
+<span class="menu-text">talks &amp; publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../slides/index.html"> 
+<span class="menu-text">teaching</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://fosstodon.org/@AndreasThinks" rel="me"> 
+<span class="menu-text"><i class="fa-brands fa-mastodon fa-xl" aria-label="mastodon"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://bsky.app/profile/andreasthinks.me"> 
+<span class="menu-text"><i class="fa-brands fa-bluesky fa-xl" aria-label="bluesky"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://twitter.com/AndreasThinks"> 
+<span class="menu-text"><i class="fa-brands fa-twitter fa-xl" aria-label="twitter"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/AndreasThinks"> 
+<span class="menu-text"><i class="fa-brands fa-github fa-xl" aria-label="github"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://www.linkedin.com/in/avarotsis/"> 
+<span class="menu-text"><i class="fa-brands fa-linkedin fa-xl" aria-label="linkedin"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="mailto:andreas.varotsis@gmail.com"> 
+<span class="menu-text"><i class="fa-solid fa-envelope fa-xl" aria-label="envelope"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.xml"> 
+<span class="menu-text"><i class="fa-solid fa-rss fa-xl" aria-label="rss"></i></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">I made ten AI models play Blood Bowl against each other (in the Discworld)</h1>
+            <p class="subtitle lead">What happens when you let LLMs loose on a fantasy sports pitch</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">AI</div>
+                <div class="quarto-category">games</div>
+                <div class="quarto-category">experiments</div>
+                <div class="quarto-category">work-in-progress</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 7, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#why-blood-bowl-why-discworld" id="toc-why-blood-bowl-why-discworld" class="nav-link active" data-scroll-target="#why-blood-bowl-why-discworld">Why Blood Bowl? Why Discworld?</a></li>
+  <li><a href="#why-blood-bowl-is-hard-for-bots" id="toc-why-blood-bowl-is-hard-for-bots" class="nav-link" data-scroll-target="#why-blood-bowl-is-hard-for-bots">Why Blood Bowl is hard for bots</a></li>
+  <li><a href="#what-it-actually-is" id="toc-what-it-actually-is" class="nav-link" data-scroll-target="#what-it-actually-is">What it actually is</a>
+  <ul class="collapse">
+  <li><a href="#versus-mode" id="toc-versus-mode" class="nav-link" data-scroll-target="#versus-mode">Versus mode</a></li>
+  </ul></li>
+  <li><a href="#the-tournament" id="toc-the-tournament" class="nav-link" data-scroll-target="#the-tournament">The tournament</a></li>
+  <li><a href="#what-we-learned-building-it-and-what-changed-from-risk" id="toc-what-we-learned-building-it-and-what-changed-from-risk" class="nav-link" data-scroll-target="#what-we-learned-building-it-and-what-changed-from-risk">What we learned building it (and what changed from Risk)</a>
+  <ul class="collapse">
+  <li><a href="#agents-need-constrained-action-spaces" id="toc-agents-need-constrained-action-spaces" class="nav-link" data-scroll-target="#agents-need-constrained-action-spaces">Agents need constrained action spaces</a></li>
+  <li><a href="#the-failure-modes-are-revealing" id="toc-the-failure-modes-are-revealing" class="nav-link" data-scroll-target="#the-failure-modes-are-revealing">The failure modes are revealing</a></li>
+  <li><a href="#ghost-players-are-a-real-problem" id="toc-ghost-players-are-a-real-problem" class="nav-link" data-scroll-target="#ghost-players-are-a-real-problem">Ghost players are a real problem</a></li>
+  <li><a href="#llms-make-surprisingly-reasonable-coaches" id="toc-llms-make-surprisingly-reasonable-coaches" class="nav-link" data-scroll-target="#llms-make-surprisingly-reasonable-coaches">LLMs make surprisingly reasonable coaches</a></li>
+  </ul></li>
+  <li><a href="#whats-it-actually-for" id="toc-whats-it-actually-for" class="nav-link" data-scroll-target="#whats-it-actually-for">What’s it actually for?</a></li>
+  <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next">What’s next</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<div class="callout callout-style-default callout-note callout-titled" title="About this post">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>About this post
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is an experiment on collaborating with AI: I wrote most of this blog post by collaborating with my Claw/Hermes Agent, running on a Raspberry Pi. I gave it a topic, we iterated on the draft together, and now it’s being published (mostly) without me ever touching the keyboard.</p>
+<p>I’m working on my own (entirely human) blog post on that experience, which should be published later this week.</p>
+</div>
+</div>
+<hr>
+<p>I have an admission to make: I spent a lot of April building a Blood Bowl clone set in Terry Pratchett’s Discworld and letting AI models play it against each other.</p>
+<p>This is that. And it’s also the sequel to <a href="../ai-at-play/index.html">AI at Play</a>.</p>
+<p>Last year I built <a href="https://ai-at-play.online/">AIs at Risk</a> — four LLM agents competing at the board game Risk, each assigned a character, watched by a leaderboard. I wrote about what I learned <a href="../ai-at-play/index.html">here</a>, talked about it at WHY2025, and came away with a list of things I wanted to try differently. Ankh-Morpork Scramble is what happens when you take those lessons and apply them to a game you built yourself rather than one you inherited.</p>
+<p><a href="https://ankh-morpork-scramble-production.up.railway.app">Ankh-Morpork Scramble</a> is a turn-based sports game where the City Watch takes on the Wizards of Unseen University in what the official rules describe as “the city’s most prestigious, least-regulated street-sport.” It runs continuously on Railway, AI vs AI, all day. You can watch a match in progress right now.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="It's live">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>It’s live
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can watch a game at <a href="https://ankh-morpork-scramble-production.up.railway.app">ankh-morpork-scramble-production.up.railway.app</a>. Code is on <a href="https://github.com/AndreasThinks/ankh-morpork-scramble">GitHub</a>. Fair warning: it’s a side project. Things occasionally break. That is, in the spirit of Blood Bowl, entirely appropriate.</p>
+</div>
+</div>
+<section id="why-blood-bowl-why-discworld" class="level2">
+<h2 class="anchored" data-anchor-id="why-blood-bowl-why-discworld">Why Blood Bowl? Why Discworld?</h2>
+<p>Blood Bowl is one of those games that has been quietly beloved for forty years precisely because it’s <em>about</em> failure. The dice are there to punish you. You build an elegant plan, you execute the first three moves perfectly, and then your star ball carrier trips over his own feet and knocks himself out cold. The crowd cheers. Your opponent looks sympathetic. The commentator makes a remark about insurance.</p>
+<p>That’s not frustrating — that’s the game. The skill is in building plans that survive contact with the dice, not in pretending the dice aren’t there.</p>
+<p>Terry Pratchett’s Ankh-Morpork is the obvious setting because it’s a city that runs on exactly that energy. Everything is held together by improvisation, tradition, and the vague suspicion that nobody actually knows the rules. The City Watch are perpetually underfunded and overextended. The wizards are technically brilliant and practically catastrophic. Both teams feel true to their source material when they fail in interesting ways.</p>
+<p>The real reason, honestly: I wanted to see what happened when you gave LLMs a genuinely hard sequential decision problem with real consequences, and watched what they did.</p>
+</section>
+<section id="why-blood-bowl-is-hard-for-bots" class="level2">
+<h2 class="anchored" data-anchor-id="why-blood-bowl-is-hard-for-bots">Why Blood Bowl is hard for bots</h2>
+<p>Blood Bowl has an AI problem. It’s not that the game is <em>secret</em> — it’s fully observable, grid-based, turn-based. At first glance, it should be approachable by existing game-playing algorithms. But as the <a href="https://njustesen.github.io/botbowl/">Bot Bowl</a> project (the annual AI competition for Blood Bowl) has documented, the turn-wise branching factor is overwhelming. Every piece on the board can move multiple times per turn, the game state explodes exponentially, and scoring is rare and difficult to reward. Traditional minimax search and reinforcement learning both struggle with the combination.</p>
+<p>Most Bot Bowl entrants use tree search or learned heuristics. What I’m doing here is different — I’m not competing with the bots, I’m using LLMs as the decision-making engine and seeing what emerges. No search, no value function, just a system prompt, a game state, and a hope that the model can read the pitch. That’s the interesting part: if Blood Bowl is hard for AlphaZero-style agents, what’s it like when you hand the decisions to a language model that mostly learned from text?</p>
+</section>
+<section id="what-it-actually-is" class="level2">
+<h2 class="anchored" data-anchor-id="what-it-actually-is">What it actually is</h2>
+<p>The game server is a FastAPI application that implements a simplified Blood Bowl ruleset: a 26x15 pitch, two teams of up to eleven players, two halves, touchdowns scored by carrying the ball to the opponent’s end zone. Players can move, block, pass, and perform Ankh-Morpork-specific actions like <em>Scuffle</em> and <em>Charge</em>.</p>
+<p>Two LLM agents play against each other. Each turn, the active agent receives a structured game state summary — where every player is, who has the ball, how many movement points each player has left, which squares are safe to move to — and returns a JSON action. One action at a time, back and forth, until the half ends or someone scores.</p>
+<p><strong>Team 1: City Watch Constables.</strong> The agent plays as Commander Sam Vimes on the sideline. The system prompt is: <em>“You are a cynical, streetwise copper who has learned the hard way that the direct route is usually the one with the trap. Coach like a Watchman on a double shift: read the play, call the safe move first, protect your ball carrier like he’s the last witness.”</em></p>
+<p><strong>Team 2: Unseen University Adepts.</strong> The agent plays as Ponder Stibbons. <em>“You have run the numbers through Hex; the numbers say this will probably not work, but probably is a range. Coach like an overworked academic: identify the highest-probability play, hedge against turnovers, explain your reasoning as if presenting to the faculty, and sigh internally when Ridcully ignores the plan.”</em></p>
+<p><strong>Commentator: C.M.O.T. Dibbler.</strong> Every turn, a third agent generates commentary in the voice of Ankh-Morpork’s most optimistic entrepreneur. “Lovely action there, buy a meat pie, only three dollars, genuine meat.” It runs as a scrolling ticker at the top of the dashboard. Dibbler turned out to be the best part of the whole project.</p>
+<section id="versus-mode" class="level3">
+<h3 class="anchored" data-anchor-id="versus-mode">Versus mode</h3>
+<p>The continuous tournament isn’t the only way to play. You can also go to <a href="../../versus">/versus</a> on the live server, pick two models yourself, and watch them face off in real time. It’s useful for comparing specific models head-to-head or just satisfying your curiosity about whether your favourite can actually score.</p>
+</section>
+</section>
+<section id="the-tournament" class="level2">
+<h2 class="anchored" data-anchor-id="the-tournament">The tournament</h2>
+<p>Each match, two models are picked from a pool of ten free LLMs on OpenRouter — Qwen, Gemma, Llama, Mistral, Phi, DeepSeek — weighted so models with fewer recorded games get more chances. The leaderboard tracks wins, losses, and draws per model, plus six behavioural dimensions: Aggression, Recklessness, Ball Craft, Lethality, Verbosity, and Efficiency.</p>
+<p>The idea is to build up a genuine performance profile across hundreds of games. Which models play tactically? Which ones yolo into combat and get punished? Which ones produce elegant multi-step plays and which ones seem confused by the pitch geometry?</p>
+<p>We’ve only run a handful of games so far — the server’s been running for a few days and there’s only one result in the data — but the infrastructure is there and it accumulates. The leaderboard is at <code>/leaderboard/ui</code> on the live server.</p>
+</section>
+<section id="what-we-learned-building-it-and-what-changed-from-risk" class="level2">
+<h2 class="anchored" data-anchor-id="what-we-learned-building-it-and-what-changed-from-risk">What we learned building it (and what changed from Risk)</h2>
+<p>In <a href="../ai-at-play/index.html">AI at Play</a> I wrote about the two hardest problems: context and scaffolding (how do you convey a complex game state to an LLM?), and the immaturity of the agent tooling (MCP and multi-agent frameworks were new and rough). Both of those shaped how I built Scramble differently.</p>
+<p><strong>No MCP, no LangChain.</strong> Risk used MCP tools and LangGraph for orchestration. It worked, but it was fragile and added a lot of complexity that didn’t pay for itself. Scramble uses direct LLM API calls with a simple JSON response format. Each turn: here’s the game state, return one action. The simplicity meant the game loop was easier to debug and the agents spent less cognitive budget on tool-calling protocol.</p>
+<p><strong>Build the game yourself.</strong> Risk is an inherited system with all of Risk’s complexity. Scramble is a game I designed, which means I could shape the rules to be agent-friendly from the start. Simpler movement, clearer win conditions, and critically: a server that could pre-compute and expose exactly what each agent was allowed to do.</p>
+<section id="agents-need-constrained-action-spaces" class="level3">
+<h3 class="anchored" data-anchor-id="agents-need-constrained-action-spaces">Agents need constrained action spaces</h3>
+<p>Early versions would confidently instruct a player to move to a square they couldn’t reach, or try to block someone three squares away. This was exactly the scaffolding problem from Risk, just wearing a different hat. The agent wasn’t hallucinating exactly — it was making reasonable-sounding decisions based on a game state description it didn’t fully understand.</p>
+<p>The fix: expose valid actions explicitly. The state summary now includes a list of reachable squares per player (computed via BFS flood-fill on the server), rendered as natural language: <em>“Constable Throat can safely reach: (8,7), (8,8), (9,6)…”</em> Once the agent only ever saw legal destinations, the “invalid action” rate dropped to near zero.</p>
+<p>The general lesson: don’t ask an LLM to search over a large space of possibilities when you can pre-compute the valid subset and just ask it to choose. The LLM’s job is strategy, not geometry. In Risk this was painful to retrofit onto an inherited ruleset. In Scramble I could design for it from the start.</p>
+</section>
+<section id="the-failure-modes-are-revealing" class="level3">
+<h3 class="anchored" data-anchor-id="the-failure-modes-are-revealing">The failure modes are revealing</h3>
+<p>When an agent makes a bad call — charges into a block it’s likely to lose, moves the ball carrier into a surrounded position — it’s often possible to read <em>why</em> from the thought field in its JSON response. Vimes-mode agents tend to get overconfident with lead changes. Stibbons-mode agents sometimes hedge so aggressively they forget to actually advance the ball.</p>
+<p>These aren’t random failures. They’re coherent with the personas. Vimes gets cocky when he’s ahead; Ponder overthinks it. I didn’t engineer this — it emerged from the system prompts.</p>
+</section>
+<section id="ghost-players-are-a-real-problem" class="level3">
+<h3 class="anchored" data-anchor-id="ghost-players-are-a-real-problem">Ghost players are a real problem</h3>
+<p>For a while, knocked-out and injured players were still occupying squares on the pitch after they left the field. Another player couldn’t move there. The server was maintaining the position data even after the player was removed from active play. It was subtle — the pitch looked fine to the agents, the positions just happened to be unavailable — and it caused movement plans to silently fail.</p>
+<p>Software bugs in games tend to be funnier than bugs in production systems. This one meant that the ghost of a knocked-out wizard would haunt a pitch square for the rest of the half. Very Discworld, actually.</p>
+</section>
+<section id="llms-make-surprisingly-reasonable-coaches" class="level3">
+<h3 class="anchored" data-anchor-id="llms-make-surprisingly-reasonable-coaches">LLMs make surprisingly reasonable coaches</h3>
+<p>This was the part I was most uncertain about. Would the agents produce coherent tactical play, or just noise?</p>
+<p>Mostly: coherent. Not brilliant, but recognisable as strategy. They pick up the ball when it’s free, they protect the carrier, they run away from situations they’re likely to lose. The multi-move sequences are a bit linear — agents don’t seem to think more than one or two turns ahead — but within a turn they make reasonable prioritisation calls.</p>
+<p>The Discworld personas help more than I expected. Framing the decision as “what would Vimes do” gives the model a consistent decision heuristic to operate from. It’s not just aesthetic flavour — it affects the actual choices.</p>
+</section>
+</section>
+<section id="whats-it-actually-for" class="level2">
+<h2 class="anchored" data-anchor-id="whats-it-actually-for">What’s it actually for?</h2>
+<p>Honestly, most of it was just fun. Discworld, Blood Bowl, AI agents, a reason to build a live dashboard — I didn’t need much more justification than that.</p>
+<p>But it’s turned out to be a reasonable testbed for a few things I’m actually interested in:</p>
+<p><strong>Can you benchmark LLM tactical reasoning at scale?</strong> This is the direct continuation of what I was doing with Risk. In <a href="../ai-at-play/index.html">AI at Play</a> I found that Horizon Alpha was aggressively dominant and Qwen-3 wouldn’t stop sending diplomatic messages. Scramble runs a similar tournament but with a game I designed to surface tactical reasoning more cleanly. If you run enough games, does a pattern emerge in which models are better at sequential multi-step planning? We don’t have enough data yet, but the infrastructure is there.</p>
+<p><strong>How much do system prompt personas affect decision quality?</strong> The Vimes/Ponder framing is a controlled variable — same model, same game state, different character. I’d like to run ablation matches (neutral system prompt vs.&nbsp;character prompt) to see if the persona actually changes behaviour beyond surface-level tone.</p>
+<p><strong>What makes a good action space for LLM agents?</strong> The valid-actions fix was the biggest single improvement to game quality. I think there’s a general pattern here about how to design interfaces for agents that’s worth writing about separately.</p>
+<p>If any of that sounds interesting to you, the code is open and PRs are welcome. There’s a skills file in the repo (<code>skills/README.md</code>) if you want to build your own agent and play it against Vimes.</p>
+</section>
+<section id="whats-next" class="level2">
+<h2 class="anchored" data-anchor-id="whats-next">What’s next</h2>
+<p>A few things on the list:</p>
+<ul>
+<li><strong>More games.</strong> The tournament needs to run for a while before the leaderboard means anything. Leaving it running is the main thing.</li>
+<li><strong>Tackle zones.</strong> The current game doesn’t visually indicate which squares require a dodge roll to leave. Agents know this from the state summary, but it’d make the dashboard much more readable.</li>
+<li><strong>Seasons.</strong> Right now it’s just continuous matches. A proper tournament bracket with a season structure would give the leaderboard more shape.</li>
+<li><strong>Your agent.</strong> The player agent is a clean interface. If you want to plug in a different model, a fine-tuned persona, or a non-LLM agent, there’s a path for that. Instructions in the repo.</li>
+</ul>
+<hr>
+<p><em>The Patrician has been informed of this project. He neither approved nor disapproved. He simply noted that if it became a problem he would know who to talk to.</em></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+  const themeStorageKey = "theme-preference";
+  const themeButtonClass = "theme-toggle-button";
+
+  const root = document.documentElement;
+
+  const getStoredTheme = () => {
+    const stored = localStorage.getItem(themeStorageKey);
+    return stored === "light" || stored === "dark" ? stored : null;
+  };
+
+  const getSystemTheme = () =>
+    window.matchMedia("(prefers-color-scheme: light)").matches
+      ? "light"
+      : "dark";
+
+  const setBootstrapTheme = (theme) => {
+    document.querySelectorAll("[data-bs-theme]").forEach((element) => {
+      element.setAttribute("data-bs-theme", theme);
+    });
+  };
+
+  const updateButtonLabel = (theme) => {
+    const button = document.querySelector(`.${themeButtonClass}`);
+    if (!button) {
+      return;
+    }
+    const nextThemeLabel =
+      theme === "light" ? "Switch to dark mode" : "Switch to light mode";
+    button.setAttribute("aria-label", nextThemeLabel);
+    button.setAttribute("title", nextThemeLabel);
+    button.setAttribute("aria-pressed", theme === "light");
+    button.dataset.theme = theme;
+  };
+
+  const applyTheme = (theme, source) => {
+    root.setAttribute("data-theme", theme);
+    root.setAttribute("data-theme-source", source);
+    setBootstrapTheme(theme);
+    updateButtonLabel(theme);
+  };
+
+  const toggleTheme = () => {
+    const currentTheme = root.getAttribute("data-theme") || getSystemTheme();
+    const nextTheme = currentTheme === "light" ? "dark" : "light";
+    localStorage.setItem(themeStorageKey, nextTheme);
+    applyTheme(nextTheme, "user");
+  };
+
+  const createToggleButton = () => {
+    if (document.querySelector(`.${themeButtonClass}`)) {
+      return;
+    }
+    const container =
+      document.querySelector(".quarto-navbar-tools") ||
+      document.querySelector(".navbar .navbar-nav.ms-auto");
+    if (!container) {
+      return;
+    }
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = themeButtonClass;
+    button.innerHTML = '<span aria-hidden="true">◐</span>';
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      toggleTheme();
+    });
+
+    container.appendChild(button);
+  };
+
+  const initTheme = () => {
+    const storedTheme = getStoredTheme();
+    if (storedTheme) {
+      applyTheme(storedTheme, "user");
+      return;
+    }
+    applyTheme(getSystemTheme(), "system");
+  };
+
+  const onReady = () => {
+    createToggleButton();
+    initTheme();
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", onReady);
+  } else {
+    onReady();
+  }
+
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: light)");
+  mediaQuery.addEventListener("change", (event) => {
+    if (getStoredTheme()) {
+      return;
+    }
+    applyTheme(event.matches ? "light" : "dark", "system");
+  });
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/andreasthinks\.me");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
