@@ -1,0 +1,140 @@
+---
+title: "Did Fine-Tuning Actually Work? Benchmarking the 3CF Reasoning Adapter"
+date: "2026-04-16"
+categories:
+  - AI
+  - research
+  - fine-tuning
+  - methodology
+toc: true
+title-block-banner: true
+draft: true
+---
+
+## What We Built and Why
+
+The Three Column Format (3CF) is a structured analytical technique used in British and NATO military planning. The format forces a particular kind of thinking through three stages:
+
+- **Factor** (What): A relevant fact or assumption, stated cleanly.
+- **Deduction** (So What): Its significance, analysed through a relevant framework.
+- **Conclusion** (Therefore): An actionable output, categorised and tagged.
+
+Numbering creates an audit trail: Factor 1.0 generates Deduction 1.1, which generates Conclusion 1.1.1. The point isn't the military jargon. The point is that this is a general-purpose reasoning pattern — it works for business crises, medical decisions, engineering post-mortems, policy analysis, anywhere you need to move from observation to analysis to action in a traceable way.
+
+The question we wanted to answer: can we fine-tune a language model to reliably reason in this format, and does doing so improve its general analytical capability?
+
+We used [Llama-3.1-Nemotron-Nano-8B-v1](https://huggingface.co/unsloth/Llama-3.1-Nemotron-Nano-8B-v1) as the base model — a dense 8B model from NVIDIA with native reasoning support via `<think>` tags. We trained a QLoRA adapter (r=32, alpha=64) on approximately 610 synthetic examples covering military, business, medical, engineering, policy, and crisis management domains. The adapter is available at [AndreasThinks/3cf-nemotron-adapter](https://huggingface.co/AndreasThinks/3cf-nemotron-adapter).
+
+## The Benchmark Plan
+
+To measure whether the fine-tune did anything useful, we ran standard lm-evaluation-harness benchmarks comparing the base model against the adapter:
+
+- **ARC-Challenge**: Science multiple-choice questions, 1172 examples.
+- **BBH (BIG-Bench Hard) subtasks**: Causal judgement, logical deduction (5 and 7 objects), spatial navigation, web of lies — all zero-shot.
+- **GPQA Main**: Graduate-level science questions, a hard ceiling test for 8B models.
+
+We ran two separate HuggingFace Jobs — one for the base model, one for the adapter — on A100-large instances. The full results are at [AndreasThinks/3cf-benchmark-results](https://huggingface.co/datasets/AndreasThinks/3cf-benchmark-results).
+
+## Run 1: Exciting Numbers, Wrong Methodology
+
+The first benchmark run produced this:
+
+| Task | Base | Adapter | Delta |
+|------|------|---------|-------|
+| ARC-Challenge (acc_norm) | 30.5% | 47.5% | **+17.1pp** |
+| BBH Causal Judgement | 20.3% | 28.9% | +8.6pp |
+| BBH Log. Deduction (5 obj) | 26.8% | 29.6% | +2.8pp |
+| BBH Log. Deduction (7 obj) | 26.0% | 24.8% | -1.2pp |
+| BBH Navigate | 58.8% | 60.0% | +1.2pp |
+| BBH Web of Lies | 46.0% | 45.6% | -0.4pp |
+| GPQA Main | 33.7% | 33.0% | -0.7pp |
+
+A seventeen percentage point gain on ARC-Challenge looks compelling. The problem is that these numbers are almost certainly wrong.
+
+Nemotron-Nano is an instruct model. It was trained with a specific chat template and a system prompt that activates reasoning mode (`detailed thinking on`). In Run 1, we evaluated it without either. We passed raw prompts directly to both the base model and the adapter.
+
+The base model, never having seen prompts in this format during training, performed poorly. The adapter — trained on structured reasoning traces using a chat template — had partially absorbed the expected input format into its LoRA weights. It was, in effect, more robust to the wrong prompt format than the base model. The +17pp delta was mostly measuring that robustness, not reasoning capability.
+
+## Run 2: Fixing the Methodology
+
+Run 2 added three changes:
+
+1. `apply_chat_template=True` — properly formats prompts for the instruct model
+2. `system_instruction` matching the 3CF training system prompt
+3. `log_samples=True` with ARC samples uploaded separately for inspection
+
+| Task | Base | Adapter | Delta |
+|------|------|---------|-------|
+| ARC-Challenge (acc_norm) | 36.3% | 36.7% | +0.3pp |
+| BBH Causal Judgement | 34.8% | 25.1% | -9.6pp |
+| BBH Log. Deduction (5 obj) | 26.0% | 30.4% | +4.4pp |
+| BBH Log. Deduction (7 obj) | 28.4% | 27.6% | -0.8pp |
+| BBH Navigate | 25.6% | 33.6% | +8.0pp |
+| BBH Web of Lies | 48.8% | 48.8% | 0.0pp |
+| GPQA Main | 24.8% | 25.9% | +1.1pp |
+
+The ARC gain collapses to 0.3pp. The methodology was doing the work, not the adapter.
+
+## What the Run-to-Run Variance Tells Us
+
+The base model results shifted substantially between runs:
+
+| Task | Run 1 Base | Run 2 Base | Swing |
+|------|-----------|-----------|-------|
+| ARC-Challenge | 30.5% | 36.3% | +5.9pp |
+| BBH Causal Judgement | 20.3% | 34.8% | **+14.4pp** |
+| BBH Navigate | 58.8% | 25.6% | **-33.2pp** |
+| GPQA Main | 33.7% | 24.8% | -8.9pp |
+
+That BBH Navigate swing — 33 percentage points on the same model, same task — is striking. Navigate is a yes/no spatial reasoning task. The 3CF system prompt applied in Run 2 is trained to produce verbose structured reasoning. Applied to the base model, it likely triggered long-form outputs that don't match what `flexible-extract` is looking for. The base model followed the system instruction but put the answer in the wrong place. The adapter, trained on exactly this prompt-to-format pipeline, degraded less.
+
+This explains the apparent +8pp Navigate delta in Run 2. It's not the adapter reasoning better about spatial navigation. It's the adapter knowing where to put the answer.
+
+## Where the Adapter Actually Differs
+
+Looking at results that are consistent across both runs — where the direction holds regardless of methodology — the picture is much more modest:
+
+**Consistent positive signal:**
+- BBH Logical Deduction (5 objects): +2.8pp (Run 1), +4.4pp (Run 2). Same direction both runs. This is the most credible finding.
+
+**Consistent neutral or slight negative:**
+- BBH Logical Deduction (7 objects): -1.2pp / -0.8pp. Slight drag, consistent.
+- BBH Web of Lies: -0.4pp / 0.0pp. Noise.
+- GPQA: -0.7pp / +1.1pp. Noise.
+
+Everything else flips direction between runs and can't be trusted.
+
+The modest 5-object logical deduction gain is plausible. The 3CF format is structurally similar: ordered multi-step reasoning where each step depends on the previous one. Five objects is within the training distribution's complexity. Seven objects isn't, and the adapter shows no consistent advantage there.
+
+## What We Can Actually Claim
+
+The adapter does not degrade performance in any consistent way. On a 600-example QLoRA fine-tune, the base model's general capability is largely preserved. That's a clean result on its own — narrow domain fine-tuning at small data scale tends not to cause catastrophic forgetting, at least here.
+
+There's a plausible but modest signal on structured multi-step ordering tasks (logical deduction, 5-object version). The mechanism is believable: Factor-Deduction-Conclusion is structurally similar to ordered constraint satisfaction.
+
+That's it. The +17pp ARC gain from Run 1 was a methodology artifact. Standard benchmarks are largely the wrong eval for this kind of adapter.
+
+## The Missing Eval
+
+The right evaluation for the 3CF adapter doesn't exist yet in any standard benchmark suite. What we'd actually want to measure:
+
+- Does the model produce valid Factor-Deduction-Conclusion chains with correct numbering and cross-references?
+- Are the deductions genuinely analytical, or do they restate the factor?
+- Are the conclusions actionable and correctly categorised?
+- Does the model select the appropriate analytical framework for the domain?
+
+None of ARC, BBH, or GPQA touches any of this. The adapter was trained to do something that standard benchmarks can't see.
+
+## The Methodological Finding
+
+Perhaps the most useful thing from this exercise is the methodology story itself.
+
+For fine-tuned instruct model adapters, benchmark results without `apply_chat_template=True` are probably not measuring what you think they're measuring. The adapter's LoRA weights absorb some of the expected input format during training. This makes fine-tuned models appear more robust to raw prompts than their base counterparts, inflating apparent gains.
+
+In this case, the inflation was 17 percentage points on ARC-Challenge — the kind of number that would look great in an abstract. Running the evaluation correctly showed the gain was essentially zero.
+
+The delta between a controlled and uncontrolled evaluation wasn't subtle. Anyone benchmarking fine-tuned instruct models should treat `apply_chat_template` as mandatory, not optional.
+
+---
+
+*Training data and scripts are available in the [three-column-format-model](https://github.com/AndreasThinks/three-column-format-model) repository. Full benchmark results at [AndreasThinks/3cf-benchmark-results](https://huggingface.co/datasets/AndreasThinks/3cf-benchmark-results). Adapter at [AndreasThinks/3cf-nemotron-adapter](https://huggingface.co/AndreasThinks/3cf-nemotron-adapter).*
