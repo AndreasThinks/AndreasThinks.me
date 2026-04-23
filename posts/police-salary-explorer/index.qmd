@@ -37,7 +37,7 @@ Use the controls to toggle ranks, switch between starting and top-of-scale pay, 
 
 ```{ojs}
 viewof selectedRanks = Inputs.checkbox(
-  ["PC National", "PC Metropolitan", "Sergeant", "Inspector", "Superintendent", "Minimum Wage"],
+  ["PC National", "PC Metropolitan", "Sergeant", "Inspector", "Superintendent", "Minimum Wage", "Median FT Earnings"],
   {label: "Ranks", value: ["PC National", "Minimum Wage"]}
 )
 
@@ -61,6 +61,7 @@ rankMap = new Map([
   ["Inspector", {code: "Insp", label: "Inspector"}],
   ["Superintendent", {code: "Supt", label: "Superintendent"}],
   ["Minimum Wage", {code: "MinWage", label: "Minimum Wage (full-time)"}],
+  ["Median FT Earnings", {code: "Median_FT", label: "Median FT Earnings (UK)"}],
 ])
 
 data = {
@@ -69,13 +70,15 @@ data = {
     const year = +d.Year;
     for (const sel of selectedRanks) {
       const info = rankMap.get(sel);
-      if (info.code === "MinWage") {
-        // MinWage only has one value, not start/top
+      if (info.code === "MinWage" || info.code === "Median_FT") {
+        // Single value comparators, not start/top
+        const nominalCol = info.code === "MinWage" ? "MinWage_Annual_Nominal" : "Median_FT_Annual_Nominal"
+        const realCol = info.code === "MinWage" ? "MinWage_Annual_Real2025" : "Median_FT_Annual_Real2025"
         rows.push({
           Year: year,
           Rank: info.label,
           Point: "Annual",
-          Salary: realTerms ? +d.MinWage_Annual_Real2025 : +d.MinWage_Annual_Nominal
+          Salary: realTerms ? +d[realCol] : +d[nominalCol]
         });
         continue;
       }
@@ -135,13 +138,17 @@ chart = Plot.plot({
 table = showTable ? Inputs.table(data, {columns: ["Year", "Rank", "Point", "Salary"]}) : html`<p style="color:#888;font-style:italic;">Toggle "Show data table" to inspect values.</p>`
 ```
 
-## Minimum wage comparison
+## Minimum wage and median earnings comparison
 
-A useful benchmark is how police starting salaries compare to the UK minimum wage (now National Living Wage), expressed as a full-time annual equivalent (37.5 hours/week × 52 weeks).
+Two useful benchmarks for police starting salaries are the UK minimum wage (now National Living Wage) and median full-time earnings, both expressed as full-time annual equivalents.
 
-In 2000, a new PC earned roughly **2.4× the minimum wage**. By 2013, after the Winsor cut, this had fallen to **1.5×**. In 2025, it has recovered to approximately **1.3×** for post-2013 entrants. The Metropolitan Police premium has historically kept Met PCs at roughly **1.8–2.1×** the minimum wage.
+**Minimum wage:** In 2000, a new PC earned roughly **2.4× the minimum wage**. By 2013, after the Winsor cut, this had fallen to **1.5×**. In 2025, it has recovered to approximately **1.3×** for post-2013 entrants. The Metropolitan Police premium has historically kept Met PCs at roughly **1.8–2.1×** the minimum wage.
 
-This ratio matters because it shows whether policing remains an economically attractive career relative to the baseline guaranteed wage. The data suggests the answer has shifted significantly over the past two decades.
+**Median full-time earnings:** In 2000, a new PC earned roughly **0.92× median full-time earnings** — slightly below the UK median. By 2013, this had fallen to **0.71×**. In 2025, a post-2013 PC starter earns approximately **0.78×** median earnings, while a Metropolitan PC earns roughly **1.10×**.
+
+These ratios matter because they show whether policing remains an economically attractive career relative to both the legal floor and the typical middle-income job. The data suggests policing has slipped from a solidly middle-income profession to one that now sits closer to the median, with significant variation by force.
+
+Source: ONS ASHE median gross weekly earnings for full-time employees [@onscpi].
 
 ## Key findings
 
