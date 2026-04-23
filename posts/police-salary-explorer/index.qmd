@@ -1,0 +1,159 @@
+---
+title: "UK Police Salary Explorer"
+description: "An interactive look at police pay across ranks from 1999 to 2025, in nominal and real terms."
+date: "04/23/2026"
+categories:
+  - policing
+  - data-visualization
+  - uk
+draft: true
+bibliography: police-salary.bib
+format:
+  html:
+    toc: true
+---
+
+This interactive tool tracks starting and top-of-scale salaries across UK police ranks from 1999 to 2025, with figures shown in both nominal pounds and real terms (adjusted to 2025 GBP using CPI) [@onscpi].
+
+The data reveals a sharp real-terms decline for new constables following the 2013 Winsor reforms [@govukwinsor; @bbc2013], and a broader stagnation across all ranks during the 2010–2020 austerity period [@smf2024]. Recent large pay awards (2022–2025) have begun to reverse some of this erosion [@prrb2024; @prrb2025].
+
+Use the controls to toggle ranks, switch between starting and top-of-scale pay, and compare nominal versus real-terms values.
+
+```{ojs}
+viewof selectedRanks = Inputs.checkbox(
+  ["PC National", "PC Metropolitan", "Sergeant", "Inspector", "Superintendent"],
+  {label: "Ranks", value: ["PC National", "Sergeant", "Inspector"]}
+)
+
+viewof payPoint = Inputs.radio(
+  ["Starting salary", "Top of scale", "Both"],
+  {label: "Pay point", value: "Starting salary"}
+)
+
+viewof realTerms = Inputs.toggle({label: "Real terms (2025 £)", value: true})
+
+viewof showTable = Inputs.toggle({label: "Show data table", value: false})
+```
+
+```{ojs}
+raw = FileAttachment("police_salary_ranks.csv").csv({typed: true})
+
+rankMap = new Map([
+  ["PC National", {code: "PC", label: "PC (National)"}],
+  ["PC Metropolitan", {code: "Met_PC", label: "PC (Metropolitan)"}],
+  ["Sergeant", {code: "Sgt", label: "Sergeant"}],
+  ["Inspector", {code: "Insp", label: "Inspector"}],
+  ["Superintendent", {code: "Supt", label: "Superintendent"}],
+])
+
+data = {
+  const rows = [];
+  for (const d of raw) {
+    const year = +d.Year;
+    for (const sel of selectedRanks) {
+      const info = rankMap.get(sel);
+      if (payPoint === "Starting salary" || payPoint === "Both") {
+        rows.push({
+          Year: year,
+          Rank: info.label,
+          Point: "Start",
+          Salary: realTerms ? +d[info.code + "_Start_Real2025"] : +d[info.code + "_Start_Nominal"]
+        });
+      }
+      if (payPoint === "Top of scale" || payPoint === "Both") {
+        rows.push({
+          Year: year,
+          Rank: info.label,
+          Point: "Top",
+          Salary: realTerms ? +d[info.code + "_Top_Real2025"] : +d[info.code + "_Top_Nominal"]
+        });
+      }
+    }
+  }
+  return rows;
+}
+
+chart = Plot.plot({
+  width,
+  height: 500,
+  y: {grid: true, label: realTerms ? "Salary (2025 £)" : "Salary (nominal £)", tickFormat: "~s"},
+  x: {label: "Year", tickFormat: "d", grid: true},
+  color: {legend: true},
+  marks: [
+    Plot.ruleY([0]),
+    Plot.lineY(data, {
+      x: "Year",
+      y: "Salary",
+      stroke: "Rank",
+      strokeWidth: 2.5,
+      tip: true
+    }),
+    Plot.dot(data, {
+      x: "Year",
+      y: "Salary",
+      stroke: "Rank",
+      fill: "Rank",
+      r: 2.5,
+      tip: true
+    })
+  ]
+})
+```
+
+```{ojs}
+table = showTable ? Inputs.table(data, {columns: ["Year", "Rank", "Point", "Salary"]}) : html`<p style="color:#888;font-style:italic;">Toggle "Show data table" to inspect values.</p>`
+```
+
+## Key findings
+
+### The 2013 Winsor cut
+
+In 2013, the starting salary for new constables was cut from ~£23,000 to £19,000 as part of the Winsor reforms [@govukwinsor; @bbc2013]. This created a two-tier system: officers who joined before April 2013 remained on the legacy scale, while new entrants started lower and progressed more slowly [@winsortable].
+
+The chart shows this as a sharp discontinuity for PC (National) in 2013. Metropolitan Police starters were less affected due to the London premium [@metfriendly2019].
+
+### Real-terms decline
+
+A constable starting in 2000 on £17,133 would need roughly £40,000 in 2025 to have equivalent purchasing power [@hansard2000]. The actual 2025 starting salary for post-2013 entrants is £31,164, a real-terms cut of roughly 22% versus 2000 [@polfedconstable; @points2prove2025]. Even the pre-2013 scale (£32,820 in 2025) barely matches the inflation-adjusted 2000 starter.
+
+This pattern repeats across ranks. Sergeant, Inspector, and Superintendent starting salaries all stagnated in real terms between 2010 and 2020 before recovering partially in 2022–2025 [@prrb2024; @prrb2025].
+
+### Rank progression
+
+- **Sergeant** entry pay has roughly doubled in nominal terms since 2000 (£26,200 to £53,600) [@hansard2000; @polfedsergeant].
+- **Inspector** entry pay has risen from ~£33,800 (2000) to £63,800 (2025) [@hansard2000; @polfedinspector].
+- **Superintendent** entry pay has risen from ~£46,000 (2000) to £84,200 (2025) [@hansard2000; @winsortable; @points2prove2025].
+
+In real terms, all ranks experienced decline or stagnation between 2010 and 2020, followed by partial recovery.
+
+### Metropolitan Police premium
+
+The Metropolitan Police has historically paid a significant London premium. In 2005, the Met starter package (~£28,400) was ~44% above the national PC starter (£19,800). In 2024, the Met advertises £42,210, roughly 41% above the national post-2013 starter (£29,907) [@metfriendly2019; @prrb2024].
+
+## About this data
+
+### Methodology
+
+- **PC (National & Metropolitan)** data is year-by-year from official sources.
+- **Sergeant, Inspector, and Superintendent** data uses known anchor points with linear interpolation for intervening years.
+- **Real-terms figures** adjust nominal salaries to 2025 GBP using UK CPI (2015 = 100) [@onscpi].
+- **Metropolitan Police** starting salaries include London Weighting and London Allowances.
+
+### Data quality
+
+| Rank / Period | Confidence | Notes |
+|:---|:---|:---|
+| PC National 1999–2025 | **High** | Multiple verified year-by-year sources |
+| PC Metropolitan 1999–2025 | **High** | Met Police careers + Metfriendly |
+| Sergeant, Inspector, Superintendent at 2000 | **High** | Direct from Hansard [@hansard2000] |
+| Sergeant, Inspector, Superintendent at 2024–2025 | **High** | Police Federation / Points2Prove |
+| Sergeant, Inspector 2001–2023 | **Medium** | Linear interpolation between anchors |
+| Superintendent 2001–2013, 2015–2023 | **Medium** | Linear interpolation; 2014 Winsor restructuring captured [@winsortable] |
+
+Interpolated years assume constant annual change between known anchor points. This smooths out actual year-to-year variations (e.g., the 2010–2012 pay freeze, sporadic awards in 2018–2021) but preserves the overall trajectory.
+
+### Sources
+
+The complete list of sources, URLs, and confidence levels is documented in [SOURCES.md](https://github.com/AndreasThinks/AndreasThinks.me/blob/main/posts/police-salary-explorer/SOURCES.md).
+
+## References
