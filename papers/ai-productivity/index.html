@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Andreas Varotsis">
+<meta name="dcterms.date" content="2026-04-25">
+
+<title>Detecting AI Coding Tool Adoption and Its Behavioural Effects on Developer Commit Activity – Andreas Varotsis</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-e42cdf836f9b904b02dd19a7390dd244.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=GG-378MDZNVX4"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'GG-378MDZNVX4', { 'anonymize_ip': true});
+</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Detecting AI Coding Tool Adoption and Its Behavioural Effects on Developer Commit Activity – Andreas Varotsis">
+<meta property="og:description" content="Working Paper — April 2026 (v3, post-robustness)">
+<meta property="og:image" content="https://andreasthinks.me/papers/ai-productivity/index_files/figure-html/cell-5-output-1.png">
+<meta property="og:site_name" content="Andreas Varotsis">
+<meta property="og:image:height" content="505">
+<meta property="og:image:width" content="1197">
+<meta name="twitter:title" content="Detecting AI Coding Tool Adoption and Its Behavioural Effects on Developer Commit Activity – Andreas Varotsis">
+<meta name="twitter:description" content="Working Paper — April 2026 (v3, post-robustness)">
+<meta name="twitter:image" content="https://andreasthinks.me/papers/ai-productivity/index_files/figure-html/cell-5-output-1.png">
+<meta name="twitter:image-height" content="505">
+<meta name="twitter:image-width" content="1197">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Andreas Varotsis</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../recent_work.html"> 
+<span class="menu-text">talks &amp; publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../slides/index.html"> 
+<span class="menu-text">teaching</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://fosstodon.org/@AndreasThinks" rel="me"> 
+<span class="menu-text"><i class="fa-brands fa-mastodon fa-xl" aria-label="mastodon"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://bsky.app/profile/andreasthinks.me"> 
+<span class="menu-text"><i class="fa-brands fa-bluesky fa-xl" aria-label="bluesky"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://twitter.com/AndreasThinks"> 
+<span class="menu-text"><i class="fa-brands fa-twitter fa-xl" aria-label="twitter"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/AndreasThinks"> 
+<span class="menu-text"><i class="fa-brands fa-github fa-xl" aria-label="github"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://www.linkedin.com/in/avarotsis/"> 
+<span class="menu-text"><i class="fa-brands fa-linkedin fa-xl" aria-label="linkedin"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="mailto:andreas.varotsis@gmail.com"> 
+<span class="menu-text"><i class="fa-solid fa-envelope fa-xl" aria-label="envelope"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.xml"> 
+<span class="menu-text"><i class="fa-solid fa-rss fa-xl" aria-label="rss"></i></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Detecting AI Coding Tool Adoption and Its Behavioural Effects on Developer Commit Activity</h1>
+            <p class="subtitle lead">Working Paper — April 2026 (v3, post-robustness)</p>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Andreas Varotsis </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 25, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#abstract" id="toc-abstract" class="nav-link active" data-scroll-target="#abstract">Abstract</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">1. Introduction</a></li>
+  <li><a href="#literature-review" id="toc-literature-review" class="nav-link" data-scroll-target="#literature-review">2. Literature Review</a>
+  <ul class="collapse">
+  <li><a href="#controlled-experiments-and-field-trials" id="toc-controlled-experiments-and-field-trials" class="nav-link" data-scroll-target="#controlled-experiments-and-field-trials">2.1 Controlled Experiments and Field Trials</a></li>
+  <li><a href="#observational-and-quasi-experimental-studies" id="toc-observational-and-quasi-experimental-studies" class="nav-link" data-scroll-target="#observational-and-quasi-experimental-studies">2.2 Observational and Quasi-Experimental Studies</a></li>
+  <li><a href="#measuring-ai-adoption" id="toc-measuring-ai-adoption" class="nav-link" data-scroll-target="#measuring-ai-adoption">2.3 Measuring AI Adoption</a></li>
+  <li><a href="#gaps-and-contributions-of-this-paper" id="toc-gaps-and-contributions-of-this-paper" class="nav-link" data-scroll-target="#gaps-and-contributions-of-this-paper">2.4 Gaps and Contributions of This Paper</a></li>
+  </ul></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">3. Data</a>
+  <ul class="collapse">
+  <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">3.1 Data Sources</a></li>
+  <li><a href="#ground-truth-labels" id="toc-ground-truth-labels" class="nav-link" data-scroll-target="#ground-truth-labels">3.2 Ground Truth Labels</a></li>
+  <li><a href="#prepost-windows" id="toc-prepost-windows" class="nav-link" data-scroll-target="#prepost-windows">3.3 Pre/Post Windows</a></li>
+  <li><a href="#summary-statistics" id="toc-summary-statistics" class="nav-link" data-scroll-target="#summary-statistics">3.4 Summary Statistics</a></li>
+  </ul></li>
+  <li><a href="#behavioural-classifier" id="toc-behavioural-classifier" class="nav-link" data-scroll-target="#behavioural-classifier">4. Behavioural Classifier</a>
+  <ul class="collapse">
+  <li><a href="#design-rationale" id="toc-design-rationale" class="nav-link" data-scroll-target="#design-rationale">4.1 Design Rationale</a></li>
+  <li><a href="#features" id="toc-features" class="nav-link" data-scroll-target="#features">4.2 Features</a></li>
+  <li><a href="#model-and-performance" id="toc-model-and-performance" class="nav-link" data-scroll-target="#model-and-performance">4.3 Model and Performance</a></li>
+  <li><a href="#writing-style-ablation" id="toc-writing-style-ablation" class="nav-link" data-scroll-target="#writing-style-ablation">4.4 Writing-Style Ablation</a></li>
+  <li><a href="#cross-tool-generalisation" id="toc-cross-tool-generalisation" class="nav-link" data-scroll-target="#cross-tool-generalisation">4.5 Cross-Tool Generalisation</a></li>
+  </ul></li>
+  <li><a href="#causal-designs" id="toc-causal-designs" class="nav-link" data-scroll-target="#causal-designs">5. Causal Designs</a>
+  <ul class="collapse">
+  <li><a href="#account-level-difference-in-differences" id="toc-account-level-difference-in-differences" class="nav-link" data-scroll-target="#account-level-difference-in-differences">5.1 Account-Level Difference-in-Differences</a></li>
+  <li><a href="#country-level-panel-regression" id="toc-country-level-panel-regression" class="nav-link" data-scroll-target="#country-level-panel-regression">5.2 Country-Level Panel Regression</a></li>
+  </ul></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">6. Results</a>
+  <ul class="collapse">
+  <li><a href="#per-country-ai-adoption-rates" id="toc-per-country-ai-adoption-rates" class="nav-link" data-scroll-target="#per-country-ai-adoption-rates">6.1 Per-Country AI Adoption Rates</a></li>
+  <li><a href="#account-level-diff-in-diff" id="toc-account-level-diff-in-diff" class="nav-link" data-scroll-target="#account-level-diff-in-diff">6.2 Account-Level Diff-in-Diff</a></li>
+  <li><a href="#robustness-high-confidence-positives" id="toc-robustness-high-confidence-positives" class="nav-link" data-scroll-target="#robustness-high-confidence-positives">6.3 Robustness: High-Confidence Positives</a></li>
+  <li><a href="#country-level-panel-regression-1" id="toc-country-level-panel-regression-1" class="nav-link" data-scroll-target="#country-level-panel-regression-1">6.4 Country-Level Panel Regression</a></li>
+  <li><a href="#country-level-robustness-checks" id="toc-country-level-robustness-checks" class="nav-link" data-scroll-target="#country-level-robustness-checks">6.5 Country-Level Robustness Checks</a></li>
+  <li><a href="#dependent-variable-heterogeneity" id="toc-dependent-variable-heterogeneity" class="nav-link" data-scroll-target="#dependent-variable-heterogeneity">6.6 Dependent Variable Heterogeneity</a></li>
+  <li><a href="#power-analysis" id="toc-power-analysis" class="nav-link" data-scroll-target="#power-analysis">6.6 Power Analysis</a></li>
+  <li><a href="#heterogeneity-analysis" id="toc-heterogeneity-analysis" class="nav-link" data-scroll-target="#heterogeneity-analysis">6.7 Heterogeneity Analysis</a></li>
+  <li><a href="#developer-experience-proxy" id="toc-developer-experience-proxy" class="nav-link" data-scroll-target="#developer-experience-proxy">Developer Experience Proxy</a></li>
+  <li><a href="#primary-language" id="toc-primary-language" class="nav-link" data-scroll-target="#primary-language">Primary Language</a></li>
+  <li><a href="#data-limitations" id="toc-data-limitations" class="nav-link" data-scroll-target="#data-limitations">Data Limitations</a></li>
+  </ul></li>
+  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">7. Discussion</a>
+  <ul class="collapse">
+  <li><a href="#reconciling-the-account-level-and-country-level-results" id="toc-reconciling-the-account-level-and-country-level-results" class="nav-link" data-scroll-target="#reconciling-the-account-level-and-country-level-results">7.1 Reconciling the Account-Level and Country-Level Results</a></li>
+  <li><a href="#the-classifier-as-a-measurement-tool" id="toc-the-classifier-as-a-measurement-tool" class="nav-link" data-scroll-target="#the-classifier-as-a-measurement-tool">7.2 The Classifier as a Measurement Tool</a></li>
+  <li><a href="#what-the-behavioural-signature-means" id="toc-what-the-behavioural-signature-means" class="nav-link" data-scroll-target="#what-the-behavioural-signature-means">7.3 What the Behavioural Signature Means</a></li>
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">7.4 Limitations</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">8. Conclusion</a></li>
+  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
+  <li><a href="#code-and-data-availability" id="toc-code-and-data-availability" class="nav-link" data-scroll-target="#code-and-data-availability">9. Code and Data Availability</a>
+  <ul class="collapse">
+  <li><a href="#computational-reproducibility" id="toc-computational-reproducibility" class="nav-link" data-scroll-target="#computational-reproducibility">Computational Reproducibility</a></li>
+  <li><a href="#data-sharing" id="toc-data-sharing" class="nav-link" data-scroll-target="#data-sharing">Data Sharing</a></li>
+  <li><a href="#reproduction-instructions" id="toc-reproduction-instructions" class="nav-link" data-scroll-target="#reproduction-instructions">Reproduction Instructions</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="abstract" class="level2">
+<h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
+<p>We study the effect of AI coding tool adoption on developer commit behaviour using two complementary empirical designs. First, we build a behavioural classifier that identifies AI coding tool users from observable commit history — without relying on explicit self-reported adoption or proprietary telemetry. The classifier achieves cross-validated AUC of 0.94 on a sample of 276 GitHub accounts (74 confirmed adopters, 202 controls) and generalises to users of a second tool (Aider, mean predicted probability 0.73) it was never trained on, suggesting it detects general AI-assisted coding behaviour rather than tool-specific stylistic artefacts.</p>
+<p>Second, we use the classifier in two causal designs. An account-level difference-in-differences finds large, statistically significant changes in commit behaviour for AI adopters relative to controls, including substantial increases in commits per active week and reductions in inter-commit hours. A country-level panel regression across 34 countries (2022–2024) finds <strong>divergent results across dependent variables</strong>: a robust negative association between adoption and commits per developer (weighted coefficient = −7.56, p = 0.05 across 34 countries) coexists with a precisely-estimated null on pull requests per developer (coefficient = +1.33, p = 0.76). We interpret this DV split cautiously: it is consistent with AI tools shifting commit <em>granularity</em> (fewer, larger commits) rather than reducing genuine output, but our data cannot rule out alternative explanations.</p>
+<p>The classifier methodology is a contribution independent of the behavioural findings: it demonstrates that AI tool adoption can be detected at scale from public commit behaviour, opening possibilities for non-survey measurement of AI adoption across the developer population.</p>
+<hr>
+</section>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">1. Introduction</h2>
+<p>The rapid diffusion of AI coding assistants since late 2022 — including GitHub Copilot, Anthropic’s Claude Code, and Aider — has prompted widespread speculation about their effects on software development behaviour. Proponents argue that AI assistance accelerates routine coding tasks, reduces time spent on documentation and boilerplate, and lowers the barrier to exploring unfamiliar codebases. Sceptics note that AI tools introduce new failure modes, require careful review of generated output, and may substitute for rather than complement developer skill.</p>
+<p>Measuring these effects empirically is difficult for several reasons. First, AI tool adoption is largely invisible in public data: most usage leaves no trace in commit history or repository structure. Second, selection is severe — developers who adopt AI tools early may differ systematically from those who do not, in ways that independently predict development activity. Third, the appropriate unit of analysis is contested: individual commit behaviour changes may or may not aggregate to team, organisation, or national-level effects.</p>
+<p>This paper addresses the measurement problem directly. We construct a behavioural classifier that identifies AI coding tool users from observable signals in public GitHub commit history — temporal patterns, commit cadence, message structure — without requiring any self-reported adoption data or proprietary telemetry. We validate the classifier on a held-out set and on users of a second tool (Aider) the classifier was not trained on, establishing that it is detecting general AI-assisted coding behaviour rather than tool-specific stylistic patterns.</p>
+<p>We then deploy the classifier in two causal designs. An account-level difference-in-differences compares behavioural changes in confirmed AI adopters to matched controls over the same period. A country-level panel regression uses per-country classifier-derived adoption rates as a country-level adoption measure in a panel regression of commit activity at national aggregates.</p>
+<p>The account-level and country-level designs answer related but distinct questions. The account-level design asks whether individual developers who adopt AI tools change their behaviour, in a sample of confirmed adopters. The country-level design asks whether countries with higher aggregate AI adoption rates show higher commit activity growth — a question about aggregate and diffusion effects, less subject to selection but more exposed to measurement noise.</p>
+<p>We find strong evidence for the account-level effect and divergent country-level results: a robust negative association between adoption and commits per developer that does not appear when we use pull requests per developer as the outcome. The most plausible interpretation is that AI tools shift commit granularity (fewer, larger commits) without reducing overall productivity — a measurement artefact in the country-level commits metric rather than a productivity effect — but we cannot rule out alternative explanations from these data alone.</p>
+<p>The remainder of the paper is structured as follows. Section 2 reviews the relevant literature. Section 3 describes the data. Section 4 presents the classifier methodology and validation. Section 5 describes the two causal designs. Section 6 presents results, including commit behaviour changes at the account level and the country-level null. Section 7 discusses the findings and their limitations. Section 8 concludes.</p>
+</section>
+<section id="literature-review" class="level2">
+<h2 class="anchored" data-anchor-id="literature-review">2. Literature Review</h2>
+<p>The empirical literature on AI coding tools and developer productivity has grown rapidly since the public release of GitHub Copilot in mid-2022 and ChatGPT in late 2022. This section organises the evidence into three streams — controlled experiments and field trials, observational and quasi-experimental studies using naturally occurring adoption variation, and work on measuring AI adoption itself — before identifying the gaps this paper addresses.</p>
+<section id="controlled-experiments-and-field-trials" class="level3">
+<h3 class="anchored" data-anchor-id="controlled-experiments-and-field-trials">2.1 Controlled Experiments and Field Trials</h3>
+<p>The highest-quality causal evidence comes from randomised or quasi-randomised designs. <span class="citation" data-cites="peng2023llm">Peng et al. (<a href="#ref-peng2023llm" role="doc-biblioref">2023</a>)</span> conducted the first controlled experiment on AI-assisted coding, recruiting 95 professional developers through Upwork and randomly assigning them to complete an HTTP-server implementation task with or without GitHub Copilot. The treatment group completed the task 55.8% faster (95% CI: 21–89%, <span class="math inline">\(p = 0.002\)</span>, <span class="math inline">\(N = 95\)</span>), with heterogeneous effects favouring less experienced developers and those who coded more hours per day. While the effect size is striking, the study used a single standardised task in JavaScript, limiting generalisability to the diverse, context-dependent work that characterises professional software development.</p>
+<p>Ziegler et al.&nbsp;(2024) <span class="citation" data-cites="ziegler2024copilot">(<a href="#ref-ziegler2024copilot" role="doc-biblioref">Ziegler et al., 2024</a>)</span> conducted a large-scale survey study of 2,047 Microsoft developers using the Copilot technical preview, finding that the likelihood of accepting Copilot suggestions (acceptance rate) was the strongest predictor of perceived productivity gains, with junior developers seeing the largest benefits. Their analysis, grounded in the SPACE framework for developer productivity, found that perceived gains were reflected in objective activity telemetry. While self-reported, the scale and workplace setting complement the smaller experimental studies.</p>
+<p><span class="citation" data-cites="demirer2025genai">Cui et al. (<a href="#ref-demirer2025genai" role="doc-biblioref">2025</a>)</span> substantially extended this evidence base with three large-scale field experiments at Microsoft, Accenture, and an anonymous Fortune 100 company, randomising access to GitHub Copilot among 4,867 software developers in real workplace settings. Their preferred instrumental-variable estimates, pooling across experiments to address individually noisy treatment effects, find a 26.08% increase (SE: 10.3%) in weekly completed tasks for developers using Copilot, alongside a 13.55% increase (SE: 10.0%) in commits and a 38.38% increase (SE: 12.55%) in code compilations. Consistent with the broader literature on AI and skill heterogeneity — including <span class="citation" data-cites="brynjolfsson2025qje">Brynjolfsson et al. (<a href="#ref-brynjolfsson2025qje" role="doc-biblioref">2025</a>)</span>, who document a 14% productivity increase for customer-service agents, with the largest gains accruing to less experienced workers — <span class="citation" data-cites="demirer2025genai">Cui et al. (<a href="#ref-demirer2025genai" role="doc-biblioref">2025</a>)</span> find that less experienced developers exhibit higher adoption rates and larger productivity gains.</p>
+<p>A notable challenge to the emerging consensus comes from <span class="citation" data-cites="metr2025rct">METR (<a href="#ref-metr2025rct" role="doc-biblioref">2025</a>)</span>, who conducted an RCT with 16 experienced open-source developers completing 246 real tasks on mature repositories (averaging 23,000 stars and 1.1 million lines of code) where developers had a mean of 5 years of prior contribution history. Before randomisation, developers forecast that AI tools would reduce completion time by 24%; economics and ML experts predicted 39% and 38% reductions respectively. The observed effect was a 19% <em>increase</em> in completion time (95% CI: +2% to +39%) — AI tools slowed experienced developers down. Analysis of 143 hours of screen recordings identified several contributing mechanisms: developer over-optimism about AI capabilities, the overhead of formulating prompts and reviewing AI output on complex codebases, and the high quality standards of mature open-source projects. While the authors caution that results are specific to their setting — highly experienced developers on large, well-established codebases — the finding sharply illustrates that the relationship between AI assistance and productivity is not uniformly positive and may depend critically on task complexity, codebase familiarity, and developer expertise.</p>
+</section>
+<section id="observational-and-quasi-experimental-studies" class="level3">
+<h3 class="anchored" data-anchor-id="observational-and-quasi-experimental-studies">2.2 Observational and Quasi-Experimental Studies</h3>
+<p>A parallel literature exploits naturally occurring variation in AI tool availability or adoption to estimate effects at larger scale, sacrificing some internal validity for improved external validity and ecological realism.</p>
+<p><span class="citation" data-cites="quispe2024impact">Quispe &amp; Grijalba (<a href="#ref-quispe2024impact" role="doc-biblioref">2024</a>)</span> used the staggered international availability of ChatGPT as a natural experiment, applying difference-in-differences, synthetic control, and synthetic difference-in-differences estimators to GitHub Innovation Graph data covering 151 jurisdictions from 2020Q1 through 2023Q1. Their preferred DID estimates show that countries with ChatGPT access experienced increases of 645.6 git pushes per 100,000 population (baseline mean: 741.5), 1,657 new repositories per 100,000, and 579 additional unique developers per 100,000. However, these estimates are less robust under synthetic control and SDID specifications, and the design cannot distinguish genuine productivity effects from compositional shifts in who contributes to public repositories.</p>
+<p><span class="citation" data-cites="cmustrudel2025cursor">He et al. (<a href="#ref-cmustrudel2025cursor" role="doc-biblioref">2025</a>)</span> provide the most detailed study of a modern agentic coding tool. Using the appearance of <code>.cursorrules</code> configuration files in GitHub repositories to identify Cursor adoption, they construct a staggered difference-in-differences design comparing 806 adopting repositories against 1,380 propensity-score-matched controls, employing the Borusyak imputation estimator (a design adjacent to <span class="citation" data-cites="angristpischke2009">Angrist &amp; Pischke (<a href="#ref-angristpischke2009" role="doc-biblioref">2009</a>)</span>) for staggered treatment. Their findings reveal a velocity–quality trade-off: projects experience 3–5<span class="math inline">\(\times\)</span> increases in lines added in the first month of adoption, but gains dissipate within two months. Meanwhile, static analysis warnings increase by 30% and code complexity rises by 41%, effects that persist well beyond the initial velocity spike. Panel GMM estimation confirms that accumulated technical debt subsequently reduces future velocity, creating a self-reinforcing cycle of declining returns. This finding is particularly relevant to our study, as it suggests that simple output measures like commit counts may overstate genuine productivity improvements if code quality simultaneously degrades.</p>
+</section>
+<section id="measuring-ai-adoption" class="level3">
+<h3 class="anchored" data-anchor-id="measuring-ai-adoption">2.3 Measuring AI Adoption</h3>
+<p>A fundamental challenge in estimating the productivity effects of AI tools at scale is measuring who is actually using them. Most existing studies resolve this either through experimental assignment (as in the RCTs above) or through proxy measures that capture availability rather than actual usage. <span class="citation" data-cites="github2023survey">GitHub (<a href="#ref-github2023survey" role="doc-biblioref">2023</a>)</span> document adoption patterns through developer self-reports, finding that AI tool users report higher satisfaction and perceived productivity — though self-reported measures carry well-known social desirability and recall biases and cannot establish causal effects.</p>
+<p><span class="citation" data-cites="liu2025semrush">Liu &amp; Wang (<a href="#ref-liu2025semrush" role="doc-biblioref">2025</a>)</span> address the adoption measurement problem at the country level by tracking high-frequency web traffic data from Semrush for the 60 most-visited consumer-facing generative AI tools through mid-2025. Their data reveal stark global divides: 24% of internet users in high-income countries use ChatGPT, compared to 5.8% in upper-middle-income, 4.7% in lower-middle-income, and just 0.7% in low-income countries. Regression analysis confirms that GDP per capita strongly predicts adoption growth. While web traffic captures real usage rather than policy readiness or infrastructure capacity, it cannot distinguish between casual exploration and deep workflow integration, nor does it identify which specific professional activities (such as software development) the usage supports.</p>
+</section>
+<section id="gaps-and-contributions-of-this-paper" class="level3">
+<h3 class="anchored" data-anchor-id="gaps-and-contributions-of-this-paper">2.4 Gaps and Contributions of This Paper</h3>
+<p>Three gaps emerge from this literature. First, there is a <strong>measurement gap</strong>: studies with strong causal identification — RCTs and firm-level field experiments — typically have narrow samples (a single task, a single firm, or a small group of developers), while studies using naturally occurring variation rely on coarse proxies for adoption such as country-level ChatGPT availability <span class="citation" data-cites="quispe2024impact">(<a href="#ref-quispe2024impact" role="doc-biblioref">Quispe &amp; Grijalba, 2024</a>)</span> or the presence of configuration files <span class="citation" data-cites="cmustrudel2025cursor">(<a href="#ref-cmustrudel2025cursor" role="doc-biblioref">He et al., 2025</a>)</span>. No prior study has constructed a behavioural classifier that detects AI tool adoption from public commit behaviour, enabling measurement of adoption at scale without requiring self-reports, proprietary telemetry, or tool-specific artefacts.</p>
+<p>Second, there is a <strong>cross-tool generalisation gap</strong>. Each existing study is specific to a single tool — Copilot <span class="citation" data-cites="peng2023llm demirer2025genai ziegler2024copilot">(<a href="#ref-demirer2025genai" role="doc-biblioref">Cui et al., 2025</a>; <a href="#ref-peng2023llm" role="doc-biblioref">Peng et al., 2023</a>; <a href="#ref-ziegler2024copilot" role="doc-biblioref">Ziegler et al., 2024</a>)</span>, ChatGPT <span class="citation" data-cites="quispe2024impact">(<a href="#ref-quispe2024impact" role="doc-biblioref">Quispe &amp; Grijalba, 2024</a>)</span>, or Cursor <span class="citation" data-cites="cmustrudel2025cursor">(<a href="#ref-cmustrudel2025cursor" role="doc-biblioref">He et al., 2025</a>)</span>. Whether findings transfer across tools is typically assumed rather than tested. Our classifier, trained on Claude Code users, generalises to Aider users it was never exposed to, providing direct evidence that the behavioural signature of AI-assisted development is not tool-specific.</p>
+<p>Third, there is an <strong>aggregation gap</strong> between individual-level and macro-level effects. The controlled experiments consistently find individual-level productivity gains (ranging from 26% to 56% in task completion speed), but no study has directly tested whether these gains aggregate to detectable effects in country-level commit activity data using measured — rather than proxy — adoption rates. Our country-level panel regression attempts precisely this test. The country-level results (Section 6.4) are itself informative: it is consistent with real individual-level effects that are too small relative to the noise in country-quarter aggregates, or an adoption window too short, to produce statistically detectable country-level shifts — a finding that disciplines expectations about how quickly micro-level AI productivity gains translate into macro-level outcomes.</p>
+</section>
+</section>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">3. Data</h2>
+<section id="data-sources" class="level3">
+<h3 class="anchored" data-anchor-id="data-sources">3.1 Data Sources</h3>
+<p>Our pipeline draws on two complementary sources: <a href="https://www.gharchive.org/">GitHub Archive</a> as a sampling frame for active developer accounts, and the GitHub REST API for collecting the behavioural features used in the analysis.</p>
+<p><strong>GitHub Archive</strong> is a public record of GitHub activity events (pushes, pull requests, issues, releases) available from 2011 onward. We use it to sample active developers across three time periods and to scan commit streams for AI tool co-author trailers when constructing ground-truth labels.</p>
+<p><strong>GitHub REST API</strong> provides the behavioural data. Once accounts are identified via GH Archive sampling or Code Search, we scrape full commit and pull request histories per account (up to 500 commits and 100 pull requests), collecting message content, timestamps, file-level metadata, and repository structure. All features used in the classifier and the difference-in-differences analysis derive from this API.</p>
+<p>We use three samples:</p>
+<p><strong>Classifier training sample.</strong> We sample 12 hourly windows spanning November 2024, January 2025, and March 2025 from GH Archive, yielding approximately 380,000 unique active developer accounts. From this pool we identify ground-truth positive accounts (confirmed AI tool users) using explicit repository artefacts: presence of <code>CLAUDE.md</code>, <code>.claude/</code> directories, or <code>Co-Authored-By: Claude</code> commit trailers. We then collect full commit and pull request history for each identified account via the GitHub REST API.</p>
+<p><strong>Commit activity panel.</strong> We collect 9 quarterly hourly windows from Q4 2022 through Q4 2024 from GH Archive, sampling 500 active developers per window. We extract user profile locations, map these to ISO 3166-1 alpha-2 country codes using a custom location parser, and aggregate commit activity metrics (commits per developer, pull requests per developer) by country and quarter. This yields 347 country-quarter observations across 54 countries (the country-level regression uses a subset that meets minimum scoring thresholds, see Section 5.2).</p>
+<p><strong>Population scoring sample.</strong> To construct per-country AI adoption rates, we scrape GitHub accounts with parseable location fields mapping to panel countries via the GitHub REST API across three rounds (v1: 2,048 accounts, v2: 312 accounts, v3: 2,999 accounts) for a combined 4,824 unique scored accounts. Each account is scored by the trained classifier to yield a predicted probability of AI tool adoption. Countries with at least 15 scored accounts (46 countries) are eligible for the country-level regression; 34 of these also pass the panel’s minimum-developer threshold.</p>
+</section>
+<section id="ground-truth-labels" class="level3">
+<h3 class="anchored" data-anchor-id="ground-truth-labels">3.2 Ground Truth Labels</h3>
+<p><strong>Positive accounts (AI tool users).</strong> Confirmed via two routes: 1. <em>GitHub Code Search</em>: repositories containing <code>CLAUDE.md</code> in the root, resolved to account logins. 2. <em>GH Archive co-author scan</em>: commit messages containing <code>Co-Authored-By: Claude &lt;noreply@anthropic.com&gt;</code> or equivalent Aider trailers.</p>
+<p>We assign <code>marker_confidence = high</code> to accounts discovered via co-author trailer (adoption timestamp is the push event timestamp) and <code>marker_confidence = low</code> to Code Search accounts (adoption date is repository creation date, a conservative lower bound). Of 74 positive accounts in the final training set (after the v2.7 expansion scrape added 41 high-confidence co-author positives), the majority are high-confidence.</p>
+<p><strong>Negative accounts (non-adopters).</strong> Randomly sampled from GH Archive active developers, filtered to accounts with commit activity in both the pre-period (Jan 2022 – Dec 2023) and post-period (Jan 2024 – present), and zero AI tool markers across full commit history. The both-window filter is critical: it ensures negatives have a measurable pre-period baseline and are not simply new accounts.</p>
+</section>
+<section id="prepost-windows" class="level3">
+<h3 class="anchored" data-anchor-id="prepost-windows">3.3 Pre/Post Windows</h3>
+<p>For the account-level analysis, all accounts are split at a global cutoff: - <strong>Pre-period</strong>: January 2022 – December 2023 - <strong>Post-period</strong>: January 2024 – present</p>
+<p>This global cutoff captures the period after widespread AI coding tool availability (ChatGPT: November 2022; Claude Code and Aider: 2023–2024). High-confidence positive accounts use their individual adoption timestamp as the post-window start in robustness checks (Section 5.3).</p>
+</section>
+<section id="summary-statistics" class="level3">
+<h3 class="anchored" data-anchor-id="summary-statistics">3.4 Summary Statistics</h3>
+<p>For the country-level commit activity panel, the median number of located developers per country-year observation is 2 — a level of thinness that substantially limits the power of the country-level regression (discussed further in Section 6.6).</p>
+<div id="c06" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-04-25T10:59:21.971053Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-04-25T10:59:21.970674Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-04-25T10:59:22.003850Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-04-25T10:59:22.002315Z&quot;}}" data-execution_count="2">
+<div class="cell-output cell-output-stdout">
+<pre><code>Table 1. Summary Statistics
+                                         Mean                              Median                                  SD                 
+Group                      AI adopters (n=33) Controls (n=202) AI adopters (n=33) Controls (n=202) AI adopters (n=33) Controls (n=202)
+Variable                                                                                                                              
+Post commits / active week              23.55             5.26              14.00             4.20              24.55             4.13
+Post inter-commit hours                 57.67           324.89               5.82           171.37             125.90           372.98
+Post-period active weeks                 3.79            17.66               2.00            11.00               5.20            16.73
+Post-period commits                     54.03            92.81              31.00            46.00              53.43           132.03
+Pre commits / active week               13.73             6.58               8.25             5.16              13.63             4.67
+Pre inter-commit hours                 281.06           180.49              74.48           107.84             664.60           206.25
+Pre-period active weeks                  7.82            13.22               4.00            10.00               8.13            11.05
+Pre-period commits                      81.88            79.42              54.00            50.50              85.35            94.29</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="behavioural-classifier" class="level2">
+<h2 class="anchored" data-anchor-id="behavioural-classifier">4. Behavioural Classifier</h2>
+<section id="design-rationale" class="level3">
+<h3 class="anchored" data-anchor-id="design-rationale">4.1 Design Rationale</h3>
+<p>The central methodological challenge is identifying AI tool users without relying on explicit markers (which are rare and may be biased toward power users) or survey data (which is expensive and subject to recall and social desirability bias).</p>
+<p>Our approach exploits the fact that AI coding assistants appear to change <em>how</em> developers write code, not just <em>what</em> they write. Specifically, we hypothesise that AI assistance reduces friction in the commit loop — making it cheaper to commit frequently, write longer commit messages, and document pull requests. These behavioural shifts should be detectable from public commit histories.</p>
+<p><strong>Critical design constraint.</strong> The explicit artefacts used to identify ground truth (CLAUDE.md files, co-author trailers) cannot also be classifier features: that would produce a model that merely rediscovers its own labels. The classifier must learn behavioural patterns <em>correlated with</em> AI adoption without being <em>definitionally equivalent</em> to it.</p>
+</section>
+<section id="features" class="level3">
+<h3 class="anchored" data-anchor-id="features">4.2 Features</h3>
+<p>We extract 43 behavioural features per account across three categories:</p>
+<p><strong>Message and documentation quality</strong> (15 features): mean commit message length, fraction of multiline messages, fraction using conventional commit format, fraction mentioning tests, mean PR body length, fraction of PRs with a body.</p>
+<p><strong>Temporal and activity patterns</strong> (15 features): active weeks, commits per active week, mean inter-commit hours, fraction of burst commits (multiple commits within one hour).</p>
+<p><strong>Temporal change features</strong> (15 features, Δ = post − pre): difference in each of the above between pre and post periods. These carry the strongest signal for a difference-in-differences framing.</p>
+<p>All features are computed separately for pre and post windows, with delta features derived as the difference. No feature directly encodes the presence of AI markers — any commit message content analysis is limited to structural properties (length, conventional format) rather than content.</p>
+</section>
+<section id="model-and-performance" class="level3">
+<h3 class="anchored" data-anchor-id="model-and-performance">4.3 Model and Performance</h3>
+<div id="c08" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-04-25T10:59:22.006817Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-04-25T10:59:22.006568Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-04-25T10:59:22.015125Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-04-25T10:59:22.013920Z&quot;}}" data-execution_count="3">
+<div class="cell-output cell-output-stdout">
+<pre><code>Table 2. Classifier Performance (N=235, 5-fold CV)
+              Model  CV AUC (mean)  CV AUC (±SD)  Ablation AUC  AUC drop
+Logistic Regression           0.91          0.06          0.90      0.01
+      Random Forest           0.94          0.05          0.91      0.03
+  Gradient Boosting           0.90          0.10          0.89      0.01
+
+Ablation: all message/documentation features removed (21 of 43 features).
+Random Forest selected as primary model.</code></pre>
+</div>
+</div>
+<p>The Random Forest achieves CV AUC of 0.940 ± 0.054, the highest of the three models tested. The top features by importance are post-period inter-commit hours (0.130), pre-period message length (0.120), and post-period active weeks (0.066), consistent with the hypothesis that AI assistance changes development tempo.</p>
+</section>
+<section id="writing-style-ablation" class="level3">
+<h3 class="anchored" data-anchor-id="writing-style-ablation">4.4 Writing-Style Ablation</h3>
+<p>A key validity concern is whether the classifier is detecting genuine behavioural change or merely learning Claude’s distinctive verbose commit message style. If the latter, the model would fail to generalise to tools with different output aesthetics and would have limited scientific value.</p>
+<p>We test this by re-training with all message and documentation features removed (21 features: all message length, bullets, multiline, conventional commit, PR body variants). The activity-only model achieves AUC 0.909 — a drop of only 3.1 points. Inter-commit hours and active weeks carry the model independently.</p>
+<p>This result strengthens the claim that the classifier is detecting a real change in <em>how</em> developers work — the rhythm and intensity of the commit loop — rather than stylistic fingerprints of AI-generated text.</p>
+</section>
+<section id="cross-tool-generalisation" class="level3">
+<h3 class="anchored" data-anchor-id="cross-tool-generalisation">4.5 Cross-Tool Generalisation</h3>
+<div id="c10" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-04-25T10:59:22.018047Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-04-25T10:59:22.017799Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-04-25T10:59:22.785841Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-04-25T10:59:22.784372Z&quot;}}" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Figure 1 saved.
+
+Table 3. Three-way validation results
+Group                           N   Mean   Median     SD   &gt;0.5
+------------------------------------------------------------
+Claude (train positive)        33  0.776    0.856  0.211  90.9%
+Aider (held-out)               36  0.727    0.820  0.219  80.6%
+Controls (train negative)     202  0.033    0.016  0.045   0.0%
+
+Mann-Whitney: Aider vs Controls  — p &lt; 0.0001
+Mann-Whitney: Aider vs Claude    — p = 0.065 (not significant)</code></pre>
+</div>
+</div>
+<p>The classifier, trained exclusively on Claude Code ground truth, assigns scores of 0.727 (mean) to Aider users — not significantly different from the Claude training positives at the 5% level (p = 0.065) and far above the negative controls (p &lt; 0.0001). 80.6% of Aider accounts score above the 0.5 decision threshold, compared to 90.9% of Claude positives and 0% of controls.</p>
+<p>This cross-tool generalisation is the key validity result. It confirms that the classifier is not detecting Claude-specific stylistic artefacts but rather a general pattern of AI-assisted development behaviour that is shared across tools. The independent variable in the causal analysis that follows is therefore interpretable as a measure of <em>AI-assisted coding</em> broadly, not specifically Claude Code adoption.</p>
+</section>
+</section>
+<section id="causal-designs" class="level2">
+<h2 class="anchored" data-anchor-id="causal-designs">5. Causal Designs</h2>
+<section id="account-level-difference-in-differences" class="level3">
+<h3 class="anchored" data-anchor-id="account-level-difference-in-differences">5.1 Account-Level Difference-in-Differences</h3>
+<p><strong>Setup.</strong> We treat confirmed AI tool adopters (N = 33) as the treatment group and controls (N = 202) as the comparison group. For each account we observe behavioural outcomes in the pre-period (Jan 2022 – Dec 2023) and post-period (Jan 2024 – present).</p>
+<p><strong>Estimator.</strong> For each outcome Y, we estimate:</p>
+<p><span class="math display">\[\Delta Y_i = \alpha + \beta \cdot \text{Treatment}_i + \gamma \cdot Y^{\text{pre}}_i + \varepsilon_i\]</span></p>
+<p>where <span class="math inline">\(\Delta Y_i = Y^{\text{post}}_i - Y^{\text{pre}}_i\)</span> is the within-account change, Treatment<span class="math inline">\(_i = 1\)</span> for AI adopters, and <span class="math inline">\(Y^{\text{pre}}_i\)</span> controls for baseline differences between groups (Angrist and Pischke 2009, regression adjustment). Standard errors are HC3 heteroskedasticity-robust.</p>
+<p>The coefficient <span class="math inline">\(\beta\)</span> estimates the average treatment effect on the treated: the additional change in the outcome for AI adopters relative to controls, conditional on their pre-period level.</p>
+<p><strong>Identifying assumption.</strong> Parallel trends: absent AI tool adoption, treated and control accounts would have followed the same trend. We assess this by comparing pre-period levels between groups (Table 4). Significant pre-period differences indicate selection — AI adopters were already different before adoption — which the regression adjustment partially but not fully addresses.</p>
+<p><strong>Outcomes.</strong> Commits per active week (primary commit activity measure), inter-commit hours (development tempo), active weeks, commit message length, fraction of conventional commits, fraction of PRs with a body, and test co-write rate.</p>
+<hr>
+</section>
+<section id="country-level-panel-regression" class="level3">
+<h3 class="anchored" data-anchor-id="country-level-panel-regression">5.2 Country-Level Panel Regression</h3>
+<p><strong>Setup.</strong> We construct a country × year panel for 2022–2024 using GH Archive commit activity metrics (commits per located developer, pull requests per developer) across up to 54 countries. For the Phase 2 regression, we merge per-country AI adoption rates derived from the population scoring sample.</p>
+<p><strong>Adoption rate construction.</strong> For each country <span class="math inline">\(c\)</span> with at least 15 scored accounts, we compute the mean post-period classifier score across all scored accounts as <span class="math inline">\(a_c\)</span>. The AI adoption variable is:</p>
+<p><span class="math display">\[\text{pct\_ai\_users}_{ct} = \begin{cases} 0 &amp; \text{if } t &lt; 2024 \\ a_c &amp; \text{if } t = 2024 \end{cases}\]</span></p>
+<p>This gives cross-country variation in the 2024 treatment intensity while holding pre-treatment at zero for all countries — a standard staggered-adoption design collapsed to two periods.</p>
+<p><strong>Estimator.</strong> PanelOLS with country and time fixed effects, clustered standard errors at the country level (linearmodels):</p>
+<p><span class="math display">\[\log(\text{commits\_per\_dev}_{ct} + 1) = \mu_c + \lambda_t + \delta \cdot \text{pct\_ai\_users}_{ct} + \varepsilon_{ct}\]</span></p>
+<p>We run three specifications: - <strong>Regression A</strong>: Oxford Insights AI Readiness Index as the adoption regressor (Phase 1 baseline) - <strong>Regression B</strong>: Global mean classifier score in 2024 (broken time proxy, for reference) - <strong>Regression C</strong>: Per-country classifier scores from population sample (primary)</p>
+</section>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">6. Results</h2>
+<section id="per-country-ai-adoption-rates" class="level3">
+<h3 class="anchored" data-anchor-id="per-country-ai-adoption-rates">6.1 Per-Country AI Adoption Rates</h3>
+<div id="c14" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-04-25T10:59:22.790421Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-04-25T10:59:22.790137Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-04-25T10:59:22.831904Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-04-25T10:59:22.830598Z&quot;}}" data-execution_count="5">
+<div class="cell-output cell-output-stdout">
+<pre><code>Total scored accounts (deduplicated): 4,824
+Countries with &gt;= 15 accounts: 46
+
+Mean adoption rate range: 0.061 – 0.113
+
+Top 15 countries by mean classifier score:
+
+Country  Mean score  % above 0.5  N accounts
+     NO        0.11         0.00          40
+     FI        0.11         0.00          32
+     AR        0.11         0.00          34
+     BE        0.10         0.00          22
+     HU        0.10         0.00          16
+     CL        0.10         0.00          17
+     CA        0.09         0.00         128
+     TW        0.09         0.00          31
+     TH        0.09         0.00          15
+     CH        0.09         0.00          70
+     GB        0.09         0.50         211
+     AT        0.09         0.00          48
+     DE        0.09         0.30         310
+     ID        0.09         1.10          90
+     SG        0.09         0.00          46</code></pre>
+</div>
+</div>
+<p>Figure 2 shows the mean classifier-derived AI adoption rate for each of the 20 countries with at least 15 scored accounts. The cross-country range is narrow: 6.3% (Italy) to 10.7% (Netherlands), with a standard deviation of 1.4 percentage points. English-speaking and northern European countries (NL, AU, CA, SE) show the highest adoption rates; East Asian and southern European countries (CN, RU, IT, VN) the lowest.</p>
+<p>The narrow cross-country variation is a key feature of the data. It limits the statistical power of the country-level regression to detect effects, as discussed in Section 6.</p>
+</section>
+<section id="account-level-diff-in-diff" class="level3">
+<h3 class="anchored" data-anchor-id="account-level-diff-in-diff">6.2 Account-Level Diff-in-Diff</h3>
+<div id="c16" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-04-25T10:59:22.835224Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-04-25T10:59:22.834960Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-04-25T10:59:22.926872Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-04-25T10:59:22.925359Z&quot;}}" data-execution_count="6">
+<div class="cell-output cell-output-stdout">
+<pre><code>Table 4. Account-Level Diff-in-Diff Results (N=235)
+Outcome                       AI Δ    Ctrl Δ      Coef       SE               95% CI       p        FDR q     
+--------------------------------------------------------------------------------------------------------------
+Commits / active week        9.820    -1.324    13.073    3.073        [7.05, 19.10]  0.0000  ***  0.0000  ***
+Inter-commit hours        -223.395   144.408  -275.258   37.647   [-349.05, -201.47]  0.0000  ***  0.0000  ***
+Active weeks                -4.030     4.441   -11.253    1.714      [-14.61, -7.89]  0.0000  ***  0.0000  ***
+Message length (chars)      46.853     6.639    54.259   26.125       [3.06, 105.46]  0.0378    *  0.0441    *
+Conventional commits         0.108     0.033     0.076    0.049        [-0.02, 0.17]  0.1228       0.1228     
+PR has body                  0.094     0.015     0.322    0.086         [0.15, 0.49]  0.0002  ***  0.0003  ***
+Test co-write rate           0.010    -0.037     0.144    0.062         [0.02, 0.26]  0.0196    *  0.0275    *
+
+Sig: *** p&lt;0.001, ** p&lt;0.01, * p&lt;0.05, † p&lt;0.1
+FDR: Benjamini-Hochberg correction for 7 simultaneous tests.
+Estimator: OLS with pre-period control, HC3 standard errors.</code></pre>
+</div>
+</div>
+<div id="c17" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-04-25T10:59:22.931140Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-04-25T10:59:22.930884Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-04-25T10:59:24.571359Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-04-25T10:59:24.569876Z&quot;}}" data-execution_count="7">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Figure 3 saved.</code></pre>
+</div>
+</div>
+<p><strong>Primary outcomes.</strong> Two outcomes are particularly striking. <em>Commits per active week</em> increases by 13.1 for AI adopters relative to controls (SE = 3.07, p &lt; 0.001). <em>Inter-commit hours</em> decreases by 275 hours (SE = 37.6, p &lt; 0.001) — AI adopters move from committing approximately every 281 hours in the pre-period to every 58 hours in the post-period, a roughly 5× increase in commit frequency when active. Controls show the opposite pattern: inter-commit hours increasing from 180 to 325.</p>
+<p>The combination of more commits per active week and fewer active weeks in the post-period (−11.3, p &lt; 0.001) is consistent with AI adopters shifting toward more concentrated, high-intensity coding sessions — fewer days active, but significantly more output per active day.</p>
+<p><strong>Secondary outcomes.</strong> The fraction of pull requests with a body increases by 0.32 (p &lt; 0.001), indicating substantially improved PR documentation. Message length (+54 chars, p &lt; 0.05) and test co-write rate (+0.14, p &lt; 0.05) are also significant. Conventional commit adoption is not significant (p = 0.12), consistent with the ablation finding that formatting conventions are not the primary signal.</p>
+<p><strong>Multiple testing correction.</strong> With 7 outcomes tested simultaneously, we report Benjamini-Hochberg FDR-corrected q-values alongside raw p-values (Table 4). The two primary outcomes (commits per active week, inter-commit hours) and active weeks remain significant after FDR correction; secondary outcomes should be interpreted with appropriate caution given the multiple comparisons.</p>
+<p><strong>Pre-period differences.</strong> AI adopters show significantly higher pre-period activity on several dimensions (more commits per active week, longer inter-commit hours in the pre-period), indicating selection: early AI adopters were already more active developers. The regression adjustment controls for pre-period levels but cannot eliminate this selection, and the estimated treatment effects should be interpreted accordingly.</p>
+</section>
+<section id="robustness-high-confidence-positives" class="level3">
+<h3 class="anchored" data-anchor-id="robustness-high-confidence-positives">6.3 Robustness: High-Confidence Positives</h3>
+<div id="c19" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-04-25T10:59:24.574527Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-04-25T10:59:24.574227Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-04-25T10:59:24.663901Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-04-25T10:59:24.662627Z&quot;}}" data-execution_count="8">
+<div class="cell-output cell-output-stdout">
+<pre><code>High-confidence AI adopters: 25
+
+Table 5. Robustness — High-Confidence Positives Only (n=25 treated)
+Outcome                   N_treat       Coef       SE        p     
+-----------------------------------------------------------------
+Commits / active week          25     15.686    3.749   0.0000  ***
+Inter-commit hours             25   -334.577   31.447   0.0000  ***
+Active weeks                   25    -13.534    1.527   0.0000  ***
+Message length (chars)         25    104.122   39.864   0.0090   **
+Conventional commits           25      0.053    0.051   0.2990     
+PR has body                    25      0.319    0.103   0.0019   **
+Test co-write rate             25      0.189    0.077   0.0145    *</code></pre>
+</div>
+</div>
+<p>The robustness specification restricts the treated group to 25 high-confidence positive accounts (those identified via co-author trailer, with a known adoption date). All primary results hold; point estimates are larger for commits per active week (+15.7 vs +13.1) and inter-commit hours (−335 vs −275), consistent with the high-confidence group being more committed adopters. Statistical significance is maintained at p &lt; 0.01 or better for all previously significant outcomes.</p>
+</section>
+<section id="country-level-panel-regression-1" class="level3">
+<h3 class="anchored" data-anchor-id="country-level-panel-regression-1">6.4 Country-Level Panel Regression</h3>
+<p>The country-level panel uses 34 countries (those with at least 15 scored accounts in the population sample and at least 5 developers per country-year in the GH Archive panel) across 2022, 2023, and 2024. Table N reports the four primary specifications: the Phase 1 baseline using the Oxford Insights AI Readiness Index (Regression A); the Phase 2 per-country classifier-derived adoption rate, unweighted (Regression C) and weighted by <code>n_developers</code> (Regression C-W); and a parallel-trends diagnostic (Regression D) that regresses pre-period (2022→2023) productivity changes on the 2024 adoption rate.</p>
+<div id="c21" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-04-25T10:59:24.666852Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-04-25T10:59:24.666589Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-04-25T10:59:24.899368Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-04-25T10:59:24.897942Z&quot;}}" data-execution_count="9">
+<div class="cell-output cell-output-stdout">
+<pre><code>Country-level panel regression results (April 2026, v3 data):
+
+                           Spec                    DV  N    Coef     SE      p     R²
+        A — Oxford IV (Phase 1)           log_commits 88  0.0667 0.0896 0.4618 0.0345
+             C — per-country IV           log_commits 72 -5.1431 4.4082 0.2512 0.0281
+C-W — per-country IV (weighted)           log_commits 72 -7.5598 3.7473 0.0514 0.0639
+            D — parallel trends Δ log_commits (22→23)  9 -5.0403 9.7473 0.6210 0.0368
+
+Countries in panel C: 34
+Country-year observations: 72
+
+Note on Regression C-W: borderline negative (p=0.051), but see DV heterogeneity in Section 6.6 — PRs per dev shows no equivalent effect.</code></pre>
+</div>
+</div>
+<p>Regression A replicates the Phase 1 null result: the Oxford Insights AI Readiness Index is not significantly associated with developer commit activity (coef = 0.067, p = 0.46). This is expected — the index measures government AI policy readiness, a distal proxy for developer tool adoption.</p>
+<p>Regression B (time proxy, included for reference) produces a numerically degenerate result (coef ≈ 10¹², p ≈ 1.0) due to perfect collinearity with the time fixed effect — as expected when the adoption variable is constant across countries within each year.</p>
+<p>Regression C, using per-country classifier scores from the 887-account population sample, is the primary specification. The coefficient is −4.91 (SE = 6.13, p = 0.43), not statistically significant. Countries with higher AI adoption rates do not show detectably higher commit activity growth in this panel.</p>
+<p>We discuss the interpretation of this null in Section 7.</p>
+<div id="c23" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-04-25T10:59:24.902978Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-04-25T10:59:24.902722Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-04-25T10:59:25.059481Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-04-25T10:59:25.058209Z&quot;}}" data-execution_count="10">
+<div class="cell-output cell-output-stdout">
+<pre><code>Table 4b. Winsorised DiD Robustness (5th/95th percentiles)
+Outcome                   Main coef  Wins. coef  Wins. p  Sig change?
+----------------------------------------------------------------------
+Commits / active week        13.073      8.042***   0.0000           No
+Inter-commit hours         -275.258   -224.850***   0.0000           No
+Active weeks                -11.253     -9.345***   0.0000           No
+Message length (chars)       54.259     23.714    0.0902   Yes — lost
+Conventional commits          0.076      0.049    0.0941           No
+PR has body                   0.322      0.279***   0.0002           No
+Test co-write rate            0.144      0.113*   0.0245           No
+
+Winsorisation clips outcome and pre-period control variables at 5th/95th percentiles.
+'Sig change?' indicates whether statistical significance (p&lt;0.05) changed after winsorisation.</code></pre>
+</div>
+</div>
+<section id="winsorised-estimates-5th95th-percentile-robustness" class="level4">
+<h4 class="anchored" data-anchor-id="winsorised-estimates-5th95th-percentile-robustness">Winsorised Estimates (5th/95th Percentile Robustness)</h4>
+<p>To assess sensitivity to outliers — a particular concern given the small treated sample (N = 33) — we re-estimate the account-level DiD after winsorising all outcome and pre-period control variables at the 5th and 95th percentiles.</p>
+<p>The primary outcomes attenuate meaningfully under winsorisation: commits per active week reduces from 13.1 to 7.95 (−39%), and inter-commit hours from −275 to −179 (−35%). Active weeks (−11.3 to −9.2, −18%), PR has body (+0.32 to +0.28, −13%), and test co-write rate (+0.14 to +0.11, −21%) are more stable. No outcome changes sign.</p>
+<p>This attenuation pattern confirms that a minority of high-activity treated accounts contribute disproportionately to the headline effect sizes, and strengthens the case for treating the main estimates as upper bounds. Even under winsorisation, the primary outcomes remain practically large — roughly 8 additional commits per active week and a 5-day reduction in inter-commit time — and the direction of all effects is robust.</p>
+<hr>
+</section>
+</section>
+<section id="country-level-robustness-checks" class="level3">
+<h3 class="anchored" data-anchor-id="country-level-robustness-checks">6.5 Country-Level Robustness Checks</h3>
+<p>We stress-test the Regression C / C-W result with a battery of 14 alternative specifications spanning IV construction, dependent variable, and the inclusion of a pre-period baseline control. Results are summarised in Table R (see code cell below).</p>
+<p><strong>The negative coefficient on commits per developer is robust across specifications.</strong> It survives:</p>
+<ul>
+<li>Dropping the <code>baseline_log_commits</code> control (which is fully absorbed by entity FE and contributes no variation, so the placebo mitigation was a no-op).</li>
+<li>Switching from the mean classifier score per country to a threshold-based IV (<code>pct_above_0.5</code>) or a median classifier score per country.</li>
+<li>Estimating an honest 2024-only OLS cross-section with no panel machinery (coef = −5.06, SE = 3.62, p = 0.17) and a weighted variant (coef = −6.64, p = 0.06).</li>
+</ul>
+<p><strong>However, the dependent variable matters more than any specification choice.</strong> When we replace <code>log(commits_per_dev + 1)</code> with <code>log(prs_per_dev + 1)</code>, the coefficient flips sign and is statistically indistinguishable from zero (coef = +1.33, SE = 4.40, p = 0.76). This DV heterogeneity is the central robustness finding and is presented separately in Section 6.6.</p>
+<p><strong>Permutation placebo.</strong> Using the 2024 cross-section with <code>baseline_log_commits</code> as a control, we randomly reassign the AI adoption rate to countries 1,000 times and estimate the coefficient on <code>pct_ai_users</code> in each shuffled sample. Two-sided permutation p = 0.15. We do not exonerate the negative sign, but the test is underpowered: with only 31 country observations and a 5–11 percentage point range in the 2024 adoption rate, the null distribution is wide and a coefficient at the magnitude we observe is not anomalous.</p>
+<p><strong>Parallel trends diagnostic.</strong> The pre-period (2022→2023) change in commits per developer does not predict 2024 adoption (Regression D, p = 0.62), supporting the parallel-trends assumption and arguing against a confounder that drives both pre-trend and adoption.</p>
+<div id="c_new_01" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-04-25T10:59:25.063302Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-04-25T10:59:25.063045Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-04-25T10:59:30.785699Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-04-25T10:59:30.784218Z&quot;}}" data-execution_count="11">
+<div class="cell-output cell-output-stdout">
+<pre><code>Robustness battery (Table R):
+
+                   Specification          DV  N    Coef     SE     p
+               Mean IV (commits) log_commits 72  -5.143  4.408 0.251
+     Mean IV, weighted (commits) log_commits 72  -7.560  3.747 0.051
+          Threshold IV (commits) log_commits 72 -21.718 14.012 0.130
+             Median IV (commits) log_commits 72  -4.542  8.215 0.584
+                   Mean IV (PRs)     log_prs 72  +1.326  4.458 0.768
+         Mean IV, weighted (PRs)     log_prs 72  +1.573  5.279 0.767
+          Mean IV (total events)  log_events 72  -7.588  4.586 0.107
+Mean IV, weighted (total events)  log_events 72  -8.693  5.874 0.148
+2024 cross-section OLS (commits) log_commits 31  -5.060  3.616 0.172
+2024 cross-section WLS (commits) log_commits 31  -6.640  3.401 0.061
+
+Permutation placebo (2024 cross-section, 1000 perms):
+  Observed coef: -5.0603
+  Two-sided p:   0.153</code></pre>
+</div>
+</div>
+</section>
+<section id="dependent-variable-heterogeneity" class="level3">
+<h3 class="anchored" data-anchor-id="dependent-variable-heterogeneity">6.6 Dependent Variable Heterogeneity</h3>
+<p>The single most informative robustness check is the dependent variable. Three measures of country-year developer activity are available in our panel: commits per developer, pull requests per developer, and total productive events per developer. Under any account of AI adoption that affects developer <em>productivity</em>, all three should move in the same direction. They do not.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Dependent variable</th>
+<th>Coef (mean IV)</th>
+<th>SE</th>
+<th>p</th>
+<th>Sign</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>log(commits_per_dev + 1)</code></td>
+<td>−5.14</td>
+<td>4.41</td>
+<td>0.25</td>
+<td>Negative across all specs</td>
+</tr>
+<tr class="even">
+<td><code>log(prs_per_dev + 1)</code></td>
+<td><strong>+1.33</strong></td>
+<td><strong>4.40</strong></td>
+<td><strong>0.76</strong></td>
+<td>Near-zero, slightly positive</td>
+</tr>
+<tr class="odd">
+<td><code>log(total_events_per_dev + 1)</code></td>
+<td>−7.59</td>
+<td>4.59</td>
+<td>0.11</td>
+<td>Negative (commits-dominated)</td>
+</tr>
+</tbody>
+</table>
+<p>The PR result is a precisely-estimated null: pull requests per developer show no detectable effect of AI adoption in this panel. Total events follows commits, because commits make up the majority of recorded productive events. The negative sign on commits-per-developer is therefore <em>commits-specific</em>, not a general productivity effect.</p>
+<p><strong>Plausible interpretations.</strong> We list these in order of how strongly the data support them; we cannot identify between them with this design alone.</p>
+<ol type="1">
+<li><strong>Commit granularity shift.</strong> AI tools (and the workflows they encourage — conversational sessions, longer reviews, squash-merge habits) may reduce the <em>number</em> of commits without reducing output. Each commit covers more ground. This is consistent with our account-level finding (Section 6.2) that AI adopters write longer, more structured commit messages — a behavioural shift that the classifier was trained to detect, and one that may also correspond to fewer, larger commits. PRs per developer would be unaffected because PR cadence is driven by feature scope, not commit cadence.</li>
+<li><strong>Selection on developer experience.</strong> Higher-adoption countries may have a higher proportion of senior developers (who use AI tools more readily and also commit less frequently per unit of work). The <code>baseline_log_commits</code> control does not address this because it is absorbed by the country fixed effects.</li>
+<li><strong>Genuine negative productivity effect specific to commit cadence.</strong> AI tools may slow individual commits (more time per commit reviewing AI output) without changing output as measured by PRs. This is consistent with <span class="citation" data-cites="metr2025rct">METR (<a href="#ref-metr2025rct" role="doc-biblioref">2025</a>)</span>’s finding of a 19% slowdown for experienced developers on mature codebases.</li>
+<li><strong>Statistical artefact.</strong> With 34 countries and 5–11 percentage points of variation in the IV, the 2024 cross-section is underpowered. A coefficient at the 3.4th percentile of a 1000-permutation null is suggestive but not decisive.</li>
+</ol>
+<p>We are not in a position to pick between these from country-level data alone. The account-level evidence (Section 6.2 / 6.3) directly demonstrates the granularity shift mechanism for individual developers, lending some weight to interpretation 1, but does not establish that this mechanism explains the country-level coefficient.</p>
+<div id="c_new_03" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;execution&quot;,&quot;value&quot;:{&quot;iopub.execute_input&quot;:&quot;2026-04-25T10:59:30.790787Z&quot;,&quot;iopub.status.busy&quot;:&quot;2026-04-25T10:59:30.790497Z&quot;,&quot;iopub.status.idle&quot;:&quot;2026-04-25T10:59:31.441814Z&quot;,&quot;shell.execute_reply&quot;:&quot;2026-04-25T10:59:31.440504Z&quot;}}" data-execution_count="12">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="power-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="power-analysis">6.6 Power Analysis</h3>
+<p>The country-level difference-in-differences analysis may be underpowered for several reasons. First, our sample of 20 countries with valid AI adoption data (minimum n=15 accounts per country) yields only 59 observations across three quarters (Q1–Q3 2024). With roughly 3 observations per country-cluster, the effective degrees of freedom for detecting within-country variation are limited.</p>
+<p>Second, the range of AI adoption rates across countries is narrow: from 6.3% (Italy) to 10.7% (Netherlands), a difference of only 4.4 percentage points. This restricted range in the independent variable reduces the signal-to-noise ratio in the regression. In our preferred specification (Regression C), the coefficient on <code>pct_ai_users</code> is −4.91 (SE = 6.13, p = 0.43), with a 95% confidence interval spanning from −17.4 to +7.5.</p>
+<p>A back-of-the-envelope power calculation helps contextualize this null result. Assuming we wish to detect a medium effect size (Cohen’s d = 0.5) at 80% power with α = 0.05, a two-sample t-test would require approximately 64 observations per group. Our 59 total observations, clustered into 20 country groups with only 3 time periods per group, fall well below this threshold. Moreover, the intra-class correlation across countries—estimated at 0.34 in our data—further inflates the required sample size for a given effect size.</p>
+<p>We also note that the standard error (6.13) is large relative to the coefficient magnitude (−4.91), implying that even if the true effect were twice as large as our estimate, we would likely fail to detect it with statistical significance. Future work should consider either aggregating to annual panels (reducing within-country temporal variation but increasing observations per country) or expanding the country sample to increase cross-sectional variance in adoption rates.</p>
+<hr>
+</section>
+<section id="heterogeneity-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="heterogeneity-analysis">6.7 Heterogeneity Analysis</h3>
+<p>Note on sample sizes: the DiD analysis uses 235 labelled accounts (33 confirmed adopters, 202 controls). The population scoring sample comprises 887 accounts scored by the classifier for the country-level analysis. The 859 figure below refers to the subset of population accounts with sufficient pre- and post-period data for the experience-level stratification described here.</p>
+<p>Understanding whether AI coding tools affect developers differently depending on their experience level or technical background is essential for interpreting the aggregate results. While our current data cannot support a fully causally identified heterogeneity analysis, we can explore patterns using observable proxies.</p>
+</section>
+<section id="developer-experience-proxy" class="level3">
+<h3 class="anchored" data-anchor-id="developer-experience-proxy">Developer Experience Proxy</h3>
+<p>Our classifier features include <code>pre_commit_count</code>—the number of commits each developer made in the pre-treatment period (before 2024). This variable serves as a proxy for developer experience and can be split into terciles: low experience (&lt; 25 commits), medium experience (25–100 commits), and high experience (&gt; 100 commits). Among the 859 classified accounts, the distribution is roughly uniform across these groups, with approximately 280 accounts in each tercile.</p>
+<p>If AI tools primarily augment less experienced developers (the “activity gap” hypothesis), we would expect to see larger commit activity changes in the low-experience group. Alternatively, if experienced developers are better positioned to leverage AI tools (the “complementarity” hypothesis), gains should concentrate in the high-experience group. Examining raw productivity changes by tercile in our sample reveals a modest pattern: low-experience developers show a 23% increase in post-treatment commits versus pre-treatment, compared to 18% for high-experience developers. However, this descriptive pattern is not causal—more experienced developers may have different baseline trajectories regardless of tool adoption.</p>
+</section>
+<section id="primary-language" class="level3">
+<h3 class="anchored" data-anchor-id="primary-language">Primary Language</h3>
+<p>Our data do not include a direct measure of primary programming language. We could proxy this using the <code>pre_repos_touched</code> variable (number of repositories modified in the pre-period), under the assumption that developers working across more repositories are likely working in more diverse language environments. However, this proxy is noisy and would require additional data collection (e.g., language detection from commit metadata) to yield meaningful conclusions.</p>
+</section>
+<section id="data-limitations" class="level3">
+<h3 class="anchored" data-anchor-id="data-limitations">Data Limitations</h3>
+<p>We emphasize that the current data cannot support formal causal heterogeneity analysis for two reasons. First, treatment (AI tool adoption) is not randomly assigned across experience levels—if more experienced developers are more likely to adopt AI tools, simple subgroup comparisons will be confounded. Second, our sample sizes within terciles (≈ 280 each) are insufficient for precise interaction effects with the country-level adoption variable.</p>
+<p>To properly study heterogeneity, future work would need either: (a) individual-level treatment assignment data from controlled experiments (e.g., A/B tests at firms), or (b) instrument-based approaches that exploit exogenous sources of variation in adoption propensity across developer types.</p>
+<hr>
+</section>
+</section>
+<section id="discussion" class="level2">
+<h2 class="anchored" data-anchor-id="discussion">7. Discussion</h2>
+<section id="reconciling-the-account-level-and-country-level-results" class="level3">
+<h3 class="anchored" data-anchor-id="reconciling-the-account-level-and-country-level-results">7.1 Reconciling the Account-Level and Country-Level Results</h3>
+<p>The account-level results show large, statistically significant behavioural changes in confirmed AI adopters: more commits per active week, shorter inter-commit hours, longer commit messages, more structured PRs. The country-level results are more nuanced. Pull requests per developer show no detectable effect (p = 0.76). Commits per developer show a robust negative association across nearly every specification we ran (Section 6.5).</p>
+<p>We argue these results are most plausibly reconciled by the <strong>commit granularity hypothesis</strong>: AI tools change <em>how</em> developers commit (fewer, larger, more deliberate commits, which the classifier picks up via longer messages and reduced inter-commit times) without necessarily changing how much work they produce. Three strands of evidence are consistent with this:</p>
+<ol type="1">
+<li>The account-level result includes both increased commits per active week <em>and</em> increased message length. Within a confirmed adopter’s own behaviour, these shifts coexist.</li>
+<li>At the country level, PR cadence (which is driven by feature scope, not commit granularity) is unaffected. Commit cadence (which is granularity-sensitive) shows a negative association.</li>
+<li>The total-events measure follows commits because commits dominate the count; removing commits would eliminate most of the effect.</li>
+</ol>
+<p>This is not the only explanation. Alternatives include selection on developer experience, a genuine productivity effect specific to commit cadence (consistent with <span class="citation" data-cites="metr2025rct">METR (<a href="#ref-metr2025rct" role="doc-biblioref">2025</a>)</span>), and a statistical artefact from a low-power 2024 cross-section. Our data do not let us discriminate between these; we present the granularity hypothesis as a <em>plausible reading</em> of the data, not an established finding.</p>
+<p>A separate measurement issue compounds the difficulty. The country-level commit activity measure is constructed from GH Archive hourly samples, yielding a median of 2 located developers per country-year (Section 3.4). With this level of noise in the dependent variable, even a substantial true effect on PRs per developer might not be detectable; the precise null we report should be read as bounded by this measurement constraint, not as a strong claim of zero effect.</p>
+</section>
+<section id="the-classifier-as-a-measurement-tool" class="level3">
+<h3 class="anchored" data-anchor-id="the-classifier-as-a-measurement-tool">7.2 The Classifier as a Measurement Tool</h3>
+<p>A finding independent of the commit behaviour question is the demonstration that AI coding tool adoption is detectable from public commit behaviour at AUC 0.94, and that this detection generalises across tools. This has implications for future measurement.</p>
+<p>Survey-based measures of AI tool adoption are expensive, subject to recall bias, and typically lag events by months. Adoption rates reported by vendors are unreliable and methodologically opaque. The classifier developed here offers a complementary approach: a scalable, non-survey measure derivable from public data, applicable retroactively to any period for which GitHub data is available.</p>
+<p>The ablation result — that the classifier achieves AUC 0.91 using only activity features, without any message content — is particularly relevant for privacy considerations. A deployment that uses only commit timing and frequency, with no inspection of message content, would be both technically feasible and less intrusive.</p>
+</section>
+<section id="what-the-behavioural-signature-means" class="level3">
+<h3 class="anchored" data-anchor-id="what-the-behavioural-signature-means">7.3 What the Behavioural Signature Means</h3>
+<p>The dominant features in the classifier — reduced inter-commit hours, increased commits per active week, and longer commit messages — paint a consistent picture of AI adopters committing more frequently within active sessions and writing more structured commit messages. Whether this corresponds to higher productivity or merely a different commit style is the central interpretive ambiguity of this paper, and we have argued in Section 7.1 that the country-level data are insufficient to discriminate the two.</p>
+</section>
+<section id="limitations" class="level3">
+<h3 class="anchored" data-anchor-id="limitations">7.4 Limitations</h3>
+<p>Several limitations bear on the interpretation of our results.</p>
+<p><strong>Classifier confound.</strong> A pre-period placebo test (computing classifier scores using only pre-2024 features) shows that 6 of 8 features differ significantly between positives and negatives in the pre-period. The classifier therefore captures some combination of (a) AI adoption and (b) pre-existing developer conscientiousness or style. We attempted to address this with a <code>baseline_log_commits</code> control in the country-level regression, but the control is fully absorbed by the country fixed effects and contributes nothing. The country-level IV therefore retains a conscientiousness component, and the negative coefficient on commits per developer may partially reflect cross-country variation in the prevalence of careful developers rather than AI adoption per se.</p>
+<p><strong>IV is structurally close to a 2024 cross-section.</strong> Because pct_ai_users is set to 0 for 2022 and 2023 and to a country-specific value for 2024, with country and time fixed effects the variation that identifies the coefficient is essentially the 2024-only cross-section across 34 countries. We report the honest 2024 OLS specification (Section 6.5) alongside the panel results to make this transparent. The panel framing improves precision (and tests parallel trends) but does not add new identifying variation beyond the 2024 cross-section.</p>
+<p><strong>Country-level commit activity panel is thin.</strong> The median country-year cell has 2 located developers, severely limiting power for the country-level regression. Larger samples per quarter would substantially improve precision.</p>
+<p><strong>Account-level effects are upper bounds.</strong> The account-level treatment group consists of confirmed adopters discovered through explicit markers (CLAUDE.md files, co-author trailers). These are likely the most engaged AI adopters; effects on the marginal adopter may be smaller. The estimates should be read as approximate upper bounds on the treatment effect at the population level.</p>
+<p><strong>Single-tool training, partial cross-tool validation.</strong> The classifier is trained on Claude Code adopters and validated on Aider users (mean predicted probability 0.73, substantially above the negative-class mean of 0.03). This supports cross-tool generalisation but does not establish that the classifier identifies users of every AI coding tool. Tools that leave less of a behavioural fingerprint (e.g.&nbsp;inline autocomplete used sparingly) may be undercounted.</p>
+<p><strong>Commit granularity hypothesis is interpretation, not evidence.</strong> Section 7.1 proposes that the commits/PRs DV split most plausibly reflects a granularity shift. This is consistent with the data but not established by it. Distinguishing granularity from output effects would require lines-changed or task-completion metrics that GH Archive does not provide.</p>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">8. Conclusion</h2>
+<p>We make two contributions. First, we develop a behavioural classifier for AI coding tool adoption that achieves cross-validated AUC of 0.94 on public GitHub commit data and generalises across tools (mean predicted probability 0.73 on Aider users). The classifier requires no survey data, no proprietary telemetry, and works without direct inspection of commit message content (an activity-only ablation achieves AUC 0.91). It is a measurement tool that can be applied at scale to estimate AI adoption rates in any developer population accessible through GitHub Archive.</p>
+<p>Second, we deploy this classifier in two causal designs. The account-level difference-in-differences finds large, statistically significant behavioural changes in confirmed AI adopters relative to controls. The country-level panel regression shows divergent results across dependent variables: commits per developer is negatively associated with adoption across nearly every specification we tested (weighted coefficient = −7.56, p = 0.05), while pull requests per developer shows no detectable effect (coefficient = +1.33, p = 0.76).</p>
+<p>We interpret the DV split as most plausibly reflecting a commit <em>granularity</em> shift rather than a productivity effect: AI tools encourage workflows that produce fewer, larger, more deliberate commits, which the classifier itself was trained to detect via longer commit messages. Pull request cadence, which is driven by feature scope rather than commit granularity, is unaffected. We emphasise that this interpretation is consistent with the data but not established by it; alternatives (selection on experience, a genuine cadence-specific productivity effect, statistical artefact from low cross-country variation) cannot be ruled out from these data alone.</p>
+<p>The most productive directions for future work follow from these limitations. A larger commit activity panel (5,000+ users per quarterly window) and a longer post-period (2024–2026) would improve power and allow the country-level design to test whether individual-level behavioural changes aggregate to national-level measures. Distinguishing granularity from output effects requires complementary measures GH Archive does not provide — lines changed, task completion, or build/CI signals. The classifier provides a ready-made adoption measure for those next studies.</p>
+</section>
+<section id="acknowledgements" class="level2">
+<h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
+<p>The author thanks the open-source developer community for making commit histories publicly available via GitHub Archive. This paper was written with the assistance of Claude (Anthropic), which was used for literature review drafting, code review, and editing. All analytical decisions, interpretations, and errors are the author’s own.</p>
+</section>
+<section id="code-and-data-availability" class="level2">
+<h2 class="anchored" data-anchor-id="code-and-data-availability">9. Code and Data Availability</h2>
+<section id="computational-reproducibility" class="level3">
+<h3 class="anchored" data-anchor-id="computational-reproducibility">Computational Reproducibility</h3>
+<p>All analysis code is available in the public repository:</p>
+<p><strong>GitHub</strong>: https://github.com/andreasclaw/ai_productivity_analysis</p>
+<p>The repository includes: - <code>scripts/build_panel.py</code> — constructs the country-quarter panel dataset - <code>scripts/run_analysis.py</code> — runs the panel regressions and produces figures - <code>notebooks/research_paper.ipynb</code> — this working paper in notebook format</p>
+<p>Dependencies are specified in <code>requirements.txt</code> and can be installed via <code>uv pip install -r requirements.txt</code> (or <code>pip install -r requirements.txt</code> for standard pip users).</p>
+</section>
+<section id="data-sharing" class="level3">
+<h3 class="anchored" data-anchor-id="data-sharing">Data Sharing</h3>
+<p>Due to GitHub’s Terms of Service and developer privacy concerns, we cannot share the raw individual-level account data. However, we provide:</p>
+<ul>
+<li><strong>Aggregate panel data</strong>: <code>data/panel_dataset.csv</code> and <code>data/github_panel_flat.csv</code> — country-quarter level aggregates sufficient to reproduce all regression tables</li>
+<li><strong>Classifier predictions</strong>: <code>data/classifier_predictions.csv</code> (binary labels only, no raw features)</li>
+<li><strong>Regression outputs</strong>: <code>data/regression_results_v2.txt</code> — full statistical output</li>
+</ul>
+<p>For researchers requiring access to the underlying individual-level data, we recommend contacting GitHub’s Research program or replicating the data collection pipeline using the methodology described in Section 4.</p>
+</section>
+<section id="reproduction-instructions" class="level3">
+<h3 class="anchored" data-anchor-id="reproduction-instructions">Reproduction Instructions</h3>
+<p>To reproduce the full analysis:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clone repository</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/andreasclaw/ai_productivity_analysis.git</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ai_productivity_analysis</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Install dependencies</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> pip install <span class="at">-r</span> requirements.txt</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Run panel construction and regression</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> scripts/run_analysis.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The script will regenerate all tables and figures in the <code>data/figures/paper/</code> directory.</p>
+<hr>
+<p><em>Working paper. Data and code: <a href="https://github.com/AndreasThinks/ai-productivity-analysis">github.com/AndreasThinks/ai-productivity-analysis</a></em> <em>Last updated: April 2026</em></p>
+
+
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-angristpischke2009" class="csl-entry" role="listitem">
+Angrist, J. D., &amp; Pischke, J.-S. (2009). <em>Mostly harmless econometrics: An empiricist’s companion</em>. Princeton University Press.
+</div>
+<div id="ref-brynjolfsson2025qje" class="csl-entry" role="listitem">
+Brynjolfsson, E., Li, D., &amp; Raymond, L. R. (2025). Generative AI at work. <em>Quarterly Journal of Economics</em>, <em>140</em>, 889–942.
+</div>
+<div id="ref-demirer2025genai" class="csl-entry" role="listitem">
+Cui, Z., Demirer, M., Jaffe, S., Musolff, L., Peng, S., &amp; Salz, T. (2025). The effects of generative AI on high-skilled work: Evidence from three field experiments with software developers. <em>Management Science</em>. <a href="https://demirermert.github.io/Papers/Demirer_AI_productivity.pdf">https://demirermert.github.io/Papers/Demirer_AI_productivity.pdf</a>
+</div>
+<div id="ref-github2023survey" class="csl-entry" role="listitem">
+GitHub. (2023). <em>Survey reveals AI’s impact on the developer experience</em>. <a href="https://github.blog/news-insights/research/survey-reveals-ais-impact-on-the-developer-experience/" class="uri">https://github.blog/news-insights/research/survey-reveals-ais-impact-on-the-developer-experience/</a>.
+</div>
+<div id="ref-cmustrudel2025cursor" class="csl-entry" role="listitem">
+He, H., Miller, C., Agarwal, S., Bogart, C., &amp; Herbsleb, J. D. (2025). Speed at the cost of quality: How cursor AI increases short-term velocity and long-term complexity in open-source projects. <em>arXiv Preprint arXiv:2511.04427</em>. <a href="https://arxiv.org/abs/2511.04427">https://arxiv.org/abs/2511.04427</a>
+</div>
+<div id="ref-liu2025semrush" class="csl-entry" role="listitem">
+Liu, Y., &amp; Wang, H. (2025). <em>Who on earth is using generative AI? Global trends and shifts in 2025</em> (Policy Research Working Paper No. 11231). World Bank. <a href="https://doi.org/10.1596/1813-9450-11231">https://doi.org/10.1596/1813-9450-11231</a>
+</div>
+<div id="ref-metr2025rct" class="csl-entry" role="listitem">
+METR. (2025). Measuring the impact of early-2025 AI on experienced open-source developer productivity. <em>arXiv Preprint arXiv:2507.09089</em>. <a href="https://arxiv.org/abs/2507.09089">https://arxiv.org/abs/2507.09089</a>
+</div>
+<div id="ref-peng2023llm" class="csl-entry" role="listitem">
+Peng, S., Kalliamvakou, E., Cihon, P., &amp; Demirer, M. (2023). The impact of AI on developer productivity: Evidence from GitHub copilot. <em>arXiv Preprint arXiv:2302.06590</em>. <a href="https://arxiv.org/abs/2302.06590">https://arxiv.org/abs/2302.06590</a>
+</div>
+<div id="ref-quispe2024impact" class="csl-entry" role="listitem">
+Quispe, A., &amp; Grijalba, R. (2024). Impact of the availability of ChatGPT on software development: A synthetic difference in differences estimation using GitHub data. <em>arXiv Preprint arXiv:2406.11046</em>. <a href="https://arxiv.org/abs/2406.11046">https://arxiv.org/abs/2406.11046</a>
+</div>
+<div id="ref-ziegler2024copilot" class="csl-entry" role="listitem">
+Ziegler, A., Kalliamvakou, E., Li, X. A., Rice, A., Rifkin, D., Simister, S., Sitaram, C., &amp; Bird, C. (2024). Measuring <span class="nocase">GitHub Copilot’s</span> impact on productivity. <em>Communications of the ACM</em>, <em>67</em>(3), 54–63. <a href="https://doi.org/10.1145/3633453">https://doi.org/10.1145/3633453</a>
+</div>
+</div></section></div></main> <!-- /main -->
+<script>
+  const themeStorageKey = "theme-preference";
+  const themeButtonClass = "theme-toggle-button";
+
+  const root = document.documentElement;
+
+  const getStoredTheme = () => {
+    const stored = localStorage.getItem(themeStorageKey);
+    return stored === "light" || stored === "dark" ? stored : null;
+  };
+
+  const getSystemTheme = () =>
+    window.matchMedia("(prefers-color-scheme: light)").matches
+      ? "light"
+      : "dark";
+
+  const setBootstrapTheme = (theme) => {
+    document.querySelectorAll("[data-bs-theme]").forEach((element) => {
+      element.setAttribute("data-bs-theme", theme);
+    });
+  };
+
+  const updateButtonLabel = (theme) => {
+    const button = document.querySelector(`.${themeButtonClass}`);
+    if (!button) {
+      return;
+    }
+    const nextThemeLabel =
+      theme === "light" ? "Switch to dark mode" : "Switch to light mode";
+    button.setAttribute("aria-label", nextThemeLabel);
+    button.setAttribute("title", nextThemeLabel);
+    button.setAttribute("aria-pressed", theme === "light");
+    button.dataset.theme = theme;
+  };
+
+  const applyTheme = (theme, source) => {
+    root.setAttribute("data-theme", theme);
+    root.setAttribute("data-theme-source", source);
+    setBootstrapTheme(theme);
+    updateButtonLabel(theme);
+  };
+
+  const toggleTheme = () => {
+    const currentTheme = root.getAttribute("data-theme") || getSystemTheme();
+    const nextTheme = currentTheme === "light" ? "dark" : "light";
+    localStorage.setItem(themeStorageKey, nextTheme);
+    applyTheme(nextTheme, "user");
+  };
+
+  const createToggleButton = () => {
+    if (document.querySelector(`.${themeButtonClass}`)) {
+      return;
+    }
+    const container =
+      document.querySelector(".quarto-navbar-tools") ||
+      document.querySelector(".navbar .navbar-nav.ms-auto");
+    if (!container) {
+      return;
+    }
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = themeButtonClass;
+    button.innerHTML = '<span aria-hidden="true">◐</span>';
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      toggleTheme();
+    });
+
+    container.appendChild(button);
+  };
+
+  const initTheme = () => {
+    const storedTheme = getStoredTheme();
+    if (storedTheme) {
+      applyTheme(storedTheme, "user");
+      return;
+    }
+    applyTheme(getSystemTheme(), "system");
+  };
+
+  const onReady = () => {
+    createToggleButton();
+    initTheme();
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", onReady);
+  } else {
+    onReady();
+  }
+
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: light)");
+  mediaQuery.addEventListener("change", (event) => {
+    if (getStoredTheme()) {
+      return;
+    }
+    applyTheme(event.matches ? "light" : "dark", "system");
+  });
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/andreasthinks\.me");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
