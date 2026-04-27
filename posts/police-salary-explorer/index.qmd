@@ -11,13 +11,14 @@ bibliography: police-salary.bib
 format:
   html:
     toc: true
+    code-fold: true
 ---
 
 This interactive tool tracks starting and top-of-scale salaries across UK police ranks from 1999 to 2025, with figures shown in both nominal pounds and real terms (adjusted to 2025 GBP using CPI) [@onscpi].
 
 The data reveals a sharp real-terms decline for new constables following the 2013 Winsor reforms [@govukwinsor; @bbc2013], and a broader stagnation across all ranks during the 2010–2020 austerity period [@smf2024]. Recent large pay awards (2022–2025) have begun to reverse some of this erosion [@prrb2024; @prrb2025].
 
-Use the controls to toggle ranks, switch between starting and top-of-scale pay, and compare nominal versus real-terms values.
+Use the controls to toggle ranks, switch between starting and top-of-scale pay, compare nominal versus real-terms values, and index salaries against minimum wage or median full-time earnings.
 
 <style>
 /* Theme-aware chart colours */
@@ -37,8 +38,8 @@ Use the controls to toggle ranks, switch between starting and top-of-scale pay, 
 
 ```{ojs}
 viewof selectedRanks = Inputs.checkbox(
-  ["PC National", "PC Metropolitan", "Sergeant", "Inspector", "Superintendent", "Minimum Wage", "Median FT Earnings"],
-  {label: "Ranks", value: ["PC National", "Minimum Wage"]}
+  ["PC National", "PC Metropolitan", "Sergeant", "Inspector", "Superintendent"],
+  {label: "Ranks", value: ["PC National", "Sergeant", "Inspector"]}
 )
 
 viewof payPoint = Inputs.radio(
@@ -47,6 +48,13 @@ viewof payPoint = Inputs.radio(
 )
 
 viewof realTerms = Inputs.toggle({label: "Real terms (2025 £)", value: true})
+
+viewof indexBy = Inputs.radio(
+  ["Absolute salary", "Minimum wage multiple", "Median wage multiple"],
+  {label: "Index by", value: "Absolute salary"}
+)
+
+viewof showBenchmarks = Inputs.toggle({label: "Show benchmark lines", value: false})
 
 viewof showTable = Inputs.toggle({label: "Show data table", value: false})
 ```
@@ -60,48 +68,58 @@ rankMap = new Map([
   ["Sergeant", {code: "Sgt", label: "Sergeant"}],
   ["Inspector", {code: "Insp", label: "Inspector"}],
   ["Superintendent", {code: "Supt", label: "Superintendent"}],
-  ["Minimum Wage", {code: "MinWage", label: "Minimum Wage (full-time)"}],
-  ["Median FT Earnings", {code: "Median_FT", label: "Median FT Earnings (UK)"}],
 ])
 
 data = {
   const rows = [];
   for (const d of raw) {
     const year = +d.Year;
+    const minWage = realTerms ? +d.MinWage_Annual_Real2025 : +d.MinWage_Annual_Nominal;
+    const medianWage = realTerms ? +d.Median_FT_Annual_Real2025 : +d.Median_FT_Annual_Nominal;
     for (const sel of selectedRanks) {
       const info = rankMap.get(sel);
-      if (info.code === "MinWage" || info.code === "Median_FT") {
-        // Single value comparators, not start/top
-        const nominalCol = info.code === "MinWage" ? "MinWage_Annual_Nominal" : "Median_FT_Annual_Nominal"
-        const realCol = info.code === "MinWage" ? "MinWage_Annual_Real2025" : "Median_FT_Annual_Real2025"
-        rows.push({
-          Year: year,
-          Rank: info.label,
-          Point: "Annual",
-          Salary: realTerms ? +d[realCol] : +d[nominalCol]
-        });
-        continue;
-      }
       if (payPoint === "Starting salary" || payPoint === "Both") {
+        let val = realTerms ? +d[info.code + "_Start_Real2025"] : +d[info.code + "_Start_Nominal"];
+        if (indexBy === "Minimum wage multiple") val = val / minWage;
+        if (indexBy === "Median wage multiple") val = val / medianWage;
         rows.push({
           Year: year,
           Rank: info.label,
           Point: "Start",
-          Salary: realTerms ? +d[info.code + "_Start_Real2025"] : +d[info.code + "_Start_Nominal"]
+          Salary: val
         });
       }
       if (payPoint === "Top of scale" || payPoint === "Both") {
+        let val = realTerms ? +d[info.code + "_Top_Real2025"] : +d[info.code + "_Top_Nominal"];
+        if (indexBy === "Minimum wage multiple") val = val / minWage;
+        if (indexBy === "Median wage multiple") val = val / medianWage;
         rows.push({
           Year: year,
           Rank: info.label,
           Point: "Top",
-          Salary: realTerms ? +d[info.code + "_Top_Real2025"] : +d[info.code + "_Top_Nominal"]
+          Salary: val
         });
       }
     }
   }
   return rows;
 }
+
+minWageLine = raw.map(d => ({
+  Year: +d.Year,
+  Salary: realTerms ? +d.MinWage_Annual_Real2025 : +d.MinWage_Annual_Nominal
+}))
+
+medianLine = raw.map(d => ({
+  Year: +d.Year,
+  Salary: realTerms ? +d.Median_FT_Annual_Real2025 : +d.Median_FT_Annual_Nominal
+}))
+
+yLabel = indexBy === "Absolute salary" ? (realTerms ? "Salary (2025 £)" : "Salary (nominal £)") :
+         indexBy === "Minimum wage multiple" ? "Multiple of minimum wage" :
+         "Multiple of median wage"
+
+tickFormat = indexBy === "Absolute salary" ? "~s" : ".2f"
 
 chart = Plot.plot({
   width,
@@ -110,11 +128,25 @@ chart = Plot.plot({
     background: "transparent",
     color: "currentColor"
   },
-  y: {grid: true, label: realTerms ? "Salary (2025 £)" : "Salary (nominal £)", tickFormat: "~s"},
+  y: {grid: true, label: yLabel, tickFormat: tickFormat},
   x: {label: "Year", tickFormat: "d", grid: true},
   color: {legend: true},
   marks: [
     Plot.ruleY([0]),
+    showBenchmarks && indexBy === "Absolute salary" ? Plot.lineY(minWageLine, {
+      x: "Year",
+      y: "Salary",
+      stroke: "#ff6b6b",
+      strokeWidth: 1.5,
+      strokeDasharray: "4,4"
+    }) : null,
+    showBenchmarks && indexBy === "Absolute salary" ? Plot.lineY(medianLine, {
+      x: "Year",
+      y: "Salary",
+      stroke: "#00d4ff",
+      strokeWidth: 1.5,
+      strokeDasharray: "4,4"
+    }) : null,
     Plot.lineY(data, {
       x: "Year",
       y: "Salary",
@@ -130,12 +162,33 @@ chart = Plot.plot({
       r: 2.5,
       tip: true
     })
-  ]
+  ].filter(Boolean)
 })
 ```
 
 ```{ojs}
-table = showTable ? Inputs.table(data, {columns: ["Year", "Rank", "Point", "Salary"]}) : html`<p style="color:#888;font-style:italic;">Toggle "Show data table" to inspect values.</p>`
+tableData = {
+  const benchMap = new Map();
+  for (const d of raw) {
+    benchMap.set(+d.Year, {
+      "Min wage": realTerms ? +d.MinWage_Annual_Real2025 : +d.MinWage_Annual_Nominal,
+      "Median wage": realTerms ? +d.Median_FT_Annual_Real2025 : +d.Median_FT_Annual_Nominal
+    });
+  }
+  return data.map(row => {
+    const bench = benchMap.get(row.Year);
+    return {
+      Year: row.Year,
+      Rank: row.Rank,
+      Point: row.Point,
+      Salary: row.Salary,
+      "Min wage": bench["Min wage"],
+      "Median wage": bench["Median wage"]
+    };
+  });
+}
+
+table = showTable ? Inputs.table(tableData, {columns: ["Year", "Rank", "Point", "Salary", "Min wage", "Median wage"]}) : html`<p style="color:#888;font-style:italic;">Toggle "Show data table" to inspect values.</p>`
 ```
 
 ## Minimum wage and median earnings comparison
@@ -165,6 +218,8 @@ A constable starting in 2000 on £17,133 would need roughly £40,000 in 2025 to 
 This pattern repeats across ranks. Sergeant, Inspector, and Superintendent starting salaries all stagnated in real terms between 2010 and 2020 before recovering partially in 2022–2025 [@prrb2024; @prrb2025].
 
 ### Rank progression
+
+The data also reveals how the gap between ranks has changed over time:
 
 - **Sergeant** entry pay has roughly doubled in nominal terms since 2000 (£26,200 to £53,600) [@hansard2000; @polfedsergeant].
 - **Inspector** entry pay has risen from ~£33,800 (2000) to £63,800 (2025) [@hansard2000; @polfedinspector].
