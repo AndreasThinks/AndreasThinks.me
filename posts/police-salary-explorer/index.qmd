@@ -14,12 +14,6 @@ format:
     code-fold: true
 ---
 
-This interactive tool tracks starting and top-of-scale salaries across UK police ranks from 1999 to 2025, with figures shown in both nominal pounds and real terms (adjusted to 2025 GBP using CPI) [@onscpi].
-
-The data reveals a sharp real-terms decline for new constables following the 2013 Winsor reforms [@govukwinsor; @bbc2013], and a broader stagnation across all ranks during the 2010–2020 austerity period [@smf2024]. Recent large pay awards (2022–2025) have begun to reverse some of this erosion [@prrb2024; @prrb2025].
-
-Use the controls to toggle ranks, switch between starting and top-of-scale pay, compare nominal versus real-terms values, and index salaries against minimum wage or median full-time earnings.
-
 <style>
 /* Theme-aware chart colours */
 .police-chart {
@@ -54,7 +48,7 @@ viewof indexBy = Inputs.radio(
   {label: "Index by", value: "Absolute salary"}
 )
 
-viewof showBenchmarks = Inputs.toggle({label: "Show benchmark lines", value: false})
+viewof showBenchmarks = Inputs.toggle({label: "Show benchmark lines (min wage & median wage)", value: false})
 
 viewof showTable = Inputs.toggle({label: "Show data table", value: false})
 ```
@@ -105,15 +99,23 @@ data = {
   return rows;
 }
 
-minWageLine = raw.map(d => ({
-  Year: +d.Year,
-  Salary: realTerms ? +d.MinWage_Annual_Real2025 : +d.MinWage_Annual_Nominal
-}))
+minWageLine = raw.map(d => {
+  const minWage = realTerms ? +d.MinWage_Annual_Real2025 : +d.MinWage_Annual_Nominal;
+  const medianWage = realTerms ? +d.Median_FT_Annual_Real2025 : +d.Median_FT_Annual_Nominal;
+  let val = minWage;
+  if (indexBy === "Minimum wage multiple") val = 1;
+  if (indexBy === "Median wage multiple") val = minWage / medianWage;
+  return { Year: +d.Year, Salary: val };
+})
 
-medianLine = raw.map(d => ({
-  Year: +d.Year,
-  Salary: realTerms ? +d.Median_FT_Annual_Real2025 : +d.Median_FT_Annual_Nominal
-}))
+medianLine = raw.map(d => {
+  const minWage = realTerms ? +d.MinWage_Annual_Real2025 : +d.MinWage_Annual_Nominal;
+  const medianWage = realTerms ? +d.Median_FT_Annual_Real2025 : +d.Median_FT_Annual_Nominal;
+  let val = medianWage;
+  if (indexBy === "Minimum wage multiple") val = medianWage / minWage;
+  if (indexBy === "Median wage multiple") val = 1;
+  return { Year: +d.Year, Salary: val };
+})
 
 yLabel = indexBy === "Absolute salary" ? (realTerms ? "Salary (2025 £)" : "Salary (nominal £)") :
          indexBy === "Minimum wage multiple" ? "Multiple of minimum wage" :
@@ -133,19 +135,41 @@ chart = Plot.plot({
   color: {legend: true},
   marks: [
     Plot.ruleY([0]),
-    showBenchmarks && indexBy === "Absolute salary" ? Plot.lineY(minWageLine, {
+    showBenchmarks ? Plot.lineY(minWageLine, {
       x: "Year",
       y: "Salary",
       stroke: "#ff6b6b",
       strokeWidth: 1.5,
-      strokeDasharray: "4,4"
+      strokeDasharray: "4,4",
+      tip: true,
+      title: d => `Min wage: ${d.Salary.toFixed(indexBy === "Absolute salary" ? 0 : 2)}`
     }) : null,
-    showBenchmarks && indexBy === "Absolute salary" ? Plot.lineY(medianLine, {
+    showBenchmarks ? Plot.text([minWageLine[minWageLine.length - 1]], {
+      x: "Year",
+      y: "Salary",
+      text: () => "Min wage",
+      dx: 5,
+      fill: "#ff6b6b",
+      fontSize: 11,
+      textAnchor: "start"
+    }) : null,
+    showBenchmarks ? Plot.lineY(medianLine, {
       x: "Year",
       y: "Salary",
       stroke: "#00d4ff",
       strokeWidth: 1.5,
-      strokeDasharray: "4,4"
+      strokeDasharray: "4,4",
+      tip: true,
+      title: d => `Median wage: ${d.Salary.toFixed(indexBy === "Absolute salary" ? 0 : 2)}`
+    }) : null,
+    showBenchmarks ? Plot.text([medianLine[medianLine.length - 1]], {
+      x: "Year",
+      y: "Salary",
+      text: () => "Median wage",
+      dx: 5,
+      fill: "#00d4ff",
+      fontSize: 11,
+      textAnchor: "start"
     }) : null,
     Plot.lineY(data, {
       x: "Year",
@@ -190,6 +214,12 @@ tableData = {
 
 table = showTable ? Inputs.table(tableData, {columns: ["Year", "Rank", "Point", "Salary", "Min wage", "Median wage"]}) : html`<p style="color:#888;font-style:italic;">Toggle "Show data table" to inspect values.</p>`
 ```
+
+This interactive tool tracks starting and top-of-scale salaries across UK police ranks from 1999 to 2025, with figures shown in both nominal pounds and real terms (adjusted to 2025 GBP using CPI) [@onscpi].
+
+The data reveals a sharp real-terms decline for new constables following the 2013 Winsor reforms [@govukwinsor; @bbc2013], and a broader stagnation across all ranks during the 2010–2020 austerity period [@smf2024]. Recent large pay awards (2022–2025) have begun to reverse some of this erosion [@prrb2024; @prrb2025].
+
+Use the controls to toggle ranks, switch between starting and top-of-scale pay, compare nominal versus real-terms values, and index salaries against minimum wage or median full-time earnings. Toggle **"Show benchmark lines"** to overlay the minimum wage and median wage on the chart — this works in all three index modes, including when salaries are themselves expressed as a multiple.
 
 ## Minimum wage and median earnings comparison
 
