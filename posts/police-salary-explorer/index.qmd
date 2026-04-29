@@ -6,7 +6,6 @@ categories:
   - policing
   - data-visualization
   - uk
-draft: true
 bibliography: police-salary.bib
 format:
   html:
