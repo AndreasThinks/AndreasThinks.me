@@ -1,3 +1,7 @@
+---
+draft: true
+---
+
 # Data Sources and Methodology
 
 ## Direct Sources (Verified Year-by-Year Data)

@@ -525,6 +525,40 @@ hr {
   }
 }
 
+/* ── Bibliography / appendix ─────────────────────────────────────────────── */
+/* Bootstrap hardcodes #quarto-appendix.default { background-color: #222 }   */
+/* and various #dee2e6 border colours — none of which are CSS vars, so they  */
+/* survive the theme toggle untouched. We override them here.                */
+
+#quarto-appendix.default {
+  background-color: var(--bg-elevated) !important;
+  border-top-color: var(--border-soft) !important;
+}
+
+#quarto-appendix.default .quarto-appendix-heading {
+  color: var(--text-primary) !important;
+}
+
+#quarto-appendix.default *[role=doc-endnotes] > ol,
+#quarto-appendix.default .quarto-appendix-contents > *:not(h2):not(.h2),
+#quarto-appendix.default section > *:not(a),
+#quarto-appendix.default section *[role=doc-endnotes] {
+  color: var(--text-muted) !important;
+  opacity: 1 !important;
+}
+
+/* csl-entry links follow the global accent */
+#quarto-appendix .csl-entry a {
+  color: var(--accent);
+}
+
+#quarto-appendix.default .quarto-appendix-bibtex,
+#quarto-appendix.default .quarto-appendix-citeas {
+  border-color: var(--border-soft) !important;
+  background-color: var(--bg-panel);
+  color: var(--text-muted);
+}
+
 /* ── Theme-adaptive figures ───────────────────────────────────────────────── */
 
 /* Hide the wrong variant based on active theme */
