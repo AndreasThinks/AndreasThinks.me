@@ -7,7 +7,7 @@ draft: false
 categories: 
   - personal
   - technology
-  - ai
+  - AI
   - data-science
 ---
 

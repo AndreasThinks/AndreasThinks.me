@@ -12,6 +12,29 @@ website:
   twitter-card: true
   open-graph: true
   draft-mode: unlinked
+  back-to-top-navigation: true
+  page-footer:
+    border: false
+    left: "© 2026 Andreas Varotsis"
+    center:
+      - text: "made with quarto"
+        href: https://quarto.org
+    right:
+      - icon: mastodon
+        href: https://fosstodon.org/@AndreasThinks
+        aria-label: Mastodon
+      - icon: github
+        href: https://github.com/AndreasThinks
+        aria-label: GitHub
+      - icon: linkedin
+        href: https://www.linkedin.com/in/avarotsis/
+        aria-label: LinkedIn
+      - icon: envelope
+        href: mailto:andreas.varotsis@gmail.com
+        aria-label: Email
+      - icon: rss
+        href: index.xml
+        aria-label: RSS feed
   navbar:
     left:
       - text: "home"
@@ -44,6 +67,7 @@ format:
     css: styles.css
     include-after-body:
       - includes/theme-toggle.html
+      - includes/reading-progress.html
     toc: false
     smooth-scroll: true
     link-external-newwindow: true
