@@ -1,0 +1,32 @@
+<script>
+  // Reading progress bar: only on pages with a title block (posts, papers,
+  // slides summaries) that are long enough to be worth tracking.
+  (() => {
+    const init = () => {
+      if (!document.getElementById("title-block-header")) {
+        return;
+      }
+      const doc = document.documentElement;
+      if (doc.scrollHeight < doc.clientHeight * 1.5) {
+        return;
+      }
+      const bar = document.createElement("div");
+      bar.className = "reading-progress";
+      bar.setAttribute("aria-hidden", "true");
+      document.body.appendChild(bar);
+      const update = () => {
+        const max = doc.scrollHeight - doc.clientHeight;
+        const progress = max > 0 ? Math.min(doc.scrollTop / max, 1) : 0;
+        bar.style.transform = `scaleX(${progress})`;
+      };
+      document.addEventListener("scroll", update, { passive: true });
+      window.addEventListener("resize", update);
+      update();
+    };
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+  })();
+</script>

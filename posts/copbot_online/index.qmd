@@ -6,7 +6,7 @@ description: |
   I built a website to look at whether language models could help articulate (or maybe even predict) police risk assessments for missing people. The conclusion?  Eeeeh.  Maybe. Ish?
 categories:
     - policing
-    - ai
+    - AI
     - web-development
 toc: true
 toc-depth: 4

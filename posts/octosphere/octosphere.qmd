@@ -6,7 +6,7 @@ format: html
 date: "02-02-2026"
 toc: true
 categories: 
-    - experiment
+    - experiments
     - metascience
     - web
     - atproto

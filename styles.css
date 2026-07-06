@@ -19,6 +19,8 @@
   --pill-bg: rgba(123, 252, 200, 0.08);
   --pill-border: rgba(123, 252, 200, 0.4);
   --shadow-glow: 0 0 25px rgba(123, 252, 200, 0.18);
+  --grid-line: rgba(123, 252, 200, 0.05);
+  --grid-glow: rgba(123, 252, 200, 0.08);
   --radius-lg: 18px;
   --radius-md: 14px;
   --radius-sm: 8px;
@@ -44,6 +46,8 @@
     --pill-bg: rgba(31, 143, 112, 0.12);
     --pill-border: rgba(31, 143, 112, 0.35);
     --shadow-glow: 0 12px 30px rgba(15, 109, 82, 0.15);
+  --grid-line: rgba(15, 109, 82, 0.06);
+  --grid-glow: rgba(15, 109, 82, 0.07);
   }
 }
 
@@ -66,6 +70,8 @@
   --pill-bg: rgba(31, 143, 112, 0.12);
   --pill-border: rgba(31, 143, 112, 0.35);
   --shadow-glow: 0 12px 30px rgba(15, 109, 82, 0.15);
+  --grid-line: rgba(15, 109, 82, 0.06);
+  --grid-glow: rgba(15, 109, 82, 0.07);
 }
 
 :root[data-theme="dark"] {
@@ -87,6 +93,8 @@
   --pill-bg: rgba(123, 252, 200, 0.08);
   --pill-border: rgba(123, 252, 200, 0.4);
   --shadow-glow: 0 0 25px rgba(123, 252, 200, 0.18);
+  --grid-line: rgba(123, 252, 200, 0.05);
+  --grid-glow: rgba(123, 252, 200, 0.08);
 }
 
 html,
@@ -94,12 +102,45 @@ body {
   min-height: 100%;
 }
 
+html {
+  background: var(--bg-primary);
+}
+
 body {
   font-family: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
   color: var(--text-primary);
-  background: var(--bg-primary);
+  background: transparent;
   line-height: 1.7;
   position: relative;
+}
+
+/* Faint terminal grid + glow behind the top of every page */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 90% 55% at 50% -12%, var(--grid-glow), transparent 60%),
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 100% 100%, 44px 44px, 44px 44px;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.3) 45%, transparent 90%);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.3) 45%, transparent 90%);
+}
+
+::selection {
+  background: rgba(123, 252, 200, 0.28);
+  color: inherit;
+}
+
+:root[data-theme="light"] ::selection {
+  background: rgba(31, 143, 112, 0.25);
+}
+
+html {
+  scrollbar-color: var(--border-strong) transparent;
 }
 
 .navbar {
@@ -322,8 +363,23 @@ a:focus {
 }
 
 .post-list .quarto-post .body {
-  flex: 1 1 100%;
+  flex: 1 1 auto;
   min-width: 0;
+}
+
+.post-list .quarto-post .metadata {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.post-list .listing-reading-time {
+  color: var(--accent);
+  opacity: 0.85;
 }
 
 .post-list .quarto-post:hover {
@@ -583,5 +639,267 @@ html[data-theme="light"] .dark-plot img {
   html:not([data-theme="dark"]) .dark-plot img {
     filter: invert(0.91) hue-rotate(180deg) saturate(0.85) brightness(0.97);
     border-radius: 4px;
+  }
+}
+
+/* ── Post/paper title banner ─────────────────────────────────────────────── */
+/* Quarto's `title-block-banner: true` paints a Bootstrap slate-blue banner   */
+/* that ignores the theme toggle. Repaint it with theme variables.            */
+
+#title-block-header.quarto-title-block.default .quarto-title-banner,
+.quarto-title-banner {
+  background: linear-gradient(160deg, var(--bg-elevated) 0%, var(--bg-primary) 100%) !important;
+  border-bottom: 1px solid var(--border-strong);
+  box-shadow: inset 0 -30px 60px -50px var(--accent);
+  color: var(--text-primary) !important;
+  padding-top: 2.75rem;
+  padding-bottom: 2.5rem;
+}
+
+.quarto-title-banner .quarto-title .title,
+.quarto-title-banner h1.title {
+  color: var(--text-primary) !important;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.quarto-title-banner .quarto-title .subtitle,
+.quarto-title-banner .subtitle {
+  color: var(--accent) !important;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.05rem;
+  margin-top: 0.6rem;
+}
+
+.quarto-title-banner .description {
+  color: var(--text-muted) !important;
+}
+
+.quarto-title-banner .quarto-categories .quarto-category,
+#title-block-header .quarto-categories .quarto-category {
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+  color: var(--accent);
+  border: 1px solid var(--pill-border);
+  border-radius: 999px;
+  background: var(--pill-bg);
+  padding: 0.25rem 0.7rem;
+  opacity: 1;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.quarto-title-banner .quarto-categories .quarto-category:hover,
+#title-block-header .quarto-categories .quarto-category:hover {
+  background: rgba(123, 252, 200, 0.16);
+  box-shadow: var(--shadow-glow);
+}
+
+/* date / author strip under the banner */
+#title-block-header .quarto-title-meta-heading {
+  font-family: 'IBM Plex Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.7rem;
+  color: var(--accent) !important;
+  opacity: 1 !important;
+}
+
+#title-block-header .quarto-title-meta-contents {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--text-meta) !important;
+}
+
+/* ── Callouts ────────────────────────────────────────────────────────────── */
+/* Darkly hardcodes dark callout headers, which turn illegible in light mode. */
+
+.callout.callout-style-default {
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent);
+  border-top: 1px solid var(--border-soft);
+  border-right: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-soft);
+  background: var(--bg-panel);
+  overflow: hidden;
+}
+
+.callout.callout-style-default > .callout-header {
+  background: var(--pill-bg) !important;
+  color: var(--text-primary) !important;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.04em;
+  opacity: 1 !important;
+}
+
+.callout.callout-style-default .callout-title-container {
+  color: var(--text-primary) !important;
+}
+
+.callout.callout-style-default .callout-body,
+.callout.callout-style-default .callout-body p {
+  color: var(--text-muted);
+}
+
+.callout.callout-warning.callout-style-default,
+.callout.callout-important.callout-style-default {
+  border-left-color: #ffb454;
+}
+
+.callout.callout-tip.callout-style-default {
+  border-left-color: var(--accent-strong);
+}
+
+/* ── Category sidebar (homepage listing) ─────────────────────────────────── */
+
+.quarto-listing-category-title {
+  font-family: 'IBM Plex Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  color: var(--accent);
+  margin-bottom: 0.9rem;
+}
+
+.quarto-listing-category {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-content: flex-start;
+}
+
+.quarto-listing-category .category {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  background: transparent;
+  padding: 0.2rem 0.65rem;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.quarto-listing-category .category:hover {
+  color: var(--accent);
+  border-color: var(--pill-border);
+  background: var(--pill-bg);
+}
+
+.quarto-listing-category .category.active {
+  color: var(--bg-primary);
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-glow);
+  font-weight: 600;
+}
+
+.quarto-listing-category .category-count {
+  opacity: 0.75;
+}
+
+/* ── Table of contents ("On this page") ──────────────────────────────────── */
+
+#toc-title,
+#quarto-margin-sidebar .quarto-secondary-nav-title {
+  font-family: 'IBM Plex Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  color: var(--accent);
+}
+
+.sidebar nav[role="doc-toc"] > ul li a {
+  color: var(--text-muted);
+  border-left: 1px solid var(--border-subtle);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.sidebar nav[role="doc-toc"] > ul li a:hover {
+  color: var(--accent);
+}
+
+.sidebar nav[role="doc-toc"] > ul li a.active {
+  color: var(--accent-strong);
+  border-left: 2px solid var(--accent-strong);
+  font-weight: 500;
+}
+
+/* ── Code copy button ────────────────────────────────────────────────────── */
+
+.code-copy-button {
+  color: var(--text-meta);
+  transition: color 0.2s ease;
+}
+
+.code-copy-button:hover > .bi::before,
+.code-copy-button:hover {
+  color: var(--accent);
+  filter: none;
+}
+
+.code-copy-button-checked > .bi::before {
+  color: var(--accent-strong);
+}
+
+/* ── Page footer ─────────────────────────────────────────────────────────── */
+
+footer.nav-footer {
+  font-size: 0.78rem;
+  color: var(--text-meta);
+}
+
+footer.nav-footer .nav-footer-left,
+footer.nav-footer .nav-footer-center,
+footer.nav-footer .nav-footer-right {
+  color: var(--text-meta);
+}
+
+footer.nav-footer .nav-footer-right a {
+  font-size: 1.05rem;
+  padding: 0 0.4rem;
+}
+
+/* ── Back to top ─────────────────────────────────────────────────────────── */
+
+#quarto-back-to-top {
+  font-family: 'IBM Plex Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  color: var(--accent);
+  background: var(--bg-panel);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  padding: 0.4rem 1rem;
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-glow);
+}
+
+#quarto-back-to-top:hover {
+  color: var(--text-primary);
+  background: var(--pill-bg);
+}
+
+/* ── Reading progress bar (injected by includes/reading-progress.html) ───── */
+
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 2000;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  box-shadow: 0 0 10px rgba(123, 252, 200, 0.55);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reading-progress {
+    transition: transform 0.08s linear;
   }
 }
