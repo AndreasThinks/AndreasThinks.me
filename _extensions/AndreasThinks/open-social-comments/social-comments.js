@@ -149,9 +149,11 @@ social-comments a:focus {
 .social-comment .author .date {
   grid-column: 3;
   grid-row: 2;
-  font-size: 0.75rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
   text-align: right;
-  line-height: 1.2;
+  line-height: 1.4;
+  white-space: nowrap;
   color: var(--comment-font-color);
   opacity: 0.65;
 }
@@ -163,6 +165,25 @@ social-comments a:focus {
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-word;
+}
+
+.social-comment .content a {
+  overflow-wrap: anywhere;
+}
+
+/* Mastodon link markup: hide the "invisible" scheme/tail spans and close
+   truncated URLs with an ellipsis, as Mastodon's own frontend does */
+.social-comment .content a .invisible {
+  display: none;
+}
+
+.social-comment .content a .ellipsis::after {
+  content: "\\2026";
+}
+
+.social-comment .author .details .name,
+.social-comment .author .details .user {
+  overflow-wrap: anywhere;
 }
 
 .social-comment .content p {
@@ -239,21 +260,13 @@ social-comments a:focus {
   }
 
   .social-comment .author {
-    grid-template-columns: 48px 1fr;
-    grid-template-rows: auto auto auto;
-    gap: 0.5rem;
+    grid-template-columns: 44px 1fr auto;
+    gap: 0.4rem 0.75rem;
   }
 
-  .social-comment .platform-indicator {
-    grid-column: 2;
-    grid-row: 1;
-    justify-content: flex-start;
-  }
-
-  .social-comment .author .date {
-    grid-column: 2;
-    grid-row: 3;
-    text-align: left;
+  .social-comment .author .avatar img {
+    width: 44px;
+    height: 44px;
   }
 }
 `;
@@ -606,7 +619,7 @@ class SocialComments extends HTMLElement {
           ${platformIcon}
         </span>
         <a class="date" href="${comment.url}" rel="nofollow">
-          ${new Date(comment.date).toLocaleDateString()}<br>${new Date(comment.date).toLocaleTimeString()}
+          ${new Date(comment.date).toLocaleDateString()}<br>${new Date(comment.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
         </a>
       </div>
       <div class="content">${comment.platform === 'mastodon' ? comment.content : this.formatBlueskyContent(comment.content)}</div>

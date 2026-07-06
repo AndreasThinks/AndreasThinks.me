@@ -124,13 +124,36 @@ mastodon-comments a:focus {
 
 .mastodon-comment .author .date {
   margin-left: auto;
-  font-size: 0.75rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  white-space: nowrap;
   color: var(--mastodon-font-color);
   opacity: 0.65;
 }
 
 .mastodon-comment .content {
   line-height: 1.65;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.mastodon-comment .content a {
+  overflow-wrap: anywhere;
+}
+
+/* Mastodon link markup: hide the "invisible" scheme/tail spans and close
+   truncated URLs with an ellipsis, as Mastodon's own frontend does */
+.mastodon-comment .content a .invisible {
+  display: none;
+}
+
+.mastodon-comment .content a .ellipsis::after {
+  content: "\\2026";
+}
+
+.mastodon-comment .author .details .name,
+.mastodon-comment .author .details .user {
+  overflow-wrap: anywhere;
 }
 
 .mastodon-comment .content p {
