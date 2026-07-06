@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2026-05-07">
+
+<title>When fewer commits don’t mean less work – Andreas Varotsis</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-58b840c486574247c09a3f35ba47c43c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=GG-378MDZNVX4"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'GG-378MDZNVX4', { 'anonymize_ip': true});
+</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="When fewer commits don’t mean less work – Andreas Varotsis">
+<meta property="og:description" content="AI coding tools appear to change commit behaviour, which makes commit counts a shaky productivity metric.">
+<meta property="og:image" content="https://andreasthinks.me/posts/ai-tools-and-the-shape-of-commits/figures/account_behaviour_shift_dark.png">
+<meta property="og:site_name" content="Andreas Varotsis">
+<meta property="og:image:height" content="735">
+<meta property="og:image:width" content="1629">
+<meta name="twitter:title" content="When fewer commits don’t mean less work – Andreas Varotsis">
+<meta name="twitter:description" content="AI coding tools appear to change commit behaviour, which makes commit counts a shaky productivity metric.">
+<meta name="twitter:image" content="https://andreasthinks.me/posts/ai-tools-and-the-shape-of-commits/figures/account_behaviour_shift_dark.png">
+<meta name="twitter:image-height" content="735">
+<meta name="twitter:image-width" content="1629">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Andreas Varotsis</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../recent_work.html"> 
+<span class="menu-text">talks &amp; publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../slides/index.html"> 
+<span class="menu-text">teaching</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://fosstodon.org/@AndreasThinks" rel="me"> 
+<span class="menu-text"><i class="fa-brands fa-mastodon fa-xl" aria-label="mastodon"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://bsky.app/profile/andreasthinks.me"> 
+<span class="menu-text"><i class="fa-brands fa-bluesky fa-xl" aria-label="bluesky"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://twitter.com/AndreasThinks"> 
+<span class="menu-text"><i class="fa-brands fa-twitter fa-xl" aria-label="twitter"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/AndreasThinks"> 
+<span class="menu-text"><i class="fa-brands fa-github fa-xl" aria-label="github"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://www.linkedin.com/in/avarotsis/"> 
+<span class="menu-text"><i class="fa-brands fa-linkedin fa-xl" aria-label="linkedin"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="mailto:andreas.varotsis@gmail.com"> 
+<span class="menu-text"><i class="fa-solid fa-envelope fa-xl" aria-label="envelope"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.xml"> 
+<span class="menu-text"><i class="fa-solid fa-rss fa-xl" aria-label="rss"></i></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">When fewer commits don’t mean less work</h1>
+            <p class="subtitle lead">AI coding tools appear to change commit behaviour, which makes commit counts a shaky productivity metric.</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">AI</div>
+                <div class="quarto-category">research</div>
+                <div class="quarto-category">data-science</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 7, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#picking-out-the-vibe-coders" id="toc-picking-out-the-vibe-coders" class="nav-link active" data-scroll-target="#picking-out-the-vibe-coders">Picking out the vibe coders</a></li>
+  <li><a href="#so-what-about-countries" id="toc-so-what-about-countries" class="nav-link" data-scroll-target="#so-what-about-countries">So what about countries?</a></li>
+  <li><a href="#the-pr-plot-twist" id="toc-the-pr-plot-twist" class="nav-link" data-scroll-target="#the-pr-plot-twist">The PR plot twist</a></li>
+  <li><a href="#so-does-any-of-this-make-sense" id="toc-so-does-any-of-this-make-sense" class="nav-link" data-scroll-target="#so-does-any-of-this-make-sense">So, does any of this make sense?</a>
+  <ul class="collapse">
+  <li><a href="#ai-tooling-changes-how-you-work-and-probably-how-much-you-ship-too" id="toc-ai-tooling-changes-how-you-work-and-probably-how-much-you-ship-too" class="nav-link" data-scroll-target="#ai-tooling-changes-how-you-work-and-probably-how-much-you-ship-too">AI tooling changes how you work, and probably how much you ship too</a></li>
+  <li><a href="#agentic-coders-really-are-built-different" id="toc-agentic-coders-really-are-built-different" class="nav-link" data-scroll-target="#agentic-coders-really-are-built-different">Agentic coders really are built different</a></li>
+  </ul></li>
+  <li><a href="#so-here-we-are." id="toc-so-here-we-are." class="nav-link" data-scroll-target="#so-here-we-are.">So, here we are.</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>I have been vibe coding <em>a lot</em>. Like, <em>a lot</em> a lot…. and it’s been leaving me feeling a bit conflicted. I’ve been committing hard, and feeling tremendously productive. But I also get this weird flash of existential dread when I catch myself furiously hitting AGAIN AGAIN AGAIN like I’m 3 Mai Tais deep at a Vegas slot machine, until I suddenly find myself staring at a codebase I’ve never seen, like some groggy father waking up from a thirty year coma to kids he barely recognises.</p>
+<p>I feel like a goddamn engineering hero. But am I?</p>
+<p>The research has left me confused, and a teeny bit sceptical. The big daddy of AI coding research, <a href="https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/">METR</a> found that AI tools can slow experienced developers down on mature codebases… but those are experienced programmers working on codebases they know, which is obviously nothing like me. Then <a href="https://www.answer.ai/posts/2026-03-12-so-where-are-all-the-ai-apps.html">Answer.AI published their analysis</a>, showing that despite all the excitement, PyPI productivity really did not seem to be shifting much… and that one threw me for a spin. I am coding more. I am releasing more stuff. So what the hell is going on?</p>
+<p>So I thought I’d check the obvious source of truth on what we are all actually doing: GitHub. I scraped an awful lot of code, and looked for how people who use AI coding tools differ.</p>
+<p>Here’s my working theory: AI really is making me commit hard. In fact, it has me committing furiously, more frequently, and in tighter bursts. But that does not necessarily mean I am producing more. It may mean AI is changing <em>how</em> I work, in a way that is extremely seductive. It is a a sneaky little trap, and I worry I’ve fallen head first into it.</p>
+<p>So I tried to figure out what makes coders who use AI different. Do they code longer? Do they commit more? Do they work in tighter bursts?</p>
+<p>It turns out the pattern is not just “more commits” or “less commits”. It is a rhythm change. AI adopters move toward more concentrated coding sessions: more commits per active week, shorter gaps between commits, but fewer active weeks overall.</p>
+<div class="dark-fig">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/account_behaviour_shift_dark.png" class="img-fluid figure-img"></p>
+<figcaption>Account-level before/after behaviour. Points show group means; whiskers show bootstrapped 95% confidence intervals over accounts.</figcaption>
+</figure>
+</div>
+</div>
+<div class="light-fig">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/account_behaviour_shift_light.png" class="img-fluid figure-img"></p>
+<figcaption>Account-level before/after behaviour. Points show group means; whiskers show bootstrapped 95% confidence intervals over accounts.</figcaption>
+</figure>
+</div>
+</div>
+<p>I don’t think this means we are automatically more productive. I think we are working differently, and that difference is tricking our brains.</p>
+<section id="picking-out-the-vibe-coders" class="level2">
+<h2 class="anchored" data-anchor-id="picking-out-the-vibe-coders">Picking out the vibe coders</h2>
+<p>To study this at scale, I built a classifier that assigns each GitHub account a rough probability of AI coding-tool adoption from public behavioural signals.</p>
+<p>The training sample is 276 GitHub accounts: 74 confirmed AI adopters, identified through <code>CLAUDE.md</code> files or <code>Co-Authored-By: Claude</code> trailers, and 202 controls with active commit histories before and after late 2023 and no AI markers. The classifier uses 43 behavioural features: commit cadence, message length and structure, PR body patterns, and inter-commit timing. It explicitly excludes the labelling artefacts themselves.</p>
+<p>The random forest model I ended up with correctly identifies the right outcome around 94% of the time. Remove all markers from the content (so it’s working purely from patterns of activity) and it still gets it right about 91% of the time.</p>
+<p>Thankfully, Claude Code is not the only tool that leaves obvious traces. Aider does too. When I run the classifier on Aider users, a tool it was never trained on, it flags them as AI-tool users 73% of the time, compared to just 3% for people not using any AI coding tools.</p>
+<p>So whatever the classifier is detecting, it is not just Claude-specific style. It looks like a broader “this developer’s behaviour looks AI-assisted” signal.</p>
+<p>If you want the methodology in detail, <a href="../../papers/ai-productivity/">the paper is here</a>. For this post, the key point is simpler: I can assign an approximate AI-adoption score to public GitHub accounts, then ask whether higher adoption lines up with different activity metrics.</p>
+</section>
+<section id="so-what-about-countries" class="level2">
+<h2 class="anchored" data-anchor-id="so-what-about-countries">So what about countries?</h2>
+<p>So, we know at an individual level that AI users seem to work differently. But what about entire countries? If all of China has indeed gone OpenClaw-crazy, are they pushing endless agentic products? I was hoping this might give me a signal about what was going on.</p>
+<p>It turns out it is just as puzzling.</p>
+<p>With per-account AI scores in hand, I aggregated them by country. Take the 4,824 scored accounts, group them by country, and use the mean classifier score as a country-level AI adoption measure.</p>
+<p>This is the weaker part of the analysis, and I want to be upfront about that. Country-level GitHub Archive data is noisy. The 2024 cross-section is thin. The adoption measure inherits whatever biases the classifier has. So I do <strong>not</strong> read this as clean evidence that AI adoption causes country-level productivity changes.</p>
+<p>I read it as a warning sign about measurement.</p>
+<p>For the dependent variables, I used a GitHub Archive panel from 2022 to 2024 with two common activity measures: commits per active developer and pull requests per active developer. If both were clean productivity metrics, you would expect them to broadly tell the same story.</p>
+<p>They do not.</p>
+<div class="dark-fig">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/dv_split_dark.png" class="img-fluid figure-img"></p>
+<figcaption>2024 country-level cross-section. Each circle is a country, sized by number of developers in the GH Archive panel. Lines are unweighted OLS fits. Treat this as an illustrative aggregate puzzle, not clean causal evidence.</figcaption>
+</figure>
+</div>
+</div>
+<div class="light-fig">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/dv_split_light.png" class="img-fluid figure-img"></p>
+<figcaption>2024 country-level cross-section. Each circle is a country, sized by number of developers in the GH Archive panel. Lines are unweighted OLS fits. Treat this as an illustrative aggregate puzzle, not clean causal evidence.</figcaption>
+</figure>
+</div>
+</div>
+<p>On the left: commits per developer in 2024, plotted against the country’s mean classifier-derived AI adoption score. Higher adoption, lower commits. The slope tilts down.</p>
+<p>On the right: pull requests per developer, same countries, same year, same adoption measure. The slope is slightly positive and statistically indistinguishable from zero.</p>
+<p>Same countries. Same year. Same adoption measure. Different activity metric, different story.</p>
+<p>That is the point. I do not think the country result is strong enough to carry a claim about national productivity. But it is exactly what you would expect to see if commit counts are partly measuring workflow granularity rather than output.</p>
+<div class="dark-fig">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/coefficient_plot_dark.png" class="img-fluid figure-img"></p>
+<figcaption>Coefficient on the country-level AI adoption rate across illustrative specifications. Whiskers are ±1 standard error. Commits estimates cluster on the negative side; PR estimates straddle zero.</figcaption>
+</figure>
+</div>
+</div>
+<div class="light-fig">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/coefficient_plot_light.png" class="img-fluid figure-img"></p>
+<figcaption>Coefficient on the country-level AI adoption rate across illustrative specifications. Whiskers are ±1 standard error. Commits estimates cluster on the negative side; PR estimates straddle zero.</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="the-pr-plot-twist" class="level2">
+<h2 class="anchored" data-anchor-id="the-pr-plot-twist">The PR plot twist</h2>
+<p>So here is the bit that made me sit up.</p>
+<p>The commit stuff measures <em>workflow tempo</em>: how often you hit save, how long you wait between commits, how chatty your messages are. That is interesting, but it is not the same as <em>shipping work</em>. To check that, I collected authored pull requests for the full classifier cohort and re-ran the before/after comparison using PR-specific outcomes.</p>
+<p><strong>Coverage.</strong> Of 276 accounts (74 treated, 202 controls), 275 had retrievable PR data. The treated group is more PR-active overall: 58 of 73 had at least one authored PR, versus 160 of 202 controls. But 15 treated accounts had zero PRs, and 13 hit the 300-PR retrieval cap. So the picture is mixed.</p>
+<p><strong>The volume story is strong.</strong> Confirmed adopters open +46.4 more PRs post-adoption and merge +42.6 more. On a per-month basis, that is +1.64 opened and +1.51 merged. All four numbers are significant at p &lt; 0.001 and survive FDR correction across ten PR outcome tests. The effect also survives dropping capped accounts, dropping zero-PR accounts, and restricting to the highest-confidence adopters.</p>
+<p><strong>The rate story is messier.</strong> Merge rate rises by about 0.16 (p = 0.004), and median hours-to-merge falls by roughly 18.5 hours (p = 0.034). But when I restrict to accounts with PRs in both windows, the merge-rate effect collapses to basically nothing (+0.03, p = 0.39) while the volume effects stay significant.</p>
+<p>What is happening? When an account had zero PRs in the pre-period, merge rate and merge time are mechanically set to zero. That artificially inflates the post-period gain. So I treat PR volume as the primary signal and merge rate as secondary, at best.</p>
+<p><strong>What this means for the puzzle.</strong> The country-level panel found PRs per developer effectively flat. The account-level extension finds confirmed adopters opening and merging substantially more PRs. The apparent contradiction is not a contradiction. It is a <strong>scale mismatch</strong>.</p>
+<p>At the country level, the treatment is a small adoption share diluted across every developer in the country. At the account level, the treatment is confirmed adoption compared with confirmed non-adoption. A +46 PR effect among 10-15% of developers is invisible when averaged across the other 85-90%. The country panel tells us aggregate PR rates do not rise with aggregate adoption. The account panel tells us the adopters themselves are shipping more packaged work. Both are true once you distinguish <em>average effects</em> from <em>average treatment effects on the treated</em>.</p>
+</section>
+<section id="so-does-any-of-this-make-sense" class="level2">
+<h2 class="anchored" data-anchor-id="so-does-any-of-this-make-sense">So, does any of this make sense?</h2>
+<p>So, you’re confused. I am too. But I think I can make some educated guesses about what is going on here.</p>
+<section id="ai-tooling-changes-how-you-work-and-probably-how-much-you-ship-too" class="level3">
+<h3 class="anchored" data-anchor-id="ai-tooling-changes-how-you-work-and-probably-how-much-you-ship-too">AI tooling changes how you work, and probably how much you ship too</h3>
+<p>The PR outcome analysis complicates the story in a useful way. Commit counts may be a bad proxy for productivity, but the adopters themselves are opening and merging substantially more pull requests. That is not a workflow artefact. That is accepted packaged work.</p>
+<p>The question is not whether AI tools increase output. At the individual level, the evidence points toward more shipped work. The question is whether our old metrics can see it, and whether aggregate data can pick up a concentrated effect among a small treated share.</p>
+<p>This might just be because we are looking at individuals. Maybe the truly transformative agentic organisation is already happening somewhere else, higher up the stack, in workflows that GitHub commits will never capture properly.</p>
+<p>But beware the siren temptress of Claude Code YOLO. No matter her dulcet singing tones, you are not necessarily the hot-shit programmer she is making you out to be.</p>
+<p>The behavioural evidence says something subtler: AI users work in a different rhythm. More concentrated bursts. Shorter gaps between commits. Fewer active weeks. That can feel like momentum, and maybe sometimes it is. But it can also make the old metrics lie.</p>
+</section>
+<section id="agentic-coders-really-are-built-different" class="level3">
+<h3 class="anchored" data-anchor-id="agentic-coders-really-are-built-different">Agentic coders really are built different</h3>
+<p>The classifier may be picking up something other than AI adoption. A pre-period placebo test on the training data showed that 6 of 8 features differ significantly between confirmed AI adopters and controls <em>before</em> AI tools existed in their current form. The classifier captures some combination of “uses AI tools” and “is the sort of person who does vibe coding”.</p>
+<p>I think these might just be very different populations.</p>
+<p>Some developers might commit less frequently per unit of work for reasons that have nothing to do with AI. Some may be more delib…</p>
+</section>
+</section>
+<section id="so-here-we-are." class="level2">
+<h2 class="anchored" data-anchor-id="so-here-we-are.">So, here we are.</h2>
+<p>I should add: there is <em>loads</em> of stuff I am not sure of. This is a noisy, self-selective, observational analysis. The data is far from ideal, and generalising from Claude Code to Aider may tell me diddly squat about agentic coding more broadly. But I kind of think it does tell us something.</p>
+<p>Claude Code might be making us feel like heroes. I am not actually sure that it is making individual programmers push out features any faster. It sure feels like it though, and that is one damn appealing trap to fall into.</p>
+<p>The PR evidence shifts the picture: AI adopters are shipping more accepted packaged work, even if commit counts are a lousy way to measure it. More controlled experiments on CI success, issue resolution, and feature ship time would still be valuable, but the observational signal is stronger than the commit data alone suggested.</p>
+<hr>
+<p><em>If you have seen this commits/PRs split in your own data, I would like to compare notes. The repo for the analysis is <a href="https://github.com/AndreasThinks/ai-productivity-analysis">here on GitHub</a>, and the formal paper version lives <a href="../../papers/ai-productivity/">over here</a>.</em></p>
+<p><em>An awful lot of the analysis for this work was done by my <a href="https://hermes-agent.nousresearch.com/">Hermes Agent</a>. I’m mostly confident, but also, if I’ve cocked it up, I’m very sorry.</em></p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script>
+  const themeStorageKey = "theme-preference";
+  const themeButtonClass = "theme-toggle-button";
+
+  const root = document.documentElement;
+
+  const getStoredTheme = () => {
+    const stored = localStorage.getItem(themeStorageKey);
+    return stored === "light" || stored === "dark" ? stored : null;
+  };
+
+  const getSystemTheme = () =>
+    window.matchMedia("(prefers-color-scheme: light)").matches
+      ? "light"
+      : "dark";
+
+  const setBootstrapTheme = (theme) => {
+    document.querySelectorAll("[data-bs-theme]").forEach((element) => {
+      element.setAttribute("data-bs-theme", theme);
+    });
+  };
+
+  const updateButtonLabel = (theme) => {
+    const button = document.querySelector(`.${themeButtonClass}`);
+    if (!button) {
+      return;
+    }
+    const nextThemeLabel =
+      theme === "light" ? "Switch to dark mode" : "Switch to light mode";
+    button.setAttribute("aria-label", nextThemeLabel);
+    button.setAttribute("title", nextThemeLabel);
+    button.setAttribute("aria-pressed", theme === "light");
+    button.dataset.theme = theme;
+  };
+
+  const applyTheme = (theme, source) => {
+    root.setAttribute("data-theme", theme);
+    root.setAttribute("data-theme-source", source);
+    setBootstrapTheme(theme);
+    updateButtonLabel(theme);
+  };
+
+  const toggleTheme = () => {
+    const currentTheme = root.getAttribute("data-theme") || getSystemTheme();
+    const nextTheme = currentTheme === "light" ? "dark" : "light";
+    localStorage.setItem(themeStorageKey, nextTheme);
+    applyTheme(nextTheme, "user");
+  };
+
+  const createToggleButton = () => {
+    if (document.querySelector(`.${themeButtonClass}`)) {
+      return;
+    }
+    const container =
+      document.querySelector(".quarto-navbar-tools") ||
+      document.querySelector(".navbar .navbar-nav.ms-auto");
+    if (!container) {
+      return;
+    }
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = themeButtonClass;
+    button.innerHTML = '<span aria-hidden="true">◐</span>';
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      toggleTheme();
+    });
+
+    container.appendChild(button);
+  };
+
+  const initTheme = () => {
+    const storedTheme = getStoredTheme();
+    if (storedTheme) {
+      applyTheme(storedTheme, "user");
+      return;
+    }
+    applyTheme(getSystemTheme(), "system");
+  };
+
+  const onReady = () => {
+    createToggleButton();
+    initTheme();
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", onReady);
+  } else {
+    onReady();
+  }
+
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: light)");
+  mediaQuery.addEventListener("change", (event) => {
+    if (getStoredTheme()) {
+      return;
+    }
+    applyTheme(event.matches ? "light" : "dark", "system");
+  });
+</script>
+<script>
+  // Reading progress bar: only on pages with a title block (posts, papers,
+  // slides summaries) that are long enough to be worth tracking.
+  (() => {
+    const init = () => {
+      if (!document.getElementById("title-block-header")) {
+        return;
+      }
+      const doc = document.documentElement;
+      if (doc.scrollHeight < doc.clientHeight * 1.5) {
+        return;
+      }
+      const bar = document.createElement("div");
+      bar.className = "reading-progress";
+      bar.setAttribute("aria-hidden", "true");
+      document.body.appendChild(bar);
+      const update = () => {
+        const max = doc.scrollHeight - doc.clientHeight;
+        const progress = max > 0 ? Math.min(doc.scrollTop / max, 1) : 0;
+        bar.style.transform = `scaleX(${progress})`;
+      };
+      document.addEventListener("scroll", update, { passive: true });
+      window.addEventListener("resize", update);
+      update();
+    };
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+  })();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/andreasthinks\.me");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 Andreas Varotsis</p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://quarto.org">
+<p>made with quarto</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@AndreasThinks">
+      <i class="bi bi-mastodon" role="img" aria-label="Mastodon">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/AndreasThinks">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/avarotsis/">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="mailto:andreas.varotsis@gmail.com">
+      <i class="bi bi-envelope" role="img" aria-label="Email">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml">
+      <i class="bi bi-rss" role="img" aria-label="RSS feed">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
