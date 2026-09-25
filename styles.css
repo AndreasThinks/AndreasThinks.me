@@ -1109,6 +1109,268 @@ html[data-theme="light"] .dark-plot img {
   }
 }
 
+/* ── Social comments (open-social-comments extension) ───────────────────── */
+/* The extension ships light-only defaults in a <style> it injects at      */
+/* runtime. Everything here is scoped under #quarto-document-content so it */
+/* outranks those rules regardless of load order, which lets the extension */
+/* be updated verbatim from upstream.                                       */
+
+#quarto-document-content social-comments {
+  --font-color: var(--text-muted);
+  --font-size: 0.95rem;
+  --block-border-width: 0px;
+  --block-border-radius: var(--radius-md);
+  --block-border-color: transparent;
+  --block-background-color: var(--cell);
+  --comment-indent: 1.5rem;
+  display: block;
+  margin-top: 3.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border-soft);
+}
+
+#quarto-document-content social-comments > p {
+  font-size: 0.95rem;
+  margin-bottom: 1.2rem;
+}
+
+#quarto-document-content social-comments .social-comments-list {
+  margin-top: 0;
+  font-size: 0.95rem;
+}
+
+/* totals: a quiet mono line */
+#quarto-document-content social-comments .comments-stats {
+  gap: 0.3rem 1.2rem;
+  margin: 0 0 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-meta);
+}
+
+/* notices, "replying to", "more replies" */
+#quarto-document-content social-comments .comments-notice,
+#quarto-document-content social-comments .reply-context {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-meta);
+  text-decoration: none;
+}
+
+#quarto-document-content social-comments .comments-notice {
+  margin: 0.4rem 0 0.8rem;
+}
+
+#quarto-document-content social-comments a.reply-context:hover {
+  color: var(--text-primary);
+}
+
+#quarto-document-content social-comments .social-comments-list > button {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 0.35rem 0.9rem;
+  margin: 0 0 1rem;
+  cursor: pointer;
+}
+
+#quarto-document-content social-comments .social-comments-list > button:hover {
+  background: var(--cell);
+}
+
+/* each comment is a cell */
+#quarto-document-content social-comments .social-comment {
+  position: relative;
+  gap: 0;
+  padding: 0.95rem 1.1rem;
+  margin-bottom: 0.6rem;
+  color: var(--text-muted);
+  transition: box-shadow 0.12s ease;
+}
+
+#quarto-document-content social-comments .social-comment:hover {
+  box-shadow: inset 2px 0 0 var(--rail);
+}
+
+/* replies hang off a thread line */
+#quarto-document-content social-comments .thread-replies .social-comment {
+  background: transparent;
+  border-left: 1px solid var(--border-strong);
+  border-radius: 0;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+#quarto-document-content social-comments .comment-thread > li {
+  margin: 0;
+}
+
+#quarto-document-content social-comments .comment-thread > li::marker {
+  content: none;
+}
+
+#quarto-document-content social-comments .thread-toggle {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-meta);
+  /* vertical only: the extension indents by depth via margin-inline-start */
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+#quarto-document-content social-comments .thread-toggle:hover {
+  color: var(--text-primary);
+}
+
+/* author row: avatar | name + handle | date over platform */
+#quarto-document-content social-comments .social-comment .author {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  gap: 0 0.75rem;
+  align-items: center;
+}
+
+#quarto-document-content social-comments .social-comment .author .avatar {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+}
+
+#quarto-document-content social-comments .social-comment .author .avatar img {
+  display: block;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  margin: 0;
+  border-radius: 50%;
+}
+
+#quarto-document-content social-comments .social-comment .author .details {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.5rem;
+}
+
+#quarto-document-content social-comments .social-comment .author .details .name {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.92rem;
+  overflow-wrap: anywhere;
+}
+
+#quarto-document-content social-comments .social-comment .author .details .user {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-meta);
+  overflow-wrap: anywhere;
+}
+
+#quarto-document-content social-comments .social-comment .author .date,
+#quarto-document-content social-comments .social-comment .platform-indicator {
+  grid-column: 3;
+  justify-self: end;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  line-height: 1.5;
+  white-space: nowrap;
+  color: var(--text-meta);
+  text-decoration: none;
+}
+
+#quarto-document-content social-comments .social-comment .author .date { grid-row: 1; }
+#quarto-document-content social-comments .social-comment .platform-indicator { grid-row: 2; }
+
+#quarto-document-content social-comments .social-comment .author .date:hover {
+  color: var(--text-primary);
+}
+
+#quarto-document-content social-comments .social-comment .content {
+  margin: 0.7rem 0 0.6rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+
+#quarto-document-content social-comments .social-comment .content p {
+  margin: 0 0 0.6rem;
+  font-size: inherit;
+}
+
+#quarto-document-content social-comments .social-comment .content p:last-child {
+  margin-bottom: 0;
+}
+
+#quarto-document-content social-comments .social-comment .attachments img,
+#quarto-document-content social-comments .social-comment .attachments video {
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-soft);
+}
+
+#quarto-document-content social-comments .social-comment .status {
+  gap: 0.3rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+}
+
+#quarto-document-content social-comments .social-comment .status a {
+  color: var(--text-meta);
+  text-decoration: none;
+}
+
+#quarto-document-content social-comments .social-comment .status a:hover {
+  color: var(--text-primary);
+}
+
+#quarto-document-content social-comments .sensitive-content > summary {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--warn);
+  margin-top: 0.6rem;
+}
+
+@media (max-width: 600px) {
+  #quarto-document-content social-comments {
+    --comment-indent: 0.75rem;
+  }
+
+  #quarto-document-content social-comments .social-comment {
+    padding: 0.85rem 0.9rem;
+  }
+
+  #quarto-document-content social-comments .social-comment .author {
+    grid-template-columns: 32px minmax(0, 1fr) auto;
+    align-items: start;
+  }
+
+  #quarto-document-content social-comments .social-comment .author .avatar img {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+  }
+
+  #quarto-document-content social-comments .social-comment .author .details {
+    grid-row: 1;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  #quarto-document-content social-comments .social-comment .platform-indicator {
+    grid-row: 1;
+  }
+
+  #quarto-document-content social-comments .social-comment .author .date {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: start;
+  }
+}
+
 /* ── Page footer ─────────────────────────────────────────────────────────── */
 
 footer.nav-footer {
