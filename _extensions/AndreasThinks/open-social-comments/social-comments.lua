@@ -43,9 +43,21 @@ function Meta(m)
       local inject_script = [[
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function() {
-  var div = document.getElementById('quarto-content');
-  if(div) {
-    div.innerHTML += `]] .. social_html .. [[`;
+  // Mount at the end of the article column (before any appendix) rather
+  // than re-serialising #quarto-content, which would drop event listeners
+  // and place the comments in the page grid's gutter.
+  var tpl = document.createElement('template');
+  tpl.innerHTML = `]] .. social_html .. [[`;
+  var comments = tpl.content.firstElementChild;
+  var main = document.getElementById('quarto-document-content');
+  var appendix = document.getElementById('quarto-appendix');
+  if (main && appendix && appendix.parentElement === main) {
+    main.insertBefore(comments, appendix);
+  } else if (main) {
+    main.appendChild(comments);
+  } else {
+    var div = document.getElementById('quarto-content');
+    if (div) div.appendChild(comments);
   }
 });
 </script>

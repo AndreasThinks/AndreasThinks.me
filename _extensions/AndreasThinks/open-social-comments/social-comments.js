@@ -1,274 +1,235 @@
 const styles = `
+/* Styled from the site's theme tokens (styles.css) so the comments follow
+   the dark/light toggle; fallbacks keep it readable anywhere else. */
 social-comments {
   display: block;
-  margin-top: 3rem;
-  font-family: 'Space Grotesk', system-ui, sans-serif;
-  color: var(--comment-font-color, var(--text-muted, #9ba9c6));
-  --comment-font-color: var(--text-muted, #9ba9c6);
-  --comment-heading-color: var(--text-primary, #f4f7ff);
-  --comment-background: var(--bg-panel, rgba(10, 15, 30, 0.72));
-  --comment-border-color: var(--border-soft, rgba(123, 252, 200, 0.18));
-  --comment-radius: var(--radius-md, 14px);
-  --comment-radius-sm: var(--radius-sm, 8px);
-  --comment-link: var(--accent, #7bfcca);
-  --comment-link-hover: var(--accent-strong, #32ffc7);
-  --mastodon-color: #8c85ff;
-  --bluesky-color: #00a2ff;
-  --comment-indent: 48px;
+  margin-top: 3.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border-soft, rgba(127, 127, 127, 0.25));
+  color: var(--text-muted, inherit);
+  --c-cell: var(--cell, rgba(127, 127, 127, 0.08));
+  --c-rail: var(--rail, currentColor);
+  --c-meta: var(--text-meta, rgba(127, 127, 127, 0.9));
+  --c-strong: var(--text-primary, inherit);
+  --c-border: var(--border-soft, rgba(127, 127, 127, 0.25));
+  --c-border-strong: var(--border-strong, rgba(127, 127, 127, 0.45));
+  --c-link: var(--accent, inherit);
+  --c-mono: var(--font-mono, ui-monospace, monospace);
+  --c-radius: var(--radius-md, 6px);
+  --comment-indent: 2rem;
 }
 
-social-comments h2 {
-  color: var(--comment-heading-color);
-  font-size: clamp(1.25rem, 2vw, 1.5rem);
-  margin-bottom: 0.75rem;
-}
-
-social-comments p {
-  color: var(--comment-font-color);
-  max-width: 640px;
-  line-height: 1.65;
+social-comments > p {
+  color: var(--text-muted, inherit);
+  font-size: 0.95rem;
+  margin-bottom: 1.2rem;
 }
 
 social-comments a {
-  color: var(--comment-link);
-  text-decoration: none;
-  transition: color 0.2s ease, text-shadow 0.2s ease;
+  color: var(--c-link);
 }
 
-social-comments a:hover,
-social-comments a:focus {
-  color: var(--comment-link-hover);
-  text-shadow: 0 0 12px rgba(123, 252, 200, 0.4);
-}
-
-#social-comments-list {
-  margin-top: 1.75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.4rem;
-}
-
+/* totals: a quiet mono line rather than a panel */
 .comments-stats {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
-  background: rgba(123, 252, 200, 0.08);
-  border: 1px solid rgba(123, 252, 200, 0.2);
-  border-radius: var(--comment-radius);
-  padding: 0.85rem 1.1rem;
-  box-shadow: var(--shadow-glow, 0 0 25px rgba(123, 252, 200, 0.15));
+  gap: 0.4rem 1.2rem;
+  margin: 0 0 1rem;
+  padding: 0;
+  background: none;
+  border: none;
+  font-family: var(--c-mono);
+  font-size: 0.75rem;
+  color: var(--c-meta);
 }
 
-.comments-stats div {
+.comments-stats > div {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  color: var(--comment-font-color);
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.85rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  gap: 0.35rem;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--c-meta);
 }
 
-.comments-stats svg {
-  color: var(--comment-link);
-}
+.comments-stats a { color: inherit; text-decoration: none; }
+.comments-stats svg { width: 14px; height: 14px; margin: 0 !important; }
 
-.social-comment {
-  background: var(--comment-background);
-  border-radius: var(--comment-radius);
-  border: 1px solid var(--comment-border-color);
-  padding: 1.35rem;
+#social-comments-list {
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
-  color: var(--comment-font-color);
-  backdrop-filter: blur(8px);
-  box-shadow: var(--shadow-glow, 0 0 25px rgba(123, 252, 200, 0.15));
+  gap: 0.6rem;
+  font-size: 0.95rem;
 }
+
+/* each comment is a cell */
+.social-comment {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 0.95rem 1.1rem;
+  background: var(--c-cell);
+  border: none;
+  border-radius: var(--c-radius);
+  color: var(--text-muted, inherit);
+  transition: box-shadow 0.12s ease;
+}
+
+.social-comment:hover {
+  box-shadow: inset 2px 0 0 var(--c-rail);
+}
+
+/* replies hang off a thread line */
+.social-comment[style*="margin-left"] {
+  background: transparent;
+  border-left: 1px solid var(--c-border-strong);
+  border-radius: 0;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.social-comment a { text-decoration: none; }
 
 .social-comment .author {
   display: grid;
-  grid-template-columns: 56px 1fr auto;
-  grid-template-rows: auto auto;
-  gap: 0.5rem 1rem;
-  align-items: start;
+  grid-template-columns: 36px minmax(0, 1fr) auto auto;
+  gap: 0 0.6rem;
+  align-items: center;
 }
 
-.social-comment .author a {
-  text-decoration: none;
-}
-
-.social-comment .author .avatar {
-  grid-column: 1;
-  grid-row: 1 / span 2;
-}
+.social-comment .author .avatar { grid-column: 1; grid-row: 1 / span 2; }
 
 .social-comment .author .avatar img {
-  width: 56px;
-  height: 56px;
-  border-radius: var(--comment-radius-sm);
-  border: 1px solid var(--comment-border-color);
-  box-shadow: 0 6px 16px rgba(5, 6, 13, 0.55);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  box-shadow: none;
+  display: block;
 }
 
 .social-comment .author .details {
   grid-column: 2;
   grid-row: 1 / span 2;
   display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.5rem;
   min-width: 0;
 }
 
 .social-comment .author .details .name {
-  color: var(--comment-heading-color);
+  color: var(--c-strong);
   font-weight: 600;
+  font-size: 0.92rem;
+  overflow-wrap: anywhere;
 }
 
 .social-comment .author .details .user {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.8rem;
-  color: var(--comment-font-color);
-  opacity: 0.7;
+  font-family: var(--c-mono);
+  font-size: 0.72rem;
+  color: var(--c-meta);
+  overflow-wrap: anywhere;
 }
 
 .social-comment .platform-indicator {
   grid-column: 3;
-  grid-row: 1;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-start;
-  font-size: 1rem;
+  grid-row: 1 / span 2;
+  justify-self: end;
+  font-size: 0.8rem;
+  line-height: 1;
 }
 
-.social-comment .platform-indicator i {
-  font-size: 1.2rem;
-}
+.social-comment .platform-indicator i { color: var(--c-meta) !important; }
 
 .social-comment .author .date {
-  grid-column: 3;
-  grid-row: 2;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.72rem;
-  text-align: right;
-  line-height: 1.4;
+  grid-column: 4;
+  grid-row: 1 / span 2;
+  justify-self: end;
+  margin-left: 0;
+  font-family: var(--c-mono);
+  font-size: 0.68rem;
   white-space: nowrap;
-  color: var(--comment-font-color);
-  opacity: 0.65;
+  color: var(--c-meta);
 }
+
+.social-comment .author .date:hover { color: var(--c-strong); }
 
 .social-comment .content {
   margin: 0;
-  width: 100%;
   line-height: 1.65;
   overflow-wrap: break-word;
-  word-wrap: break-word;
   word-break: break-word;
 }
 
-.social-comment .content a {
-  overflow-wrap: anywhere;
-}
+.social-comment .content a { overflow-wrap: anywhere; }
 
 /* Mastodon link markup: hide the "invisible" scheme/tail spans and close
    truncated URLs with an ellipsis, as Mastodon's own frontend does */
-.social-comment .content a .invisible {
-  display: none;
-}
+.social-comment .content a .invisible { display: none; }
+.social-comment .content a .ellipsis::after { content: "\\2026"; }
 
-.social-comment .content a .ellipsis::after {
-  content: "\\2026";
-}
-
-.social-comment .author .details .name,
-.social-comment .author .details .user {
-  overflow-wrap: anywhere;
-}
-
-.social-comment .content p {
-  margin: 0 0 0.75rem;
-}
-
-.social-comment .content p:last-child {
-  margin-bottom: 0;
-}
+.social-comment .content p { margin: 0 0 0.6rem; font-size: inherit; }
+.social-comment .content p:last-child { margin-bottom: 0; }
 
 .social-comment .attachments {
-  margin: 0;
-  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.6rem;
 }
 
-.social-comment .attachments > * {
-  margin: 0;
-  max-width: 100%;
-}
+.social-comment .attachments:empty { display: none; }
+
+.social-comment .attachments > * { margin: 0; max-width: 100%; }
 
 .social-comment .attachments img,
 .social-comment .attachments video,
 .social-comment .attachments audio {
-  border-radius: var(--comment-radius-sm);
-  border: 1px solid rgba(123, 252, 200, 0.18);
+  border-radius: var(--radius-sm, 4px);
+  border: 1px solid var(--c-border);
 }
 
 .social-comment .status {
   display: flex;
-  gap: 1rem;
   flex-wrap: wrap;
+  gap: 1rem;
+  font-family: var(--c-mono);
+  font-size: 0.72rem;
 }
 
 .social-comment .status > div {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.85rem;
-  color: var(--comment-font-color);
-}
-
-.social-comment .status svg {
-  width: 16px;
-  height: 16px;
+  gap: 0.35rem;
+  color: var(--c-meta);
 }
 
 .social-comment .status a {
-  color: inherit;
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  text-decoration: none;
+  gap: 0.35rem;
+  color: inherit;
 }
 
-.social-comment .status .replies.active a,
-.social-comment .status .reblogs.active a,
-.social-comment .status .reposts.active a,
-.social-comment .status .favourites.active a,
-.social-comment .status .likes.active a {
-  color: var(--comment-link);
-}
+.social-comment .status svg,
+.social-comment .status i { width: 14px; height: 14px; font-size: 0.8rem; }
+
+.social-comment .status .active a { color: var(--c-strong); }
 
 @media (max-width: 600px) {
-  social-comments {
-    --comment-indent: 24px;
-  }
-
-  .social-comment {
-    padding: 1.1rem;
-  }
-
-  .social-comment .author {
-    grid-template-columns: 44px 1fr auto;
-    gap: 0.4rem 0.75rem;
-  }
-
-  .social-comment .author .avatar img {
-    width: 44px;
-    height: 44px;
-  }
+  social-comments { --comment-indent: 1rem; }
+  .social-comment { padding: 0.85rem 0.9rem; }
+  .social-comment .author { grid-template-columns: 32px minmax(0, 1fr) auto; }
+  .social-comment .author .avatar { align-self: start; }
+  .social-comment .author .avatar img { width: 32px; height: 32px; }
+  .social-comment .author .details { grid-row: 1; flex-direction: column; gap: 0; }
+  .social-comment .platform-indicator { grid-row: 1; align-self: start; }
+  .social-comment .author .date { grid-column: 2; grid-row: 2; justify-self: start; }
+  .social-comment[style*="margin-left"] { padding-left: 0.8rem; }
 }
+
 `;
 
 class SocialComments extends HTMLElement {
@@ -618,9 +579,7 @@ class SocialComments extends HTMLElement {
         <span class="platform-indicator">
           ${platformIcon}
         </span>
-        <a class="date" href="${comment.url}" rel="nofollow">
-          ${new Date(comment.date).toLocaleDateString()}<br>${new Date(comment.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-        </a>
+        <a class="date" href="${comment.url}" rel="nofollow" title="${new Date(comment.date).toLocaleString()}">${new Date(comment.date).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })}</a>
       </div>
       <div class="content">${comment.platform === 'mastodon' ? comment.content : this.formatBlueskyContent(comment.content)}</div>
       ${comment.attachments ? this.renderAttachments(comment.attachments) : ''}

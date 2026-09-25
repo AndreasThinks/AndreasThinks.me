@@ -1,242 +1,234 @@
 const styles = `
+/* Styled from the site's theme tokens (styles.css) so the comments follow
+   the dark/light toggle; fallbacks keep it readable anywhere else. */
 mastodon-comments {
   display: block;
-  margin-top: 3rem;
-  font-family: 'Space Grotesk', system-ui, sans-serif;
-  color: var(--mastodon-font-color, var(--text-muted, #9ba9c6));
-  --mastodon-font-color: var(--text-muted, #9ba9c6);
-  --mastodon-heading-color: var(--text-primary, #f4f7ff);
-  --mastodon-background: var(--bg-panel, rgba(10, 15, 30, 0.72));
-  --mastodon-border-color: var(--border-soft, rgba(123, 252, 200, 0.18));
-  --mastodon-radius: var(--radius-md, 14px);
-  --mastodon-radius-sm: var(--radius-sm, 8px);
-  --mastodon-link: var(--accent, #7bfcca);
-  --mastodon-link-hover: var(--accent-strong, #32ffc7);
-  --comment-indent: 48px;
+  margin-top: 3.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border-soft, rgba(127, 127, 127, 0.25));
+  color: var(--text-muted, inherit);
+  --c-cell: var(--cell, rgba(127, 127, 127, 0.08));
+  --c-rail: var(--rail, currentColor);
+  --c-meta: var(--text-meta, rgba(127, 127, 127, 0.9));
+  --c-strong: var(--text-primary, inherit);
+  --c-border: var(--border-soft, rgba(127, 127, 127, 0.25));
+  --c-border-strong: var(--border-strong, rgba(127, 127, 127, 0.45));
+  --c-link: var(--accent, inherit);
+  --c-mono: var(--font-mono, ui-monospace, monospace);
+  --c-radius: var(--radius-md, 6px);
+  --comment-indent: 2rem;
 }
 
-mastodon-comments h2 {
-  color: var(--mastodon-heading-color);
-  font-size: clamp(1.25rem, 2vw, 1.5rem);
-  margin-bottom: 0.75rem;
-}
-
-mastodon-comments p {
-  color: var(--mastodon-font-color);
-  max-width: 640px;
-  line-height: 1.65;
+mastodon-comments > p {
+  color: var(--text-muted, inherit);
+  font-size: 0.95rem;
+  margin-bottom: 1.2rem;
 }
 
 mastodon-comments a {
-  color: var(--mastodon-link);
-  text-decoration: none;
-  transition: color 0.2s ease, text-shadow 0.2s ease;
+  color: var(--c-link);
 }
 
-mastodon-comments a:hover,
-mastodon-comments a:focus {
-  color: var(--mastodon-link-hover);
-  text-shadow: 0 0 12px rgba(123, 252, 200, 0.4);
-}
-
+/* totals: a quiet mono line rather than a panel */
 #mastodon-stats {
-  margin-top: 1.5rem;
   display: flex;
-  gap: 1rem;
   flex-wrap: wrap;
+  gap: 0.4rem 1.2rem;
+  margin: 0 0 1rem;
+  padding: 0;
+  background: none;
+  border: none;
+  font-family: var(--c-mono);
+  font-size: 0.75rem;
+  color: var(--c-meta);
 }
 
 #mastodon-stats > div {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.55rem 0.85rem;
-  background: rgba(123, 252, 200, 0.08);
-  border: 1px solid rgba(123, 252, 200, 0.2);
-  border-radius: var(--mastodon-radius-sm);
-  color: var(--mastodon-font-color);
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.85rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  gap: 0.35rem;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--c-meta);
 }
 
-#mastodon-stats a {
-  color: inherit;
-}
+#mastodon-stats a { color: inherit; text-decoration: none; }
+#mastodon-stats svg { width: 14px; height: 14px; margin: 0 !important; }
 
 #mastodon-comments-list {
-  margin-top: 1.6rem;
   display: flex;
   flex-direction: column;
-  gap: 1.4rem;
+  gap: 0.6rem;
+  font-size: 0.95rem;
 }
 
+/* each comment is a cell */
 .mastodon-comment {
-  background: var(--mastodon-background);
-  border-radius: var(--mastodon-radius);
-  border: 1px solid var(--mastodon-border-color);
-  padding: 1.35rem;
-  color: var(--mastodon-font-color);
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
-  backdrop-filter: blur(8px);
-  box-shadow: var(--shadow-glow, 0 0 25px rgba(123, 252, 200, 0.15));
+  gap: 0.7rem;
+  padding: 0.95rem 1.1rem;
+  background: var(--c-cell);
+  border: none;
+  border-radius: var(--c-radius);
+  color: var(--text-muted, inherit);
+  transition: box-shadow 0.12s ease;
 }
+
+.mastodon-comment:hover {
+  box-shadow: inset 2px 0 0 var(--c-rail);
+}
+
+/* replies hang off a thread line */
+.mastodon-comment:not([style*="* 0)"]) {
+  background: transparent;
+  border-left: 1px solid var(--c-border-strong);
+  border-radius: 0;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.mastodon-comment a { text-decoration: none; }
 
 .mastodon-comment .author {
-  display: flex;
-  gap: 1rem;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  gap: 0 0.75rem;
+  align-items: center;
 }
 
-.mastodon-comment .author a {
-  text-decoration: none;
-}
+.mastodon-comment .author .avatar { grid-column: 1; grid-row: 1 / span 2; }
 
 .mastodon-comment .author .avatar img {
-  width: 60px;
-  height: 60px;
-  border-radius: var(--mastodon-radius-sm);
-  border: 1px solid var(--mastodon-border-color);
-  box-shadow: 0 6px 16px rgba(5, 6, 13, 0.55);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  box-shadow: none;
+  display: block;
 }
 
 .mastodon-comment .author .details {
+  grid-column: 2;
+  grid-row: 1 / span 2;
   display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.5rem;
   min-width: 0;
 }
 
 .mastodon-comment .author .details .name {
-  color: var(--mastodon-heading-color);
+  color: var(--c-strong);
   font-weight: 600;
+  font-size: 0.92rem;
+  overflow-wrap: anywhere;
 }
 
 .mastodon-comment .author .details .user {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.8rem;
-  color: var(--mastodon-font-color);
-  opacity: 0.7;
+  font-family: var(--c-mono);
+  font-size: 0.72rem;
+  color: var(--c-meta);
+  overflow-wrap: anywhere;
 }
+
+.mastodon-comment .platform-indicator {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
+.mastodon-comment .platform-indicator i { color: var(--c-meta) !important; }
 
 .mastodon-comment .author .date {
-  margin-left: auto;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.72rem;
+  grid-column: 3;
+  grid-row: 2;
+  justify-self: end;
+  margin-left: 0;
+  font-family: var(--c-mono);
+  font-size: 0.68rem;
   white-space: nowrap;
-  color: var(--mastodon-font-color);
-  opacity: 0.65;
+  color: var(--c-meta);
 }
 
+.mastodon-comment .author .date:hover { color: var(--c-strong); }
+
 .mastodon-comment .content {
+  margin: 0;
   line-height: 1.65;
   overflow-wrap: break-word;
   word-break: break-word;
 }
 
-.mastodon-comment .content a {
-  overflow-wrap: anywhere;
-}
+.mastodon-comment .content a { overflow-wrap: anywhere; }
 
 /* Mastodon link markup: hide the "invisible" scheme/tail spans and close
    truncated URLs with an ellipsis, as Mastodon's own frontend does */
-.mastodon-comment .content a .invisible {
-  display: none;
-}
+.mastodon-comment .content a .invisible { display: none; }
+.mastodon-comment .content a .ellipsis::after { content: "\\2026"; }
 
-.mastodon-comment .content a .ellipsis::after {
-  content: "\\2026";
-}
-
-.mastodon-comment .author .details .name,
-.mastodon-comment .author .details .user {
-  overflow-wrap: anywhere;
-}
-
-.mastodon-comment .content p {
-  margin: 0 0 0.75rem;
-}
-
-.mastodon-comment .content p:last-child {
-  margin-bottom: 0;
-}
+.mastodon-comment .content p { margin: 0 0 0.6rem; font-size: inherit; }
+.mastodon-comment .content p:last-child { margin-bottom: 0; }
 
 .mastodon-comment .attachments {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.6rem;
 }
 
-.mastodon-comment .attachments > * {
-  margin: 0;
-  max-width: 100%;
-}
+.mastodon-comment .attachments:empty { display: none; }
+
+.mastodon-comment .attachments > * { margin: 0; max-width: 100%; }
 
 .mastodon-comment .attachments img,
 .mastodon-comment .attachments video,
 .mastodon-comment .attachments audio {
-  border-radius: var(--mastodon-radius-sm);
-  border: 1px solid rgba(123, 252, 200, 0.18);
+  border-radius: var(--radius-sm, 4px);
+  border: 1px solid var(--c-border);
 }
 
 .mastodon-comment .status {
   display: flex;
-  gap: 1rem;
   flex-wrap: wrap;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.85rem;
+  gap: 1rem;
+  font-family: var(--c-mono);
+  font-size: 0.72rem;
 }
 
 .mastodon-comment .status > div {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  color: var(--mastodon-font-color);
+  gap: 0.35rem;
+  color: var(--c-meta);
 }
 
 .mastodon-comment .status a {
-  color: inherit;
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
+  color: inherit;
 }
 
 .mastodon-comment .status svg,
-.mastodon-comment .status i {
-  width: 16px;
-  height: 16px;
-}
+.mastodon-comment .status i { width: 14px; height: 14px; font-size: 0.8rem; }
 
-.mastodon-comment .status .replies.active a,
-.mastodon-comment .status .reblogs.active a,
-.mastodon-comment .status .favourites.active a,
-#mastodon-stats .replies.active a,
-#mastodon-stats .reblogs.active a,
-#mastodon-stats .favourites.active a {
-  color: var(--mastodon-link);
-}
+.mastodon-comment .status .active a { color: var(--c-strong); }
 
 @media (max-width: 600px) {
-  mastodon-comments {
-    --comment-indent: 24px;
-  }
-
-  .mastodon-comment {
-    padding: 1.1rem;
-  }
-
-  .mastodon-comment .author {
-    flex-wrap: wrap;
-  }
-
-  .mastodon-comment .author .date {
-    width: 100%;
-    margin-left: 0;
-  }
+  mastodon-comments { --comment-indent: 1rem; }
+  .mastodon-comment { padding: 0.85rem 0.9rem; }
+  .mastodon-comment .author { grid-template-columns: 32px minmax(0, 1fr); }
+  .mastodon-comment .author .avatar { align-self: start; }
+  .mastodon-comment .author .avatar img { width: 32px; height: 32px; }
+  .mastodon-comment .author .details { grid-row: 1; flex-direction: column; gap: 0; }
+  .mastodon-comment .author .date { grid-column: 2; grid-row: 2; justify-self: start; }
+  .mastodon-comment:not([style*="* 0)"]) { padding-left: 0.8rem; }
 }
+
 `;
 
 class MastodonComments extends HTMLElement {
@@ -371,10 +363,9 @@ class MastodonComments extends HTMLElement {
           </div>
           <a class="date" href="${
             toot.url
-          }" rel="nofollow">${toot.created_at.substr(
-            0,
-            10,
-          )} ${toot.created_at.substr(11, 8)}</a>
+          }" rel="nofollow" title="${new Date(toot.created_at).toLocaleString()}">${new Date(
+            toot.created_at,
+          ).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" })}</a>
         </div>
         <div class="content">${toot.content}</div>
         <div class="attachments">

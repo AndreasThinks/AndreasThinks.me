@@ -1,100 +1,118 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+/* ==========================================================================
+   andreasthinks.me — "Margin" theme
+   A quiet notebook: content runs in cells, a narrow left margin carries cell
+   indices and section marks, the hovered cell lights a thin rail, and each
+   post in the listing reads as an input block followed by its output.
+
+   Dark/light: includes/theme-toggle.html sets data-theme on <html>. Tokens
+   are defined for the system preference and for both explicit themes.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+/* ── Tokens ──────────────────────────────────────────────────────────────── */
 
 :root {
-  --bg-primary: #05060d;
-  --bg-elevated: #0a0f1e;
-  --bg-panel: rgba(10, 15, 30, 0.72);
-  --bg-nav: rgba(2, 6, 15, 0.85);
-  --bg-footer: rgba(2, 6, 15, 0.85);
-  --bg-code: rgba(3, 12, 24, 0.65);
-  --bg-blockquote: rgba(2, 6, 15, 0.6);
-  --border-soft: rgba(123, 252, 200, 0.18);
-  --border-strong: rgba(123, 252, 200, 0.4);
-  --border-subtle: rgba(123, 252, 200, 0.15);
-  --text-primary: #f4f7ff;
-  --text-muted: #9ba9c6;
-  --text-meta: rgba(149, 169, 194, 0.8);
-  --accent: #7bfcca;
-  --accent-strong: #32ffc7;
-  --pill-bg: rgba(123, 252, 200, 0.08);
-  --pill-border: rgba(123, 252, 200, 0.4);
-  --shadow-glow: 0 0 25px rgba(123, 252, 200, 0.18);
-  --grid-line: rgba(123, 252, 200, 0.05);
-  --grid-glow: rgba(123, 252, 200, 0.08);
-  --radius-lg: 18px;
-  --radius-md: 14px;
-  --radius-sm: 8px;
+  --bg-primary: #111317;
+  --bg-elevated: #1a1d23;
+  --bg-panel: #15171c;
+  --bg-nav: rgba(17, 19, 23, 0.94);
+  --bg-footer: #111317;
+  --bg-code: #1a1d23;
+  --cell: #1a1d23;
+  --border-soft: #262a31;
+  --border-strong: #3a3f48;
+  --border-subtle: #1e2127;
+  --text-primary: #e6e8ec;
+  --text-muted: #aab0bb;
+  --text-meta: #6b717d;
+  --rail: #8b93ff;
+  --accent: #9aa2ff;
+  --accent-strong: #b9beff;
+  --ok: #6fcf97;
+  --warn: #f2b35b;
+  --radius-lg: 8px;
+  --radius-md: 6px;
+  --radius-sm: 4px;
+  --gutter-w: 4.2rem;
+  --font-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+  color-scheme: dark;
 }
 
 @media (prefers-color-scheme: light) {
-  :root {
-    --bg-primary: #f5f7fb;
-    --bg-elevated: #ffffff;
-    --bg-panel: rgba(255, 255, 255, 0.88);
-    --bg-nav: rgba(245, 247, 251, 0.92);
-    --bg-footer: rgba(245, 247, 251, 0.92);
-    --bg-code: rgba(15, 30, 50, 0.06);
-    --bg-blockquote: rgba(15, 30, 50, 0.05);
-    --border-soft: rgba(15, 109, 82, 0.15);
-    --border-strong: rgba(15, 109, 82, 0.35);
-    --border-subtle: rgba(15, 109, 82, 0.2);
-    --text-primary: #0b1220;
-    --text-muted: #465066;
-    --text-meta: rgba(67, 84, 109, 0.8);
-    --accent: #1f8f70;
-    --accent-strong: #0f6d52;
-    --pill-bg: rgba(31, 143, 112, 0.12);
-    --pill-border: rgba(31, 143, 112, 0.35);
-    --shadow-glow: 0 12px 30px rgba(15, 109, 82, 0.15);
-  --grid-line: rgba(15, 109, 82, 0.06);
-  --grid-glow: rgba(15, 109, 82, 0.07);
+  :root:not([data-theme="dark"]) {
+    --bg-primary: #f7f8fa;
+    --bg-elevated: #eff1f5;
+    --bg-panel: #ffffff;
+    --bg-nav: rgba(247, 248, 250, 0.94);
+    --bg-footer: #f7f8fa;
+    --bg-code: #eff1f5;
+    --cell: #eff1f5;
+    --border-soft: #e3e6eb;
+    --border-strong: #c9ced6;
+    --border-subtle: #eceef2;
+    --text-primary: #16181d;
+    --text-muted: #4a505c;
+    --text-meta: #858c99;
+    --rail: #4f5bd5;
+    --accent: #3f4bc4;
+    --accent-strong: #2c369e;
+    --ok: #2f9e5c;
+    --warn: #b7791f;
+    color-scheme: light;
   }
 }
 
 :root[data-theme="light"] {
-  --bg-primary: #f5f7fb;
-  --bg-elevated: #ffffff;
-  --bg-panel: rgba(255, 255, 255, 0.88);
-  --bg-nav: rgba(245, 247, 251, 0.92);
-  --bg-footer: rgba(245, 247, 251, 0.92);
-  --bg-code: rgba(15, 30, 50, 0.06);
-  --bg-blockquote: rgba(15, 30, 50, 0.05);
-  --border-soft: rgba(15, 109, 82, 0.15);
-  --border-strong: rgba(15, 109, 82, 0.35);
-  --border-subtle: rgba(15, 109, 82, 0.2);
-  --text-primary: #0b1220;
-  --text-muted: #465066;
-  --text-meta: rgba(67, 84, 109, 0.8);
-  --accent: #1f8f70;
-  --accent-strong: #0f6d52;
-  --pill-bg: rgba(31, 143, 112, 0.12);
-  --pill-border: rgba(31, 143, 112, 0.35);
-  --shadow-glow: 0 12px 30px rgba(15, 109, 82, 0.15);
-  --grid-line: rgba(15, 109, 82, 0.06);
-  --grid-glow: rgba(15, 109, 82, 0.07);
+  --bg-primary: #f7f8fa;
+  --bg-elevated: #eff1f5;
+  --bg-panel: #ffffff;
+  --bg-nav: rgba(247, 248, 250, 0.94);
+  --bg-footer: #f7f8fa;
+  --bg-code: #eff1f5;
+  --cell: #eff1f5;
+  --border-soft: #e3e6eb;
+  --border-strong: #c9ced6;
+  --border-subtle: #eceef2;
+  --text-primary: #16181d;
+  --text-muted: #4a505c;
+  --text-meta: #858c99;
+  --rail: #4f5bd5;
+  --accent: #3f4bc4;
+  --accent-strong: #2c369e;
+  --ok: #2f9e5c;
+  --warn: #b7791f;
+  color-scheme: light;
 }
 
 :root[data-theme="dark"] {
-  --bg-primary: #05060d;
-  --bg-elevated: #0a0f1e;
-  --bg-panel: rgba(10, 15, 30, 0.72);
-  --bg-nav: rgba(2, 6, 15, 0.85);
-  --bg-footer: rgba(2, 6, 15, 0.85);
-  --bg-code: rgba(3, 12, 24, 0.65);
-  --bg-blockquote: rgba(2, 6, 15, 0.6);
-  --border-soft: rgba(123, 252, 200, 0.18);
-  --border-strong: rgba(123, 252, 200, 0.4);
-  --border-subtle: rgba(123, 252, 200, 0.15);
-  --text-primary: #f4f7ff;
-  --text-muted: #9ba9c6;
-  --text-meta: rgba(149, 169, 194, 0.8);
-  --accent: #7bfcca;
-  --accent-strong: #32ffc7;
-  --pill-bg: rgba(123, 252, 200, 0.08);
-  --pill-border: rgba(123, 252, 200, 0.4);
-  --shadow-glow: 0 0 25px rgba(123, 252, 200, 0.18);
-  --grid-line: rgba(123, 252, 200, 0.05);
-  --grid-glow: rgba(123, 252, 200, 0.08);
+  --bg-primary: #111317;
+  --bg-elevated: #1a1d23;
+  --bg-panel: #15171c;
+  --bg-nav: rgba(17, 19, 23, 0.94);
+  --bg-footer: #111317;
+  --bg-code: #1a1d23;
+  --cell: #1a1d23;
+  --border-soft: #262a31;
+  --border-strong: #3a3f48;
+  --border-subtle: #1e2127;
+  --text-primary: #e6e8ec;
+  --text-muted: #aab0bb;
+  --text-meta: #6b717d;
+  --rail: #8b93ff;
+  --accent: #9aa2ff;
+  --accent-strong: #b9beff;
+  --ok: #6fcf97;
+  --warn: #f2b35b;
+  color-scheme: dark;
+}
+
+/* ── Base ────────────────────────────────────────────────────────────────── */
+
+html {
+  background: var(--bg-primary);
+  scrollbar-color: var(--border-strong) transparent;
 }
 
 html,
@@ -102,109 +120,95 @@ body {
   min-height: 100%;
 }
 
-html {
+body {
+  font-family: var(--font-body);
+  font-size: 16.5px;
+  line-height: 1.7;
+  color: var(--text-primary);
   background: var(--bg-primary);
 }
 
-body {
-  font-family: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  color: var(--text-primary);
-  background: transparent;
-  line-height: 1.7;
-  position: relative;
-}
-
-/* Faint terminal grid + glow behind the top of every page */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 90% 55% at 50% -12%, var(--grid-glow), transparent 60%),
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 100% 100%, 44px 44px, 44px 44px;
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.3) 45%, transparent 90%);
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.3) 45%, transparent 90%);
-}
-
 ::selection {
-  background: rgba(123, 252, 200, 0.28);
+  background: color-mix(in srgb, var(--rail) 22%, transparent);
   color: inherit;
 }
 
-:root[data-theme="light"] ::selection {
-  background: rgba(31, 143, 112, 0.25);
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
 }
 
-html {
-  scrollbar-color: var(--border-strong) transparent;
+p,
+li {
+  font-size: 1.02rem;
+  color: var(--text-muted);
 }
+
+strong { color: var(--text-primary); }
+
+a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 28%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+a:hover,
+a:focus {
+  color: var(--accent-strong);
+  text-decoration-color: currentColor;
+}
+
+hr {
+  border-color: var(--border-soft);
+  opacity: 1;
+  margin: 2.5rem 0;
+}
+
+/* ── Margin column ───────────────────────────────────────────────────────── */
+
+main.content {
+  padding-left: var(--gutter-w) !important;
+  position: relative;
+  counter-reset: nbcell;
+}
+
+/* section marks in the margin */
+#quarto-document-content h2 {
+  position: relative;
+  font-size: 1.5rem;
+  border-bottom: none;
+  margin-top: 2.6rem;
+}
+
+#quarto-document-content h2::before {
+  content: "§";
+  position: absolute;
+  left: calc(-1 * var(--gutter-w));
+  width: calc(var(--gutter-w) - 1.2rem);
+  text-align: right;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 0.85rem;
+  line-height: 2.3rem;
+  color: var(--text-meta);
+}
+
+/* ── Navbar ──────────────────────────────────────────────────────────────── */
 
 .navbar {
-  backdrop-filter: blur(12px);
   background: var(--bg-nav) !important;
+  backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border-soft);
-  font-family: 'IBM Plex Mono', monospace;
-  padding: 0.85rem 1.2rem;
-  text-transform: none;
-  letter-spacing: 0.02em;
-}
-
-.quarto-navbar-tools {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.theme-toggle-button {
-  border: none;
-  background: transparent;
-  color: var(--text-muted);
-  border-radius: 0;
-  width: auto;
-  height: auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.25rem;
-  font-size: 1.25rem;
-  line-height: 1;
-  transition: color 0.2s ease, text-shadow 0.2s ease;
-}
-
-.theme-toggle-button:hover,
-.theme-toggle-button:focus-visible {
-  color: var(--accent);
-  text-shadow: 0 0 12px rgba(123, 252, 200, 0.45);
-}
-
-.theme-toggle-button:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-.navbar .navbar-brand,
-.navbar .nav-link {
-  color: var(--text-muted) !important;
-  transition: color 0.2s ease, text-shadow 0.2s ease;
-  font-weight: 500;
-  text-transform: none;
-}
-
-.navbar .navbar-brand:hover,
-.navbar .nav-link:hover,
-.navbar .nav-link:focus {
-  color: var(--accent) !important;
-  text-shadow: 0 0 12px rgba(123, 252, 200, 0.45);
+  font-family: var(--font-body);
+  padding: 0.55rem 1.2rem;
 }
 
 .navbar .navbar-brand-container {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
   margin: 0;
   padding: 0;
 }
@@ -212,387 +216,851 @@ html {
 .navbar .navbar-brand {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
-  font-size: 1.05rem;
-  letter-spacing: 0.05em;
+  font-family: var(--font-body);
+  font-size: 1.02rem;
   font-weight: 600;
+  letter-spacing: -0.01em;
   color: var(--text-primary) !important;
-  margin-right: 1.5rem;
+  margin-right: 1.2rem;
   padding: 0;
   white-space: nowrap;
-  line-height: 1.1;
 }
 
-.navbar .navbar-nav .nav-link {
+/* a quiet "ready" dot */
+.navbar .navbar-brand::before {
+  content: "";
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ok);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 20%, transparent);
+  margin-right: 0.6rem;
+}
+
+.navbar .nav-link {
+  font-size: 0.9rem;
+  color: var(--text-muted) !important;
+  opacity: 1;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.navbar .navbar-brand:hover,
+.navbar .nav-link:hover,
+.navbar .nav-link:focus {
+  color: var(--text-primary) !important;
+}
+
+.navbar .navbar-nav.me-auto .nav-link.active {
+  color: var(--text-primary) !important;
+  box-shadow: inset 0 -2px 0 var(--rail);
+}
+
+/* social icons: a touch smaller and tighter so the bar stays on one line */
+.navbar .navbar-nav.ms-auto .nav-link {
+  padding-left: 0.45rem;
+  padding-right: 0.45rem;
+}
+
+.navbar .navbar-nav.ms-auto .nav-link .fa-xl {
+  font-size: 1.15rem;
+}
+
+/* Darkly paints the hamburger icon white; recolour it from the tokens */
+.navbar .navbar-toggler {
+  border: none;
+  padding: 0.25rem;
+  box-shadow: none !important;
+}
+
+.navbar .navbar-toggler-icon {
+  background-image: none;
+  -webkit-mask: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='black' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") center / 100% no-repeat;
+  mask: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='black' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") center / 100% no-repeat;
+  background-color: var(--text-primary);
+  width: 1.5em;
+  height: 1.5em;
+}
+
+/* ── Navbar tools: search + theme toggle ─────────────────────────────────── */
+/* Quarto orders the collapsed navbar as toggler(1) brand(2) tools(3)       */
+/* search(4). Push the toggle after search at every width so the two sit    */
+/* together on the right and never overlap.                                 */
+
+#quarto-search {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
-  font-size: 0.95rem;
-  opacity: 0.92;
 }
 
-.navbar .navbar-nav .nav-link.active {
-  color: var(--accent-strong) !important;
+.navbar #quarto-search .aa-DetachedSearchButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: 'Space Grotesk', system-ui, sans-serif;
-  letter-spacing: 0.03em;
-  font-weight: 600;
+.navbar #quarto-search .aa-DetachedSearchButtonIcon,
+.navbar #quarto-search .aa-SubmitIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted) !important;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+}
+
+/* Quarto's SVG is 26px and inline, which drops it below centre */
+.navbar #quarto-search .aa-DetachedSearchButtonIcon svg {
+  display: block;
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.navbar #quarto-search .aa-DetachedSearchButton:hover .aa-DetachedSearchButtonIcon {
+  color: var(--text-primary) !important;
+}
+
+.navbar .quarto-navbar-tools {
+  display: flex;
+  align-items: center;
+  order: 1000;
+  margin-left: 0.15rem;
+}
+
+.theme-toggle-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.theme-toggle-button:hover,
+.navbar #quarto-search .aa-DetachedSearchButton:hover {
   color: var(--text-primary);
+  background: var(--cell);
 }
 
-@media (prefers-color-scheme: light) {
-  #title-block-header .title,
-  #title-block-header .subtitle,
-  #title-block-header .quarto-title-meta,
-  #title-block-header .quarto-title-meta-heading,
-  #title-block-header .quarto-title-meta-contents,
-  .callout .callout-header,
-  .callout .callout-title-container,
-  .callout .callout-title {
-    color: var(--text-primary);
+.theme-toggle-button:focus-visible,
+.navbar #quarto-search .aa-DetachedSearchButton:focus-visible {
+  outline: 2px solid var(--rail);
+  outline-offset: 1px;
+}
+
+/* collapsed navbar: toggler | brand ........ search toggle */
+@media (max-width: 991.98px) {
+  .navbar {
+    padding: 0.45rem 0.8rem;
+  }
+
+  .navbar .navbar-brand-container {
+    margin-right: auto !important;
+  }
+
+  .navbar .navbar-brand {
+    margin-right: 0;
+  }
+
+  .navbar #quarto-search {
+    order: 4;
+  }
+
+  .navbar .quarto-navbar-tools {
+    order: 5;
+  }
+
+  .navbar-collapse .navbar-nav .nav-link {
+    padding: 0.45rem 0.2rem;
+  }
+
+  .navbar-collapse .navbar-nav.me-auto .nav-link.active {
+    box-shadow: inset 2px 0 0 var(--rail);
+    padding-left: 0.7rem;
+  }
+
+  .navbar-collapse .navbar-nav.ms-auto {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.2rem;
+    padding: 0.4rem 0 0.6rem;
   }
 }
 
-:root[data-theme="light"] #title-block-header .title,
-:root[data-theme="light"] #title-block-header .subtitle,
-:root[data-theme="light"] #title-block-header .quarto-title-meta,
-:root[data-theme="light"] #title-block-header .quarto-title-meta-heading,
-:root[data-theme="light"] #title-block-header .quarto-title-meta-contents,
-:root[data-theme="light"] .callout .callout-header,
-:root[data-theme="light"] .callout .callout-title-container,
-:root[data-theme="light"] .callout .callout-title {
-  color: var(--text-primary);
+@media (max-width: 400px) {
+  .navbar .navbar-brand {
+    font-size: 0.95rem;
+  }
+
+  .navbar .navbar-brand::before {
+    margin-right: 0.45rem;
+  }
 }
 
-p,
-li {
-  font-size: 1.05rem;
-  color: var(--text-muted);
+/* very narrow phones: drop the status dot and tighten so nothing wraps */
+@media (max-width: 340px) {
+  .navbar { padding-left: 0.5rem; padding-right: 0.5rem; }
+  .navbar .navbar-brand { font-size: 0.9rem; }
+  .navbar .navbar-brand::before { display: none; }
+  .navbar .navbar-toggler { padding: 0.15rem; }
+  .navbar #quarto-search .aa-DetachedSearchButton,
+  .theme-toggle-button { width: 32px; }
 }
 
-a {
-  color: var(--accent);
+/* ── Search overlay ──────────────────────────────────────────────────────── */
+/* Quarto's search panel ships Darkly greys and blues; repaint from tokens. */
+
+.aa-DetachedOverlay {
+  background: color-mix(in srgb, var(--bg-primary) 60%, transparent) !important;
+  backdrop-filter: blur(3px);
+}
+
+.aa-DetachedContainer,
+.aa-DetachedFormContainer,
+.aa-Panel,
+.aa-DetachedContainer .aa-Panel {
+  background: var(--bg-panel) !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font-body);
+}
+
+.aa-DetachedContainer--modal {
+  border: 1px solid var(--border-soft) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.45) !important;
+  overflow: hidden;
+}
+
+.aa-DetachedFormContainer {
+  border-bottom: 1px solid var(--border-soft) !important;
+}
+
+.aa-Form {
+  background: var(--cell) !important;
+  border: 1px solid var(--border-soft) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: none !important;
+}
+
+.aa-Form:focus-within {
+  border-color: var(--rail) !important;
+}
+
+.aa-Input,
+.aa-Input::placeholder {
+  color: var(--text-primary) !important;
+  font-family: var(--font-body);
+}
+
+.aa-SubmitIcon,
+.aa-ClearButton,
+.aa-ClearIcon,
+.aa-CopyButton,
+.aa-LoadingIcon {
+  color: var(--text-meta) !important;
+}
+
+.aa-DetachedCancelButton {
+  color: var(--text-muted) !important;
+  background: none !important;
+  border: none !important;
+  font-family: var(--font-body);
+}
+
+.aa-DetachedCancelButton:hover {
+  color: var(--text-primary) !important;
+}
+
+#quarto-search-results .search-result-header,
+.aa-Panel .search-result-header {
+  background: transparent !important;
+  color: var(--text-meta) !important;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-bottom: 1px solid var(--border-soft) !important;
+}
+
+.aa-Panel .aa-Item {
+  color: var(--text-muted) !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+}
+
+.aa-Panel .search-item,
+.aa-Panel .search-result-title-container,
+.aa-Panel .search-result-text-container,
+.aa-Panel .search-result-text {
+  background: transparent !important;
+  color: var(--text-muted) !important;
+}
+
+.aa-Panel .search-result-link,
+.aa-Panel .search-result-title,
+.aa-Panel .search-result-section {
+  color: var(--text-primary) !important;
   text-decoration: none;
-  transition: color 0.2s ease, text-shadow 0.2s ease;
 }
 
-a:hover,
-a:focus {
-  color: var(--accent-strong);
-  text-shadow: 0 0 14px rgba(123, 252, 200, 0.5);
+.aa-Panel .search-result-section {
+  font-size: 0.9rem;
 }
+
+.aa-Panel .search-result-doc,
+.aa-Panel .search-result-doc-section,
+.aa-Panel .aa-Item {
+  border-color: var(--border-subtle) !important;
+}
+
+.aa-Panel .search-result-icon {
+  color: var(--text-meta) !important;
+}
+
+/* selected result: cell surface + rail, like the listing */
+.aa-Panel .aa-Item[aria-selected="true"] .search-item,
+.aa-Panel .aa-Item[aria-selected="true"] .search-result-title-container,
+.aa-Panel .aa-Item[aria-selected="true"] .search-result-text-container,
+.aa-Panel .aa-Item[aria-selected="true"] .search-result-text {
+  background: var(--cell) !important;
+}
+
+.aa-Panel .aa-Item[aria-selected="true"] {
+  box-shadow: inset 2px 0 0 var(--rail);
+}
+
+.aa-Panel mark.search-match,
+.aa-Panel .search-match {
+  background: color-mix(in srgb, var(--rail) 22%, transparent) !important;
+  color: var(--text-primary) !important;
+  border-radius: 2px;
+  padding: 0 0.1em;
+}
+
+/* ── Homepage intro: the active cell ─────────────────────────────────────── */
 
 .intro-panel {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
-  gap: 2.2rem;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 1.8rem;
   align-items: flex-start;
-  margin-bottom: 3rem;
-  padding: 2.4rem 2.2rem;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border-soft);
+  margin: 1.2rem 0 3rem;
+  padding: 1.8rem 1.8rem 1.8rem 2rem;
   background: var(--bg-panel);
-  box-shadow: var(--shadow-glow);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: inset 3px 0 0 var(--rail);
+}
+
+.intro-panel::before {
+  content: "00";
+  position: absolute;
+  left: calc(-1 * var(--gutter-w));
+  width: calc(var(--gutter-w) - 1.2rem);
+  top: 1.9rem;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--rail);
 }
 
 .intro-media {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+}
+
+.intro-media p {
+  margin: 0;
+}
+
+.profile-pic {
+  width: min(140px, 40vw);
+  border-radius: 50%;
 }
 
 .intro-copy {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-}
-
-.profile-pic {
-  width: min(220px, 60vw);
-  border-radius: 50%;
-  border: 2px solid var(--border-strong);
-  box-shadow: var(--shadow-glow);
-  background: var(--bg-primary);
-  padding: 0.4rem;
+  gap: 0.6rem;
 }
 
 .intro-copy p {
-  margin-bottom: 1rem;
-  color: var(--text-muted);
-  font-size: 1.05rem;
+  margin-bottom: 0;
 }
 
 .intro-copy p:first-of-type {
   color: var(--text-primary);
+  font-size: 1.08rem;
 }
 
-.intro-copy p:last-of-type {
-  margin-bottom: 0;
+/* ── Post listing: input block → output ──────────────────────────────────── */
+
+#listing-blog-listings {
+  margin-top: 1.8rem;
 }
 
-#blog-listings.quarto-listing {
-  margin-top: 2.2rem;
+.post-list .list {
+  counter-reset: cell;
 }
 
 .post-list .quarto-post {
-  display: flex;
-  flex-direction: row;
-  gap: 1.5rem;
-  padding: 1.6rem 1.8rem;
-  border-radius: var(--radius-md);
-  background: var(--bg-panel);
-  border: 1px solid transparent;
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-  align-items: stretch;
-  color: var(--text-primary);
+  counter-increment: cell;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  padding: 0.9rem 0;
+  margin: 0 0 0.6rem;
+  border: none;
+  background: transparent;
 }
 
-.post-list .quarto-post .thumbnail:has(.listing-item-img-placeholder) {
-  display: none;
-}
+.post-list .quarto-post .thumbnail:has(.listing-item-img-placeholder),
 .post-list .quarto-post .thumbnail:has(img[style*="height:0"]),
 .post-list .quarto-post .thumbnail:has(img[style*="height: 0"]) {
   display: none;
 }
 
 .post-list .quarto-post .body {
-  flex: 1 1 auto;
   min-width: 0;
 }
 
-.post-list .quarto-post .metadata {
-  flex: 0 0 auto;
-  white-space: nowrap;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  align-items: flex-end;
+/* cell index in the margin */
+.post-list .quarto-post::before {
+  content: counter(cell, decimal-leading-zero);
+  position: absolute;
+  left: calc(-1 * var(--gutter-w));
+  width: calc(var(--gutter-w) - 1.2rem);
+  top: 1.45rem;
   text-align: right;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-meta);
+  transition: color 0.12s ease;
 }
 
-.post-list .listing-reading-time {
-  color: var(--accent);
-  opacity: 0.85;
+/* hover rail */
+.post-list .quarto-post::after {
+  content: "";
+  position: absolute;
+  left: -0.9rem;
+  top: 0.9rem;
+  bottom: 0.9rem;
+  width: 2px;
+  border-radius: 2px;
+  background: transparent;
+  transition: background 0.12s ease;
 }
 
-.post-list .quarto-post:hover {
-  transform: translateY(-4px);
-  border-color: var(--border-strong);
-  box-shadow: var(--shadow-glow);
-}
+.post-list .quarto-post:hover::after { background: var(--rail); }
+.post-list .quarto-post:hover::before { color: var(--rail); }
 
+/* the input: title, subtitle, tags */
+.post-list .listing-title,
+.post-list .listing-subtitle,
 .post-list .listing-categories {
-  font-family: 'IBM Plex Mono', monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.7rem;
-  color: var(--accent);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-
-.post-list .listing-categories .listing-category {
-  padding: 0.15rem 0.6rem;
-  border: 1px solid var(--pill-border);
-  border-radius: 999px;
-  background: var(--pill-bg);
+  background: var(--cell);
+  margin: 0 !important;
+  padding: 0 1rem;
 }
 
 .post-list .listing-title {
-  font-size: clamp(1.2rem, 2.2vw, 1.45rem);
-  margin-bottom: 0.4rem;
-  color: var(--text-primary);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  padding-top: 0.7rem;
+  font-size: 1.14rem;
+  font-weight: 600;
 }
 
-.post-list .listing-title a {
-  color: var(--text-primary);
+.post-list .listing-title a,
+.post-list .listing-subtitle a,
+.post-list .listing-description a,
+.post-list .quarto-post .metadata a {
+  text-decoration: none;
 }
+
+.post-list .listing-title a { color: var(--text-primary); }
 
 .post-list .listing-subtitle,
-.post-list .listing-description {
+.post-list .listing-subtitle a {
   color: var(--text-muted);
-  margin-bottom: 0.6rem;
+  font-size: 0.93rem;
+  padding-top: 0.1rem;
 }
 
-.post-list .listing-subtitle a,
-.post-list .listing-description a {
-  color: var(--text-muted);
+/* Quarto emits an empty subtitle div for posts without one */
+.post-list .listing-subtitle:has(> a:empty) { display: none; }
+
+.post-list .listing-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.8rem;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  padding-top: 0.4rem;
+  padding-bottom: 0.7rem;
+  font-family: var(--font-mono);
 }
 
-.post-list .quarto-post .metadata a {
+.post-list.quarto-listing .quarto-post .listing-categories .listing-category {
+  border: none;
+  border-radius: 0;
+  background: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.7rem;
+  text-transform: none;
+  letter-spacing: 0;
   color: var(--text-meta);
 }
 
-.post-list .quarto-post .metadata {
-  font-family: 'IBM Plex Mono', monospace;
+.post-list.quarto-listing .quarto-post .listing-categories .listing-category::before {
+  content: "#";
+  opacity: 0.6;
+}
+
+.post-list.quarto-listing .quarto-post .listing-categories .listing-category:hover {
+  color: var(--rail);
+}
+
+/* the output */
+.post-list .listing-description {
+  position: relative;
+  padding: 0.7rem 1rem 0 1.9rem;
+  margin: 0 !important;
+}
+
+.post-list .listing-description::before {
+  content: "↳";
+  position: absolute;
+  left: 0.9rem;
+  top: 0.72rem;
+  font-family: var(--font-mono);
   font-size: 0.8rem;
   color: var(--text-meta);
 }
 
+.post-list .listing-description,
+.post-list .listing-description a {
+  color: var(--text-muted);
+  font-size: 0.96rem;
+}
+
+.post-list .quarto-post .metadata {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-meta);
+  padding: 0;
+}
+
+.post-list .quarto-post .metadata a {
+  display: flex;
+  gap: 0.9rem;
+  color: var(--text-meta);
+}
+
+.post-list .listing-reading-time { color: var(--text-meta); }
+.post-list .listing-reading-time::before { content: "⏱ "; }
+
+/* ── Category sidebar (homepage listing) ─────────────────────────────────── */
+
+.quarto-listing-category-title,
+#quarto-margin-sidebar .quarto-listing-category-title {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-meta);
+  margin-bottom: 0.6rem;
+}
+
+.quarto-listing-category {
+  display: block;
+}
+
+.quarto-listing-category .category {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  border-radius: var(--radius-sm);
+  padding: 0.14rem 0.5rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.quarto-listing-category .quarto-category-count {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-meta);
+}
+
+.quarto-listing-category .category:hover {
+  background: var(--cell);
+  color: var(--text-primary);
+}
+
+.quarto-listing-category .category.active {
+  background: var(--cell);
+  color: var(--text-primary);
+  box-shadow: inset 2px 0 0 var(--rail);
+  font-weight: 500;
+}
+
+/* ── Post / paper title block ────────────────────────────────────────────── */
+/* Quarto's `title-block-banner: true` paints a Bootstrap banner that       */
+/* ignores the theme toggle; repaint it with tokens.                        */
+
+#title-block-header.quarto-title-block.default .quarto-title-banner,
+.quarto-title-banner {
+  background: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  border-bottom: 1px solid var(--border-soft);
+  padding-top: 2.6rem;
+  padding-bottom: 2.2rem;
+}
+
+.quarto-title-banner h1.title,
+.quarto-title-banner .quarto-title .title {
+  color: var(--text-primary) !important;
+  font-weight: 600;
+  font-size: clamp(2rem, 4.4vw, 2.9rem);
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+}
+
+.quarto-title-banner .quarto-title .subtitle,
+.quarto-title-banner .subtitle {
+  font-family: var(--font-body) !important;
+  color: var(--text-muted) !important;
+  font-size: 1.15rem !important;
+  margin-top: 0.6rem;
+}
+
+.quarto-title-banner .description {
+  color: var(--text-muted) !important;
+}
+
+.quarto-title-banner .quarto-categories .quarto-category,
+#title-block-header .quarto-categories .quarto-category {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text-muted);
+  background: var(--cell);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.2rem 0.6rem;
+  opacity: 1;
+}
+
+.quarto-title-banner .quarto-categories .quarto-category:hover,
+#title-block-header .quarto-categories .quarto-category:hover {
+  color: var(--text-primary);
+}
+
+#title-block-header .quarto-title-meta-heading {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.68rem;
+  color: var(--text-meta) !important;
+  opacity: 1 !important;
+}
+
+#title-block-header .quarto-title-meta-contents {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-primary) !important;
+}
+
+/* ── Notebook cells in posts: numbered in the margin ─────────────────────── */
+
+#quarto-document-content .cell {
+  counter-increment: nbcell;
+  position: relative;
+}
+
+#quarto-document-content .cell::before {
+  content: counter(nbcell, decimal-leading-zero);
+  position: absolute;
+  left: calc(-1 * var(--gutter-w));
+  width: calc(var(--gutter-w) - 1.2rem);
+  top: 0.5rem;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-meta);
+}
+
+/* ── Table of contents ("On this page") ──────────────────────────────────── */
+
+#toc-title,
+#quarto-margin-sidebar .quarto-secondary-nav-title {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-meta);
+}
+
+.sidebar nav[role="doc-toc"] > ul li a {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-left: 1px solid var(--border-soft);
+}
+
+.sidebar nav[role="doc-toc"] > ul li a:hover {
+  color: var(--text-primary);
+}
+
+.sidebar nav[role="doc-toc"] ul > li > a.active,
+.sidebar nav[role="doc-toc"] ul > li > ul > li > a.active {
+  color: var(--text-primary) !important;
+  border-left: 2px solid var(--rail) !important;
+  font-weight: 500;
+}
+
+/* ── Code ────────────────────────────────────────────────────────────────── */
+
 code,
 pre,
 pre code {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.95rem;
-  background-color: var(--bg-code);
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+}
+
+p code,
+li code {
+  color: var(--text-primary);
+  background: var(--cell);
+  padding: 0.1rem 0.3rem;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--border-soft);
+}
+
+div.sourceCode {
+  background: var(--cell);
+  border: none;
+  border-radius: var(--radius-md);
 }
 
 pre {
-  padding: 1rem 1.2rem;
+  padding: 0.9rem 1.1rem;
 }
+
+.code-copy-button {
+  color: var(--text-meta);
+}
+
+.code-copy-button:hover > .bi::before,
+.code-copy-button:hover {
+  color: var(--text-primary);
+  filter: none;
+}
+
+.code-copy-button-checked > .bi::before {
+  color: var(--ok);
+}
+
+/* ── Quotes & callouts ───────────────────────────────────────────────────── */
 
 blockquote {
-  border-left: 3px solid var(--accent);
-  padding-left: 1rem;
+  border-left: 2px solid var(--border-strong);
+  padding: 0.2rem 0 0.2rem 1.2rem;
   color: var(--text-muted);
-  background: var(--bg-blockquote);
-  border-radius: var(--radius-sm);
-  padding: 1rem 1.4rem;
+  background: none;
 }
 
-footer.nav-footer {
-  border-top: 1px solid var(--border-soft);
-  background: var(--bg-footer);
-  font-family: 'IBM Plex Mono', monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 2.5rem 1rem;
+/* Darkly hardcodes dark callout headers, which turn illegible in light mode */
+.callout.callout-style-default {
+  border: 1px solid var(--border-soft);
+  border-left: 3px solid var(--rail);
+  border-radius: var(--radius-md);
+  background: var(--bg-panel);
+  overflow: hidden;
 }
 
-footer.nav-footer a {
+.callout.callout-style-default > .callout-header {
+  background: var(--cell) !important;
+  color: var(--text-primary) !important;
+  opacity: 1 !important;
+}
+
+.callout.callout-style-default .callout-title-container,
+.callout .callout-title {
+  color: var(--text-primary) !important;
+}
+
+.callout.callout-style-default .callout-body,
+.callout.callout-style-default .callout-body p {
   color: var(--text-muted);
 }
 
-footer.nav-footer a:hover {
-  color: var(--accent);
+.callout.callout-warning.callout-style-default,
+.callout.callout-important.callout-style-default {
+  border-left-color: var(--warn);
 }
+
+.callout.callout-tip.callout-style-default {
+  border-left-color: var(--ok);
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
 
 .btn,
 .button,
 .btn-primary {
-  font-family: 'IBM Plex Mono', monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  border-radius: 999px;
-  padding: 0.85rem 1.6rem;
-  min-height: 44px;
-  min-width: 44px;
-  font-size: 0.95rem;
-  line-height: 1.2;
+  font-family: var(--font-body);
+  border-radius: var(--radius-md);
   border: 1px solid var(--border-strong);
   background: transparent;
-  color: var(--accent);
-  transition: background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+  color: var(--text-primary);
+  min-height: 44px;
+  padding: 0.6rem 1.2rem;
 }
 
 .btn:hover,
 .button:hover,
 .btn-primary:hover {
-  background: rgba(123, 252, 200, 0.15);
+  background: var(--cell);
+  border-color: var(--border-strong);
   color: var(--text-primary);
-  box-shadow: var(--shadow-glow);
-}
-
-hr {
-  border-color: var(--border-subtle);
-  margin: 2.5rem 0;
-}
-
-@media (max-width: 900px) {
-  .intro-panel {
-    grid-template-columns: 1fr;
-    text-align: center;
-    padding: 2rem 1.8rem;
-  }
-
-  .intro-copy {
-    text-align: left;
-  }
-
-  main {
-    padding-top: 2.6rem;
-  }
-}
-
-@media (max-width: 600px) {
-  .navbar {
-    padding: 0.75rem 1rem;
-  }
-
-  .navbar .navbar-brand-container {
-    justify-content: center;
-    gap: 0.5rem;
-    width: auto;
-  }
-
-  .navbar .navbar-brand {
-    font-size: 0.95rem;
-    letter-spacing: 0.04em;
-    margin: 0;
-    text-align: center;
-  }
-
-  .navbar .navbar-brand-logo {
-    display: none;
-  }
-
-  .theme-toggle-button {
-    min-width: 44px;
-    min-height: 44px;
-    padding: 0.5rem;
-    font-size: 1.35rem;
-  }
-
-  .intro-panel {
-    padding: 1.6rem 1.4rem;
-  }
-
-  .post-list .quarto-post {
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1.3rem 1.4rem;
-  }
-}
-
-@media (max-width: 576px) {
-  .navbar {
-    position: relative;
-  }
-
-  .quarto-navbar-tools {
-    position: absolute;
-    top: 0.65rem;
-    right: 0.75rem;
-  }
-
-  .theme-toggle-button {
-    padding: 0.2rem;
-    font-size: 1.1rem;
-  }
 }
 
 /* ── Bibliography / appendix ─────────────────────────────────────────────── */
-/* Bootstrap hardcodes #quarto-appendix.default { background-color: #222 }   */
-/* and various #dee2e6 border colours — none of which are CSS vars, so they  */
-/* survive the theme toggle untouched. We override them here.                */
+/* Bootstrap hardcodes #quarto-appendix.default { background-color: #222 } */
+/* and #dee2e6 borders, which survive the theme toggle untouched.          */
 
 #quarto-appendix.default {
-  background-color: var(--bg-elevated) !important;
+  background-color: var(--bg-primary) !important;
   border-top-color: var(--border-soft) !important;
 }
 
 #quarto-appendix.default .quarto-appendix-heading {
   color: var(--text-primary) !important;
+  border-bottom-color: var(--border-soft) !important;
 }
 
 #quarto-appendix.default *[role=doc-endnotes] > ol,
@@ -603,7 +1071,6 @@ hr {
   opacity: 1 !important;
 }
 
-/* csl-entry links follow the global accent */
 #quarto-appendix .csl-entry a {
   color: var(--accent);
 }
@@ -611,11 +1078,11 @@ hr {
 #quarto-appendix.default .quarto-appendix-bibtex,
 #quarto-appendix.default .quarto-appendix-citeas {
   border-color: var(--border-soft) !important;
-  background-color: var(--bg-panel);
+  background-color: var(--cell);
   color: var(--text-muted);
 }
 
-/* ── Theme-adaptive figures ───────────────────────────────────────────────── */
+/* ── Theme-adaptive figures ──────────────────────────────────────────────── */
 
 /* Hide the wrong variant based on active theme */
 html[data-theme="light"] .dark-fig  { display: none !important; }
@@ -629,224 +1096,26 @@ html[data-theme="dark"]  .light-fig { display: none !important; }
   html:not([data-theme="light"]) .light-fig { display: none !important; }
 }
 
-/* For embedded code-cell plot outputs (blog post): invert dark figures in light mode.
-   CSS class "dark-plot" is applied via Quarto cell option  # | classes: dark-plot  */
+/* Embedded code-cell plot outputs: invert dark figures in light mode.
+   Apply with the Quarto cell option  # | classes: dark-plot  */
 html[data-theme="light"] .dark-plot img {
   filter: invert(0.91) hue-rotate(180deg) saturate(0.85) brightness(0.97);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
 }
 @media (prefers-color-scheme: light) {
   html:not([data-theme="dark"]) .dark-plot img {
     filter: invert(0.91) hue-rotate(180deg) saturate(0.85) brightness(0.97);
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
   }
-}
-
-/* ── Post/paper title banner ─────────────────────────────────────────────── */
-/* Quarto's `title-block-banner: true` paints a Bootstrap slate-blue banner   */
-/* that ignores the theme toggle. Repaint it with theme variables.            */
-
-#title-block-header.quarto-title-block.default .quarto-title-banner,
-.quarto-title-banner {
-  background: linear-gradient(160deg, var(--bg-elevated) 0%, var(--bg-primary) 100%) !important;
-  border-bottom: 1px solid var(--border-strong);
-  box-shadow: inset 0 -30px 60px -50px var(--accent);
-  color: var(--text-primary) !important;
-  padding-top: 2.75rem;
-  padding-bottom: 2.5rem;
-}
-
-.quarto-title-banner .quarto-title .title,
-.quarto-title-banner h1.title {
-  color: var(--text-primary) !important;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-}
-
-.quarto-title-banner .quarto-title .subtitle,
-.quarto-title-banner .subtitle {
-  color: var(--accent) !important;
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 1.05rem;
-  margin-top: 0.6rem;
-}
-
-.quarto-title-banner .description {
-  color: var(--text-muted) !important;
-}
-
-.quarto-title-banner .quarto-categories .quarto-category,
-#title-block-header .quarto-categories .quarto-category {
-  font-family: 'IBM Plex Mono', monospace;
-  letter-spacing: 0.08em;
-  font-size: 0.7rem;
-  color: var(--accent);
-  border: 1px solid var(--pill-border);
-  border-radius: 999px;
-  background: var(--pill-bg);
-  padding: 0.25rem 0.7rem;
-  opacity: 1;
-  transition: background 0.2s ease, box-shadow 0.2s ease;
-}
-
-.quarto-title-banner .quarto-categories .quarto-category:hover,
-#title-block-header .quarto-categories .quarto-category:hover {
-  background: rgba(123, 252, 200, 0.16);
-  box-shadow: var(--shadow-glow);
-}
-
-/* date / author strip under the banner */
-#title-block-header .quarto-title-meta-heading {
-  font-family: 'IBM Plex Mono', monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.7rem;
-  color: var(--accent) !important;
-  opacity: 1 !important;
-}
-
-#title-block-header .quarto-title-meta-contents {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.85rem;
-  color: var(--text-meta) !important;
-}
-
-/* ── Callouts ────────────────────────────────────────────────────────────── */
-/* Darkly hardcodes dark callout headers, which turn illegible in light mode. */
-
-.callout.callout-style-default {
-  border-radius: var(--radius-sm);
-  border-left: 3px solid var(--accent);
-  border-top: 1px solid var(--border-soft);
-  border-right: 1px solid var(--border-soft);
-  border-bottom: 1px solid var(--border-soft);
-  background: var(--bg-panel);
-  overflow: hidden;
-}
-
-.callout.callout-style-default > .callout-header {
-  background: var(--pill-bg) !important;
-  color: var(--text-primary) !important;
-  font-family: 'IBM Plex Mono', monospace;
-  letter-spacing: 0.04em;
-  opacity: 1 !important;
-}
-
-.callout.callout-style-default .callout-title-container {
-  color: var(--text-primary) !important;
-}
-
-.callout.callout-style-default .callout-body,
-.callout.callout-style-default .callout-body p {
-  color: var(--text-muted);
-}
-
-.callout.callout-warning.callout-style-default,
-.callout.callout-important.callout-style-default {
-  border-left-color: #ffb454;
-}
-
-.callout.callout-tip.callout-style-default {
-  border-left-color: var(--accent-strong);
-}
-
-/* ── Category sidebar (homepage listing) ─────────────────────────────────── */
-
-.quarto-listing-category-title {
-  font-family: 'IBM Plex Mono', monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.75rem;
-  color: var(--accent);
-  margin-bottom: 0.9rem;
-}
-
-.quarto-listing-category {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-  align-content: flex-start;
-}
-
-.quarto-listing-category .category {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
-  border: 1px solid var(--border-subtle);
-  border-radius: 999px;
-  background: transparent;
-  padding: 0.2rem 0.65rem;
-  cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-}
-
-.quarto-listing-category .category:hover {
-  color: var(--accent);
-  border-color: var(--pill-border);
-  background: var(--pill-bg);
-}
-
-.quarto-listing-category .category.active {
-  color: var(--bg-primary);
-  background: var(--accent);
-  border-color: var(--accent);
-  box-shadow: var(--shadow-glow);
-  font-weight: 600;
-}
-
-.quarto-listing-category .category-count {
-  opacity: 0.75;
-}
-
-/* ── Table of contents ("On this page") ──────────────────────────────────── */
-
-#toc-title,
-#quarto-margin-sidebar .quarto-secondary-nav-title {
-  font-family: 'IBM Plex Mono', monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.72rem;
-  color: var(--accent);
-}
-
-.sidebar nav[role="doc-toc"] > ul li a {
-  color: var(--text-muted);
-  border-left: 1px solid var(--border-subtle);
-  transition: color 0.2s ease, border-color 0.2s ease;
-}
-
-.sidebar nav[role="doc-toc"] > ul li a:hover {
-  color: var(--accent);
-}
-
-.sidebar nav[role="doc-toc"] > ul li a.active {
-  color: var(--accent-strong);
-  border-left: 2px solid var(--accent-strong);
-  font-weight: 500;
-}
-
-/* ── Code copy button ────────────────────────────────────────────────────── */
-
-.code-copy-button {
-  color: var(--text-meta);
-  transition: color 0.2s ease;
-}
-
-.code-copy-button:hover > .bi::before,
-.code-copy-button:hover {
-  color: var(--accent);
-  filter: none;
-}
-
-.code-copy-button-checked > .bi::before {
-  color: var(--accent-strong);
 }
 
 /* ── Page footer ─────────────────────────────────────────────────────────── */
 
 footer.nav-footer {
-  font-size: 0.78rem;
+  background: var(--bg-footer);
+  border-top: 1px solid var(--border-soft);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
   color: var(--text-meta);
 }
 
@@ -856,30 +1125,35 @@ footer.nav-footer .nav-footer-right {
   color: var(--text-meta);
 }
 
+footer.nav-footer a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+footer.nav-footer a:hover {
+  color: var(--text-primary);
+}
+
 footer.nav-footer .nav-footer-right a {
-  font-size: 1.05rem;
-  padding: 0 0.4rem;
+  font-size: 1rem;
+  padding: 0 0.35rem;
 }
 
 /* ── Back to top ─────────────────────────────────────────────────────────── */
 
 #quarto-back-to-top {
-  font-family: 'IBM Plex Mono', monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-size: 0.75rem;
-  color: var(--accent);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--text-muted);
   background: var(--bg-panel);
-  border: 1px solid var(--border-strong);
-  border-radius: 999px;
-  padding: 0.4rem 1rem;
-  backdrop-filter: blur(10px);
-  box-shadow: var(--shadow-glow);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  padding: 0.35rem 0.9rem;
 }
 
 #quarto-back-to-top:hover {
   color: var(--text-primary);
-  background: var(--pill-bg);
+  background: var(--cell);
 }
 
 /* ── Reading progress bar (injected by includes/reading-progress.html) ───── */
@@ -889,17 +1163,68 @@ footer.nav-footer .nav-footer-right a {
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
+  height: 2px;
   z-index: 2000;
   transform-origin: 0 50%;
   transform: scaleX(0);
-  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
-  box-shadow: 0 0 10px rgba(123, 252, 200, 0.55);
+  background: var(--rail);
   pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .reading-progress {
     transition: transform 0.08s linear;
+  }
+}
+
+/* ── Small screens: the margin collapses ─────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .intro-panel {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
+  .intro-media {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 767.98px) {
+  :root { --gutter-w: 0rem; }
+
+  main.content {
+    padding-left: 1rem !important;
+  }
+
+  #quarto-document-content h2::before,
+  .intro-panel::before,
+  #quarto-document-content .cell::before {
+    display: none;
+  }
+
+  .intro-panel {
+    padding: 1.3rem 1.1rem 1.3rem 1.3rem;
+  }
+
+  .profile-pic {
+    width: 112px;
+  }
+
+  /* index sits inline above each post instead of in the margin */
+  .post-list .quarto-post::before {
+    position: static;
+    width: auto;
+    text-align: left;
+    margin-bottom: 0.3rem;
+  }
+
+  .post-list .quarto-post::after {
+    left: -0.6rem;
+  }
+
+  .post-list .quarto-post .metadata {
+    justify-content: flex-start;
+    padding: 0.35rem 0 0 1.9rem;
   }
 }
