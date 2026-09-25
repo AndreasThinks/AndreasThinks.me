@@ -1,0 +1,559 @@
+/* ==========================================================================
+   Theme: BLUEPRINT
+   Engineering-drawing aesthetic. Dark = cyanotype sheet, light = drafting
+   vellum with blue ink. Hairline linework, registration marks, drawing
+   numbers, a title-block footer. Loaded after styles.css as an override.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+:root {
+  --bg-primary: #0b1f3a;
+  --bg-elevated: #0e2748;
+  --bg-panel: rgba(14, 39, 72, 0.78);
+  --bg-nav: rgba(9, 26, 49, 0.92);
+  --bg-footer: #091a31;
+  --bg-code: rgba(5, 16, 32, 0.55);
+  --bg-blockquote: rgba(5, 16, 32, 0.35);
+  --border-soft: rgba(168, 206, 255, 0.22);
+  --border-strong: rgba(198, 226, 255, 0.6);
+  --border-subtle: rgba(168, 206, 255, 0.16);
+  --text-primary: #eef5ff;
+  --text-muted: #b3c8e6;
+  --text-meta: #7f9cc4;
+  --accent: #8fd3ff;
+  --accent-strong: #c4e9ff;
+  --mark: #ffd23f;               /* redline / annotation colour */
+  --pill-bg: transparent;
+  --pill-border: rgba(143, 211, 255, 0.45);
+  --shadow-glow: none;
+  --grid-minor: rgba(168, 206, 255, 0.055);
+  --grid-major: rgba(168, 206, 255, 0.11);
+  --radius-lg: 0;
+  --radius-md: 0;
+  --radius-sm: 0;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-head: 'IBM Plex Sans Condensed', 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-primary: #f3f0e6;
+    --bg-elevated: #faf8f1;
+    --bg-panel: rgba(250, 248, 241, 0.9);
+    --bg-nav: rgba(243, 240, 230, 0.94);
+    --bg-footer: #ebe7da;
+    --bg-code: rgba(26, 61, 124, 0.06);
+    --bg-blockquote: rgba(26, 61, 124, 0.04);
+    --border-soft: rgba(26, 61, 124, 0.22);
+    --border-strong: rgba(26, 61, 124, 0.7);
+    --border-subtle: rgba(26, 61, 124, 0.15);
+    --text-primary: #13294f;
+    --text-muted: #3b4f73;
+    --text-meta: #6a7a96;
+    --accent: #1f56b3;
+    --accent-strong: #123f8a;
+    --mark: #d2410f;
+    --pill-border: rgba(31, 86, 179, 0.4);
+    --grid-minor: rgba(26, 61, 124, 0.05);
+    --grid-major: rgba(26, 61, 124, 0.09);
+  }
+}
+
+:root[data-theme="light"] {
+  --bg-primary: #f3f0e6;
+  --bg-elevated: #faf8f1;
+  --bg-panel: rgba(250, 248, 241, 0.9);
+  --bg-nav: rgba(243, 240, 230, 0.94);
+  --bg-footer: #ebe7da;
+  --bg-code: rgba(26, 61, 124, 0.06);
+  --bg-blockquote: rgba(26, 61, 124, 0.04);
+  --border-soft: rgba(26, 61, 124, 0.22);
+  --border-strong: rgba(26, 61, 124, 0.7);
+  --border-subtle: rgba(26, 61, 124, 0.15);
+  --text-primary: #13294f;
+  --text-muted: #3b4f73;
+  --text-meta: #6a7a96;
+  --accent: #1f56b3;
+  --accent-strong: #123f8a;
+  --mark: #d2410f;
+  --pill-border: rgba(31, 86, 179, 0.4);
+  --grid-minor: rgba(26, 61, 124, 0.05);
+  --grid-major: rgba(26, 61, 124, 0.09);
+}
+
+:root[data-theme="dark"] {
+  --bg-primary: #0b1f3a;
+  --bg-elevated: #0e2748;
+  --bg-panel: rgba(14, 39, 72, 0.78);
+  --bg-nav: rgba(9, 26, 49, 0.92);
+  --bg-footer: #091a31;
+  --bg-code: rgba(5, 16, 32, 0.55);
+  --bg-blockquote: rgba(5, 16, 32, 0.35);
+  --border-soft: rgba(168, 206, 255, 0.22);
+  --border-strong: rgba(198, 226, 255, 0.6);
+  --border-subtle: rgba(168, 206, 255, 0.16);
+  --text-primary: #eef5ff;
+  --text-muted: #b3c8e6;
+  --text-meta: #7f9cc4;
+  --accent: #8fd3ff;
+  --accent-strong: #c4e9ff;
+  --mark: #ffd23f;
+  --pill-border: rgba(143, 211, 255, 0.45);
+  --grid-minor: rgba(168, 206, 255, 0.055);
+  --grid-major: rgba(168, 206, 255, 0.11);
+}
+
+/* ── Base ─────────────────────────────────────────────────────────────── */
+
+body {
+  font-family: var(--font-body);
+  line-height: 1.72;
+  counter-reset: sheet;
+}
+
+/* Full-page drafting grid: 12px minor, 60px major */
+body::before {
+  background:
+    linear-gradient(var(--grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(var(--grid-minor) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
+  background-size: 60px 60px, 60px 60px, 12px 12px, 12px 12px;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+::selection,
+:root[data-theme="light"] ::selection {
+  background: var(--mark);
+  color: #0b1f3a;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-head);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+#quarto-document-content h2 {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 1.35rem;
+  border-bottom: 1px solid var(--border-strong) !important;
+  padding-bottom: 0.45rem;
+  position: relative;
+}
+
+/* dimension-line tick at each end of the h2 rule */
+#quarto-document-content h2::before,
+#quarto-document-content h2::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  width: 1px;
+  height: 9px;
+  background: var(--border-strong);
+}
+#quarto-document-content h2::before { left: 0; }
+#quarto-document-content h2::after { right: 0; }
+
+h3 { font-size: 1.2rem; }
+
+p, li { color: var(--text-muted); }
+
+a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: var(--pill-border);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+a:hover,
+a:focus {
+  color: var(--accent-strong);
+  text-shadow: none;
+  text-decoration-color: var(--mark);
+}
+
+/* ── Navbar ───────────────────────────────────────────────────────────── */
+
+.navbar {
+  font-family: var(--font-mono);
+  border-bottom: 1px solid var(--border-strong);
+  backdrop-filter: blur(6px);
+}
+
+.navbar .navbar-brand {
+  font-family: var(--font-head);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--border-strong);
+}
+
+.navbar .navbar-nav .nav-link {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.78rem;
+}
+
+.navbar .navbar-brand:hover,
+.navbar .nav-link:hover,
+.navbar .nav-link:focus,
+.theme-toggle-button:hover,
+.theme-toggle-button:focus-visible {
+  text-shadow: none;
+  color: var(--accent-strong) !important;
+}
+
+.navbar .navbar-nav .nav-link.active {
+  color: var(--text-primary) !important;
+  box-shadow: inset 0 -2px 0 var(--mark);
+}
+
+/* ── Intro panel: a detail callout with registration marks ─────────────── */
+
+.intro-panel {
+  position: relative;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-panel);
+  box-shadow: none;
+  padding: 2.6rem 2.4rem 2.2rem;
+  /* corner registration marks */
+  --tick: var(--mark);
+  background-image:
+    linear-gradient(var(--tick), var(--tick)), linear-gradient(var(--tick), var(--tick)),
+    linear-gradient(var(--tick), var(--tick)), linear-gradient(var(--tick), var(--tick)),
+    linear-gradient(var(--tick), var(--tick)), linear-gradient(var(--tick), var(--tick)),
+    linear-gradient(var(--tick), var(--tick)), linear-gradient(var(--tick), var(--tick));
+  background-repeat: no-repeat;
+  background-size: 14px 2px, 2px 14px, 14px 2px, 2px 14px, 14px 2px, 2px 14px, 14px 2px, 2px 14px;
+  background-position:
+    -1px -1px, -1px -1px,
+    calc(100% + 1px) -1px, calc(100% + 1px) -1px,
+    -1px calc(100% + 1px), -1px calc(100% + 1px),
+    calc(100% + 1px) calc(100% + 1px), calc(100% + 1px) calc(100% + 1px);
+  background-color: var(--bg-panel);
+}
+
+.intro-panel::before {
+  content: "DETAIL A — PROFILE";
+  position: absolute;
+  top: -0.7rem;
+  left: 1.4rem;
+  padding: 0 0.6rem;
+  background: var(--bg-primary);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--mark);
+}
+
+.intro-panel::after {
+  content: "SCALE 1:1  ·  SHEET 01";
+  position: absolute;
+  bottom: -0.7rem;
+  right: 1.4rem;
+  padding: 0 0.6rem;
+  background: var(--bg-primary);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  color: var(--text-meta);
+}
+
+/* Profile photo in a targeting reticle */
+.profile-pic {
+  border: 1px solid var(--border-strong);
+  box-shadow: none;
+  padding: 0.55rem;
+  background: transparent;
+  outline: 1px dashed var(--pill-border);
+  outline-offset: 10px;
+}
+
+.intro-media {
+  position: relative;
+  padding: 14px;
+}
+
+.intro-media::before,
+.intro-media::after {
+  content: "";
+  position: absolute;
+  background: var(--border-strong);
+  pointer-events: none;
+}
+.intro-media::before { left: 50%; top: 0; bottom: 0; width: 1px; opacity: 0.35; }
+.intro-media::after { top: 50%; left: 0; right: 0; height: 1px; opacity: 0.35; }
+
+.intro-media p { position: relative; z-index: 1; margin: 0; }
+
+.intro-copy p:first-of-type {
+  font-size: 1.12rem;
+}
+
+/* ── Blog listing: each post is a numbered drawing sheet ──────────────── */
+
+.post-list .list { counter-reset: dwg; }
+
+.post-list .quarto-post {
+  counter-increment: dwg;
+  position: relative;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-soft);
+  border-left: 3px solid var(--border-strong);
+  padding: 1.9rem 1.8rem 1.4rem;
+  margin-bottom: 1.1rem;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.post-list .quarto-post::before {
+  content: "DWG-" counter(dwg, decimal-leading-zero);
+  position: absolute;
+  top: 0.55rem;
+  left: 1.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.18em;
+  color: var(--text-meta);
+}
+
+.post-list .quarto-post:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: var(--border-strong);
+  border-left-color: var(--mark);
+  background: var(--bg-elevated);
+}
+
+.post-list .listing-title {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+}
+
+.post-list .listing-title a,
+.post-list .listing-subtitle a,
+.post-list .listing-description a,
+.post-list .quarto-post .metadata a {
+  text-decoration: none;
+}
+
+.post-list .listing-subtitle {
+  color: var(--accent);
+  font-size: 0.98rem;
+}
+.post-list .listing-subtitle a { color: var(--accent); }
+
+.post-list.quarto-listing .quarto-post .listing-categories .listing-category {
+  border-radius: 0;
+  border: 1px solid var(--pill-border);
+  background: transparent;
+  color: var(--accent);
+  font-size: 0.64rem;
+  padding: 0.1rem 0.5rem;
+}
+
+.post-list .quarto-post .metadata {
+  font-family: var(--font-mono);
+  border-left: 1px solid var(--border-subtle);
+  padding-left: 1.2rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+}
+
+.post-list .listing-reading-time { color: var(--mark); opacity: 1; }
+.post-list .listing-reading-time::before { content: "⏱ "; opacity: 0.7; }
+
+/* ── Category sidebar as a drawing legend ─────────────────────────────── */
+
+.quarto-listing-category-title {
+  white-space: nowrap;
+  letter-spacing: 0.1em;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-strong);
+  padding-bottom: 0.4rem;
+  font-family: var(--font-mono);
+}
+.quarto-listing-category-title::before { content: "LEGEND / "; color: var(--mark); }
+
+.quarto-listing-category {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
+.quarto-listing-category .category {
+  border: none;
+  border-bottom: 1px dotted var(--border-subtle);
+  border-radius: 0;
+  padding: 0.28rem 0.2rem;
+  display: flex;
+  justify-content: space-between;
+}
+.quarto-listing-category .category:hover {
+  background: transparent;
+  color: var(--accent-strong);
+}
+.quarto-listing-category .category.active {
+  background: transparent;
+  color: var(--mark);
+  box-shadow: none;
+  border-bottom-color: var(--mark);
+}
+
+/* ── Table of contents ────────────────────────────────────────────────── */
+
+#toc-title {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mark) !important;
+}
+
+.sidebar nav[role="doc-toc"] > ul li a {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  text-decoration: none;
+  color: var(--text-muted);
+}
+
+.sidebar nav[role="doc-toc"] > ul li a.active {
+  color: var(--text-primary) !important;
+  border-left: 2px solid var(--mark) !important;
+}
+
+.post-list .listing-categories { color: var(--accent); }
+
+/* ── Post title banner: sheet header ──────────────────────────────────── */
+
+#title-block-header.quarto-title-block.default .quarto-title-banner,
+.quarto-title-banner {
+  background: transparent !important;
+  border-bottom: 1px solid var(--border-strong);
+  box-shadow: none;
+  position: relative;
+}
+
+.quarto-title-banner h1.title {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: clamp(2rem, 4.5vw, 3.1rem);
+  letter-spacing: 0;
+  line-height: 1.1;
+}
+
+.quarto-title-banner .subtitle {
+  font-family: var(--font-body) !important;
+  color: var(--text-muted) !important;
+}
+
+.quarto-title-banner .quarto-categories .quarto-category,
+#title-block-header .quarto-categories .quarto-category {
+  border-radius: 0;
+  background: transparent;
+}
+
+#title-block-header .quarto-title-meta-heading { color: var(--mark) !important; }
+
+/* ── Code, quotes, callouts ───────────────────────────────────────────── */
+
+code, pre, pre code { font-family: var(--font-mono); }
+
+div.sourceCode, pre {
+  border: 1px solid var(--border-soft);
+  border-left: 3px solid var(--accent);
+}
+
+blockquote {
+  border-left: 3px solid var(--mark);
+  font-style: italic;
+}
+
+.callout.callout-style-default { border-left-color: var(--accent); }
+
+/* ── Buttons & misc glow removal ──────────────────────────────────────── */
+
+.btn, .button, .btn-primary { border-radius: 0; }
+.btn:hover, .button:hover, .btn-primary:hover {
+  background: var(--accent);
+  color: var(--bg-primary);
+  box-shadow: none;
+}
+
+.reading-progress {
+  background: var(--mark);
+  box-shadow: none;
+  height: 2px;
+}
+
+#quarto-back-to-top { border-radius: 0; box-shadow: none; }
+
+/* ── Footer as an engineering title block ─────────────────────────────── */
+
+footer.nav-footer {
+  background: var(--bg-footer);
+  border-top: 1px solid var(--border-strong);
+  padding: 0;
+  font-family: var(--font-mono);
+}
+
+footer.nav-footer .nav-footer-left,
+footer.nav-footer .nav-footer-center,
+footer.nav-footer .nav-footer-right {
+  padding: 1.1rem 1.4rem;
+  border-right: 1px solid var(--border-soft);
+  display: flex;
+  align-items: center;
+  min-height: 4.2rem;
+}
+
+footer.nav-footer .nav-footer-left::before { content: "DRAWN BY · "; color: var(--mark); margin-right: 0.3rem; }
+footer.nav-footer .nav-footer-center::before { content: "TOOLING · "; color: var(--mark); margin-right: 0.3rem; }
+footer.nav-footer .nav-footer-right { border-right: none; justify-content: flex-end; }
+
+@media (max-width: 767px) {
+  footer.nav-footer .nav-footer-left,
+  footer.nav-footer .nav-footer-center,
+  footer.nav-footer .nav-footer-right {
+    border-right: none;
+    border-bottom: 1px solid var(--border-soft);
+    justify-content: center;
+    min-height: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .intro-panel { padding: 2.2rem 1.3rem 1.8rem; }
+  .intro-panel::after { right: 0.8rem; }
+  .intro-panel::before { left: 0.8rem; }
+  .post-list .quarto-post { padding: 1.9rem 1.3rem 1.2rem; }
+  .post-list .quarto-post::before { left: 1.3rem; }
+  .post-list .quarto-post .metadata {
+    border-left: none;
+    padding-left: 0;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+  }
+  .post-list .quarto-post .metadata a { display: flex; gap: 1rem; }
+}
+
+/* ── Navbar icons: Darkly paints these white, invisible on light bg ───── */
+
+.navbar #quarto-search .aa-DetachedSearchButtonIcon,
+.navbar #quarto-search .aa-DetachedSearchButton,
+.navbar #quarto-search .aa-SubmitIcon {
+  color: var(--text-primary) !important;
+}
+
+:root[data-theme="light"] .navbar-toggler-icon {
+  filter: invert(1) brightness(0.35);
+}
