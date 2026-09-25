@@ -392,7 +392,7 @@ a:focus {
   color: var(--text-muted);
 }
 
-.quarto-listing-category .category-count {
+.quarto-listing-category .quarto-category-count {
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--text-meta);
