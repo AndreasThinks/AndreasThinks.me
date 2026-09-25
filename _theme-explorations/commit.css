@@ -1,0 +1,649 @@
+/* ==========================================================================
+   Theme: COMMIT
+   Version control as a visual language. The post list is `git log --graph`
+   (a rail with commit nodes, HEAD~n refs, tags as decorations), the intro is
+   a diff of README.md with added lines, section headings are hunk headers,
+   the footer is a Signed-off-by trailer. Loaded after styles.css.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;500;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+:root {
+  --bg-primary: #101214;
+  --bg-elevated: #181b1f;
+  --bg-panel: #15181b;
+  --bg-nav: rgba(16, 18, 20, 0.94);
+  --bg-footer: #0c0d0f;
+  --bg-code: #0c0d0f;
+  --bg-blockquote: transparent;
+  --border-soft: #2a2f36;
+  --border-strong: #3d444d;
+  --border-subtle: #1f2328;
+  --text-primary: #e8eaed;
+  --text-muted: #a9afb8;
+  --text-meta: #6e7681;
+  --add: #4ac26b;
+  --add-bg: rgba(74, 194, 107, 0.1);
+  --add-gutter: rgba(74, 194, 107, 0.2);
+  --del: #f0686a;
+  --hash: #d4a72c;
+  --ref: #5ec4e0;
+  --branch: #b392f0;
+  --accent: #5ec4e0;
+  --accent-strong: #8ad7eb;
+  --pill-bg: transparent;
+  --pill-border: transparent;
+  --shadow-glow: none;
+  --radius-lg: 8px;
+  --radius-md: 6px;
+  --radius-sm: 4px;
+  --font-body: 'Source Sans 3', system-ui, sans-serif;
+  --font-mono: 'Martian Mono', ui-monospace, monospace;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-primary: #fcfcfb;
+    --bg-elevated: #f3f4f6;
+    --bg-panel: #ffffff;
+    --bg-nav: rgba(252, 252, 251, 0.95);
+    --bg-footer: #f3f4f6;
+    --bg-code: #f3f4f6;
+    --border-soft: #dde1e6;
+    --border-strong: #b9c0c8;
+    --border-subtle: #eceef1;
+    --text-primary: #1b1f24;
+    --text-muted: #454c55;
+    --text-meta: #7a828c;
+    --add: #1a7f37;
+    --add-bg: rgba(26, 127, 55, 0.07);
+    --add-gutter: rgba(26, 127, 55, 0.14);
+    --del: #cf222e;
+    --hash: #9a6700;
+    --ref: #0b6e99;
+    --branch: #8250df;
+    --accent: #0b6e99;
+    --accent-strong: #085577;
+  }
+}
+
+:root[data-theme="light"] {
+  --bg-primary: #fcfcfb;
+  --bg-elevated: #f3f4f6;
+  --bg-panel: #ffffff;
+  --bg-nav: rgba(252, 252, 251, 0.95);
+  --bg-footer: #f3f4f6;
+  --bg-code: #f3f4f6;
+  --border-soft: #dde1e6;
+  --border-strong: #b9c0c8;
+  --border-subtle: #eceef1;
+  --text-primary: #1b1f24;
+  --text-muted: #454c55;
+  --text-meta: #7a828c;
+  --add: #1a7f37;
+  --add-bg: rgba(26, 127, 55, 0.07);
+  --add-gutter: rgba(26, 127, 55, 0.14);
+  --del: #cf222e;
+  --hash: #9a6700;
+  --ref: #0b6e99;
+  --branch: #8250df;
+  --accent: #0b6e99;
+  --accent-strong: #085577;
+}
+
+:root[data-theme="dark"] {
+  --bg-primary: #101214;
+  --bg-elevated: #181b1f;
+  --bg-panel: #15181b;
+  --bg-nav: rgba(16, 18, 20, 0.94);
+  --bg-footer: #0c0d0f;
+  --bg-code: #0c0d0f;
+  --border-soft: #2a2f36;
+  --border-strong: #3d444d;
+  --border-subtle: #1f2328;
+  --text-primary: #e8eaed;
+  --text-muted: #a9afb8;
+  --text-meta: #6e7681;
+  --add: #4ac26b;
+  --add-bg: rgba(74, 194, 107, 0.1);
+  --add-gutter: rgba(74, 194, 107, 0.2);
+  --del: #f0686a;
+  --hash: #d4a72c;
+  --ref: #5ec4e0;
+  --branch: #b392f0;
+  --accent: #5ec4e0;
+  --accent-strong: #8ad7eb;
+}
+
+/* ── Base ─────────────────────────────────────────────────────────────── */
+
+body {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.68;
+}
+
+body::before { display: none; }
+
+::selection,
+:root[data-theme="light"] ::selection {
+  background: var(--add-gutter);
+  color: inherit;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* hunk headers */
+#quarto-document-content h2 {
+  font-size: 1.55rem;
+  border-bottom: none !important;
+  background: linear-gradient(var(--bg-elevated), var(--bg-elevated)) no-repeat;
+  background-size: 100% 100%;
+  padding: 0.35rem 0.8rem;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--ref);
+}
+
+#quarto-document-content h2::before {
+  content: "@@ -0,0 +1 @@  ";
+  white-space: pre;
+  font-family: var(--font-mono);
+  font-size: 0.7em;
+  font-weight: 400;
+  color: var(--ref);
+  vertical-align: 0.12em;
+}
+
+
+
+p, li { color: var(--text-muted); font-size: 1.04rem; }
+
+a {
+  color: var(--ref);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--ref) 40%, transparent);
+  text-underline-offset: 3px;
+}
+
+a:hover,
+a:focus {
+  color: var(--accent-strong);
+  text-shadow: none;
+  text-decoration-color: currentColor;
+}
+
+/* ── Navbar: branch switcher ──────────────────────────────────────────── */
+
+.navbar {
+  border-bottom: 1px solid var(--border-soft);
+  font-family: var(--font-mono);
+  padding: 0.6rem 1.2rem;
+}
+
+.navbar .navbar-brand {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 0.35rem 0.75rem;
+}
+
+.navbar .navbar-brand::before { content: "⎇ "; color: var(--branch); }
+.navbar .navbar-brand::after { content: " ▾"; color: var(--text-meta); font-size: 0.8em; }
+
+.navbar .navbar-nav .nav-link {
+  font-size: 0.75rem;
+  letter-spacing: -0.02em;
+  color: var(--text-muted) !important;
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem !important;
+  margin: 0 0.1rem;
+  opacity: 1;
+}
+
+.navbar .navbar-nav.me-auto .nav-link.active {
+  color: var(--add) !important;
+  background: var(--add-bg);
+  box-shadow: inset 0 0 0 1px var(--add-gutter);
+}
+
+.navbar .navbar-brand:hover,
+.navbar .nav-link:hover,
+.navbar .nav-link:focus,
+.theme-toggle-button:hover,
+.theme-toggle-button:focus-visible {
+  text-shadow: none;
+  color: var(--text-primary) !important;
+}
+
+/* ── Intro: a diff of README.md ───────────────────────────────────────── */
+
+.intro-panel {
+  position: relative;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: none;
+  padding: 3.6rem 1.6rem 1.6rem;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 1.8rem;
+}
+
+.intro-panel::before {
+  content: "README.md";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0.55rem 1rem;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-primary);
+}
+
+.intro-panel::after {
+  content: "+2 −0  ■■■■■";
+  position: absolute;
+  top: 0.55rem;
+  right: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--add);
+  letter-spacing: 0.02em;
+}
+
+.profile-pic {
+  width: min(150px, 40vw);
+  border: 2px solid var(--border-strong);
+  box-shadow: 0 0 0 4px var(--bg-panel), 0 0 0 5px var(--add-gutter);
+  padding: 0;
+  background: none;
+}
+
+.intro-copy { gap: 0.4rem; }
+
+.intro-copy p {
+  position: relative;
+  background: var(--add-bg);
+  border-left: 3px solid var(--add-gutter);
+  padding: 0.7rem 1rem 0.7rem 2.2rem;
+  margin: 0 !important;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.intro-copy p::before {
+  content: "+";
+  position: absolute;
+  left: 0.8rem;
+  top: 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--add);
+}
+
+.intro-copy p:first-of-type { color: var(--text-primary); font-size: 1.08rem; }
+
+/* ── Post list: git log --graph ───────────────────────────────────────── */
+
+.post-list .list {
+  position: relative;
+  counter-reset: head -1;
+}
+
+.post-list .list::before {
+  content: "";
+  position: absolute;
+  left: 0.95rem;
+  top: 1.6rem;
+  bottom: 1rem;
+  width: 2px;
+  background: linear-gradient(var(--branch), var(--ref));
+  opacity: 0.55;
+}
+
+.post-list .quarto-post {
+  counter-increment: head;
+  position: relative;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 1rem 1rem 1rem 3rem;
+  margin: 0 0 0.5rem;
+  transition: background 0.12s ease;
+}
+
+.post-list .quarto-post::before {
+  content: "";
+  position: absolute;
+  left: calc(0.95rem - 6px);
+  top: 1.45rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--bg-primary);
+  border: 2px solid var(--branch);
+  z-index: 1;
+}
+
+.post-list .quarto-post:first-child::before {
+  background: var(--add);
+  border-color: var(--add);
+  box-shadow: 0 0 0 4px var(--add-bg);
+}
+
+.post-list .quarto-post:hover {
+  transform: none;
+  box-shadow: none;
+  background: var(--bg-elevated);
+}
+
+.post-list .quarto-post:hover::before { background: var(--branch); }
+
+.post-list .quarto-post .body::before {
+  content: "HEAD~" counter(head);
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--hash);
+  margin-bottom: 0.2rem;
+}
+
+.post-list .quarto-post:first-child .body::before {
+  content: "HEAD~0  (HEAD → main, origin/main)";
+}
+
+.post-list .listing-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.15rem;
+}
+
+.post-list .listing-title a,
+.post-list .listing-subtitle a,
+.post-list .listing-description a,
+.post-list .quarto-post .metadata a {
+  text-decoration: none;
+}
+
+.post-list .listing-title a { color: var(--text-primary); }
+.post-list .quarto-post:hover .listing-title a { color: var(--ref); }
+
+.post-list .listing-subtitle,
+.post-list .listing-subtitle a { color: var(--text-muted); font-size: 1rem; }
+
+.post-list .listing-description,
+.post-list .listing-description a { color: var(--text-muted); font-size: 0.98rem; }
+
+.post-list .listing-categories {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  gap: 0;
+  margin: 0.3rem 0 0.5rem;
+  color: var(--hash);
+}
+
+.post-list .listing-categories::before { content: "("; }
+.post-list .listing-categories::after { content: ")"; }
+
+.post-list.quarto-listing .quarto-post .listing-categories .listing-category {
+  border: none;
+  border-radius: 0;
+  background: none;
+  padding: 0;
+  margin: 0;
+  font-size: inherit;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--hash);
+}
+
+.post-list.quarto-listing .quarto-post .listing-categories .listing-category::before { content: "tag: "; opacity: 0.7; }
+
+.post-list.quarto-listing .quarto-post .listing-categories .listing-category:not(:last-child)::after {
+  content: ",";
+  margin-right: 0.6em;
+}
+
+.post-list .quarto-post .metadata {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-meta);
+  padding-top: 1.4rem;
+}
+
+.post-list .listing-reading-time { color: var(--add); opacity: 1; }
+.post-list .listing-reading-time::before { content: "+"; }
+
+/* ── Category sidebar: branches / tags ────────────────────────────────── */
+
+.quarto-listing-category-title {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--text-primary);
+}
+
+.quarto-listing-category-title { white-space: nowrap; }
+.quarto-listing-category-title::before { content: "$ git tag · "; color: var(--text-meta); }
+
+.quarto-listing-category { display: block; }
+
+.quarto-listing-category .category {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: -0.02em;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.2rem 0.5rem;
+  color: var(--text-muted);
+}
+
+.quarto-listing-category .category:hover { background: var(--bg-elevated); color: var(--hash); }
+
+.quarto-listing-category .category.active {
+  background: var(--add-bg);
+  color: var(--add);
+  box-shadow: inset 0 0 0 1px var(--add-gutter);
+  border: none;
+}
+
+/* ── Post header: git show ────────────────────────────────────────────── */
+
+#title-block-header.quarto-title-block.default .quarto-title-banner,
+.quarto-title-banner {
+  background: var(--bg-primary) !important;
+  border-bottom: 1px solid var(--border-soft);
+  box-shadow: none;
+}
+
+.quarto-title-banner .quarto-title::before {
+  content: "$ git show HEAD";
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-meta);
+  margin-bottom: 1rem;
+}
+
+.quarto-title-banner h1.title {
+  font-weight: 700;
+  font-size: clamp(2.1rem, 4.6vw, 3.2rem);
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+}
+
+.quarto-title-banner .quarto-title .subtitle,
+.quarto-title-banner .subtitle {
+  font-family: var(--font-body) !important;
+  color: var(--text-muted) !important;
+  font-size: 1.2rem !important;
+}
+
+.quarto-title-banner .quarto-categories .quarto-category,
+#title-block-header .quarto-categories .quarto-category {
+  font-family: var(--font-mono);
+  border: 1px solid color-mix(in srgb, var(--hash) 45%, transparent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--hash);
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.66rem;
+}
+
+.quarto-title-banner .quarto-categories .quarto-category::before,
+#title-block-header .quarto-categories .quarto-category::before { content: "tag: "; opacity: 0.7; }
+
+#title-block-header .quarto-title-meta-heading {
+  font-family: var(--font-mono);
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text-meta) !important;
+}
+
+#title-block-header .quarto-title-meta-heading::after { content: ":"; }
+#title-block-header .quarto-title-meta-contents { font-family: var(--font-mono); color: var(--text-primary) !important; }
+
+/* ── TOC ──────────────────────────────────────────────────────────────── */
+
+#toc-title {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-meta);
+}
+
+.sidebar nav[role="doc-toc"] > ul li a {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.sidebar nav[role="doc-toc"] > ul li a.active {
+  color: var(--ref) !important;
+  border-left: 2px solid var(--ref) !important;
+}
+
+/* ── Code, quotes, callouts ───────────────────────────────────────────── */
+
+code, pre, pre code { font-family: var(--font-mono); font-size: 0.82rem; border: none; }
+
+p code, li code {
+  color: var(--branch);
+  background: var(--bg-elevated);
+  padding: 0.1rem 0.35rem;
+  border-radius: var(--radius-sm);
+}
+
+div.sourceCode {
+  background: var(--bg-code);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+}
+
+blockquote {
+  border-left: 3px solid var(--del);
+  background: color-mix(in srgb, var(--del) 7%, transparent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.callout.callout-style-default {
+  border: 1px solid var(--border-soft);
+  border-left: 3px solid var(--ref);
+  border-radius: var(--radius-md);
+}
+
+hr { border-top: 1px dashed var(--border-strong); opacity: 1; }
+
+/* ── Buttons, progress, back-to-top ───────────────────────────────────── */
+
+.btn, .button, .btn-primary {
+  font-family: var(--font-mono);
+  border-radius: var(--radius-md);
+  text-transform: none;
+  letter-spacing: 0;
+  background: var(--add);
+  border-color: var(--add);
+  color: #fff;
+}
+
+.btn:hover, .button:hover, .btn-primary:hover {
+  filter: brightness(1.08);
+  background: var(--add);
+  color: #fff;
+  box-shadow: none;
+}
+
+.reading-progress {
+  background: linear-gradient(90deg, var(--branch), var(--ref), var(--add));
+  box-shadow: none;
+  height: 3px;
+}
+
+#quarto-back-to-top {
+  border-radius: 999px;
+  box-shadow: none;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-soft);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* ── Footer: commit trailer ───────────────────────────────────────────── */
+
+footer.nav-footer {
+  background: var(--bg-footer);
+  border-top: 1px solid var(--border-soft);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+footer.nav-footer .nav-footer-left::before { content: "Signed-off-by: "; color: var(--text-meta); }
+footer.nav-footer .nav-footer-left { color: var(--text-primary); }
+footer.nav-footer .nav-footer-center::before { content: "Built-with: "; color: var(--text-meta); }
+
+footer.nav-footer a:hover { color: var(--ref); }
+
+@media (max-width: 900px) {
+  .intro-panel { grid-template-columns: 1fr; }
+  .intro-media { justify-content: flex-start; }
+}
+
+@media (max-width: 600px) {
+  .intro-panel { padding: 3.4rem 1rem 1rem; }
+  .intro-copy p { padding: 0.6rem 0.8rem 0.6rem 1.9rem; }
+  .intro-copy p::before { left: 0.6rem; }
+  .post-list .quarto-post { padding: 0.9rem 0.6rem 0.9rem 2.6rem; }
+  .post-list .list::before { left: 0.8rem; }
+  .post-list .quarto-post::before { left: calc(0.8rem - 6px); }
+  .post-list .quarto-post .metadata { flex-direction: row; padding-top: 0; }
+  .post-list .quarto-post .metadata a { display: flex; gap: 1rem; }
+}
+
+/* ── Navbar icons: Darkly paints these white, invisible on light bg ───── */
+
+.navbar #quarto-search .aa-DetachedSearchButtonIcon,
+.navbar #quarto-search .aa-DetachedSearchButton,
+.navbar #quarto-search .aa-SubmitIcon {
+  color: var(--text-primary) !important;
+}
+
+:root[data-theme="light"] .navbar-toggler-icon {
+  filter: invert(1) brightness(0.35);
+}

@@ -52,10 +52,20 @@ andreasthinks-site/
 
 The site defaults to the user's system preference and has a manual toggle (`◐` in the navbar). The theme toggle JS sets `data-theme="dark"` or `data-theme="light"` on the `<html>` element, and `styles.css` has CSS variables for both.
 
-**Key CSS variables** (defined in `styles.css` for `:root`, `[data-theme="dark"]`, `[data-theme="light"]`):
-- Dark accent: `#7bfcca` / Light accent: `#1f8f70`
-- Dark bg: `#05060d` / Light bg: `#f5f7fb`
-- Text: `#f4f7ff` (dark) / `#0b1220` (light)
+**Design: "Margin".** A quiet notebook look. Content runs in cells; a narrow left margin (`--gutter-w`) carries cell indices (`00`, `01`…) and `§` section marks; the homepage intro is the "active" cell; each post in the listing is an input block (title, subtitle, `#tags`) followed by a `↳` output (the excerpt). Fonts: IBM Plex Sans + IBM Plex Mono. The margin collapses below 768px.
+
+**Key CSS variables** (defined in `styles.css` for `:root`, the light system preference, `[data-theme="dark"]` and `[data-theme="light"]`):
+- Background `--bg-primary`: `#111317` (dark) / `#f7f8fa` (light)
+- Cell surface `--cell`: `#1a1d23` / `#eff1f5`
+- Text `--text-primary`: `#e6e8ec` / `#16181d`; muted `--text-muted`, meta `--text-meta`
+- Rail/accent `--rail`: `#8b93ff` / `#4f5bd5`; links `--accent`: `#9aa2ff` / `#3f4bc4`
+- `--font-body`, `--font-mono`, `--radius-*`
+
+Use these tokens rather than hard-coded colours so things follow the toggle. The comments extensions (`_extensions/AndreasThinks/open-social-comments`, `mastodon-comments`) style themselves from the same tokens and mount at the end of `#quarto-document-content`.
+
+**Navbar tools:** the theme toggle is appended to `.quarto-navbar-tools`; `styles.css` orders it directly after `#quarto-search` at every width. If you change the navbar, check 1440 / 992 / 991 / 390 / 320px for overlap.
+
+Earlier design explorations (ten alternative themes with previews) live in `_theme-explorations/` — underscore-prefixed, so Quarto ignores them.
 
 ### Figures must work in both modes
 
@@ -176,4 +186,4 @@ Draft posts (draft: true) render and deploy — they're just excluded from listi
    ```
 6. Push
 
-*Last updated: April 2026*
+*Last updated: September 2026*
