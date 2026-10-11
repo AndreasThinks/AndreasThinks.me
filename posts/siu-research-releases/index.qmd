@@ -1,6 +1,6 @@
 ---
-title: "Metropolitan Police Strategic Insight Unit: research and evaluation releases"
-description: "A browsable collection of reports released by the Metropolitan Police Service following a Freedom of Information request."
+title: "Thank God for the FOI Act: Strategic Insight Unit releases in the open"
+description: "Some of my proudest research was done with the Metropolitan Police SIU. I'd sort of assumed much of it would never see the light of day, but it turns out plenty has already been released!"
 date: "2026-10-11"
 draft: true
 categories:
@@ -12,11 +12,11 @@ format:
     toc: false
 ---
 
-This page collects the PDF reports released by the Metropolitan Police Service (MPS) in response to a Freedom of Information request for work by its Strategic Insight Unit (SIU). The requester shared the response bundle through [WhatDoTheyKnow](https://www.whatdotheyknow.com/request/research_by_the_strategic_insigh_2), following an ICO decision requiring the MPS to issue a fresh response.
+My time in the Metropolitan Police Strategic Insight Unit (SIU) remains a career highlight. The team did (and continues to do) lots of excellent, operationally relevant and robust research, the likes of which we need plenty more of in the world. So it was an ongoing disappointment of mine that so little of the work managed to make it through the byzantine structures of Met Police hierarchy and into the public domain. I'd vaguely assumed, much to my disappointment, that much of this work would never see the light of day.
 
-The reports cover operational evaluations, research and analysis. The closest material to hotspot policing in the FOI bundle is the Town Centre Uplift Analysis. **The bundle does not include a direct evaluation of Operation Avert or Grip patrols.** Since it was released, however, the Home Office has published national Grip evaluations, and the MPS has published its Precision Stop & Search pilot evaluation. Those are separate public releases, linked below.
+Well, it turns out I was wrong! Someone recently pointed out that some of it had been released in response to a Freedom of Information Act request on [WhatDoTheyKnow](https://www.whatdotheyknow.com/), so I tasked my AI agent with collecting all the relevant releases and backing them up here.
 
-> **Release and handling note:** These files are copies from the FOI response bundle, not documents hosted by the MPS. Some retain labels such as “Internal to MPS only” or “Official Sensitive – Do not share”; those labels are reproduced as they appear in the released files. Check each document's own markings and context before reusing or circulating it.
+It's excellent research, and I hope someone finds it useful. And next time someone moans about how much of a pain FOI requests are, remember that they can do some real good. I'm certainly glad they're still around.
 
 ## Place-based and operational evaluations
 
@@ -43,18 +43,6 @@ The reports cover operational evaluations, research and analysis. The closest ma
 - [MOPAC decision: Grip funding, PCD 1596](https://www.london.gov.uk/programmes-strategies/mayors-office-policing-and-crime-mopac/mopac-governance-and-decision-making/mopac-decisions/pcd-1596-ho-grip-funding) — funding decision and programme context, not an evaluation report.
 - [MOPAC decision: Home Office Hotspot Response Fund, PCD 1650](https://www.london.gov.uk/programmes-strategies/mayors-office-policing-and-crime-mopac/mopac-governance-and-decision-making/mopac-decisions/pcd-1650-home-office-hotspot-response-fund) — funding decision covering hotspot patrols, problem-oriented policing and analytical support, not an outcome evaluation.
 - [London Policing Board meeting record, February 2025](https://www.london.gov.uk/moderngovmb/mgAi.aspx?ID=38866) — records MPS discussion of its hotspot-policing randomised trial and subsequent evaluation work.
-
-## Later public releases: Grip and hotspot policing
-
-These are national Home Office evaluations of the Grip programme, not SIU reports and not an Operation Avert-specific standalone report. They provide the best published evidence I found on the programme's overall outcomes:
-
-- [Evaluation of Grip and bespoke-funded hot spot policing, year ending March 2022 (published 15 February 2024)](https://www.gov.uk/government/publications/hot-spot-policing-in-england-and-wales-year-ending-march-2022/evaluation-report-on-grip-and-bespoke-funded-hot-spot-policing) — national analysis estimated 7% fewer violence-against-the-person and robbery offences in hotspots on patrol days versus non-patrol days, equivalent to about 1,100 crimes prevented. Results were statistically significant at programme level, but only 2 or 3 of 19 force-level estimates were significant. The report says force approaches differed and treats them as separate evaluations.
-- [Evaluation of Grip and bespoke-funded hot spot policing, year ending March 2023 (published 27 March 2025)](https://www.gov.uk/government/publications/hot-spot-policing-in-england-and-wales-year-ending-march-2023/hot-spot-policing-in-england-and-wales-year-ending-march-2023-evaluation-of-grip-and-bespoke-funded-hot-spot-policing) — no statistically significant programme-level impact on violence and robbery volumes that year. It did find more positive crime outcomes on patrol days, including an 8.1% increase for violence and robbery. It also reported no evidence of displacement or diffusion in the available tests. This makes the picture less tidy than “hotspot patrols worked”: the 2022 aggregate crime reduction did not recur in 2023.
-- [Home Office publication page for the 2022 evaluation](https://www.gov.uk/government/publications/hot-spot-policing-in-england-and-wales-year-ending-march-2022) and [2023 evaluation](https://www.gov.uk/government/publications/hot-spot-policing-in-england-and-wales-year-ending-march-2023) — source pages, with publication details and report text.
-- [MOPAC decision: Home Office Grip Funding 2022–2025](https://www.london.gov.uk/media/103900/download) — describes separate MPS-funded work including Operation Nightingale, a randomised trial combining hotspot policing and problem-oriented policing, plus an Innovation Fund trial of static officer posts and drones. This documents funded trial plans, not their results.
-- [Operation Avert conference presentation entry](https://anzsebpconference.com.au/6728) — identifies a 228-location crossover randomized trial and says the researchers presented results, but the public page is an abstract, not a full paper or report. I have not located a publicly downloadable full Operation Avert evaluation.
-
-The key distinction: the Home Office Grip reports evaluate the programme across forces, using force-level evaluations and national synthesis. They are not a direct public release of the MPS’s Operation Avert RCT results. MOPAC records show further MPS trials were planned, but I have not found a public results document for Operation Nightingale either.
 
 ## Other later updates
 
