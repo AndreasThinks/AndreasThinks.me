@@ -1,6 +1,6 @@
 ---
 title: "Thank God for the FOI Act: Strategic Insight Unit releases in the open"
-description: "Some of my proudest research was done with the Metropolitan Police SIU. I'd sort of assumed much of it would never see the light of day, but it turns out plenty has already been released!"
+description: "Some of my proudest work was done with the Metropolitan Police SIU. I'd sort of assumed much of it would never see the light of day, but it turns out plenty has already been released! So thank god (or at least New Labour) for the Freedom of Information Act, and here are some reports, backed-up for posterity."
 date: "2026-10-11"
 categories:
   - policing
