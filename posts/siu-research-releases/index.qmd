@@ -1,0 +1,44 @@
+---
+title: "Metropolitan Police Strategic Insight Unit: research and evaluation releases"
+description: "A browsable collection of reports released by the Metropolitan Police Service following a Freedom of Information request."
+date: "2026-10-11"
+draft: true
+categories:
+  - policing
+  - freedom-of-information
+  - evaluation
+format:
+  html:
+    toc: false
+---
+
+This page collects the PDF reports released by the Metropolitan Police Service (MPS) in response to a Freedom of Information request for work by its Strategic Insight Unit (SIU). The requester shared the response bundle through [WhatDoTheyKnow](https://www.whatdotheyknow.com/request/research_by_the_strategic_insigh_2), following an ICO decision requiring the MPS to issue a fresh response.
+
+The reports cover operational evaluations, research and analysis. The closest material to hotspot policing is the Town Centre Uplift Analysis and the Precision Stop & Search pilot evaluation. **I did not find a report in this release that directly evaluates the Met's Grip hotspot patrols.** The town-centre analysis is related place-based work, not the same intervention.
+
+> **Release and handling note:** These files are copies from the FOI response bundle, not documents hosted by the MPS. Some retain labels such as “Internal to MPS only” or “Official Sensitive – Do not share”; those labels are reproduced as they appear in the released files. Check each document's own markings and context before reusing or circulating it.
+
+## Place-based and operational evaluations
+
+- [Town Centre Uplift Analysis (November 2022)](town-centre-uplift-analysis.pdf) — examines the effect of 19 Town Centre Teams across London. Finds a consistent increase in recorded drug offences across its two comparison approaches; results for other outcomes are mixed or small, and the report cautions against strong causal claims.
+- [Precision Stop & Search pilot evaluation (26 February 2024)](precision-stop-search-pilot-evaluation.pdf) — evaluates a targeted stop-and-search pilot in nine wards in Lambeth and Barking & Dagenham, including training, community engagement, trust, crime and compliance strands. The report is marked “Internal to MPS only.”
+- [Operation Coniston short report (February 2024)](operation-coniston-short-report.pdf) — short version of a randomised trial of supervisor reviews of body-worn video from stop-and-search encounters. Covers search data, supervisor assessments and officer/supervisor views.
+- [Knife Crime Prevention Orders impact evaluation (April 2023)](kcpo-impact-evaluation.pdf) — trial-based analysis of reoffending. Low uptake and few actual orders left too few observations for a confident causal estimate; the report finds no statistically significant difference in reoffending rates.
+- [Positive Action workshop evaluation (May 2021)](positive-action-workshop-evaluation.pdf) — randomised evaluation of workshops for minority ethnic and female direct-entry detective candidates. The report finds increased assessment success among candidates offered the workshop, with larger reported gains for minority ethnic candidates.
+
+## Other SIU research and analysis
+
+- [Factors associated with strip-search in MPS custody suites](strip-search-factors.pdf) — statistical analysis of 403,208 arrests from 2019–2021, examining factors associated with custody strip-search, including offence type, location and ethnicity. The analysis is limited to strip-search after arrest.
+- [Factors associated with missing-person high-risk grading (May 2023)](missing-person-risk-grading.pdf) — analyses how risk grades relate to contextual factors and subsequent harm, including differences by ethnicity.
+- [Ethnic disproportionality at the point of internal misconduct allegation (November 2023)](misconduct-disproportionality-research.pdf) — mixed-methods research on possible drivers of disproportionality in the misconduct process. The report notes significant data limitations and is marked “Official Sensitive – Do not share.”
+- [Misconduct research recommendations (November 2023)](misconduct-recommendations.pdf) — companion paper setting out high-level potential interventions and the need for further development and coordination.
+- [Rapid Community Polling assessment: ZenCity](zencity-rapid-polling-assessment.pdf) — assesses the MPS trial of online community polling. The SIU reports problems with respondent retention and representativeness, and does not recommend renewing the ongoing “Blockwise” service in its current form.
+- [ZenCity methodology report (April 2024)](zencity-methodology-report.pdf) — compares ZenCity polling with MOPAC’s Public Attitude Survey. Finds that the voluntary online sample is not a sound measure of London-wide trust and confidence trends.
+- [Six ways to improve case-file quality (January 2021)](improving-case-file-quality.pdf) — qualitative research and descriptive analysis of barriers to good case files, with recommendations for supervisor feedback, review processes and targeted support.
+
+## Original request and related records
+
+- [WhatDoTheyKnow request: Research by the Strategic Insight Unit since 2021](https://www.whatdotheyknow.com/request/research_by_the_strategic_insigh_2) — request, correspondence and ICO-related updates.
+- [MOPAC decision: Grip funding, PCD 1596](https://www.london.gov.uk/programmes-strategies/mayors-office-policing-and-crime-mopac/mopac-governance-and-decision-making/mopac-decisions/pcd-1596-ho-grip-funding) — funding decision and programme context, not an evaluation report.
+- [MOPAC decision: Home Office Hotspot Response Fund, PCD 1650](https://www.london.gov.uk/programmes-strategies/mayors-office-policing-and-crime-mopac/mopac-governance-and-decision-making/mopac-decisions/pcd-1650-home-office-hotspot-response-fund) — funding decision covering hotspot patrols, problem-oriented policing and analytical support, not an outcome evaluation.
+- [London Policing Board meeting record, February 2025](https://www.london.gov.uk/moderngovmb/mgAi.aspx?ID=38866) — records MPS discussion of its hotspot-policing randomised trial and subsequent evaluation work.
