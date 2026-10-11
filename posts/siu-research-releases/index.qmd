@@ -9,6 +9,14 @@ categories:
 format:
   html:
     toc: false
+filters:
+  - open-social-comments
+mastodon_comments:
+  user: "AndreasThinks"
+  host: "fosstodon.org"
+  toot_id: "117422440682457256"
+bluesky_comments:
+  post_uri: "https://bsky.app/profile/andreasthinks.me/post/3mxm3bmso6k2v"
 ---
 
 My time in the Metropolitan Police Strategic Insight Unit (SIU) remains a career highlight. The team did (and continues to do) lots of excellent, operationally relevant and robust research, the likes of which we need plenty more of in the world. So it was an ongoing disappointment of mine that so little of the work managed to make it through the byzantine structures of Met Police hierarchy and into the public domain. I'd vaguely assumed, much to my disappointment, that much of this work would never see the light of day.
