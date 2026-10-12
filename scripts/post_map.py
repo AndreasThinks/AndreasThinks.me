@@ -1,15 +1,15 @@
-"""Build post-map.json for the homepage figure (Fig. 1).
+"""Build post-map.json for the homepage atlas (cell 01).
 
-Runs as a Quarto pre-render script, so it needs nothing beyond numpy, scipy
-and PyYAML and no API key. For every published post it:
+Runs as a Quarto pre-render script, so it needs nothing beyond numpy and
+PyYAML and no API key. For every published post it:
 
 1. reads the title, subtitle, description, tags and body text;
 2. turns the text into TF-IDF vectors and reduces them with a truncated SVD
    (latent semantic analysis);
 3. assigns a topic from topics.yml by tag overlap, falling back to the
    nearest topic in text space for posts with no mapped tags;
-4. projects to 3D with a regularised linear discriminant analysis on those
-   topics, so topics separate while positions still follow the text.
+4. links each post to its two nearest neighbours in text space and to every
+   post it shares a tag with. includes/post-atlas.js lays the graph out.
 
 Output: post-map.json at the project root, copied to the site as a resource.
 """
@@ -136,27 +136,22 @@ def assign_topics(posts, Z, topics, ignore):
     return labels
 
 
-def lda3(Z, labels, reg=0.15):
-    y = np.array(labels)
-    mu = Z.mean(axis=0)
-    Sw = np.zeros((Z.shape[1],) * 2)
-    Sb = np.zeros_like(Sw)
-    for c in set(labels):
-        Zc = Z[y == c]
-        mc = Zc.mean(axis=0)
-        Sw += (Zc - mc).T @ (Zc - mc)
-        Sb += len(Zc) * np.outer(mc - mu, mc - mu)
-    Sw += reg * np.trace(Sw) / len(Sw) * np.eye(len(Sw)) + 1e-9 * np.eye(len(Sw))
-    vals, vecs = np.linalg.eig(np.linalg.solve(Sw, Sb))
-    order = np.argsort(-vals.real)
-    W = vecs[:, order].real
-    # top discriminants, padded with principal directions if there are too few topics
-    if W.shape[1] < 3:
-        W = np.hstack([W, np.linalg.svd(Z - mu, full_matrices=False)[2].T])
-    P = (Z - mu) @ W[:, :3]
-    P -= P.mean(axis=0)
-    P /= np.abs(P).max() + 1e-12
-    return P
+
+def edges(Z, posts, ignore):
+    """Links for the homepage graph: each post to its two nearest posts in text space,
+    plus every pair of posts that share a tag (tags in `ignore` don't count)."""
+    Zn = Z / (np.linalg.norm(Z, axis=1, keepdims=True) + 1e-12)
+    C = Zn @ Zn.T
+    out, ign = {}, set(ignore)
+    for i in range(len(posts)):
+        for j in [j for j in np.argsort(-C[i]) if j != i][:2]:
+            key = tuple(sorted((i, int(j))))
+            out[key] = max(out.get(key, 0.0), float(C[i, j]))
+        for j in range(i + 1, len(posts)):
+            shared = (set(posts[i]["tags"]) & set(posts[j]["tags"])) - ign
+            if shared:
+                out[(i, j)] = max(out.get((i, j), 0.0), 0.3 + 0.2 * len(shared))
+    return [[a, b, round(w, 3)] for (a, b), w in sorted(out.items())]
 
 
 def main():
@@ -176,10 +171,10 @@ def main():
             print(f"post_map: topic '{t['name']}' has no posts yet; left off the map", file=sys.stderr)
     topics = [topics[i] for i in used]
     labels = [used.index(l) for l in labels]
-    P = lda3(Z, labels)
     out = {
-        "topics": [{"name": t["name"], "center": [round(float(v), 3) for v in P[np.array(labels) == i].mean(axis=0)]} for i, t in enumerate(topics)],
-        "posts": [{"href": p["href"], "title": p["title"], "tags": p["tags"], "topic": int(l), "xyz": [round(float(v), 3) for v in P[i]]} for i, (p, l) in enumerate(zip(posts, labels))],
+        "topics": [t["name"] for t in topics],
+        "posts": [{"href": p["href"], "title": p["title"], "tags": p["tags"], "topic": int(l)} for p, l in zip(posts, labels)],
+        "edges": edges(Z, posts, ignore),
     }
     OUT.write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding="utf-8")
     print(f"post_map: mapped {len(posts)} posts into {len(topics)} topics", file=sys.stderr)

@@ -31,6 +31,7 @@
   --accent-strong: #b9beff;
   --ok: #6fcf97;
   --warn: #f2b35b;
+  --atlas-k1: #8b93ff; --atlas-k2: #5cc4b4; --atlas-k3: #e0b45e; --atlas-k4: #e38a9c; --atlas-k5: #9cc27a;
   --radius-lg: 8px;
   --radius-md: 6px;
   --radius-sm: 4px;
@@ -60,6 +61,7 @@
     --accent-strong: #2c369e;
     --ok: #2f9e5c;
     --warn: #b7791f;
+    --atlas-k1: #4f5bd5; --atlas-k2: #1f8a7a; --atlas-k3: #a87412; --atlas-k4: #b54a62; --atlas-k5: #4f7d2a;
     color-scheme: light;
   }
 }
@@ -83,6 +85,7 @@
   --accent-strong: #2c369e;
   --ok: #2f9e5c;
   --warn: #b7791f;
+  --atlas-k1: #4f5bd5; --atlas-k2: #1f8a7a; --atlas-k3: #a87412; --atlas-k4: #b54a62; --atlas-k5: #4f7d2a;
   color-scheme: light;
 }
 
@@ -105,6 +108,7 @@
   --accent-strong: #b9beff;
   --ok: #6fcf97;
   --warn: #f2b35b;
+  --atlas-k1: #8b93ff; --atlas-k2: #5cc4b4; --atlas-k3: #e0b45e; --atlas-k4: #e38a9c; --atlas-k5: #9cc27a;
   color-scheme: dark;
 }
 
@@ -601,6 +605,21 @@ main.content {
   box-shadow: inset 3px 0 0 var(--rail);
 }
 
+/* the intro cell "runs" once on load: a light passes down its rail */
+.intro-panel {
+  background: linear-gradient(transparent, var(--accent-strong), transparent) no-repeat 0 -100% / 3px 45%, var(--bg-panel);
+  animation: intro-run 1.2s ease-out 0.25s 1 both;
+}
+
+@keyframes intro-run {
+  from { background-position: 0 -100%, 0 0; }
+  to { background-position: 0 200%, 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-panel { animation: none; background: var(--bg-panel); }
+}
+
 .intro-panel::before {
   content: "00";
   position: absolute;
@@ -642,14 +661,125 @@ main.content {
   font-size: 1.08rem;
 }
 
+/* ── Homepage atlas: cell 01, a map of every post ───────────────────────── */
+/* includes/post-atlas.js draws it; topics are territories, the cursor is a lens */
+
+.atlas-cell {
+  position: relative;
+  margin: -1.6rem 0 3rem;
+}
+
+.atlas-cell::before {
+  content: "01";
+  position: absolute;
+  left: calc(-1 * var(--gutter-w));
+  width: calc(var(--gutter-w) - 1.2rem);
+  top: 0.15rem;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-meta);
+}
+
+.atlas-cap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  padding: 0 0 0.5rem 0.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-meta);
+}
+
+.atlas-cap::before { content: "↳"; }
+.atlas-cap b { font-weight: 500; color: var(--rail); }
+.atlas-hint { margin-left: auto; }
+
+.atlas-plot {
+  position: relative;
+  height: 380px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.atlas-plot canvas { display: block; width: 100%; height: 100%; }
+
+/* a small north mark, because it's a map */
+.atlas-plot::after {
+  content: "N";
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  padding: 0 0.15rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-meta);
+  border-bottom: 1px solid var(--text-meta);
+  pointer-events: none;
+}
+
+.atlas-ring {
+  display: none;
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  margin: -120px 0 0 -120px;
+  border-radius: 50%;
+  border: 1px dashed color-mix(in srgb, var(--rail) 55%, transparent);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .atlas-plot:hover .atlas-ring { display: block; }
+}
+
+.atlas-keys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.9rem;
+  margin-top: 0.6rem;
+  padding-left: 0.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.atlas-keys button {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--text-meta);
+  cursor: pointer;
+}
+
+.atlas-keys button::before { content: "#"; opacity: 0.6; }
+.atlas-keys button:hover,
+.atlas-keys button[aria-pressed="true"] { color: var(--rail); }
+.atlas-keys i { display: inline-block; width: 7px; height: 7px; margin-right: 0.35rem; border-radius: 50%; vertical-align: 1px; }
+.atlas-keys span { margin-left: 0.2rem; opacity: 0.6; }
+
+/* a post lit from the map reads as hovered */
+.post-list .quarto-post.atlas-lit::after { background: var(--rail); }
+.post-list .quarto-post.atlas-lit::before { color: var(--rail); }
+.post-list .quarto-post.atlas-lit .listing-title a { color: var(--accent); }
+
+@media (max-width: 767px) {
+  .atlas-cell::before { display: none; }
+  .atlas-plot { height: 320px; }
+  .atlas-hint { display: none; }
+}
+
 /* ── Post listing: input block → output ──────────────────────────────────── */
 
 #listing-blog-listings {
   margin-top: 1.8rem;
 }
 
+/* the feed counts on from the atlas, cell 01 */
 .post-list .list {
-  counter-reset: cell;
+  counter-reset: cell 1;
 }
 
 .post-list .quarto-post {
