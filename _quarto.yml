@@ -1,6 +1,11 @@
 
 project:
   type: website
+  # builds post-map.json (topics and positions for the homepage's Fig. 1)
+  pre-render: scripts/post_map.py
+  resources:
+    - post-map.json
+    - includes/post-map.js
 execute:
   freeze: auto
 website:
@@ -46,20 +51,27 @@ website:
       - text: "teaching"
         file: slides/index.qmd
     right:
-      - text: "{{< fa brands mastodon size=xl >}}" 
+      - text: "{{< fa brands mastodon >}}"
+        aria-label: Mastodon
         href: https://fosstodon.org/@AndreasThinks
         rel: "me"
-      - text: "{{< fa brands bluesky size=xl >}}" 
+      - text: "{{< fa brands bluesky >}}"
+        aria-label: Bluesky
         href: https://bsky.app/profile/andreasthinks.me
-      - text: "{{< fa brands twitter size=xl >}}" 
+      - text: "{{< fa brands twitter >}}"
+        aria-label: Twitter
         href: https://twitter.com/AndreasThinks
-      - text: "{{< fa brands github size=xl >}}" 
+      - text: "{{< fa brands github >}}"
+        aria-label: GitHub
         href: https://github.com/AndreasThinks
-      - text: "{{< fa brands linkedin size=xl >}}" 
+      - text: "{{< fa brands linkedin >}}"
+        aria-label: LinkedIn
         href: https://www.linkedin.com/in/avarotsis/
-      - text: "{{< fa envelope size=xl >}}" 
+      - text: "{{< fa envelope >}}"
+        aria-label: Email
         href: mailto:andreas.varotsis@gmail.com
-      - text: "{{< fa rss size=xl >}}" 
+      - text: "{{< fa rss >}}"
+        aria-label: RSS feed
         href: index.xml
 format:
   html:

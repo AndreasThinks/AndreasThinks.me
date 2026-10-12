@@ -17,6 +17,7 @@ dependencies = [
     { name = "pandas" },
     { name = "panel" },
     { name = "plotly" },
+    { name = "pyyaml" },
     { name = "scipy" },
 ]
 
@@ -27,6 +28,7 @@ requires-dist = [
     { name = "pandas", specifier = ">=2.1.0" },
     { name = "panel", specifier = ">=1.4.0" },
     { name = "plotly", specifier = ">=5.18.0" },
+    { name = "pyyaml", specifier = ">=6.0.3" },
     { name = "scipy", specifier = ">=1.11.0" },
 ]
 
