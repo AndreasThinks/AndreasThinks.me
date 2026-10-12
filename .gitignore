@@ -18,3 +18,4 @@ posts/**/*.html
 
 /.quarto/
 post-map.json
+__pycache__/

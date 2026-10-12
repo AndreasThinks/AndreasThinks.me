@@ -67,14 +67,12 @@ Use these tokens rather than hard-coded colours so things follow the toggle. The
 
 Earlier design explorations (ten alternative themes with previews) live in `_theme-explorations/` — underscore-prefixed, so Quarto ignores them.
 
-### Homepage: "Open Spread"
+### Homepage atlas
 
-The homepage (`index.qmd`, styled by `home.css`, body class `.home`) is a lab notebook lying open: the intro on the left page, **Fig. 1** on the right, and the blog feed on its own sheet below (custom listing template `includes/listing-notebook.ejs`). `home.css` re-points the site tokens at the notebook palette, so only the homepage changes look; posts keep "Margin".
-
-Fig. 1 plots every published post in 3D, grouped by topic. It needs no API key:
-- `scripts/post_map.py` runs as a Quarto `pre-render` step and writes `post-map.json` (gitignored, copied to the site as a resource). It uses TF-IDF + SVD on each post's text for positions, and numpy/scipy/PyYAML only.
-- Topics and their names live in `topics.yml`. A post joins the topic it shares most tags with; a post with no topic tags joins the topic its text is closest to. The build prints any tag that is in neither a topic nor `ignore`, so new tags get filed by hand.
-- `includes/post-map.js` draws the figure and links it to the feed (hovering one highlights the other).
+Under the intro cell (`00`), the homepage has a map of the blog as cell `01`. Each topic is a coloured "territory", and moving the cursor over it opens a lens that spreads nearby posts apart and shows their titles. Hovering a point lights its post in the feed, and hovering a post lights its point. The topic buttons under the map filter the feed. It needs no API key:
+- `scripts/post_map.py` runs as a Quarto `pre-render` step and writes `post-map.json` (gitignored, copied to the site as a resource). It holds topics, posts and links. Links join each post to its two nearest posts by TF-IDF + SVD text similarity, and to every post it shares a tag with. It uses numpy and PyYAML only.
+- Topics and their names live in `topics.yml`. A post joins the topic it shares most tags with; a post with no topic tags joins the topic its text is closest to. The build prints any tag that is in neither a topic nor `ignore`, so new tags get filed by hand. A topic with no posts yet stays off the map. There are five territory colours (`--atlas-k1`…`--atlas-k5` in `styles.css`); a sixth topic would reuse the first.
+- `includes/post-atlas.js` lays the graph out with a vendored `includes/d3-force.min.js` (about 17KB) and draws it on a canvas. Styles are in the "Homepage atlas" section of `styles.css`.
 
 ### Figures must work in both modes
 

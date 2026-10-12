@@ -1,11 +1,12 @@
 
 project:
   type: website
-  # builds post-map.json (topics and positions for the homepage's Fig. 1)
+  # builds post-map.json (topics and links for the homepage atlas)
   pre-render: scripts/post_map.py
   resources:
     - post-map.json
-    - includes/post-map.js
+    - includes/post-atlas.js
+    - includes/d3-force.min.js
 execute:
   freeze: auto
 website:
