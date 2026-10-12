@@ -258,14 +258,46 @@ main.content {
   box-shadow: inset 0 -2px 0 var(--rail);
 }
 
-/* social icons: a touch smaller and tighter so the bar stays on one line */
-.navbar .navbar-nav.ms-auto .nav-link {
-  padding-left: 0.45rem;
-  padding-right: 0.45rem;
+/* social icons: the same 36px buttons as search and the theme toggle, so the
+   right of the bar reads as one set of tools; a hairline separates them */
+.navbar .navbar-nav.ms-auto {
+  align-items: center;
+  gap: 0.1rem;
 }
 
-.navbar .navbar-nav.ms-auto .nav-link .fa-xl {
-  font-size: 1.15rem;
+.navbar .navbar-nav.ms-auto .nav-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: var(--radius-md);
+  color: var(--text-meta) !important;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.navbar .navbar-nav.ms-auto .nav-link .menu-text {
+  display: inline-flex;
+}
+
+.navbar .navbar-nav.ms-auto .nav-link i {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.navbar .navbar-nav.ms-auto .nav-link:hover,
+.navbar .navbar-nav.ms-auto .nav-link:focus-visible {
+  color: var(--accent) !important;
+  background: var(--cell);
+}
+
+@media (min-width: 992px) {
+  .navbar .navbar-nav.ms-auto {
+    padding-right: 0.5rem;
+    margin-right: 0.35rem;
+    border-right: 1px solid var(--border-soft);
+  }
 }
 
 /* Darkly paints the hamburger icon white; recolour it from the tokens */

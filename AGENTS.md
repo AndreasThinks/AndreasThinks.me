@@ -67,6 +67,15 @@ Use these tokens rather than hard-coded colours so things follow the toggle. The
 
 Earlier design explorations (ten alternative themes with previews) live in `_theme-explorations/` — underscore-prefixed, so Quarto ignores them.
 
+### Homepage: "Open Spread"
+
+The homepage (`index.qmd`, styled by `home.css`, body class `.home`) is a lab notebook lying open: the intro on the left page, **Fig. 1** on the right, and the blog feed on its own sheet below (custom listing template `includes/listing-notebook.ejs`). `home.css` re-points the site tokens at the notebook palette, so only the homepage changes look; posts keep "Margin".
+
+Fig. 1 plots every published post in 3D, grouped by topic. It needs no API key:
+- `scripts/post_map.py` runs as a Quarto `pre-render` step and writes `post-map.json` (gitignored, copied to the site as a resource). It uses TF-IDF + SVD on each post's text for positions, and numpy/scipy/PyYAML only.
+- Topics and their names live in `topics.yml`. A post joins the topic it shares most tags with; a post with no topic tags joins the topic its text is closest to. The build prints any tag that is in neither a topic nor `ignore`, so new tags get filed by hand.
+- `includes/post-map.js` draws the figure and links it to the feed (hovering one highlights the other).
+
 ### Figures must work in both modes
 
 **Markdown image references** (papers, static images): generate two PNGs and use CSS classes:

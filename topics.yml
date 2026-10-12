@@ -1,0 +1,25 @@
+# Topics for the homepage figure (Fig. 1).
+#
+# scripts/post_map.py reads this before every render. Each post joins the
+# topic whose tags it shares most (ties go to the topic listed first). A post
+# with none of these tags joins the topic whose posts its text is closest to.
+# Positions in the figure come from the post text, so related posts sit near
+# each other within and across topics.
+#
+# To add a topic: give it a name and the tags that belong to it.
+# To file a new tag: add it to a topic, or to `ignore` if it says nothing
+# about the subject (the build prints any tag that is in neither list).
+
+topics:
+  - name: AI & evaluation
+    tags: [AI, nlp, research]
+  - name: Policing & evidence
+    tags: [policing, evaluation, freedom-of-information, current affairs]
+  - name: Crime in space
+    tags: [crime, geospatial, forecasting]
+  - name: Open source & the open web
+    tags: [open-source, atproto, web, civic tech, govtech, web-development]
+  - name: Games & experiments
+    tags: [games, experiments, metascience]
+
+ignore: [data-science, data-visualization, personal, technology, week-notes, timed-post, work-in-progress, uk, news]

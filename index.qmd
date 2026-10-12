@@ -2,33 +2,65 @@
 listing:
   contents: posts
   sort: "date desc"
-  type: default
-  categories: true
+  template: includes/listing-notebook.ejs
+  categories: false
   sort-ui: false
   filter-ui: false
   fields: [date, title, subtitle, reading-time, categories, description]
-  image-height: "0"
   feed: true
   id: blog-listings
 max-description-length: 300
+page-layout: full
+body-classes: home
+format:
+  html:
+    css: [styles.css, home.css]
 ---
 
-::: {.intro-panel}
-::: {.intro-media}
-![](images/round_me.png){.profile-pic}
-:::
-::: {.intro-copy}
+::: {.spread}
+
+::: {.nb-page .nb-left}
+[andreasthinks.me]{.nb-head}
+
+[[1]]{.nb-num}
+
+```{=html}
+<h1 class="nb-name">Andreas Varotsis</h1>
+```
+
+[![](images/round_me.png){.nb-profile fig-alt="Andreas Varotsis"} Data scientist and public safety researcher]{.nb-aff}
+
 I'm Andreas, [a data scientist and public safety researcher working to improve the use of data and evidence in government](https://andreasthinks.me/about.html). I enjoy [coordinating exciting communities](https://lu.ma/ai-for-good), and working with [fantastic](https://newspeak.house/) [institutions](https://ai.gov.uk/) to build projects that improve the world, including [teaching on public sector innovation at Newspeak House](slides/index.qmd). You can read more about me [on my about page here](https://andreasthinks.me/about.html).
 
 If you'd like to discuss professional work or collaborating on a project, [please say hello!](mailto:andreas.varotsis@gmail.com)
-
-:::
 :::
 
-## 📮 Blog Feed
+::: {.nb-page .nb-right}
+```{=html}
+<div class="nb-head"><span>Fig. 1</span><span>drag to rotate</span></div>
+<figure class="nb-fig">
+  <div class="nb-plate">
+    <canvas id="post-map" aria-label="Every post on this blog as a point in a rotating 3D figure, grouped by topic"></canvas>
+    <div class="nb-tip" hidden></div>
+  </div>
+  <figcaption><b>Fig. 1.</b> Every post on this blog, placed by what it's about. Hover a point to read it.</figcaption>
+  <div class="nb-key"></div>
+</figure>
+<script src="includes/post-map.js" defer></script>
+```
+:::
+
+:::
+
+::: {.nb-page .nb-feed}
+
+[[2]]{.nb-num}
+
+## 📮 Blog Feed {.unnumbered .unlisted}
 
 I use this blog to journal on what I've been learning about and building recently. If you'd like to see more of my formal work, you can see [a selection of my papers and writing here.](recent_work.qmd)
 
-::: {#blog-listings .post-list}
+::: {#blog-listings}
+:::
 
 :::
