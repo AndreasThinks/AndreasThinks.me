@@ -169,9 +169,16 @@ def main():
     docs = [tokens(" ".join([p["title"]] * 3 + [p["subtitle"], p["description"]] * 2 + [" ".join(p["tags"])] * 2 + [p["body"]])) for p in posts]
     Z = lsa(tfidf(docs), k=min(12, len(posts) - 1))
     labels = assign_topics(posts, Z, topics, ignore)
+    # a topic with no posts yet is left off the figure, so it gets no label, colour or key entry
+    used = sorted(set(labels))
+    for i, t in enumerate(topics):
+        if i not in used:
+            print(f"post_map: topic '{t['name']}' has no posts yet; left off the map", file=sys.stderr)
+    topics = [topics[i] for i in used]
+    labels = [used.index(l) for l in labels]
     P = lda3(Z, labels)
     out = {
-        "topics": [{"name": t["name"], "center": [round(float(v), 3) for v in P[np.array(labels) == i].mean(axis=0)] if i in labels else [0, 0, 0]} for i, t in enumerate(topics)],
+        "topics": [{"name": t["name"], "center": [round(float(v), 3) for v in P[np.array(labels) == i].mean(axis=0)]} for i, t in enumerate(topics)],
         "posts": [{"href": p["href"], "title": p["title"], "tags": p["tags"], "topic": int(l), "xyz": [round(float(v), 3) for v in P[i]]} for i, (p, l) in enumerate(zip(posts, labels))],
     }
     OUT.write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding="utf-8")
