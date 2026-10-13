@@ -19,7 +19,7 @@
   let W = 0, H = 0, dpr = 1, colors = {}, mouse = null, hover = null, ext = null, filter = -1;
 
   function readColors() {
-    colors = { rail: css("--rail"), line: css("--border-strong"), text: css("--text-primary"), mono: css("--font-mono"),
+    colors = { rail: css("--rail"), panel: css("--bg-panel"), line: css("--border-strong"), text: css("--text-primary"), mono: css("--font-mono"),
       tint: [1, 2, 3, 4, 5].map((i) => css("--atlas-k" + i)) };
   }
   const tint = (t) => colors.tint[t % colors.tint.length];
@@ -121,17 +121,45 @@
       ctx.beginPath(); ctx.arc(S.X, S.Y, r, 0, 7); ctx.fill();
       if (on) { ctx.strokeStyle = colors.rail; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(S.X, S.Y, r + 4, 0, 7); ctx.stroke(); }
       // titles appear inside the lens, or for a post lit from the feed
-      const show = on ? 1 : S.lens > 0.15 ? Math.min(1, S.lens * 2.2) : 0;
+      const show = on ? 0 : S.lens > 0.15 ? Math.min(1, S.lens * 2.2) : 0;
       if (show) {
-        ctx.globalAlpha = show * (dim ? 0.4 : 1); ctx.fillStyle = on ? colors.rail : colors.text;
+        ctx.globalAlpha = show * (dim ? 0.3 : L ? 0.6 : 1); ctx.fillStyle = colors.text;
         ctx.fillText(n.title.length > 34 ? n.title.slice(0, 33) + "…" : n.title, S.X + r + 5, S.Y + 4);
       }
     }
+    if (L) drawTag(L);
+    if (mouse) drawCursor(L && L === hover ? toScreen(L) : null);
     ctx.globalAlpha = 1;
   }
 
+  // the selected post's title sits on a solid tag, above the other lens labels
+  function drawTag(n) {
+    const S = toScreen(n), r = 6 * (1 + S.lens * 0.6), t = n.title.length > 48 ? n.title.slice(0, 47) + "…" : n.title;
+    ctx.font = `500 12px ${colors.mono}`; ctx.textAlign = "left"; ctx.globalAlpha = 1;
+    const w = ctx.measureText(t).width + 14, x = Math.min(W - w - 6, S.X + r + 8), y = S.Y - 10;
+    ctx.fillStyle = colors.panel; ctx.strokeStyle = colors.rail; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x, y, w, 20, 4) : ctx.rect(x, y, w, 20); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = colors.text; ctx.fillText(t, x + 7, y + 14);
+  }
+
+  // the cursor: a crosshair at the pointer, tethered to the post a click would open
+  function drawCursor(T) {
+    const { x, y } = mouse;
+    ctx.globalAlpha = 1; ctx.strokeStyle = colors.rail; ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) { ctx.moveTo(x + dx * 4, y + dy * 4); ctx.lineTo(x + dx * 10, y + dy * 10); }
+    ctx.stroke();
+    if (!T) { ctx.beginPath(); ctx.arc(x, y, 1.5, 0, 7); ctx.fillStyle = colors.rail; ctx.fill(); return; }
+    const d = Math.hypot(T.X - x, T.Y - y);
+    if (d > 12) {
+      ctx.setLineDash([3, 3]); ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(x + ((T.X - x) / d) * 6, y + ((T.Y - y) / d) * 6); ctx.lineTo(T.X, T.Y); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+  }
+
   function pick(mx, my) {
-    let best = null, bd = 12;
+    let best = null, bd = 22;
     for (const n of posts) { const S = toScreen(n), d = Math.hypot(S.X - mx, S.Y - my); if (d < bd) { bd = d; best = n; } }
     return best;
   }
@@ -157,7 +185,7 @@
       mouse = { x: mx, y: my };
       const h = pick(mx, my);
       if (h !== hover) { hover = h; markFeed(); }
-      canvas.style.cursor = h ? "pointer" : "none";
+      canvas.style.cursor = "none";
       draw();
     });
     canvas.addEventListener("pointerleave", () => { mouse = null; hover = null; markFeed(); draw(); });
