@@ -1,0 +1,579 @@
+{
+ "topics": [
+  "AI & evaluation",
+  "Policing & evidence",
+  "Crime in space",
+  "Open source & the open web",
+  "Games & experiments"
+ ],
+ "posts": [
+  {
+   "href": "posts/Copbot/explainer.html",
+   "title": "Teaching OpenAI to assess risk, with CopBot!",
+   "tags": [
+    "policing",
+    "AI",
+    "data-science"
+   ],
+   "topic": 0
+  },
+  {
+   "href": "posts/FastAI_Twitter_Sentiment_Analysis_Tutorial/FastAI_Twitter_Sentiment_Analysis_Tutorial.html",
+   "title": "Twitter Sentiment Analysis with FastAI",
+   "tags": [
+    "data-science",
+    "nlp"
+   ],
+   "topic": 0
+  },
+  {
+   "href": "posts/OSM_for_christmas/osm_for_xmas.html",
+   "title": "Why I'm Contributing to OpenStreetMap for Christmas...",
+   "tags": [
+    "personal",
+    "technology",
+    "open-source",
+    "geospatial"
+   ],
+   "topic": 2
+  },
+  {
+   "href": "posts/ai-at-play/index.html",
+   "title": "AI at Play - Lessons from a silly benchmark",
+   "tags": [
+    "personal",
+    "technology",
+    "AI",
+    "open-source",
+    "games"
+   ],
+   "topic": 0
+  },
+  {
+   "href": "posts/ai-tools-and-the-shape-of-commits/index.html",
+   "title": "When fewer commits don't mean less work",
+   "tags": [
+    "AI",
+    "research",
+    "data-science"
+   ],
+   "topic": 0
+  },
+  {
+   "href": "posts/ankh-morpork-scramble/index.html",
+   "title": "I made ten AI models play Blood Bowl against each other (in the Discworld)",
+   "tags": [
+    "AI",
+    "games",
+    "experiments",
+    "work-in-progress"
+   ],
+   "topic": 4
+  },
+  {
+   "href": "posts/burglary_attendance/index.html",
+   "title": "What's Happened to Burglary, and does Attending Help?",
+   "tags": [
+    "policing",
+    "crime",
+    "data-science"
+   ],
+   "topic": 1
+  },
+  {
+   "href": "posts/cccamp23/index.html",
+   "title": "Hackers aren't excited about AI (and other bits from CCCamp23)",
+   "tags": [
+    "personal",
+    "technology",
+    "AI",
+    "data-science"
+   ],
+   "topic": 0
+  },
+  {
+   "href": "posts/copbot_online/index.html",
+   "title": "Copbot Online: bias and variance in AI perceptions of risk",
+   "tags": [
+    "policing",
+    "AI",
+    "web-development"
+   ],
+   "topic": 0
+  },
+  {
+   "href": "posts/lapd_and_prophet/lapd_and_prophet.html",
+   "title": "LAPD Call Prediction for Fun (and Prophet)",
+   "tags": [
+    "data-science",
+    "forecasting",
+    "crime"
+   ],
+   "topic": 2
+  },
+  {
+   "href": "posts/lockdown_effect/index.html",
+   "title": "Learning R - Exploring the COVID Crime Effect in London",
+   "tags": [
+    "data-science",
+    "forecasting",
+    "crime",
+    "geospatial"
+   ],
+   "topic": 2
+  },
+  {
+   "href": "posts/migrated_to_quarto/index.html",
+   "title": "I've migrated to Quarto!",
+   "tags": [
+    "news"
+   ],
+   "topic": 3
+  },
+  {
+   "href": "posts/national-data-library.html",
+   "title": "What I want from a National Data Library",
+   "tags": [
+    "govtech",
+    "civic tech",
+    "open-source",
+    "timed-post"
+   ],
+   "topic": 3
+  },
+  {
+   "href": "posts/octosphere/octosphere.html",
+   "title": "Octosphere, an experiment in decentralised science with ATProto",
+   "tags": [
+    "experiments",
+    "metascience",
+    "web",
+    "atproto",
+    "civic tech",
+    "open-source"
+   ],
+   "topic": 3
+  },
+  {
+   "href": "posts/police-salary-explorer/index.html",
+   "title": "UK Police Salary Explorer",
+   "tags": [
+    "policing",
+    "data-visualization",
+    "uk"
+   ],
+   "topic": 1
+  },
+  {
+   "href": "posts/quarto_comments/index.html",
+   "title": "Quarto Comments, Powered by the Fediverse",
+   "tags": [
+    "personal",
+    "technology",
+    "open-source"
+   ],
+   "topic": 3
+  },
+  {
+   "href": "posts/quarto_comments/open-social.html",
+   "title": "Quarto comments, by the open social web",
+   "tags": [],
+   "topic": 3
+  },
+  {
+   "href": "posts/reflecting_on_the_NPS.html",
+   "title": "Reflecting on the National Police Service",
+   "tags": [
+    "policing",
+    "current affairs"
+   ],
+   "topic": 1
+  },
+  {
+   "href": "posts/robbery_and_searches_in_space/robbery_and_searches_in_space.html",
+   "title": "Learning GIS in Python - Robbery and Police Searches in Space",
+   "tags": [
+    "crime",
+    "geospatial"
+   ],
+   "topic": 2
+  },
+  {
+   "href": "posts/share-crappy-fiddles.html",
+   "title": "My 2025 resolution: share more crappy fiddles (and unfinished research)",
+   "tags": [
+    "personal",
+    "open-source"
+   ],
+   "topic": 3
+  },
+  {
+   "href": "posts/siu-research-releases/index.html",
+   "title": "Thank God for the FOI Act: Strategic Insight Unit releases in the open",
+   "tags": [
+    "policing",
+    "freedom-of-information",
+    "evaluation"
+   ],
+   "topic": 1
+  },
+  {
+   "href": "posts/week-notes/Weeknote - 2024-W34 (2024-08-19).html",
+   "title": "Weeknote - 2024-W34 (2024-08-19)",
+   "tags": [
+    "week-notes"
+   ],
+   "topic": 0
+  },
+  {
+   "href": "posts/week-notes/Weeknote - 2024-W35.html",
+   "title": "Weeknote - 2024-W35",
+   "tags": [
+    "week-notes"
+   ],
+   "topic": 0
+  }
+ ],
+ "edges": [
+  [
+   0,
+   1,
+   0.405
+  ],
+  [
+   0,
+   3,
+   0.5
+  ],
+  [
+   0,
+   4,
+   0.5
+  ],
+  [
+   0,
+   5,
+   0.5
+  ],
+  [
+   0,
+   6,
+   0.5
+  ],
+  [
+   0,
+   7,
+   0.5
+  ],
+  [
+   0,
+   8,
+   0.817
+  ],
+  [
+   0,
+   14,
+   0.5
+  ],
+  [
+   0,
+   17,
+   0.5
+  ],
+  [
+   0,
+   20,
+   0.5
+  ],
+  [
+   1,
+   4,
+   0.508
+  ],
+  [
+   2,
+   3,
+   0.5
+  ],
+  [
+   2,
+   7,
+   0.448
+  ],
+  [
+   2,
+   10,
+   0.5
+  ],
+  [
+   2,
+   12,
+   0.5
+  ],
+  [
+   2,
+   13,
+   0.5
+  ],
+  [
+   2,
+   15,
+   0.5
+  ],
+  [
+   2,
+   18,
+   0.5
+  ],
+  [
+   2,
+   19,
+   0.5
+  ],
+  [
+   2,
+   20,
+   0.396
+  ],
+  [
+   3,
+   4,
+   0.5
+  ],
+  [
+   3,
+   5,
+   0.965
+  ],
+  [
+   3,
+   7,
+   0.5
+  ],
+  [
+   3,
+   8,
+   0.5
+  ],
+  [
+   3,
+   12,
+   0.553
+  ],
+  [
+   3,
+   13,
+   0.5
+  ],
+  [
+   3,
+   15,
+   0.5
+  ],
+  [
+   3,
+   19,
+   0.5
+  ],
+  [
+   4,
+   5,
+   0.5
+  ],
+  [
+   4,
+   6,
+   0.604
+  ],
+  [
+   4,
+   7,
+   0.5
+  ],
+  [
+   4,
+   8,
+   0.5
+  ],
+  [
+   4,
+   20,
+   0.45
+  ],
+  [
+   5,
+   7,
+   0.5
+  ],
+  [
+   5,
+   8,
+   0.5
+  ],
+  [
+   5,
+   13,
+   0.5
+  ],
+  [
+   6,
+   8,
+   0.554
+  ],
+  [
+   6,
+   9,
+   0.5
+  ],
+  [
+   6,
+   10,
+   0.817
+  ],
+  [
+   6,
+   14,
+   0.5
+  ],
+  [
+   6,
+   17,
+   0.5
+  ],
+  [
+   6,
+   18,
+   0.753
+  ],
+  [
+   6,
+   20,
+   0.605
+  ],
+  [
+   7,
+   8,
+   0.5
+  ],
+  [
+   7,
+   17,
+   0.479
+  ],
+  [
+   8,
+   14,
+   0.5
+  ],
+  [
+   8,
+   17,
+   0.5
+  ],
+  [
+   8,
+   20,
+   0.5
+  ],
+  [
+   8,
+   21,
+   0.545
+  ],
+  [
+   9,
+   10,
+   0.7
+  ],
+  [
+   9,
+   18,
+   0.5
+  ],
+  [
+   10,
+   18,
+   0.976
+  ],
+  [
+   11,
+   12,
+   0.288
+  ],
+  [
+   11,
+   15,
+   0.39
+  ],
+  [
+   12,
+   13,
+   0.78
+  ],
+  [
+   12,
+   15,
+   0.5
+  ],
+  [
+   12,
+   17,
+   0.641
+  ],
+  [
+   12,
+   19,
+   0.692
+  ],
+  [
+   13,
+   15,
+   0.5
+  ],
+  [
+   13,
+   16,
+   0.45
+  ],
+  [
+   13,
+   19,
+   0.823
+  ],
+  [
+   14,
+   17,
+   0.566
+  ],
+  [
+   14,
+   20,
+   0.5
+  ],
+  [
+   15,
+   16,
+   0.842
+  ],
+  [
+   15,
+   19,
+   0.5
+  ],
+  [
+   17,
+   20,
+   0.5
+  ],
+  [
+   19,
+   22,
+   0.5
+  ],
+  [
+   21,
+   22,
+   0.901
+  ]
+ ]
+}
