@@ -27,8 +27,8 @@ If you'd like to discuss professional work or collaborating on a project, [pleas
 
 ```{=html}
 <figure class="atlas-cell">
-  <figcaption class="atlas-cap"><span class="atlas-count"></span><span class="atlas-hint">move the lens to read · click to open</span></figcaption>
-  <div class="atlas-plot"><canvas id="post-atlas" role="img" aria-label="A map of every post on this blog, grouped by topic. The same posts are listed in the Blog Feed below."></canvas><div class="atlas-ring" aria-hidden="true"></div></div>
+  <figcaption class="atlas-cap"><span class="atlas-count"></span><span class="atlas-hint">hover or ←→ to browse · ⏎ to open</span></figcaption>
+  <div class="atlas-plot"><canvas id="post-atlas" tabindex="0" role="img" aria-label="A map of every post on this blog, grouped by topic. The same posts are listed in the Blog Feed below."></canvas><div class="atlas-ring" aria-hidden="true"></div><div class="atlas-status" aria-live="polite"></div></div>
   <div class="atlas-keys" aria-label="Filter the feed by topic"></div>
 </figure>
 <script src="includes/d3-force.min.js" defer></script>

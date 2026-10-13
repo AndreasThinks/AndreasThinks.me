@@ -685,7 +685,7 @@ main.content {
 }
 
 /* ── Homepage atlas: cell 01, a map of every post ───────────────────────── */
-/* includes/post-atlas.js draws it; topics are territories, the cursor is a lens */
+/* includes/post-atlas.js draws it like a terminal: territories are fields of dots, the cursor is a lens */
 
 .atlas-cell {
   position: relative;
@@ -720,29 +720,18 @@ main.content {
 
 .atlas-plot {
   position: relative;
-  height: 380px;
+  height: 402px;
+  padding-bottom: 22px; /* the status line */
   background: var(--bg-panel);
   border: 1px solid var(--border-soft);
-  border-radius: var(--radius-lg);
+  border-radius: 4px;
   overflow: hidden;
 }
 
 .atlas-plot canvas { display: block; width: 100%; height: 100%; }
+.atlas-plot canvas:focus-visible { outline: 2px solid var(--rail); outline-offset: -2px; }
 
-/* a small north mark, because it's a map */
-.atlas-plot::after {
-  content: "N";
-  position: absolute;
-  top: 12px;
-  right: 16px;
-  padding: 0 0.15rem;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--text-meta);
-  border-bottom: 1px solid var(--text-meta);
-  pointer-events: none;
-}
-
+/* the lens */
 .atlas-ring {
   display: none;
   position: absolute;
@@ -750,13 +739,44 @@ main.content {
   height: 240px;
   margin: -120px 0 0 -120px;
   border-radius: 50%;
-  border: 1px dashed color-mix(in srgb, var(--rail) 55%, transparent);
+  border: 1px dotted color-mix(in srgb, var(--rail) 45%, transparent);
   pointer-events: none;
 }
 
 @media (hover: hover) {
   .atlas-plot:hover .atlas-ring { display: block; }
 }
+
+/* a vim-style status line: mode, territory, post, position */
+.atlas-status {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding-right: 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--rail) 10%, var(--bg-panel));
+  border-top: 1px solid var(--border-soft);
+}
+
+.atlas-status b { height: 100%; display: flex; align-items: center; padding: 0 0.6rem; font-weight: 600; background: var(--rail); color: var(--bg-panel); }
+.atlas-status .s-title { color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; }
+.atlas-status .s-keys { margin-left: auto; color: var(--text-meta); }
+.atlas-status .s-pos { color: var(--rail); }
+
+/* the caption is typed out as a shell command, with a blinking block cursor */
+.atlas-cap .t-cmd { color: var(--ok); }
+.atlas-cap .t-cur { display: inline-block; width: 0.55em; height: 1em; margin-left: 0.15em; vertical-align: -0.15em; background: var(--ok); animation: atlas-blink 1.06s steps(1) infinite; }
+@keyframes atlas-blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .atlas-cap .t-cur { animation: none; } }
 
 .atlas-keys {
   display: flex;
@@ -790,7 +810,8 @@ main.content {
 
 @media (max-width: 767px) {
   .atlas-cell::before { display: none; }
-  .atlas-plot { height: 320px; }
+  .atlas-plot { height: 342px; }
+  .atlas-status .s-keys { display: none; }
   .atlas-hint { display: none; }
 }
 
