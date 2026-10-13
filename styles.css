@@ -228,19 +228,42 @@ main.content {
   margin-right: 1.2rem;
   padding: 0;
   white-space: nowrap;
+  overflow: visible; /* Quarto clips the brand; the power light's glow needs to spill out */
 }
 
-/* a quiet "ready" dot */
+/* a "switched on" power light: a soft phosphor glow that flickers on at load, then breathes */
 .navbar .navbar-brand::before {
+  --glow-lo: 0 0 3px 1px color-mix(in srgb, var(--ok) 80%, transparent), 0 0 9px 2px color-mix(in srgb, var(--ok) 45%, transparent), 0 0 18px 4px color-mix(in srgb, var(--ok) 18%, transparent);
+  --glow-hi: 0 0 4px 1px color-mix(in srgb, var(--ok) 90%, transparent), 0 0 12px 3px color-mix(in srgb, var(--ok) 55%, transparent), 0 0 24px 6px color-mix(in srgb, var(--ok) 24%, transparent);
   content: "";
   display: inline-block;
   flex: 0 0 auto;
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--ok);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 20%, transparent);
+  background: radial-gradient(circle at 35% 35%, color-mix(in srgb, var(--ok) 55%, #fff), var(--ok) 70%);
+  box-shadow: var(--glow-lo);
   margin-right: 0.6rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .navbar .navbar-brand::before {
+    animation: power-on 0.9s steps(1, end) both, power-glow 3.6s ease-in-out 0.9s infinite;
+  }
+}
+
+@keyframes power-on {
+  0%   { opacity: 0.15; box-shadow: none; }
+  18%  { opacity: 1; }
+  26%  { opacity: 0.3; box-shadow: none; }
+  40%  { opacity: 1; }
+  48%  { opacity: 0.6; }
+  60%  { opacity: 1; }
+}
+
+@keyframes power-glow {
+  0%, 100% { box-shadow: var(--glow-lo); }
+  50%      { box-shadow: var(--glow-hi); }
 }
 
 .navbar .nav-link {
