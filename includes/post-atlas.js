@@ -5,7 +5,8 @@
 // that spreads nearby posts apart and shows their titles. The crosshair snaps to the post a
 // click would open. A status line along the bottom names it, and the arrow keys (or h/l)
 // step through posts once the map has focus, with Enter to open.
-// Hovering a point lights its post in the feed below, and hovering a post lights its point.
+// Hovering a point lights its post in the feed beside it, and hovering a post lights its point.
+// Hovering a project in the rail lights its post in both.
 (function () {
   const canvas = document.getElementById("post-atlas");
   if (!canvas || !window.d3) return;
@@ -236,6 +237,11 @@
       el.dataset.topic = p.topic;
       el.addEventListener("mouseenter", () => { ext = p; setStatus(); kick(); });
       el.addEventListener("mouseleave", () => { ext = null; setStatus(); draw(); });
+    });
+    document.querySelectorAll(".proj-list [data-post]").forEach((el) => {
+      const p = byKey.get(norm(el.dataset.post)); if (!p) return;
+      el.addEventListener("mouseenter", () => { ext = p; markFeed(); setStatus(); kick(); });
+      el.addEventListener("mouseleave", () => { ext = null; markFeed(); setStatus(); draw(); });
     });
     canvas.addEventListener("pointermove", (e) => {
       if (e.pointerType !== "mouse") return;

@@ -1,0 +1,46 @@
+# Recent projects, shown in the homepage rail. index.qmd loads this file and includes/projects.lua draws the list.
+# Newest first; four or five fit best. Only list projects whose post is published (not draft).
+#   path:        the project's post; hovering the project lights this post on the atlas and in the feed
+#   status:      live | wip | released
+#   links:       text + href; links off the site get ↗, links on it get →
+projects:
+  - title: AI Tools and the Shape of Commits
+    path: posts/ai-tools-and-the-shape-of-commits/index.html
+    description: Detecting when developers adopt AI coding tools, and how their commits change after they do.
+    status: released
+    links:
+      - text: paper
+        href: papers/ai-productivity/index.html
+      - text: code
+        href: https://github.com/AndreasThinks/ai-productivity-analysis
+      - text: write-up
+        href: posts/ai-tools-and-the-shape-of-commits/index.html
+  - title: UK Police Salary Explorer
+    path: posts/police-salary-explorer/index.html
+    description: An interactive look at police pay across ranks from 1999 to 2025, in nominal and real terms.
+    status: live
+    links:
+      - text: explore
+        href: posts/police-salary-explorer/index.html
+      - text: sources
+        href: https://github.com/AndreasThinks/AndreasThinks.me/blob/main/posts/police-salary-explorer/SOURCES.md
+  - title: Ankh-Morpork Scramble
+    path: posts/ankh-morpork-scramble/index.html
+    description: Ten AI models play Blood Bowl against each other, in the Discworld.
+    status: wip
+    links:
+      - text: play
+        href: https://ankh-morpork-scramble-production.up.railway.app
+      - text: code
+        href: https://github.com/AndreasThinks/ankh-morpork-scramble
+      - text: write-up
+        href: posts/ankh-morpork-scramble/index.html
+  - title: Octosphere
+    path: posts/octosphere/octosphere.html
+    description: Bridges your Octopus research publications to ATProto, as permanent, social records.
+    status: live
+    links:
+      - text: octosphere.social
+        href: https://octosphere.social/
+      - text: write-up
+        href: posts/octosphere/octosphere.html

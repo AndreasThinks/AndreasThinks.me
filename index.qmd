@@ -11,6 +11,10 @@ listing:
   feed: true
   id: blog-listings
 max-description-length: 300
+body-classes: home-page
+# the Recent projects list in the rail: edit projects.yml
+metadata-files: [projects.yml]
+filters: [includes/projects.lua]
 ---
 
 ::: {.intro-panel}
@@ -25,16 +29,8 @@ If you'd like to discuss professional work or collaborating on a project, [pleas
 :::
 :::
 
-```{=html}
-<figure class="atlas-cell">
-  <figcaption class="atlas-cap"><span class="atlas-count"></span><span class="atlas-hint">hover or ←→ to browse · ⏎ to open</span></figcaption>
-  <div class="atlas-plot"><canvas id="post-atlas" tabindex="0" role="img" aria-label="A map of every post on this blog, grouped by topic. The same posts are listed in the Blog Feed below."></canvas><div class="atlas-ring" aria-hidden="true"></div><div class="atlas-status" aria-live="polite"></div></div>
-  <div class="atlas-keys" aria-label="Filter the feed by topic"></div>
-</figure>
-<script src="includes/d3-force.min.js" defer></script>
-<script src="includes/post-atlas.js" defer></script>
-```
-
+:::: {.home-grid}
+::: {.home-main}
 ## 📮 Blog Feed
 
 I use this blog to journal on what I've been learning about and building recently. If you'd like to see more of my formal work, you can see [a selection of my papers and writing here.](recent_work.qmd)
@@ -42,3 +38,31 @@ I use this blog to journal on what I've been learning about and building recentl
 ::: {#blog-listings .post-list}
 
 :::
+:::
+
+::: {.home-rail}
+```{=html}
+<figure class="atlas-cell">
+  <figcaption class="atlas-cap"><span class="atlas-count"></span><span class="atlas-hint">hover or ←→ to browse · ⏎ to open</span></figcaption>
+  <div class="atlas-plot"><canvas id="post-atlas" tabindex="0" role="img" aria-label="A map of every post on this blog, grouped by topic. The same posts are listed in the Blog Feed beside it."></canvas><div class="atlas-ring" aria-hidden="true"></div><div class="atlas-status" aria-live="polite"></div></div>
+  <div class="atlas-keys" aria-label="Filter the feed by topic"></div>
+</figure>
+<script src="includes/d3-force.min.js" defer></script>
+<script src="includes/post-atlas.js" defer></script>
+```
+
+::: {.proj-shelf}
+```{=html}
+<h5 class="quarto-listing-category-title">Recent projects</h5>
+```
+
+::: {#projects}
+:::
+:::
+
+```{=html}
+<details class="home-cats"><summary class="quarto-listing-category-title">Categories</summary></details>
+<script src="includes/home-rail.js" defer></script>
+```
+:::
+::::

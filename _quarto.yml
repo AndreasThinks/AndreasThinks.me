@@ -6,6 +6,7 @@ project:
   resources:
     - post-map.json
     - includes/post-atlas.js
+    - includes/home-rail.js
     - includes/d3-force.min.js
 execute:
   freeze: auto
