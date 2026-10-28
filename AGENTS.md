@@ -69,10 +69,18 @@ Earlier design explorations (ten alternative themes with previews) live in `_the
 
 ### Homepage atlas
 
-Under the intro cell (`00`), the homepage has a map of the blog as cell `01`, drawn like a terminal screen. Each topic is a "territory" made of coloured dots, posts are `◆` glyphs, and moving the cursor opens a lens that spreads nearby posts apart and shows their titles. The crosshair snaps to the post a click would open, and a vim-style status line along the bottom names it. Once the map has focus, ←/→ (or h/l) step through posts and Enter opens one. Hovering a point lights its post in the feed, and hovering a post lights its point. The topic buttons under the map filter the feed. It needs no API key:
+The homepage map of the blog sits at the top of the right rail (see below), drawn like a terminal screen. Each topic is a "territory" made of coloured dots, posts are `◆` glyphs, and moving the cursor opens a lens that spreads nearby posts apart and shows their titles. The crosshair snaps to the post a click would open, and a vim-style status line along the bottom names it. Once the map has focus, ←/→ (or h/l) step through posts and Enter opens one. Hovering a point lights its post in the feed, and hovering a post lights its point. The topic buttons under the map filter the feed. It needs no API key:
 - `scripts/post_map.py` runs as a Quarto `pre-render` step and writes `post-map.json` (gitignored, copied to the site as a resource). It holds topics, posts and links. Links join each post to its two nearest posts by TF-IDF + SVD text similarity, and to every post it shares a tag with. It uses numpy and PyYAML only.
 - Topics and their names live in `topics.yml`. A post joins the topic it shares most tags with; a post with no topic tags joins the topic its text is closest to. The build prints any tag that is in neither a topic nor `ignore`, so new tags get filed by hand. A topic with no posts yet stays off the map. There are five territory colours (`--atlas-k1`…`--atlas-k5` in `styles.css`); a sixth topic would reuse the first.
 - `includes/post-atlas.js` lays the graph out with a vendored `includes/d3-force.min.js` (about 17KB) and draws it on a canvas. Styles are in the "Homepage atlas" section of `styles.css`.
+
+### Homepage layout and recent projects
+
+`index.qmd` sets `body-classes: home-page`, which swaps Quarto's three-column grid for our own: the intro cell (`00`) across the top, then the Blog Feed beside a 370px right rail. The rail holds the atlas, a **Recent projects** list and the listing's categories (folded), which `includes/home-rail.js` moves out of Quarto's margin column. Below 992px it becomes one column, with the atlas and project names above the feed. Styles are in the "Homepage layout" section of `styles.css`.
+
+- **To change the projects, edit `projects.yml`.** Each one has a title, `path` (its post), a one-line `description`, a `status` (`live`, `wip` or `released`, shown as a green, amber or blue light) and `links`. Only list projects whose post is published, not a draft.
+- `index.qmd` loads `projects.yml` with `metadata-files` and `includes/projects.lua` draws the list in place of the empty `#projects` div. It isn't a second Quarto listing on purpose: a second listing joins the category filter, so picking a category hid every project.
+- Hovering a project lights its post on the atlas and in the feed (`includes/post-atlas.js`), and each project's post in the feed gets a small "● project" tag (`includes/home-rail.js`).
 
 ### Figures must work in both modes
 
