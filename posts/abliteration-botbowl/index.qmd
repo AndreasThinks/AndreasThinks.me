@@ -24,6 +24,12 @@ Removing refusal-related directions from a language model's weights is often dis
 
 The setting is Bot Bowl, a stochastic fantasy-football simulator. This experiment uses the existing BotBowl Bench harness, not a new game implementation. A model chooses actions against fixed control policies. Success requires moving the ball, managing risk and completing actions, rather than merely producing plausible commentary. Fouling is an in-game tactical action, not a measure of real-world harmfulness.
 
+## Related work
+
+[LieCraft](https://arxiv.org/html/2603.06874v1) studies deception, defection and accusation in a multiplayer hidden-role game, including edited-model comparisons. This is not the first game-based investigation of abliteration. [Abliteration Is Not a Scalpel](https://arxiv.org/html/2607.17427v1), a preprint by Aleksander Fafuła, examines financial decision disposition and reports quantizer/template contamination in preliminary comparisons. Its warning about artifact provenance is directly relevant here; its task and experimental controls differ from ours.
+
+Our contribution is a narrower tactical-competition audit: whether particular released edits alter scores or execution reliability under a common assisted interface. The current data cannot identify opportunity-conditioned aggression convincingly.
+
 ## What we ran
 
 The final dataset contains **144 completed games**: 138 local-model games and six control-control games. There are **23 local artifacts**: ten original/primary-edit pairs, plus independent Heretic alternatives for Gemma3, GPT-OSS and Llama. Each artifact played the same three distinct controls, once home and once away. The controls are Scripted baseline, Random baseline and the official Bot Bowl scripted bot.
