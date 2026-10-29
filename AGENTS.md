@@ -78,7 +78,7 @@ The homepage map of the blog sits at the top of the right rail (see below), draw
 
 `index.qmd` sets `body-classes: home-page`, which swaps Quarto's three-column grid for our own: the intro cell (`00`) across the top, then the Blog Feed beside a 370px right rail. The rail holds the atlas, a **Recent projects** list and the listing's categories (folded), which `includes/home-rail.js` moves out of Quarto's margin column. Below 992px it becomes one column, with the atlas and project names above the feed. Styles are in the "Homepage layout" section of `styles.css`.
 
-- **To change the projects, edit `projects.yml`.** Each one has a title, `path` (its post), a one-line `description`, a `status` (`live`, `wip` or `released`, shown as a green, amber or blue light) and `links`. Only list projects whose post is published, not a draft.
+- **To change the projects, edit `projects.yml`.** Each one has a title, `path` (a public project destination or published post), a one-line `description`, a `status` (`live`, `wip` or `released`, shown as a green, amber or blue light) and `links`. Keep the curated list to four projects. External project destinations are supported; only matching published posts receive atlas/feed highlighting. Never link a draft as a project's write-up.
 - `index.qmd` loads `projects.yml` with `metadata-files` and `includes/projects.lua` draws the list in place of the empty `#projects` div. It isn't a second Quarto listing on purpose: a second listing joins the category filter, so picking a category hid every project.
 - Hovering a project lights its post on the atlas and in the feed (`includes/post-atlas.js`), and each project's post in the feed gets a small "● project" tag (`includes/home-rail.js`).
 

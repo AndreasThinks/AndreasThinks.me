@@ -1,46 +1,49 @@
-# Recent projects, shown in the homepage rail. index.qmd loads this file and includes/projects.lua draws the list.
-# Newest first; four or five fit best. Only list projects whose post is published (not draft).
-#   path:        the project's post; hovering the project lights this post on the atlas and in the feed
-#   status:      live | wip | released
+# Selected projects, shown in the homepage rail. index.qmd loads this file and includes/projects.lua draws the list.
+# Curated order; keep this list to four projects.
+#   path:        public project destination, or a published (not draft) blog post
+#                Published posts also receive atlas/feed hover highlighting.
+#   status:      live | wip | released (release maturity, not a real-time health check)
 #   links:       text + href; links off the site get ↗, links on it get →
 projects:
-  - title: AI Tools and the Shape of Commits
-    path: posts/ai-tools-and-the-shape-of-commits/index.html
-    description: Detecting when developers adopt AI coding tools, and how their commits change after they do.
-    status: released
-    links:
-      - text: paper
-        href: papers/ai-productivity/index.html
-      - text: code
-        href: https://github.com/AndreasThinks/ai-productivity-analysis
-      - text: write-up
-        href: posts/ai-tools-and-the-shape-of-commits/index.html
-  - title: UK Police Salary Explorer
-    path: posts/police-salary-explorer/index.html
-    description: An interactive look at police pay across ranks from 1999 to 2025, in nominal and real terms.
+  - title: Open GovTech Index
+    path: https://www.govtechindex.cloud/
+    description: Explore government open-source software, with searchable repositories, downloadable data and a public API.
     status: live
     links:
       - text: explore
-        href: posts/police-salary-explorer/index.html
-      - text: sources
-        href: https://github.com/AndreasThinks/AndreasThinks.me/blob/main/posts/police-salary-explorer/SOURCES.md
-  - title: Ankh-Morpork Scramble
-    path: posts/ankh-morpork-scramble/index.html
-    description: Ten AI models play Blood Bowl against each other, in the Discworld.
+        href: https://www.govtechindex.cloud/
+      - text: data
+        href: https://huggingface.co/datasets/AndreasThinks/government-github-repos
+      - text: code
+        href: https://github.com/AndreasThinks/open-govtech-report
+  - title: Broadsheet
+    path: https://broadsheet-feeds-production.up.railway.app/
+    description: Read and post across Bluesky, Mastodon and X, with local-first storage and feeds you control.
+    status: released
+    links:
+      - text: try in browser
+        href: https://broadsheet-feeds-production.up.railway.app/web
+      - text: download
+        href: https://broadsheet-feeds-production.up.railway.app/
+      - text: code
+        href: https://github.com/AndreasThinks/cross-poster-
+  - title: BotBowl Bench
+    path: https://github.com/AndreasThinks/botbowlbench
+    description: Language models coach Blood Bowl teams, with recorded games and decision-quality analysis. Built on the BotBowl engine.
     status: wip
     links:
-      - text: play
-        href: https://ankh-morpork-scramble-production.up.railway.app
+      - text: benchmark
+        href: https://github.com/AndreasThinks/botbowlbench/tree/main/bench
       - text: code
-        href: https://github.com/AndreasThinks/ankh-morpork-scramble
-      - text: write-up
-        href: posts/ankh-morpork-scramble/index.html
-  - title: Octosphere
-    path: posts/octosphere/octosphere.html
-    description: Bridges your Octopus research publications to ATProto, as permanent, social records.
-    status: live
+        href: https://github.com/AndreasThinks/botbowlbench
+  - title: Hermes Wristbound
+    path: https://github.com/AndreasThinks/hermes-wristbound
+    description: Your own Hermes assistant on a Pebble watch. Experimental release requiring an Android companion and a running Hermes backend.
+    status: wip
     links:
-      - text: octosphere.social
-        href: https://octosphere.social/
-      - text: write-up
-        href: posts/octosphere/octosphere.html
+      - text: install
+        href: https://github.com/AndreasThinks/hermes-wristbound/blob/main/docs/INSTALL.md
+      - text: releases
+        href: https://github.com/AndreasThinks/hermes-wristbound/releases/latest
+      - text: code
+        href: https://github.com/AndreasThinks/hermes-wristbound
