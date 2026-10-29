@@ -1,0 +1,631 @@
+comparison,metric,family,estimate
+Primary edits,td_diff,gemma3-12b,-0.16666666666666666
+Primary edits,td_diff,gemma4-26b-a4b,1.0
+Primary edits,td_diff,gemma4-e4b,-0.6666666666666666
+Primary edits,td_diff,gpt-oss-20b,-1.5
+Primary edits,td_diff,llama3.1-8b,-1.0
+Primary edits,td_diff,ministral3-14b,-0.5
+Primary edits,td_diff,phi4,0.0
+Primary edits,td_diff,qwen3-14b,0.6666666666666666
+Primary edits,td_diff,qwen3-8b,0.3333333333333333
+Primary edits,td_diff,qwen3.8-27b,1.3333333333333333
+Primary edits,td_for,gemma3-12b,0.16666666666666666
+Primary edits,td_for,gemma4-26b-a4b,0.3333333333333333
+Primary edits,td_for,gemma4-e4b,0.16666666666666666
+Primary edits,td_for,gpt-oss-20b,-0.16666666666666666
+Primary edits,td_for,llama3.1-8b,-0.5
+Primary edits,td_for,ministral3-14b,-0.5
+Primary edits,td_for,phi4,-0.16666666666666666
+Primary edits,td_for,qwen3-14b,-0.3333333333333333
+Primary edits,td_for,qwen3-8b,0.0
+Primary edits,td_for,qwen3.8-27b,1.3333333333333333
+Primary edits,td_against,gemma3-12b,0.3333333333333333
+Primary edits,td_against,gemma4-26b-a4b,-0.6666666666666666
+Primary edits,td_against,gemma4-e4b,0.8333333333333334
+Primary edits,td_against,gpt-oss-20b,1.3333333333333333
+Primary edits,td_against,llama3.1-8b,0.5
+Primary edits,td_against,ministral3-14b,0.0
+Primary edits,td_against,phi4,-0.16666666666666666
+Primary edits,td_against,qwen3-14b,-1.0
+Primary edits,td_against,qwen3-8b,-0.3333333333333333
+Primary edits,td_against,qwen3.8-27b,0.0
+Primary edits,win,gemma3-12b,0.0
+Primary edits,win,gemma4-26b-a4b,0.16666666666666666
+Primary edits,win,gemma4-e4b,0.0
+Primary edits,win,gpt-oss-20b,-0.16666666666666666
+Primary edits,win,llama3.1-8b,-0.3333333333333333
+Primary edits,win,ministral3-14b,0.0
+Primary edits,win,phi4,-0.16666666666666666
+Primary edits,win,qwen3-14b,0.0
+Primary edits,win,qwen3-8b,0.0
+Primary edits,win,qwen3.8-27b,0.3333333333333333
+Primary edits,forced_actions,gemma3-12b,8.333333333333334
+Primary edits,forced_actions,gemma4-26b-a4b,0.0
+Primary edits,forced_actions,gemma4-e4b,0.0
+Primary edits,forced_actions,gpt-oss-20b,13.166666666666666
+Primary edits,forced_actions,llama3.1-8b,17.666666666666668
+Primary edits,forced_actions,ministral3-14b,0.0
+Primary edits,forced_actions,phi4,0.0
+Primary edits,forced_actions,qwen3-14b,0.0
+Primary edits,forced_actions,qwen3-8b,0.0
+Primary edits,forced_actions,qwen3.8-27b,0.0
+Primary edits,invalid_tool_calls,gemma3-12b,0.0
+Primary edits,invalid_tool_calls,gemma4-26b-a4b,0.0
+Primary edits,invalid_tool_calls,gemma4-e4b,0.0
+Primary edits,invalid_tool_calls,gpt-oss-20b,0.0
+Primary edits,invalid_tool_calls,llama3.1-8b,52.333333333333336
+Primary edits,invalid_tool_calls,ministral3-14b,0.0
+Primary edits,invalid_tool_calls,phi4,0.0
+Primary edits,invalid_tool_calls,qwen3-14b,0.5
+Primary edits,invalid_tool_calls,qwen3-8b,0.0
+Primary edits,invalid_tool_calls,qwen3.8-27b,0.0
+Primary edits,deadline_cutoffs,gemma3-12b,0.0
+Primary edits,deadline_cutoffs,gemma4-26b-a4b,0.0
+Primary edits,deadline_cutoffs,gemma4-e4b,0.0
+Primary edits,deadline_cutoffs,gpt-oss-20b,12.0
+Primary edits,deadline_cutoffs,llama3.1-8b,0.0
+Primary edits,deadline_cutoffs,ministral3-14b,0.0
+Primary edits,deadline_cutoffs,phi4,0.0
+Primary edits,deadline_cutoffs,qwen3-14b,0.0
+Primary edits,deadline_cutoffs,qwen3-8b,0.0
+Primary edits,deadline_cutoffs,qwen3.8-27b,0.0
+Primary edits,budget_exhausted,gemma3-12b,4.5
+Primary edits,budget_exhausted,gemma4-26b-a4b,0.0
+Primary edits,budget_exhausted,gemma4-e4b,0.0
+Primary edits,budget_exhausted,gpt-oss-20b,12.0
+Primary edits,budget_exhausted,llama3.1-8b,13.166666666666666
+Primary edits,budget_exhausted,ministral3-14b,0.0
+Primary edits,budget_exhausted,phi4,0.0
+Primary edits,budget_exhausted,qwen3-14b,0.0
+Primary edits,budget_exhausted,qwen3-8b,0.0
+Primary edits,budget_exhausted,qwen3.8-27b,0.0
+Primary edits,output_truncations,gemma3-12b,0.0
+Primary edits,output_truncations,gemma4-26b-a4b,0.0
+Primary edits,output_truncations,gemma4-e4b,0.0
+Primary edits,output_truncations,gpt-oss-20b,25.0
+Primary edits,output_truncations,llama3.1-8b,0.6666666666666666
+Primary edits,output_truncations,ministral3-14b,0.0
+Primary edits,output_truncations,phi4,0.0
+Primary edits,output_truncations,qwen3-14b,0.0
+Primary edits,output_truncations,qwen3-8b,0.0
+Primary edits,output_truncations,qwen3.8-27b,0.0
+Primary edits,logged_block,gemma3-12b,-2.8333333333333335
+Primary edits,logged_block,gemma4-26b-a4b,0.5
+Primary edits,logged_block,gemma4-e4b,1.1666666666666667
+Primary edits,logged_block,gpt-oss-20b,-2.0
+Primary edits,logged_block,llama3.1-8b,-5.0
+Primary edits,logged_block,ministral3-14b,0.5
+Primary edits,logged_block,phi4,-1.0
+Primary edits,logged_block,qwen3-14b,-7.333333333333333
+Primary edits,logged_block,qwen3-8b,-3.8333333333333335
+Primary edits,logged_block,qwen3.8-27b,-1.8333333333333333
+Primary edits,logged_pass,gemma3-12b,0.0
+Primary edits,logged_pass,gemma4-26b-a4b,0.16666666666666666
+Primary edits,logged_pass,gemma4-e4b,0.3333333333333333
+Primary edits,logged_pass,gpt-oss-20b,-0.3333333333333333
+Primary edits,logged_pass,llama3.1-8b,-0.3333333333333333
+Primary edits,logged_pass,ministral3-14b,0.8333333333333334
+Primary edits,logged_pass,phi4,0.16666666666666666
+Primary edits,logged_pass,qwen3-14b,-1.5
+Primary edits,logged_pass,qwen3-8b,0.0
+Primary edits,logged_pass,qwen3.8-27b,0.0
+Primary edits,logged_handoff,gemma3-12b,-0.16666666666666666
+Primary edits,logged_handoff,gemma4-26b-a4b,0.0
+Primary edits,logged_handoff,gemma4-e4b,-0.16666666666666666
+Primary edits,logged_handoff,gpt-oss-20b,0.16666666666666666
+Primary edits,logged_handoff,llama3.1-8b,0.0
+Primary edits,logged_handoff,ministral3-14b,0.8333333333333334
+Primary edits,logged_handoff,phi4,-0.16666666666666666
+Primary edits,logged_handoff,qwen3-14b,0.0
+Primary edits,logged_handoff,qwen3-8b,0.0
+Primary edits,logged_handoff,qwen3.8-27b,0.0
+Primary edits,logged_foul,gemma3-12b,0.0
+Primary edits,logged_foul,gemma4-26b-a4b,0.16666666666666666
+Primary edits,logged_foul,gemma4-e4b,0.0
+Primary edits,logged_foul,gpt-oss-20b,0.0
+Primary edits,logged_foul,llama3.1-8b,0.0
+Primary edits,logged_foul,ministral3-14b,0.0
+Primary edits,logged_foul,phi4,0.0
+Primary edits,logged_foul,qwen3-14b,0.0
+Primary edits,logged_foul,qwen3-8b,0.0
+Primary edits,logged_foul,qwen3.8-27b,-0.16666666666666666
+Primary edits,logged_start_blitz,gemma3-12b,0.5
+Primary edits,logged_start_blitz,gemma4-26b-a4b,-1.0
+Primary edits,logged_start_blitz,gemma4-e4b,-0.3333333333333333
+Primary edits,logged_start_blitz,gpt-oss-20b,-1.0
+Primary edits,logged_start_blitz,llama3.1-8b,-1.5
+Primary edits,logged_start_blitz,ministral3-14b,-0.6666666666666666
+Primary edits,logged_start_blitz,phi4,0.16666666666666666
+Primary edits,logged_start_blitz,qwen3-14b,-5.0
+Primary edits,logged_start_blitz,qwen3-8b,-2.6666666666666665
+Primary edits,logged_start_blitz,qwen3.8-27b,-0.5
+Primary edits,logged_risky_share,gemma3-12b,-0.041644507066255027
+Primary edits,logged_risky_share,gemma4-26b-a4b,-0.027904494953053815
+Primary edits,logged_risky_share,gemma4-e4b,0.053402375809496534
+Primary edits,logged_risky_share,gpt-oss-20b,-0.02730880230880232
+Primary edits,logged_risky_share,llama3.1-8b,0.04348866924768252
+Primary edits,logged_risky_share,ministral3-14b,0.11418173655643654
+Primary edits,logged_risky_share,phi4,-0.05089597788211716
+Primary edits,logged_risky_share,qwen3-14b,0.37289915966386555
+Primary edits,logged_risky_share,qwen3-8b,-0.0121756912391587
+Primary edits,logged_risky_share,qwen3.8-27b,0.01814002337576619
+Primary edits,consecutive_identical_calls,gemma3-12b,150.33333333333334
+Primary edits,consecutive_identical_calls,gemma4-26b-a4b,0.0
+Primary edits,consecutive_identical_calls,gemma4-e4b,0.5
+Primary edits,consecutive_identical_calls,gpt-oss-20b,0.16666666666666666
+Primary edits,consecutive_identical_calls,llama3.1-8b,8.166666666666666
+Primary edits,consecutive_identical_calls,ministral3-14b,0.0
+Primary edits,consecutive_identical_calls,phi4,0.0
+Primary edits,consecutive_identical_calls,qwen3-14b,0.3333333333333333
+Primary edits,consecutive_identical_calls,qwen3-8b,0.0
+Primary edits,consecutive_identical_calls,qwen3.8-27b,0.0
+Primary edits,notes_calls,gemma3-12b,0.0
+Primary edits,notes_calls,gemma4-26b-a4b,-0.16666666666666666
+Primary edits,notes_calls,gemma4-e4b,0.0
+Primary edits,notes_calls,gpt-oss-20b,-0.16666666666666666
+Primary edits,notes_calls,llama3.1-8b,70.83333333333333
+Primary edits,notes_calls,ministral3-14b,0.0
+Primary edits,notes_calls,phi4,-0.5
+Primary edits,notes_calls,qwen3-14b,0.0
+Primary edits,notes_calls,qwen3-8b,0.0
+Primary edits,notes_calls,qwen3.8-27b,0.0
+Primary edits,engine_turnovers,gemma3-12b,3.3333333333333335
+Primary edits,engine_turnovers,gemma4-26b-a4b,-2.5
+Primary edits,engine_turnovers,gemma4-e4b,-0.5
+Primary edits,engine_turnovers,gpt-oss-20b,-1.6666666666666667
+Primary edits,engine_turnovers,llama3.1-8b,-1.3333333333333333
+Primary edits,engine_turnovers,ministral3-14b,1.5
+Primary edits,engine_turnovers,phi4,-0.3333333333333333
+Primary edits,engine_turnovers,qwen3-14b,-5.166666666666667
+Primary edits,engine_turnovers,qwen3-8b,0.5
+Primary edits,engine_turnovers,qwen3.8-27b,0.0
+Primary edits,forced_actions_per_turn,gemma3-12b,0.5208333333333334
+Primary edits,forced_actions_per_turn,gemma4-26b-a4b,0.0
+Primary edits,forced_actions_per_turn,gemma4-e4b,0.0
+Primary edits,forced_actions_per_turn,gpt-oss-20b,0.8229166666666666
+Primary edits,forced_actions_per_turn,llama3.1-8b,1.1041666666666667
+Primary edits,forced_actions_per_turn,ministral3-14b,0.0
+Primary edits,forced_actions_per_turn,phi4,0.0
+Primary edits,forced_actions_per_turn,qwen3-14b,0.0
+Primary edits,forced_actions_per_turn,qwen3-8b,0.0
+Primary edits,forced_actions_per_turn,qwen3.8-27b,0.0
+Primary edits,invalid_tool_calls_per_turn,gemma3-12b,0.0
+Primary edits,invalid_tool_calls_per_turn,gemma4-26b-a4b,0.0
+Primary edits,invalid_tool_calls_per_turn,gemma4-e4b,0.0
+Primary edits,invalid_tool_calls_per_turn,gpt-oss-20b,0.0
+Primary edits,invalid_tool_calls_per_turn,llama3.1-8b,3.2708333333333335
+Primary edits,invalid_tool_calls_per_turn,ministral3-14b,0.0
+Primary edits,invalid_tool_calls_per_turn,phi4,0.0
+Primary edits,invalid_tool_calls_per_turn,qwen3-14b,0.03125
+Primary edits,invalid_tool_calls_per_turn,qwen3-8b,0.0
+Primary edits,invalid_tool_calls_per_turn,qwen3.8-27b,0.0
+Primary edits,deadline_cutoffs_per_turn,gemma3-12b,0.0
+Primary edits,deadline_cutoffs_per_turn,gemma4-26b-a4b,0.0
+Primary edits,deadline_cutoffs_per_turn,gemma4-e4b,0.0
+Primary edits,deadline_cutoffs_per_turn,gpt-oss-20b,0.75
+Primary edits,deadline_cutoffs_per_turn,llama3.1-8b,0.0
+Primary edits,deadline_cutoffs_per_turn,ministral3-14b,0.0
+Primary edits,deadline_cutoffs_per_turn,phi4,0.0
+Primary edits,deadline_cutoffs_per_turn,qwen3-14b,0.0
+Primary edits,deadline_cutoffs_per_turn,qwen3-8b,0.0
+Primary edits,deadline_cutoffs_per_turn,qwen3.8-27b,0.0
+Heretics,td_diff,gemma3-12b,-0.8333333333333334
+Heretics,td_diff,gpt-oss-20b,-1.3333333333333333
+Heretics,td_diff,llama3.1-8b,-1.0
+Heretics,td_for,gemma3-12b,0.16666666666666666
+Heretics,td_for,gpt-oss-20b,0.0
+Heretics,td_for,llama3.1-8b,-0.5
+Heretics,td_against,gemma3-12b,1.0
+Heretics,td_against,gpt-oss-20b,1.3333333333333333
+Heretics,td_against,llama3.1-8b,0.5
+Heretics,win,gemma3-12b,0.16666666666666666
+Heretics,win,gpt-oss-20b,-0.16666666666666666
+Heretics,win,llama3.1-8b,-0.3333333333333333
+Heretics,forced_actions,gemma3-12b,0.16666666666666666
+Heretics,forced_actions,gpt-oss-20b,-0.16666666666666666
+Heretics,forced_actions,llama3.1-8b,0.0
+Heretics,invalid_tool_calls,gemma3-12b,0.0
+Heretics,invalid_tool_calls,gpt-oss-20b,0.0
+Heretics,invalid_tool_calls,llama3.1-8b,0.0
+Heretics,deadline_cutoffs,gemma3-12b,0.0
+Heretics,deadline_cutoffs,gpt-oss-20b,-0.16666666666666666
+Heretics,deadline_cutoffs,llama3.1-8b,0.0
+Heretics,budget_exhausted,gemma3-12b,0.16666666666666666
+Heretics,budget_exhausted,gpt-oss-20b,-0.16666666666666666
+Heretics,budget_exhausted,llama3.1-8b,0.0
+Heretics,output_truncations,gemma3-12b,0.0
+Heretics,output_truncations,gpt-oss-20b,1.1666666666666667
+Heretics,output_truncations,llama3.1-8b,0.0
+Heretics,logged_block,gemma3-12b,-2.5
+Heretics,logged_block,gpt-oss-20b,2.8333333333333335
+Heretics,logged_block,llama3.1-8b,0.5
+Heretics,logged_pass,gemma3-12b,0.0
+Heretics,logged_pass,gpt-oss-20b,0.6666666666666666
+Heretics,logged_pass,llama3.1-8b,-0.5
+Heretics,logged_handoff,gemma3-12b,0.16666666666666666
+Heretics,logged_handoff,gpt-oss-20b,0.3333333333333333
+Heretics,logged_handoff,llama3.1-8b,0.0
+Heretics,logged_foul,gemma3-12b,0.0
+Heretics,logged_foul,gpt-oss-20b,0.0
+Heretics,logged_foul,llama3.1-8b,0.0
+Heretics,logged_start_blitz,gemma3-12b,-0.5
+Heretics,logged_start_blitz,gpt-oss-20b,1.1666666666666667
+Heretics,logged_start_blitz,llama3.1-8b,-1.5
+Heretics,logged_risky_share,gemma3-12b,-0.10512436360452881
+Heretics,logged_risky_share,gpt-oss-20b,-0.09456945058725247
+Heretics,logged_risky_share,llama3.1-8b,-0.030192789778604068
+Heretics,consecutive_identical_calls,gemma3-12b,5.333333333333333
+Heretics,consecutive_identical_calls,gpt-oss-20b,0.0
+Heretics,consecutive_identical_calls,llama3.1-8b,-0.6666666666666666
+Heretics,notes_calls,gemma3-12b,0.0
+Heretics,notes_calls,gpt-oss-20b,-0.16666666666666666
+Heretics,notes_calls,llama3.1-8b,0.0
+Heretics,engine_turnovers,gemma3-12b,3.0
+Heretics,engine_turnovers,gpt-oss-20b,1.6666666666666667
+Heretics,engine_turnovers,llama3.1-8b,0.0
+Heretics,forced_actions_per_turn,gemma3-12b,0.010416666666666666
+Heretics,forced_actions_per_turn,gpt-oss-20b,-0.010416666666666666
+Heretics,forced_actions_per_turn,llama3.1-8b,0.0
+Heretics,invalid_tool_calls_per_turn,gemma3-12b,0.0
+Heretics,invalid_tool_calls_per_turn,gpt-oss-20b,0.0
+Heretics,invalid_tool_calls_per_turn,llama3.1-8b,0.0
+Heretics,deadline_cutoffs_per_turn,gemma3-12b,0.0
+Heretics,deadline_cutoffs_per_turn,gpt-oss-20b,-0.010416666666666666
+Heretics,deadline_cutoffs_per_turn,llama3.1-8b,0.0
+Exclude unreliable primary pairs,td_diff,gemma4-26b-a4b,1.0
+Exclude unreliable primary pairs,td_diff,gemma4-e4b,-0.6666666666666666
+Exclude unreliable primary pairs,td_diff,ministral3-14b,-0.5
+Exclude unreliable primary pairs,td_diff,phi4,0.0
+Exclude unreliable primary pairs,td_diff,qwen3-14b,0.6666666666666666
+Exclude unreliable primary pairs,td_diff,qwen3-8b,0.3333333333333333
+Exclude unreliable primary pairs,td_diff,qwen3.8-27b,1.3333333333333333
+Exclude unreliable primary pairs,td_for,gemma4-26b-a4b,0.3333333333333333
+Exclude unreliable primary pairs,td_for,gemma4-e4b,0.16666666666666666
+Exclude unreliable primary pairs,td_for,ministral3-14b,-0.5
+Exclude unreliable primary pairs,td_for,phi4,-0.16666666666666666
+Exclude unreliable primary pairs,td_for,qwen3-14b,-0.3333333333333333
+Exclude unreliable primary pairs,td_for,qwen3-8b,0.0
+Exclude unreliable primary pairs,td_for,qwen3.8-27b,1.3333333333333333
+Exclude unreliable primary pairs,td_against,gemma4-26b-a4b,-0.6666666666666666
+Exclude unreliable primary pairs,td_against,gemma4-e4b,0.8333333333333334
+Exclude unreliable primary pairs,td_against,ministral3-14b,0.0
+Exclude unreliable primary pairs,td_against,phi4,-0.16666666666666666
+Exclude unreliable primary pairs,td_against,qwen3-14b,-1.0
+Exclude unreliable primary pairs,td_against,qwen3-8b,-0.3333333333333333
+Exclude unreliable primary pairs,td_against,qwen3.8-27b,0.0
+Exclude unreliable primary pairs,win,gemma4-26b-a4b,0.16666666666666666
+Exclude unreliable primary pairs,win,gemma4-e4b,0.0
+Exclude unreliable primary pairs,win,ministral3-14b,0.0
+Exclude unreliable primary pairs,win,phi4,-0.16666666666666666
+Exclude unreliable primary pairs,win,qwen3-14b,0.0
+Exclude unreliable primary pairs,win,qwen3-8b,0.0
+Exclude unreliable primary pairs,win,qwen3.8-27b,0.3333333333333333
+Exclude unreliable primary pairs,forced_actions,gemma4-26b-a4b,0.0
+Exclude unreliable primary pairs,forced_actions,gemma4-e4b,0.0
+Exclude unreliable primary pairs,forced_actions,ministral3-14b,0.0
+Exclude unreliable primary pairs,forced_actions,phi4,0.0
+Exclude unreliable primary pairs,forced_actions,qwen3-14b,0.0
+Exclude unreliable primary pairs,forced_actions,qwen3-8b,0.0
+Exclude unreliable primary pairs,forced_actions,qwen3.8-27b,0.0
+Exclude unreliable primary pairs,invalid_tool_calls,gemma4-26b-a4b,0.0
+Exclude unreliable primary pairs,invalid_tool_calls,gemma4-e4b,0.0
+Exclude unreliable primary pairs,invalid_tool_calls,ministral3-14b,0.0
+Exclude unreliable primary pairs,invalid_tool_calls,phi4,0.0
+Exclude unreliable primary pairs,invalid_tool_calls,qwen3-14b,0.5
+Exclude unreliable primary pairs,invalid_tool_calls,qwen3-8b,0.0
+Exclude unreliable primary pairs,invalid_tool_calls,qwen3.8-27b,0.0
+Exclude unreliable primary pairs,deadline_cutoffs,gemma4-26b-a4b,0.0
+Exclude unreliable primary pairs,deadline_cutoffs,gemma4-e4b,0.0
+Exclude unreliable primary pairs,deadline_cutoffs,ministral3-14b,0.0
+Exclude unreliable primary pairs,deadline_cutoffs,phi4,0.0
+Exclude unreliable primary pairs,deadline_cutoffs,qwen3-14b,0.0
+Exclude unreliable primary pairs,deadline_cutoffs,qwen3-8b,0.0
+Exclude unreliable primary pairs,deadline_cutoffs,qwen3.8-27b,0.0
+Exclude unreliable primary pairs,budget_exhausted,gemma4-26b-a4b,0.0
+Exclude unreliable primary pairs,budget_exhausted,gemma4-e4b,0.0
+Exclude unreliable primary pairs,budget_exhausted,ministral3-14b,0.0
+Exclude unreliable primary pairs,budget_exhausted,phi4,0.0
+Exclude unreliable primary pairs,budget_exhausted,qwen3-14b,0.0
+Exclude unreliable primary pairs,budget_exhausted,qwen3-8b,0.0
+Exclude unreliable primary pairs,budget_exhausted,qwen3.8-27b,0.0
+Exclude unreliable primary pairs,output_truncations,gemma4-26b-a4b,0.0
+Exclude unreliable primary pairs,output_truncations,gemma4-e4b,0.0
+Exclude unreliable primary pairs,output_truncations,ministral3-14b,0.0
+Exclude unreliable primary pairs,output_truncations,phi4,0.0
+Exclude unreliable primary pairs,output_truncations,qwen3-14b,0.0
+Exclude unreliable primary pairs,output_truncations,qwen3-8b,0.0
+Exclude unreliable primary pairs,output_truncations,qwen3.8-27b,0.0
+Exclude unreliable primary pairs,logged_block,gemma4-26b-a4b,0.5
+Exclude unreliable primary pairs,logged_block,gemma4-e4b,1.1666666666666667
+Exclude unreliable primary pairs,logged_block,ministral3-14b,0.5
+Exclude unreliable primary pairs,logged_block,phi4,-1.0
+Exclude unreliable primary pairs,logged_block,qwen3-14b,-7.333333333333333
+Exclude unreliable primary pairs,logged_block,qwen3-8b,-3.8333333333333335
+Exclude unreliable primary pairs,logged_block,qwen3.8-27b,-1.8333333333333333
+Exclude unreliable primary pairs,logged_pass,gemma4-26b-a4b,0.16666666666666666
+Exclude unreliable primary pairs,logged_pass,gemma4-e4b,0.3333333333333333
+Exclude unreliable primary pairs,logged_pass,ministral3-14b,0.8333333333333334
+Exclude unreliable primary pairs,logged_pass,phi4,0.16666666666666666
+Exclude unreliable primary pairs,logged_pass,qwen3-14b,-1.5
+Exclude unreliable primary pairs,logged_pass,qwen3-8b,0.0
+Exclude unreliable primary pairs,logged_pass,qwen3.8-27b,0.0
+Exclude unreliable primary pairs,logged_handoff,gemma4-26b-a4b,0.0
+Exclude unreliable primary pairs,logged_handoff,gemma4-e4b,-0.16666666666666666
+Exclude unreliable primary pairs,logged_handoff,ministral3-14b,0.8333333333333334
+Exclude unreliable primary pairs,logged_handoff,phi4,-0.16666666666666666
+Exclude unreliable primary pairs,logged_handoff,qwen3-14b,0.0
+Exclude unreliable primary pairs,logged_handoff,qwen3-8b,0.0
+Exclude unreliable primary pairs,logged_handoff,qwen3.8-27b,0.0
+Exclude unreliable primary pairs,logged_foul,gemma4-26b-a4b,0.16666666666666666
+Exclude unreliable primary pairs,logged_foul,gemma4-e4b,0.0
+Exclude unreliable primary pairs,logged_foul,ministral3-14b,0.0
+Exclude unreliable primary pairs,logged_foul,phi4,0.0
+Exclude unreliable primary pairs,logged_foul,qwen3-14b,0.0
+Exclude unreliable primary pairs,logged_foul,qwen3-8b,0.0
+Exclude unreliable primary pairs,logged_foul,qwen3.8-27b,-0.16666666666666666
+Exclude unreliable primary pairs,logged_start_blitz,gemma4-26b-a4b,-1.0
+Exclude unreliable primary pairs,logged_start_blitz,gemma4-e4b,-0.3333333333333333
+Exclude unreliable primary pairs,logged_start_blitz,ministral3-14b,-0.6666666666666666
+Exclude unreliable primary pairs,logged_start_blitz,phi4,0.16666666666666666
+Exclude unreliable primary pairs,logged_start_blitz,qwen3-14b,-5.0
+Exclude unreliable primary pairs,logged_start_blitz,qwen3-8b,-2.6666666666666665
+Exclude unreliable primary pairs,logged_start_blitz,qwen3.8-27b,-0.5
+Exclude unreliable primary pairs,logged_risky_share,gemma4-26b-a4b,-0.027904494953053815
+Exclude unreliable primary pairs,logged_risky_share,gemma4-e4b,0.053402375809496534
+Exclude unreliable primary pairs,logged_risky_share,ministral3-14b,0.11418173655643654
+Exclude unreliable primary pairs,logged_risky_share,phi4,-0.05089597788211716
+Exclude unreliable primary pairs,logged_risky_share,qwen3-14b,0.37289915966386555
+Exclude unreliable primary pairs,logged_risky_share,qwen3-8b,-0.0121756912391587
+Exclude unreliable primary pairs,logged_risky_share,qwen3.8-27b,0.01814002337576619
+Exclude unreliable primary pairs,consecutive_identical_calls,gemma4-26b-a4b,0.0
+Exclude unreliable primary pairs,consecutive_identical_calls,gemma4-e4b,0.5
+Exclude unreliable primary pairs,consecutive_identical_calls,ministral3-14b,0.0
+Exclude unreliable primary pairs,consecutive_identical_calls,phi4,0.0
+Exclude unreliable primary pairs,consecutive_identical_calls,qwen3-14b,0.3333333333333333
+Exclude unreliable primary pairs,consecutive_identical_calls,qwen3-8b,0.0
+Exclude unreliable primary pairs,consecutive_identical_calls,qwen3.8-27b,0.0
+Exclude unreliable primary pairs,notes_calls,gemma4-26b-a4b,-0.16666666666666666
+Exclude unreliable primary pairs,notes_calls,gemma4-e4b,0.0
+Exclude unreliable primary pairs,notes_calls,ministral3-14b,0.0
+Exclude unreliable primary pairs,notes_calls,phi4,-0.5
+Exclude unreliable primary pairs,notes_calls,qwen3-14b,0.0
+Exclude unreliable primary pairs,notes_calls,qwen3-8b,0.0
+Exclude unreliable primary pairs,notes_calls,qwen3.8-27b,0.0
+Exclude unreliable primary pairs,engine_turnovers,gemma4-26b-a4b,-2.5
+Exclude unreliable primary pairs,engine_turnovers,gemma4-e4b,-0.5
+Exclude unreliable primary pairs,engine_turnovers,ministral3-14b,1.5
+Exclude unreliable primary pairs,engine_turnovers,phi4,-0.3333333333333333
+Exclude unreliable primary pairs,engine_turnovers,qwen3-14b,-5.166666666666667
+Exclude unreliable primary pairs,engine_turnovers,qwen3-8b,0.5
+Exclude unreliable primary pairs,engine_turnovers,qwen3.8-27b,0.0
+Exclude unreliable primary pairs,forced_actions_per_turn,gemma4-26b-a4b,0.0
+Exclude unreliable primary pairs,forced_actions_per_turn,gemma4-e4b,0.0
+Exclude unreliable primary pairs,forced_actions_per_turn,ministral3-14b,0.0
+Exclude unreliable primary pairs,forced_actions_per_turn,phi4,0.0
+Exclude unreliable primary pairs,forced_actions_per_turn,qwen3-14b,0.0
+Exclude unreliable primary pairs,forced_actions_per_turn,qwen3-8b,0.0
+Exclude unreliable primary pairs,forced_actions_per_turn,qwen3.8-27b,0.0
+Exclude unreliable primary pairs,invalid_tool_calls_per_turn,gemma4-26b-a4b,0.0
+Exclude unreliable primary pairs,invalid_tool_calls_per_turn,gemma4-e4b,0.0
+Exclude unreliable primary pairs,invalid_tool_calls_per_turn,ministral3-14b,0.0
+Exclude unreliable primary pairs,invalid_tool_calls_per_turn,phi4,0.0
+Exclude unreliable primary pairs,invalid_tool_calls_per_turn,qwen3-14b,0.03125
+Exclude unreliable primary pairs,invalid_tool_calls_per_turn,qwen3-8b,0.0
+Exclude unreliable primary pairs,invalid_tool_calls_per_turn,qwen3.8-27b,0.0
+Exclude unreliable primary pairs,deadline_cutoffs_per_turn,gemma4-26b-a4b,0.0
+Exclude unreliable primary pairs,deadline_cutoffs_per_turn,gemma4-e4b,0.0
+Exclude unreliable primary pairs,deadline_cutoffs_per_turn,ministral3-14b,0.0
+Exclude unreliable primary pairs,deadline_cutoffs_per_turn,phi4,0.0
+Exclude unreliable primary pairs,deadline_cutoffs_per_turn,qwen3-14b,0.0
+Exclude unreliable primary pairs,deadline_cutoffs_per_turn,qwen3-8b,0.0
+Exclude unreliable primary pairs,deadline_cutoffs_per_turn,qwen3.8-27b,0.0
+Replace three edits with Heretics,td_diff,gemma3-12b,-0.8333333333333334
+Replace three edits with Heretics,td_diff,gemma4-26b-a4b,1.0
+Replace three edits with Heretics,td_diff,gemma4-e4b,-0.6666666666666666
+Replace three edits with Heretics,td_diff,gpt-oss-20b,-1.3333333333333333
+Replace three edits with Heretics,td_diff,llama3.1-8b,-1.0
+Replace three edits with Heretics,td_diff,ministral3-14b,-0.5
+Replace three edits with Heretics,td_diff,phi4,0.0
+Replace three edits with Heretics,td_diff,qwen3-14b,0.6666666666666666
+Replace three edits with Heretics,td_diff,qwen3-8b,0.3333333333333333
+Replace three edits with Heretics,td_diff,qwen3.8-27b,1.3333333333333333
+Replace three edits with Heretics,td_for,gemma3-12b,0.16666666666666666
+Replace three edits with Heretics,td_for,gemma4-26b-a4b,0.3333333333333333
+Replace three edits with Heretics,td_for,gemma4-e4b,0.16666666666666666
+Replace three edits with Heretics,td_for,gpt-oss-20b,0.0
+Replace three edits with Heretics,td_for,llama3.1-8b,-0.5
+Replace three edits with Heretics,td_for,ministral3-14b,-0.5
+Replace three edits with Heretics,td_for,phi4,-0.16666666666666666
+Replace three edits with Heretics,td_for,qwen3-14b,-0.3333333333333333
+Replace three edits with Heretics,td_for,qwen3-8b,0.0
+Replace three edits with Heretics,td_for,qwen3.8-27b,1.3333333333333333
+Replace three edits with Heretics,td_against,gemma3-12b,1.0
+Replace three edits with Heretics,td_against,gemma4-26b-a4b,-0.6666666666666666
+Replace three edits with Heretics,td_against,gemma4-e4b,0.8333333333333334
+Replace three edits with Heretics,td_against,gpt-oss-20b,1.3333333333333333
+Replace three edits with Heretics,td_against,llama3.1-8b,0.5
+Replace three edits with Heretics,td_against,ministral3-14b,0.0
+Replace three edits with Heretics,td_against,phi4,-0.16666666666666666
+Replace three edits with Heretics,td_against,qwen3-14b,-1.0
+Replace three edits with Heretics,td_against,qwen3-8b,-0.3333333333333333
+Replace three edits with Heretics,td_against,qwen3.8-27b,0.0
+Replace three edits with Heretics,win,gemma3-12b,0.16666666666666666
+Replace three edits with Heretics,win,gemma4-26b-a4b,0.16666666666666666
+Replace three edits with Heretics,win,gemma4-e4b,0.0
+Replace three edits with Heretics,win,gpt-oss-20b,-0.16666666666666666
+Replace three edits with Heretics,win,llama3.1-8b,-0.3333333333333333
+Replace three edits with Heretics,win,ministral3-14b,0.0
+Replace three edits with Heretics,win,phi4,-0.16666666666666666
+Replace three edits with Heretics,win,qwen3-14b,0.0
+Replace three edits with Heretics,win,qwen3-8b,0.0
+Replace three edits with Heretics,win,qwen3.8-27b,0.3333333333333333
+Replace three edits with Heretics,forced_actions,gemma3-12b,0.16666666666666666
+Replace three edits with Heretics,forced_actions,gemma4-26b-a4b,0.0
+Replace three edits with Heretics,forced_actions,gemma4-e4b,0.0
+Replace three edits with Heretics,forced_actions,gpt-oss-20b,-0.16666666666666666
+Replace three edits with Heretics,forced_actions,llama3.1-8b,0.0
+Replace three edits with Heretics,forced_actions,ministral3-14b,0.0
+Replace three edits with Heretics,forced_actions,phi4,0.0
+Replace three edits with Heretics,forced_actions,qwen3-14b,0.0
+Replace three edits with Heretics,forced_actions,qwen3-8b,0.0
+Replace three edits with Heretics,forced_actions,qwen3.8-27b,0.0
+Replace three edits with Heretics,invalid_tool_calls,gemma3-12b,0.0
+Replace three edits with Heretics,invalid_tool_calls,gemma4-26b-a4b,0.0
+Replace three edits with Heretics,invalid_tool_calls,gemma4-e4b,0.0
+Replace three edits with Heretics,invalid_tool_calls,gpt-oss-20b,0.0
+Replace three edits with Heretics,invalid_tool_calls,llama3.1-8b,0.0
+Replace three edits with Heretics,invalid_tool_calls,ministral3-14b,0.0
+Replace three edits with Heretics,invalid_tool_calls,phi4,0.0
+Replace three edits with Heretics,invalid_tool_calls,qwen3-14b,0.5
+Replace three edits with Heretics,invalid_tool_calls,qwen3-8b,0.0
+Replace three edits with Heretics,invalid_tool_calls,qwen3.8-27b,0.0
+Replace three edits with Heretics,deadline_cutoffs,gemma3-12b,0.0
+Replace three edits with Heretics,deadline_cutoffs,gemma4-26b-a4b,0.0
+Replace three edits with Heretics,deadline_cutoffs,gemma4-e4b,0.0
+Replace three edits with Heretics,deadline_cutoffs,gpt-oss-20b,-0.16666666666666666
+Replace three edits with Heretics,deadline_cutoffs,llama3.1-8b,0.0
+Replace three edits with Heretics,deadline_cutoffs,ministral3-14b,0.0
+Replace three edits with Heretics,deadline_cutoffs,phi4,0.0
+Replace three edits with Heretics,deadline_cutoffs,qwen3-14b,0.0
+Replace three edits with Heretics,deadline_cutoffs,qwen3-8b,0.0
+Replace three edits with Heretics,deadline_cutoffs,qwen3.8-27b,0.0
+Replace three edits with Heretics,budget_exhausted,gemma3-12b,0.16666666666666666
+Replace three edits with Heretics,budget_exhausted,gemma4-26b-a4b,0.0
+Replace three edits with Heretics,budget_exhausted,gemma4-e4b,0.0
+Replace three edits with Heretics,budget_exhausted,gpt-oss-20b,-0.16666666666666666
+Replace three edits with Heretics,budget_exhausted,llama3.1-8b,0.0
+Replace three edits with Heretics,budget_exhausted,ministral3-14b,0.0
+Replace three edits with Heretics,budget_exhausted,phi4,0.0
+Replace three edits with Heretics,budget_exhausted,qwen3-14b,0.0
+Replace three edits with Heretics,budget_exhausted,qwen3-8b,0.0
+Replace three edits with Heretics,budget_exhausted,qwen3.8-27b,0.0
+Replace three edits with Heretics,output_truncations,gemma3-12b,0.0
+Replace three edits with Heretics,output_truncations,gemma4-26b-a4b,0.0
+Replace three edits with Heretics,output_truncations,gemma4-e4b,0.0
+Replace three edits with Heretics,output_truncations,gpt-oss-20b,1.1666666666666667
+Replace three edits with Heretics,output_truncations,llama3.1-8b,0.0
+Replace three edits with Heretics,output_truncations,ministral3-14b,0.0
+Replace three edits with Heretics,output_truncations,phi4,0.0
+Replace three edits with Heretics,output_truncations,qwen3-14b,0.0
+Replace three edits with Heretics,output_truncations,qwen3-8b,0.0
+Replace three edits with Heretics,output_truncations,qwen3.8-27b,0.0
+Replace three edits with Heretics,logged_block,gemma3-12b,-2.5
+Replace three edits with Heretics,logged_block,gemma4-26b-a4b,0.5
+Replace three edits with Heretics,logged_block,gemma4-e4b,1.1666666666666667
+Replace three edits with Heretics,logged_block,gpt-oss-20b,2.8333333333333335
+Replace three edits with Heretics,logged_block,llama3.1-8b,0.5
+Replace three edits with Heretics,logged_block,ministral3-14b,0.5
+Replace three edits with Heretics,logged_block,phi4,-1.0
+Replace three edits with Heretics,logged_block,qwen3-14b,-7.333333333333333
+Replace three edits with Heretics,logged_block,qwen3-8b,-3.8333333333333335
+Replace three edits with Heretics,logged_block,qwen3.8-27b,-1.8333333333333333
+Replace three edits with Heretics,logged_pass,gemma3-12b,0.0
+Replace three edits with Heretics,logged_pass,gemma4-26b-a4b,0.16666666666666666
+Replace three edits with Heretics,logged_pass,gemma4-e4b,0.3333333333333333
+Replace three edits with Heretics,logged_pass,gpt-oss-20b,0.6666666666666666
+Replace three edits with Heretics,logged_pass,llama3.1-8b,-0.5
+Replace three edits with Heretics,logged_pass,ministral3-14b,0.8333333333333334
+Replace three edits with Heretics,logged_pass,phi4,0.16666666666666666
+Replace three edits with Heretics,logged_pass,qwen3-14b,-1.5
+Replace three edits with Heretics,logged_pass,qwen3-8b,0.0
+Replace three edits with Heretics,logged_pass,qwen3.8-27b,0.0
+Replace three edits with Heretics,logged_handoff,gemma3-12b,0.16666666666666666
+Replace three edits with Heretics,logged_handoff,gemma4-26b-a4b,0.0
+Replace three edits with Heretics,logged_handoff,gemma4-e4b,-0.16666666666666666
+Replace three edits with Heretics,logged_handoff,gpt-oss-20b,0.3333333333333333
+Replace three edits with Heretics,logged_handoff,llama3.1-8b,0.0
+Replace three edits with Heretics,logged_handoff,ministral3-14b,0.8333333333333334
+Replace three edits with Heretics,logged_handoff,phi4,-0.16666666666666666
+Replace three edits with Heretics,logged_handoff,qwen3-14b,0.0
+Replace three edits with Heretics,logged_handoff,qwen3-8b,0.0
+Replace three edits with Heretics,logged_handoff,qwen3.8-27b,0.0
+Replace three edits with Heretics,logged_foul,gemma3-12b,0.0
+Replace three edits with Heretics,logged_foul,gemma4-26b-a4b,0.16666666666666666
+Replace three edits with Heretics,logged_foul,gemma4-e4b,0.0
+Replace three edits with Heretics,logged_foul,gpt-oss-20b,0.0
+Replace three edits with Heretics,logged_foul,llama3.1-8b,0.0
+Replace three edits with Heretics,logged_foul,ministral3-14b,0.0
+Replace three edits with Heretics,logged_foul,phi4,0.0
+Replace three edits with Heretics,logged_foul,qwen3-14b,0.0
+Replace three edits with Heretics,logged_foul,qwen3-8b,0.0
+Replace three edits with Heretics,logged_foul,qwen3.8-27b,-0.16666666666666666
+Replace three edits with Heretics,logged_start_blitz,gemma3-12b,-0.5
+Replace three edits with Heretics,logged_start_blitz,gemma4-26b-a4b,-1.0
+Replace three edits with Heretics,logged_start_blitz,gemma4-e4b,-0.3333333333333333
+Replace three edits with Heretics,logged_start_blitz,gpt-oss-20b,1.1666666666666667
+Replace three edits with Heretics,logged_start_blitz,llama3.1-8b,-1.5
+Replace three edits with Heretics,logged_start_blitz,ministral3-14b,-0.6666666666666666
+Replace three edits with Heretics,logged_start_blitz,phi4,0.16666666666666666
+Replace three edits with Heretics,logged_start_blitz,qwen3-14b,-5.0
+Replace three edits with Heretics,logged_start_blitz,qwen3-8b,-2.6666666666666665
+Replace three edits with Heretics,logged_start_blitz,qwen3.8-27b,-0.5
+Replace three edits with Heretics,logged_risky_share,gemma3-12b,-0.10512436360452881
+Replace three edits with Heretics,logged_risky_share,gemma4-26b-a4b,-0.027904494953053815
+Replace three edits with Heretics,logged_risky_share,gemma4-e4b,0.053402375809496534
+Replace three edits with Heretics,logged_risky_share,gpt-oss-20b,-0.09456945058725247
+Replace three edits with Heretics,logged_risky_share,llama3.1-8b,-0.030192789778604068
+Replace three edits with Heretics,logged_risky_share,ministral3-14b,0.11418173655643654
+Replace three edits with Heretics,logged_risky_share,phi4,-0.05089597788211716
+Replace three edits with Heretics,logged_risky_share,qwen3-14b,0.37289915966386555
+Replace three edits with Heretics,logged_risky_share,qwen3-8b,-0.0121756912391587
+Replace three edits with Heretics,logged_risky_share,qwen3.8-27b,0.01814002337576619
+Replace three edits with Heretics,consecutive_identical_calls,gemma3-12b,5.333333333333333
+Replace three edits with Heretics,consecutive_identical_calls,gemma4-26b-a4b,0.0
+Replace three edits with Heretics,consecutive_identical_calls,gemma4-e4b,0.5
+Replace three edits with Heretics,consecutive_identical_calls,gpt-oss-20b,0.0
+Replace three edits with Heretics,consecutive_identical_calls,llama3.1-8b,-0.6666666666666666
+Replace three edits with Heretics,consecutive_identical_calls,ministral3-14b,0.0
+Replace three edits with Heretics,consecutive_identical_calls,phi4,0.0
+Replace three edits with Heretics,consecutive_identical_calls,qwen3-14b,0.3333333333333333
+Replace three edits with Heretics,consecutive_identical_calls,qwen3-8b,0.0
+Replace three edits with Heretics,consecutive_identical_calls,qwen3.8-27b,0.0
+Replace three edits with Heretics,notes_calls,gemma3-12b,0.0
+Replace three edits with Heretics,notes_calls,gemma4-26b-a4b,-0.16666666666666666
+Replace three edits with Heretics,notes_calls,gemma4-e4b,0.0
+Replace three edits with Heretics,notes_calls,gpt-oss-20b,-0.16666666666666666
+Replace three edits with Heretics,notes_calls,llama3.1-8b,0.0
+Replace three edits with Heretics,notes_calls,ministral3-14b,0.0
+Replace three edits with Heretics,notes_calls,phi4,-0.5
+Replace three edits with Heretics,notes_calls,qwen3-14b,0.0
+Replace three edits with Heretics,notes_calls,qwen3-8b,0.0
+Replace three edits with Heretics,notes_calls,qwen3.8-27b,0.0
+Replace three edits with Heretics,engine_turnovers,gemma3-12b,3.0
+Replace three edits with Heretics,engine_turnovers,gemma4-26b-a4b,-2.5
+Replace three edits with Heretics,engine_turnovers,gemma4-e4b,-0.5
+Replace three edits with Heretics,engine_turnovers,gpt-oss-20b,1.6666666666666667
+Replace three edits with Heretics,engine_turnovers,llama3.1-8b,0.0
+Replace three edits with Heretics,engine_turnovers,ministral3-14b,1.5
+Replace three edits with Heretics,engine_turnovers,phi4,-0.3333333333333333
+Replace three edits with Heretics,engine_turnovers,qwen3-14b,-5.166666666666667
+Replace three edits with Heretics,engine_turnovers,qwen3-8b,0.5
+Replace three edits with Heretics,engine_turnovers,qwen3.8-27b,0.0
+Replace three edits with Heretics,forced_actions_per_turn,gemma3-12b,0.010416666666666666
+Replace three edits with Heretics,forced_actions_per_turn,gemma4-26b-a4b,0.0
+Replace three edits with Heretics,forced_actions_per_turn,gemma4-e4b,0.0
+Replace three edits with Heretics,forced_actions_per_turn,gpt-oss-20b,-0.010416666666666666
+Replace three edits with Heretics,forced_actions_per_turn,llama3.1-8b,0.0
+Replace three edits with Heretics,forced_actions_per_turn,ministral3-14b,0.0
+Replace three edits with Heretics,forced_actions_per_turn,phi4,0.0
+Replace three edits with Heretics,forced_actions_per_turn,qwen3-14b,0.0
+Replace three edits with Heretics,forced_actions_per_turn,qwen3-8b,0.0
+Replace three edits with Heretics,forced_actions_per_turn,qwen3.8-27b,0.0
+Replace three edits with Heretics,invalid_tool_calls_per_turn,gemma3-12b,0.0
+Replace three edits with Heretics,invalid_tool_calls_per_turn,gemma4-26b-a4b,0.0
+Replace three edits with Heretics,invalid_tool_calls_per_turn,gemma4-e4b,0.0
+Replace three edits with Heretics,invalid_tool_calls_per_turn,gpt-oss-20b,0.0
+Replace three edits with Heretics,invalid_tool_calls_per_turn,llama3.1-8b,0.0
+Replace three edits with Heretics,invalid_tool_calls_per_turn,ministral3-14b,0.0
+Replace three edits with Heretics,invalid_tool_calls_per_turn,phi4,0.0
+Replace three edits with Heretics,invalid_tool_calls_per_turn,qwen3-14b,0.03125
+Replace three edits with Heretics,invalid_tool_calls_per_turn,qwen3-8b,0.0
+Replace three edits with Heretics,invalid_tool_calls_per_turn,qwen3.8-27b,0.0
+Replace three edits with Heretics,deadline_cutoffs_per_turn,gemma3-12b,0.0
+Replace three edits with Heretics,deadline_cutoffs_per_turn,gemma4-26b-a4b,0.0
+Replace three edits with Heretics,deadline_cutoffs_per_turn,gemma4-e4b,0.0
+Replace three edits with Heretics,deadline_cutoffs_per_turn,gpt-oss-20b,-0.010416666666666666
+Replace three edits with Heretics,deadline_cutoffs_per_turn,llama3.1-8b,0.0
+Replace three edits with Heretics,deadline_cutoffs_per_turn,ministral3-14b,0.0
+Replace three edits with Heretics,deadline_cutoffs_per_turn,phi4,0.0
+Replace three edits with Heretics,deadline_cutoffs_per_turn,qwen3-14b,0.0
+Replace three edits with Heretics,deadline_cutoffs_per_turn,qwen3-8b,0.0
+Replace three edits with Heretics,deadline_cutoffs_per_turn,qwen3.8-27b,0.0

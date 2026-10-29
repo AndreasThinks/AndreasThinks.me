@@ -1,0 +1,43 @@
+comparison,check,estimate
+Primary edits,omit_family:gemma3-12b,-0.03703703703703703
+Primary edits,omit_family:gemma4-26b-a4b,-0.16666666666666663
+Primary edits,omit_family:gemma4-e4b,0.018518518518518528
+Primary edits,omit_family:gpt-oss-20b,0.1111111111111111
+Primary edits,omit_family:llama3.1-8b,0.05555555555555558
+Primary edits,omit_family:ministral3-14b,2.4671622769447922e-17
+Primary edits,omit_family:phi4,-0.05555555555555553
+Primary edits,omit_family:qwen3-14b,-0.12962962962962965
+Primary edits,omit_family:qwen3-8b,-0.09259259259259259
+Primary edits,omit_family:qwen3.8-27b,-0.2037037037037037
+Primary edits,omit_opponent:bot-bowl-scripted-bot,0.025
+Primary edits,omit_opponent:random-baseline,-0.075
+Primary edits,omit_opponent:scripted-baseline,-0.1
+Heretics,omit_family:gemma3-12b,-1.1666666666666665
+Heretics,omit_family:gpt-oss-20b,-0.9166666666666667
+Heretics,omit_family:llama3.1-8b,-1.0833333333333333
+Heretics,omit_opponent:bot-bowl-scripted-bot,-0.4166666666666667
+Heretics,omit_opponent:random-baseline,-1.4166666666666667
+Heretics,omit_opponent:scripted-baseline,-1.3333333333333333
+Exclude unreliable primary pairs,omit_family:gemma4-26b-a4b,0.19444444444444445
+Exclude unreliable primary pairs,omit_family:gemma4-e4b,0.47222222222222215
+Exclude unreliable primary pairs,omit_family:ministral3-14b,0.4444444444444444
+Exclude unreliable primary pairs,omit_family:phi4,0.3611111111111111
+Exclude unreliable primary pairs,omit_family:qwen3-14b,0.25
+Exclude unreliable primary pairs,omit_family:qwen3-8b,0.3055555555555555
+Exclude unreliable primary pairs,omit_family:qwen3.8-27b,0.13888888888888887
+Exclude unreliable primary pairs,omit_opponent:bot-bowl-scripted-bot,0.21428571428571427
+Exclude unreliable primary pairs,omit_opponent:random-baseline,0.32142857142857145
+Exclude unreliable primary pairs,omit_opponent:scripted-baseline,0.39285714285714285
+Replace three edits with Heretics,omit_family:gemma3-12b,-0.018518518518518476
+Replace three edits with Heretics,omit_family:gemma4-26b-a4b,-0.2222222222222222
+Replace three edits with Heretics,omit_family:gemma4-e4b,-0.03703703703703703
+Replace three edits with Heretics,omit_family:gpt-oss-20b,0.03703703703703703
+Replace three edits with Heretics,omit_family:llama3.1-8b,-2.4671622769447922e-17
+Replace three edits with Heretics,omit_family:ministral3-14b,-0.05555555555555558
+Replace three edits with Heretics,omit_family:phi4,-0.11111111111111113
+Replace three edits with Heretics,omit_family:qwen3-14b,-0.1851851851851852
+Replace three edits with Heretics,omit_family:qwen3-8b,-0.1481481481481482
+Replace three edits with Heretics,omit_family:qwen3.8-27b,-0.2592592592592593
+Replace three edits with Heretics,omit_opponent:bot-bowl-scripted-bot,0.025
+Replace three edits with Heretics,omit_opponent:random-baseline,-0.2
+Replace three edits with Heretics,omit_opponent:scripted-baseline,-0.125

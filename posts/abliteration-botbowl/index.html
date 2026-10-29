@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Andreas Varotsis">
+<meta name="dcterms.date" content="2026-10-29">
+<meta name="description" content="A draft paired-model study: little evidence of an average score effect, substantial artifact-specific reliability failures, and why alternative edits matter.">
+
+<title>Does abliteration change how language models play Blood Bowl? – Andreas Varotsis</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b626d73c4c936ccc3cb08be7d45d1df6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-fa7406bda98beb34aa6dac81f8a199e5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=GG-378MDZNVX4"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'GG-378MDZNVX4', { 'anonymize_ip': true});
+</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<meta name="quarto:status" content="draft">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Does abliteration change how language models play Blood Bowl? – Andreas Varotsis">
+<meta property="og:description" content="A draft paired-model study: little evidence of an average score effect, substantial artifact-specific reliability failures, and why alternative edits matter.">
+<meta property="og:image" content="https://andreasthinks.me/posts/abliteration-botbowl/figures/family-differences.png">
+<meta property="og:site_name" content="Andreas Varotsis">
+<meta property="og:image:height" content="831">
+<meta property="og:image:width" content="1509">
+<meta name="twitter:title" content="Does abliteration change how language models play Blood Bowl? – Andreas Varotsis">
+<meta name="twitter:description" content="A draft paired-model study: little evidence of an average score effect, substantial artifact-specific reliability failures, and why alternative edits matter.">
+<meta name="twitter:image" content="https://andreasthinks.me/posts/abliteration-botbowl/figures/family-differences.png">
+<meta name="twitter:image-height" content="831">
+<meta name="twitter:image-width" content="1509">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner"><div id="quarto-draft-alert" class="alert alert-warning"><i class="bi bi-pencil-square"></i>Draft</div>
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Andreas Varotsis</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">about</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../recent_work.html"> 
+<span class="menu-text">talks &amp; publications</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../slides/index.html"> 
+<span class="menu-text">teaching</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://fosstodon.org/@AndreasThinks" rel="me"> 
+<span class="menu-text"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://bsky.app/profile/andreasthinks.me"> 
+<span class="menu-text"><i class="fa-brands fa-bluesky" aria-label="bluesky"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://twitter.com/AndreasThinks"> 
+<span class="menu-text"><i class="fa-brands fa-twitter" aria-label="twitter"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/AndreasThinks"> 
+<span class="menu-text"><i class="fa-brands fa-github" aria-label="github"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://www.linkedin.com/in/avarotsis/"> 
+<span class="menu-text"><i class="fa-brands fa-linkedin" aria-label="linkedin"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="mailto:andreas.varotsis@gmail.com"> 
+<span class="menu-text"><i class="fa-solid fa-envelope" aria-label="envelope"></i></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.xml"> 
+<span class="menu-text"><i class="fa-solid fa-rss" aria-label="rss"></i></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Does abliteration change how language models play Blood Bowl?</h1>
+                  <div>
+        <div class="description">
+          A draft paired-model study: little evidence of an average score effect, substantial artifact-specific reliability failures, and why alternative edits matter.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">AI</div>
+                <div class="quarto-category">research</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Andreas Varotsis </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">October 29, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-question" id="toc-the-question" class="nav-link active" data-scroll-target="#the-question">The question</a></li>
+  <li><a href="#related-work" id="toc-related-work" class="nav-link" data-scroll-target="#related-work">Related work</a></li>
+  <li><a href="#what-we-ran" id="toc-what-we-ran" class="nav-link" data-scroll-target="#what-we-ran">What we ran</a>
+  <ul class="collapse">
+  <li><a href="#comparison-and-provenance-audit" id="toc-comparison-and-provenance-audit" class="nav-link" data-scroll-target="#comparison-and-provenance-audit">Comparison and provenance audit</a></li>
+  </ul></li>
+  <li><a href="#estimating-the-within-family-difference" id="toc-estimating-the-within-family-difference" class="nav-link" data-scroll-target="#estimating-the-within-family-difference">Estimating the within-family difference</a></li>
+  <li><a href="#main-result-no-clear-average-score-effect" id="toc-main-result-no-clear-average-score-effect" class="nav-link" data-scroll-target="#main-result-no-clear-average-score-effect">Main result: no clear average score effect</a></li>
+  <li><a href="#does-excluding-the-unreliable-edits-change-the-result" id="toc-does-excluding-the-unreliable-edits-change-the-result" class="nav-link" data-scroll-target="#does-excluding-the-unreliable-edits-change-the-result">Does excluding the unreliable edits change the result?</a></li>
+  <li><a href="#reliability-is-a-different-stronger-descriptive-story" id="toc-reliability-is-a-different-stronger-descriptive-story" class="nav-link" data-scroll-target="#reliability-is-a-different-stronger-descriptive-story">Reliability is a different, stronger descriptive story</a>
+  <ul class="collapse">
+  <li><a href="#regression-summary" id="toc-regression-summary" class="nav-link" data-scroll-target="#regression-summary">Regression summary</a></li>
+  </ul></li>
+  <li><a href="#what-changes-in-play" id="toc-what-changes-in-play" class="nav-link" data-scroll-target="#what-changes-in-play">What changes in play?</a></li>
+  <li><a href="#opponents-and-sensitivity" id="toc-opponents-and-sensitivity" class="nav-link" data-scroll-target="#opponents-and-sensitivity">Opponents and sensitivity</a></li>
+  <li><a href="#limitations-and-the-next-experiment" id="toc-limitations-and-the-next-experiment" class="nav-link" data-scroll-target="#limitations-and-the-next-experiment">Limitations and the next experiment</a></li>
+  <li><a href="#bottom-line" id="toc-bottom-line" class="nav-link" data-scroll-target="#bottom-line">Bottom line</a></li>
+  <li><a href="#tables-and-reproducibility" id="toc-tables-and-reproducibility" class="nav-link" data-scroll-target="#tables-and-reproducibility">Tables and reproducibility</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Working draft, not a causal verdict
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is an exploratory skeleton based on a completed local tournament. Analyses were specified after interim results had been inspected. The estimates compare particular released artifacts, not a randomly assigned intervention. Tables and figures are computed from the completed data; the interpretation remains provisional.</p>
+</div>
+</div>
+<section id="the-question" class="level2">
+<h2 class="anchored" data-anchor-id="the-question">The question</h2>
+<p>Removing refusal-related directions from a language model’s weights is often discussed as if it changes one behaviour and leaves everything else intact. Here the question is narrower and measurable: <strong>does an edited version play differently from its original in a tactical game?</strong> And if it struggles, is that weak tactical play or an inability to execute decisions?</p>
+<p>The setting is Bot Bowl, a stochastic fantasy-football simulator. This experiment uses the existing BotBowl Bench harness, not a new game implementation. A model chooses actions against fixed control policies. Success requires moving the ball, managing risk and completing actions, rather than merely producing plausible commentary. Fouling is an in-game tactical action, not a measure of real-world harmfulness.</p>
+</section>
+<section id="related-work" class="level2">
+<h2 class="anchored" data-anchor-id="related-work">Related work</h2>
+<p><a href="https://arxiv.org/html/2603.06874v1">LieCraft</a> studies deception, defection and accusation in a multiplayer hidden-role game, including edited-model comparisons. This is not the first game-based investigation of abliteration. <a href="https://arxiv.org/html/2607.17427v1">Abliteration Is Not a Scalpel</a>, a preprint by Aleksander Fafuła, examines financial decision disposition and reports quantizer/template contamination in preliminary comparisons. Its warning about artifact provenance is directly relevant here; its task and experimental controls differ from ours.</p>
+<p>Our contribution is a narrower tactical-competition audit: whether particular released edits alter scores or execution reliability under a common assisted interface. The current data cannot identify opportunity-conditioned aggression convincingly.</p>
+</section>
+<section id="what-we-ran" class="level2">
+<h2 class="anchored" data-anchor-id="what-we-ran">What we ran</h2>
+<p>The final dataset contains <strong>144 completed games</strong>: 138 local-model games and six control-control games. There are <strong>23 local artifacts</strong>: ten original/primary-edit pairs, plus independent Heretic alternatives for Gemma3, GPT-OSS and Llama. Each artifact played the same three distinct controls, once home and once away. The controls are Scripted baseline, Random baseline and the official Bot Bowl scripted bot.</p>
+<p>All final-run local contestants used constrained JSON and the same phase-aware action-assistance interface. Assistance constrains available actions; it does not supply strategy or prevent legal but unproductive repetition. Granite was excluded as an entire pair following compatibility failures. Earlier native/mixed-interface experiments and superseded GPT reasoning conditions are not pooled here.</p>
+<p><strong>All 144 games have different seeds.</strong> Pairing means the same family, opponent and side, not a replay of identical dice. Each artifact has only six games. These are within-family fixture comparisons, not common-random-number trials.</p>
+<section id="comparison-and-provenance-audit" class="level3">
+<h3 class="anchored" data-anchor-id="comparison-and-provenance-audit">Comparison and provenance audit</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Family</th>
+<th>Primary edit lineage</th>
+<th>Additional comparator / material caveat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Qwen3-8B</td>
+<td>Mlabonne</td>
+<td>Q4_K_M label does not guarantee identical conversion</td>
+</tr>
+<tr class="even">
+<td>Llama3.1-8B</td>
+<td>Mlabonne</td>
+<td>p-e-w Heretic added independently</td>
+</tr>
+<tr class="odd">
+<td>Ministral3-14B</td>
+<td>jenerallee78</td>
+<td>Documented norm-preserving biprojected edit</td>
+</tr>
+<tr class="even">
+<td>Gemma3-12B</td>
+<td>Mlabonne v2</td>
+<td>DreamFast Heretic v2; embedded top_k 64 versus 40</td>
+</tr>
+<tr class="odd">
+<td>Phi-4</td>
+<td>Orion-zhen</td>
+<td>Community artifact comparison</td>
+</tr>
+<tr class="even">
+<td>Qwen3-14B</td>
+<td>Mlabonne</td>
+<td>Community artifact comparison</td>
+</tr>
+<tr class="odd">
+<td>GPT-OSS20B</td>
+<td>Huihui BF16-derived edit</td>
+<td>p-e-w Heretic; reconstruction/quant lineage confound; explicit low reasoning</td>
+</tr>
+<tr class="even">
+<td>Gemma4-E4B</td>
+<td>Madras1</td>
+<td>Architecture-specific conversion caveats</td>
+</tr>
+<tr class="odd">
+<td>Gemma4-26B-A4B</td>
+<td>WWTCyberLab</td>
+<td>Intervention includes embedding suppression</td>
+</tr>
+<tr class="even">
+<td>Qwen3.8-27B</td>
+<td>JonathanColetti</td>
+<td>Materially different GGUF layout/size despite quant label</td>
+</tr>
+</tbody>
+</table>
+<p>The alternatives were selected to test whether severe failures were peculiar to an edit, not to replace losses retrospectively. Exact revisions and hashes are retained in the private research manifest. No raw private transcripts are published here.</p>
+</section>
+</section>
+<section id="estimating-the-within-family-difference" class="level2">
+<h2 class="anchored" data-anchor-id="estimating-the-within-family-difference">Estimating the within-family difference</h2>
+<p>The primary regression is:</p>
+<p><span class="math display">\[Y_{f,o,s,e} = \alpha_{f,o,s} + \beta\,\mathrm{Edited}_e + \varepsilon_{f,o,s,e}.\]</span></p>
+<p>The fixed effects identify family-by-opponent-by-side fixture strata. The primary outcome is touchdown differential per game; secondary outcomes cover scoring, winning, execution reliability and observable actions. The original primary edits are the primary analysis. Alternative edits are separate sensitivity analyses.</p>
+<p>In this balanced design, the coefficient equals the mean of the ten family-level differences. Family-level Student-t intervals use nine degrees of freedom. These independently reproduce the prior implementation’s CR2/Bell-McCaffrey intervals for the overlapping score outcomes. The primary restricted wild-cluster Rademacher bootstrap also fails to reject zero (p=0.906). This is model-based inference under strong small-sample assumptions, not randomization inference. The families are a convenience sample, and related architectures can weaken independence further.</p>
+<p>The simpler additive family/opponent/side model gives the same primary point estimate. Tool calls and turns are not treated as independent experimental replicates. We do not control for forced actions in the score regression: execution failure may be part of the pathway from an artifact to performance, so adjusting it away would change the question.</p>
+</section>
+<section id="main-result-no-clear-average-score-effect" class="level2">
+<h2 class="anchored" data-anchor-id="main-result-no-clear-average-score-effect">Main result: no clear average score effect</h2>
+<p>The primary estimate is <strong>−0.05 touchdowns of differential per game</strong>, with a <strong>95% interval from −0.69 to +0.59</strong>. This is inconclusive, not evidence of equivalence. The data remain compatible with differences that would matter in a low-scoring game.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/family-differences.png" class="img-fluid figure-img"></p>
+<figcaption>Primary edited-minus-original differences by family. Positive values favour the edit; each family has six fixture contrasts.</figcaption>
+</figure>
+</div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">family</th>
+<th style="text-align: right;">estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">gemma3-12b</td>
+<td style="text-align: right;">-0.167</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gemma4-26b-a4b</td>
+<td style="text-align: right;">1.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">gemma4-e4b</td>
+<td style="text-align: right;">-0.667</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gpt-oss-20b</td>
+<td style="text-align: right;">-1.500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">llama3.1-8b</td>
+<td style="text-align: right;">-1.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ministral3-14b</td>
+<td style="text-align: right;">-0.500</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">phi4</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">qwen3-14b</td>
+<td style="text-align: right;">0.667</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">qwen3-8b</td>
+<td style="text-align: right;">0.333</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">qwen3.8-27b</td>
+<td style="text-align: right;">1.333</td>
+</tr>
+</tbody>
+</table>
+<p>Qwen3.8-27B and Gemma4-26B-A4B improved in this sample; GPT-OSS and Llama deteriorated. Averaging hides that heterogeneity. Neither the positive nor negative family result alone establishes a general editing-method effect.</p>
+</section>
+<section id="does-excluding-the-unreliable-edits-change-the-result" class="level2">
+<h2 class="anchored" data-anchor-id="does-excluding-the-unreliable-edits-change-the-result">Does excluding the unreliable edits change the result?</h2>
+<p>The three flagged primary edits were Gemma3, GPT-OSS and Llama. We report the requested exclusion <strong>symmetrically</strong>, dropping both members of each affected pair. A second sensitivity keeps all ten families but substitutes all three independent Heretics together. We do not choose each family’s highest-scoring edit.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 32%">
+<col style="width: 11%">
+<col style="width: 19%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Specification</th>
+<th style="text-align: right;">Families</th>
+<th style="text-align: right;">Fixture contrasts</th>
+<th style="text-align: right;">Difference</th>
+<th style="text-align: right;">95% lower</th>
+<th style="text-align: right;">95% upper</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Primary edits</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">-0.050</td>
+<td style="text-align: right;">-0.693</td>
+<td style="text-align: right;">0.593</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Exclude unreliable primary pairs</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">0.310</td>
+<td style="text-align: right;">-0.382</td>
+<td style="text-align: right;">1.001</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Replace three edits with Heretics</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">-0.100</td>
+<td style="text-align: right;">-0.749</td>
+<td style="text-align: right;">0.549</td>
+</tr>
+</tbody>
+</table>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/sensitivity.png" class="img-fluid figure-img"></p>
+<figcaption>All-pair, whole-pair-exclusion and alternative-edit estimates.</figcaption>
+</figure>
+</div>
+<p>Removing the three affected pairs changes the estimate from slightly negative to <strong>+0.31</strong>, but the interval still spans zero. Replacing their edits with Heretics gives <strong>−0.10</strong>, also inconclusive. <strong>The tactical conclusion is not rescued by cleaning up the execution failures.</strong> The exclusions are outcome-informed exploratory checks, not a pre-registered clean sample.</p>
+<p>The three Heretics alone average −1.06 relative to their originals. Their corresponding primary edits already average −0.89 on these same families. That is not a fair basis for claiming Heretic is generally worse: these were specifically the problematic families, only three were studied, and the matches use different seeds. We do not promote the small-three-family parametric p-value to a general method claim.</p>
+</section>
+<section id="reliability-is-a-different-stronger-descriptive-story" class="level2">
+<h2 class="anchored" data-anchor-id="reliability-is-a-different-stronger-descriptive-story">Reliability is a different, stronger descriptive story</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 12%">
+<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">artifact</th>
+<th style="text-align: right;">wins</th>
+<th style="text-align: right;">draws</th>
+<th style="text-align: right;">losses</th>
+<th style="text-align: right;">td_for</th>
+<th style="text-align: right;">td_against</th>
+<th style="text-align: right;">forced</th>
+<th style="text-align: right;">invalid</th>
+<th style="text-align: right;">deadlines</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">gemma3-12b-abliterated</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gemma3-12b-heretic-v2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">gemma3-12b-original</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gpt-oss-20b-abliterated</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">75</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">gpt-oss-20b-heretic</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">gpt-oss-20b-original</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">llama3.1-8b-abliterated</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">106</td>
+<td style="text-align: right;">314</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">llama3.1-8b-heretic</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">llama3.1-8b-original</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/reliability.png" class="img-fluid figure-img"></p>
+<figcaption>Forced actions across all six games for each artifact in the three problem families.</figcaption>
+</figure>
+</div>
+<p>The primary edits produced large, concentrated execution failures. Alternative Llama ran without invalid calls or forced actions. GPT Heretic needed two forced actions versus Huihui’s 82. Gemma Heretic needed one versus Mlabonne’s 50. These alternatives did <strong>not</strong> uniformly improve scores.</p>
+<p>Across all ten pairs, the primary edits average +3.92 forced actions per game. With the three alternatives substituted, the mean difference is zero in this sample. That does not imply every artifact has identical reliability: GPT Heretic has one fewer forced action than its original across six games, while Gemma Heretic has one more. Reliability improved sharply for these specific alternative artifacts; method-wide causality remains unidentified.</p>
+<section id="regression-summary" class="level3">
+<h3 class="anchored" data-anchor-id="regression-summary">Regression summary</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 18%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 9%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Outcome</th>
+<th style="text-align: right;">Difference</th>
+<th style="text-align: right;">95% lower</th>
+<th style="text-align: right;">95% upper</th>
+<th style="text-align: right;">p</th>
+<th style="text-align: right;">BH q</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">td_diff</td>
+<td style="text-align: right;">-0.050</td>
+<td style="text-align: right;">-0.693</td>
+<td style="text-align: right;">0.593</td>
+<td style="text-align: right;">0.864</td>
+<td style="text-align: right;">nan</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">td_for</td>
+<td style="text-align: right;">0.033</td>
+<td style="text-align: right;">-0.351</td>
+<td style="text-align: right;">0.418</td>
+<td style="text-align: right;">0.849</td>
+<td style="text-align: right;">0.894</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">td_against</td>
+<td style="text-align: right;">0.083</td>
+<td style="text-align: right;">-0.414</td>
+<td style="text-align: right;">0.581</td>
+<td style="text-align: right;">0.713</td>
+<td style="text-align: right;">0.865</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">win</td>
+<td style="text-align: right;">-0.017</td>
+<td style="text-align: right;">-0.148</td>
+<td style="text-align: right;">0.115</td>
+<td style="text-align: right;">0.780</td>
+<td style="text-align: right;">0.867</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">forced_actions</td>
+<td style="text-align: right;">3.917</td>
+<td style="text-align: right;">-0.861</td>
+<td style="text-align: right;">8.695</td>
+<td style="text-align: right;">0.097</td>
+<td style="text-align: right;">0.434</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">invalid_tool_calls</td>
+<td style="text-align: right;">5.283</td>
+<td style="text-align: right;">-6.543</td>
+<td style="text-align: right;">17.110</td>
+<td style="text-align: right;">0.339</td>
+<td style="text-align: right;">0.538</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">deadline_cutoffs</td>
+<td style="text-align: right;">1.200</td>
+<td style="text-align: right;">-1.515</td>
+<td style="text-align: right;">3.915</td>
+<td style="text-align: right;">0.343</td>
+<td style="text-align: right;">0.538</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">logged_block</td>
+<td style="text-align: right;">-2.167</td>
+<td style="text-align: right;">-4.086</td>
+<td style="text-align: right;">-0.247</td>
+<td style="text-align: right;">0.031</td>
+<td style="text-align: right;">0.418</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">logged_foul</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">-0.056</td>
+<td style="text-align: right;">0.056</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">logged_start_blitz</td>
+<td style="text-align: right;">-1.200</td>
+<td style="text-align: right;">-2.345</td>
+<td style="text-align: right;">-0.055</td>
+<td style="text-align: right;">0.042</td>
+<td style="text-align: right;">0.418</td>
+</tr>
+</tbody>
+</table>
+<p>Counts are per game; <code>win</code> is a probability difference. <code>logged_*</code> denotes tool-layer primitive/activation records, not successful outcomes. The BH adjustment covers the complete primary secondary-outcome set in the downloadable table, including the exploratory behavioural checks. The primary score outcome is not included in that adjustment. Intervals for sparse/skewed counts are descriptive approximations; ordinary linear intervals can cross zero for nonnegative outcomes because they describe a difference.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/coefficients.png" class="img-fluid figure-img"></p>
+<figcaption>Selected primary coefficient estimates. Different rows use different natural units; bar lengths are not standardized effect sizes.</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="what-changes-in-play" class="level2">
+<h2 class="anchored" data-anchor-id="what-changes-in-play">What changes in play?</h2>
+<p>There is an unadjusted decrease in logged BLOCK primitives (−2.17 per game, p=0.031) and START_BLITZ activations (−1.20, p=0.042). Neither survives the secondary-outcome multiple-testing adjustment. With unreliable pairs excluded or Heretics substituted, the BLOCK difference’s interval also spans zero. It would be premature to call this reduced aggression.</p>
+<p><strong>An important measurement trap:</strong> the harness’s <code>blocks</code>, <code>passes</code>, <code>handoffs</code> and <code>fouls</code> summary counters count action <em>starts</em>. They do not count completed attacks, successful passes or actual foul primitives. Across the local games, the transcript contains 2 FOUL primitive records, while the summary reports 15 foul activations. Those quantities answer different questions. Similarly, a blitz can contain a BLOCK primitive without being a BLOCK_ACTION_STARTED event.</p>
+<p>We therefore analyse tool-layer action records separately from engine activation counters. A recorded primitive means it reached the action-submission path, not that a roll succeeded. Exact attribution of forced actions is unavailable. Missing primitive observations or zero event totals must not be read as a precise estimate of unwillingness.</p>
+<p>Foul opportunities were not logged as a complete, unique state-level exposure. The interface’s offered-tool lists can identify some opportunities, but repeated replies and legal alternatives make them an unsuitable denominator for a clean foul-choice rate. <strong>We cannot estimate willingness to foul convincingly from this run.</strong> It needs state-level opportunity instrumentation or matched-state probes.</p>
+<p>The supplemental extraction also measures consecutive identical tool calls and notebook-update calls. Repetition is observable but is not automatically a legal no-op: game state can change between apparently identical actions. These exploratory differences are imprecise and do not survive multiplicity adjustment. The data do not justify claims about personality or real-world dangerousness.</p>
+</section>
+<section id="opponents-and-sensitivity" class="level2">
+<h2 class="anchored" data-anchor-id="opponents-and-sensitivity">Opponents and sensitivity</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/opponents.png" class="img-fluid figure-img"></p>
+<figcaption>Edited-minus-original touchdown differential by control opponent, averaged over home and away.</figcaption>
+</figure>
+</div>
+<p>Leaving one family out moves the primary estimate between <strong>-0.20 and +0.11</strong>. Removing one opponent moves it between −0.10 and +0.03. There is no stable directional average effect in these checks. The full robustness table also includes the whole-pair exclusions and Heretic-replacement specifications.</p>
+<p>A clean-execution subset is supplied only as a diagnostic in the research analysis: selecting on successful execution is selecting on something the edit itself may affect. It cannot identify an unaffected tactical effect. Equally, rate denominators such as turns or actions can change because of the edit; rate estimates describe conditional behaviour, not total effects.</p>
+</section>
+<section id="limitations-and-the-next-experiment" class="level2">
+<h2 class="anchored" data-anchor-id="limitations-and-the-next-experiment">Limitations and the next experiment</h2>
+<ul>
+<li>Only six games per artifact, different seeds and a selected set of families. Narrow-looking intervals from three alternatives are particularly fragile.</li>
+<li>These are released-artifact contrasts. Family fixed effects cannot remove within-family quantization, conversion, sampling, calibration or editing-method differences.</li>
+<li>Constrained JSON plus phase-aware assistance defines the tested system. Native tool failures from earlier runs are a separate condition.</li>
+<li>The logged Git commit does not fully identify the executed harness: action-assist changes were uncommitted and were not fingerprinted. The exact historical code cannot now be certified.</li>
+<li>Seven tool-call count discrepancies appear across four resumed games (three local seats and four control seats). Current code provides a restart-accounting explanation, but it has not been verified by replay. We retain source-specific counts and do not use these disputed tool-call denominators to estimate causal behaviour rates.</li>
+<li>All transcript files were present; integrity checks and analysis tests passed. Integrity is not a guarantee that every construct is measured correctly.</li>
+<li>Analysis choices followed interim inspection. Secondary analyses and exclusions are exploratory, with null results retained.</li>
+</ul>
+<p>The follow-up should use multiple independent edits per family, matched conversion and explicit sampling defaults, common seed schedules with repeated games, and saved-state decision probes. Fouling should be measured as a choice conditional on a genuine legal opportunity. Refusal removal itself should also be measured if the aim is to relate intervention strength to gameplay: the label ‘abliterated’ is not an intervention-dose measurement.</p>
+</section>
+<section id="bottom-line" class="level2">
+<h2 class="anchored" data-anchor-id="bottom-line">Bottom line</h2>
+<p><strong>No clearly measurable average score effect emerges from this small tournament.</strong> Excluding unreliable pairs changes the point estimate, but not that conclusion. Independent alternatives show that the spectacular execution failures are not inevitable properties of all edited versions of these families. Clean execution, however, is not the same as competent football.</p>
+</section>
+<section id="tables-and-reproducibility" class="level2">
+<h2 class="anchored" data-anchor-id="tables-and-reproducibility">Tables and reproducibility</h2>
+<ul>
+<li><a href="paired_metric_regressions.csv">All regression and sensitivity outcomes</a></li>
+<li><a href="family_metric_differences.csv">Family-level differences</a></li>
+<li><a href="artifact_summary.csv">All artifact results</a></li>
+<li><a href="robustness.csv">Leave-one-family and opponent checks</a></li>
+</ul>
+<p>Analysis uses a frozen SQLite snapshot, with SHA-256 <code>65057c8ca0176f20cb9e211d95a2debcd9eff7dcc9245a685237a5d2626298c0</code>. The extraction and regression tests passed locally; an independent recomputation verified the balanced fixed-effect estimates and score intervals. Bulk data, exact artifact manifests and raw transcripts remain in the private research workspace. This draft does not claim to be the first study of edited models in games.</p>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script>
+  const themeStorageKey = "theme-preference";
+  const themeButtonClass = "theme-toggle-button";
+
+  const root = document.documentElement;
+
+  const getStoredTheme = () => {
+    const stored = localStorage.getItem(themeStorageKey);
+    return stored === "light" || stored === "dark" ? stored : null;
+  };
+
+  const getSystemTheme = () =>
+    window.matchMedia("(prefers-color-scheme: light)").matches
+      ? "light"
+      : "dark";
+
+  const setBootstrapTheme = (theme) => {
+    document.querySelectorAll("[data-bs-theme]").forEach((element) => {
+      element.setAttribute("data-bs-theme", theme);
+    });
+  };
+
+  const updateButtonLabel = (theme) => {
+    const button = document.querySelector(`.${themeButtonClass}`);
+    if (!button) {
+      return;
+    }
+    const nextThemeLabel =
+      theme === "light" ? "Switch to dark mode" : "Switch to light mode";
+    button.setAttribute("aria-label", nextThemeLabel);
+    button.setAttribute("title", nextThemeLabel);
+    button.setAttribute("aria-pressed", theme === "light");
+    button.dataset.theme = theme;
+  };
+
+  const applyTheme = (theme, source) => {
+    root.setAttribute("data-theme", theme);
+    root.setAttribute("data-theme-source", source);
+    setBootstrapTheme(theme);
+    updateButtonLabel(theme);
+  };
+
+  const toggleTheme = () => {
+    const currentTheme = root.getAttribute("data-theme") || getSystemTheme();
+    const nextTheme = currentTheme === "light" ? "dark" : "light";
+    localStorage.setItem(themeStorageKey, nextTheme);
+    applyTheme(nextTheme, "user");
+  };
+
+  const createToggleButton = () => {
+    if (document.querySelector(`.${themeButtonClass}`)) {
+      return;
+    }
+    const container =
+      document.querySelector(".quarto-navbar-tools") ||
+      document.querySelector(".navbar .navbar-nav.ms-auto");
+    if (!container) {
+      return;
+    }
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = themeButtonClass;
+    button.innerHTML = '<span aria-hidden="true">◐</span>';
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      toggleTheme();
+    });
+
+    container.appendChild(button);
+  };
+
+  const initTheme = () => {
+    const storedTheme = getStoredTheme();
+    if (storedTheme) {
+      applyTheme(storedTheme, "user");
+      return;
+    }
+    applyTheme(getSystemTheme(), "system");
+  };
+
+  const onReady = () => {
+    createToggleButton();
+    initTheme();
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", onReady);
+  } else {
+    onReady();
+  }
+
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: light)");
+  mediaQuery.addEventListener("change", (event) => {
+    if (getStoredTheme()) {
+      return;
+    }
+    applyTheme(event.matches ? "light" : "dark", "system");
+  });
+</script>
+<script>
+  // Reading progress bar: only on pages with a title block (posts, papers,
+  // slides summaries) that are long enough to be worth tracking.
+  (() => {
+    const init = () => {
+      if (!document.getElementById("title-block-header")) {
+        return;
+      }
+      const doc = document.documentElement;
+      if (doc.scrollHeight < doc.clientHeight * 1.5) {
+        return;
+      }
+      const bar = document.createElement("div");
+      bar.className = "reading-progress";
+      bar.setAttribute("aria-hidden", "true");
+      document.body.appendChild(bar);
+      const update = () => {
+        const max = doc.scrollHeight - doc.clientHeight;
+        const progress = max > 0 ? Math.min(doc.scrollTop / max, 1) : 0;
+        bar.style.transform = `scaleX(${progress})`;
+      };
+      document.addEventListener("scroll", update, { passive: true });
+      window.addEventListener("resize", update);
+      update();
+    };
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+  })();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/andreasthinks\.me");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 Andreas Varotsis</p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://quarto.org">
+<p>made with quarto</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@AndreasThinks">
+      <i class="bi bi-mastodon" role="img" aria-label="Mastodon">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/AndreasThinks">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/avarotsis/">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="mailto:andreas.varotsis@gmail.com">
+      <i class="bi bi-envelope" role="img" aria-label="Email">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml">
+      <i class="bi bi-rss" role="img" aria-label="RSS feed">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
