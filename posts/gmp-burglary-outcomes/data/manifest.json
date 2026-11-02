@@ -1,0 +1,441 @@
+[
+  {
+    "file": "prc-outcomes-open-data-jun2026-tables-221026.xlsx",
+    "sha256": "4e79a0ebe4f12011d320d1390529df9541f8860464a483f7f9f643df3ffcc8ab",
+    "bytes": 10974335,
+    "years": [
+      "2026/27"
+    ],
+    "quarters": [
+      "1"
+    ],
+    "burglary_rows": 28512,
+    "headers": [
+      "Financial Year",
+      "Financial Quarter",
+      "Force Name",
+      "Offence Description",
+      "Offence Group",
+      "Offence Subgroup",
+      "Offence Code",
+      "Offence code expired",
+      "Outcome Description",
+      "Outcome Group",
+      "Outcome Type",
+      "Outcomes for offences that were recorded in the quarter",
+      "Outcomes for investigations closed in the quarter"
+    ],
+    "notes_update": "Updated: 22 October 2026",
+    "source_page": "https://www.gov.uk/government/statistical-data-sets/police-recorded-crime-and-outcomes-open-data-tables",
+    "download_date": "2026-11-02",
+    "attachment_url": "https://assets.publishing.service.gov.uk/media/6ad2342649ba86d6c953cb0b/prc-outcomes-open-data-jun2026-tables-221026.xlsx"
+  },
+  {
+    "file": "prc-outcomes-open-data-mar2015-tables-241024.xlsx",
+    "sha256": "cf651dd5aa388e8e11ee3ffe9af76828dea270c795ec0d447ed73b6140079c12",
+    "bytes": 26516184,
+    "years": [
+      "2014/15"
+    ],
+    "quarters": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "burglary_rows": 30096,
+    "headers": [
+      "Financial Year",
+      "Financial Quarter",
+      "Force Name",
+      "Offence Description",
+      "Offence Group",
+      "Offence Subgroup",
+      "Offence Code",
+      "Offence code expired",
+      "Outcome Description",
+      "Outcome Group",
+      "Outcome Type",
+      "Outcomes for offences that were recorded in the quarter",
+      "Outcomes for investigations closed in the quarter"
+    ],
+    "notes_update": "Updated: 24 January 2019",
+    "source_page": "https://www.gov.uk/government/statistical-data-sets/police-recorded-crime-and-outcomes-open-data-tables",
+    "download_date": "2026-11-02",
+    "attachment_url": "https://assets.publishing.service.gov.uk/media/6807a0704dd7e0f8897a6195/prc-outcomes-open-data-mar2015-tables-241024.xlsx"
+  },
+  {
+    "file": "prc-outcomes-open-data-mar2016-tables-240724.xlsx",
+    "sha256": "2ce603e1c17f902d6e58447fbedbe61d7b8c02aec4d11772b4ec522693e5f481",
+    "bytes": 31152280,
+    "years": [
+      "2015/16"
+    ],
+    "quarters": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "burglary_rows": 34848,
+    "headers": [
+      "Financial Year",
+      "Financial Quarter",
+      "Force Name",
+      "Offence Description",
+      "Offence Group",
+      "Offence Subgroup",
+      "Offence Code",
+      "Offence code expired",
+      "Outcome Description",
+      "Outcome Group",
+      "Outcome Type",
+      "Outcomes for offences that were recorded in the quarter",
+      "Outcomes for investigations closed in the quarter"
+    ],
+    "notes_update": "Updated: 27 April 2023",
+    "source_page": "https://www.gov.uk/government/statistical-data-sets/police-recorded-crime-and-outcomes-open-data-tables",
+    "download_date": "2026-11-02",
+    "attachment_url": "https://assets.publishing.service.gov.uk/media/6807a0c13bdfd1243078e6d8/prc-outcomes-open-data-mar2016-tables-240724.xlsx"
+  },
+  {
+    "file": "prc-outcomes-open-data-mar2017-tables-240724.xlsx",
+    "sha256": "b8971b23222e1aa3245229f568bd5864e4903a8a5c76cdd5744a7fe22243edca",
+    "bytes": 33742929,
+    "years": [
+      "2016/17"
+    ],
+    "quarters": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "burglary_rows": 65120,
+    "headers": [
+      "Financial Year",
+      "Financial Quarter",
+      "Force Name",
+      "Offence Description",
+      "Offence Group",
+      "Offence Subgroup",
+      "Offence Code",
+      "Offence code expired",
+      "Outcome Description",
+      "Outcome Group",
+      "Outcome Type",
+      "Outcomes for offences that were recorded in the quarter",
+      "Outcomes for investigations closed in the quarter"
+    ],
+    "notes_update": "Updated 19th October 2023",
+    "source_page": "https://www.gov.uk/government/statistical-data-sets/police-recorded-crime-and-outcomes-open-data-tables",
+    "download_date": "2026-11-02",
+    "attachment_url": "https://assets.publishing.service.gov.uk/media/6807a0f90324470d6a394e70/prc-outcomes-open-data-mar2017-tables-240724.xlsx"
+  },
+  {
+    "file": "prc-outcomes-open-data-mar2018-tables-240724.xlsx",
+    "sha256": "4b04cb277bac29ae7d9e0d178da1433d50a4d8ab6ef902a5189dff8f7833b513",
+    "bytes": 32700741,
+    "years": [
+      "2017/18"
+    ],
+    "quarters": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "burglary_rows": 65824,
+    "headers": [
+      "Financial Year",
+      "Financial Quarter",
+      "Force Name",
+      "Offence Description",
+      "Offence Group",
+      "Offence Subgroup",
+      "Offence Code",
+      "Offence code expired",
+      "Outcome Description",
+      "Outcome Group",
+      "Outcome Type",
+      "Outcomes for offences that were recorded in the quarter",
+      "Outcomes for investigations closed in the quarter"
+    ],
+    "notes_update": "Updated:  19th October 2023",
+    "source_page": "https://www.gov.uk/government/statistical-data-sets/police-recorded-crime-and-outcomes-open-data-tables",
+    "download_date": "2026-11-02",
+    "attachment_url": "https://assets.publishing.service.gov.uk/media/6807a12b4dd7e0f8897a6196/prc-outcomes-open-data-mar2018-tables-240724.xlsx"
+  },
+  {
+    "file": "prc-outcomes-open-data-mar2019-tables-240724.xlsx",
+    "sha256": "4938d7e5bd8955cae81e65f640a42b89fda180d7e72dc2455ab5a1118ceb6b0d",
+    "bytes": 40701172,
+    "years": [
+      "2018/19"
+    ],
+    "quarters": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "burglary_rows": 65824,
+    "headers": [
+      "Financial Year",
+      "Financial Quarter",
+      "Force Name",
+      "Offence Description",
+      "Offence Group",
+      "Offence Subgroup",
+      "Offence Code",
+      "Offence code expired",
+      "Outcome Description",
+      "Outcome Group",
+      "Outcome Type",
+      "Outcomes for offences that were recorded in the quarter",
+      "Outcomes for investigations closed in the quarter"
+    ],
+    "notes_update": "Updated 25th January 2024",
+    "source_page": "https://www.gov.uk/government/statistical-data-sets/police-recorded-crime-and-outcomes-open-data-tables",
+    "download_date": "2026-11-02",
+    "attachment_url": "https://assets.publishing.service.gov.uk/media/6807a1618c1316be7978e6d7/prc-outcomes-open-data-mar2019-tables-240724.xlsx"
+  },
+  {
+    "file": "prc-outcomes-open-data-mar2020-tables-240724.xlsx",
+    "sha256": "e02fc76eb0c980ef357d6c5cb8a6cac555c16529360482330cb4314a4dc2e9cf",
+    "bytes": 40798120,
+    "years": [
+      "2019/20"
+    ],
+    "quarters": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "burglary_rows": 65824,
+    "headers": [
+      "Financial Year",
+      "Financial Quarter",
+      "Force Name",
+      "Offence Description",
+      "Offence Group",
+      "Offence Subgroup",
+      "Offence Code",
+      "Offence code expired",
+      "Outcome Description",
+      "Outcome Group",
+      "Outcome Type",
+      "Outcomes for offences that were recorded in the quarter",
+      "Outcomes for investigations closed in the quarter"
+    ],
+    "notes_update": "Updated: 25th January 2024",
+    "source_page": "https://www.gov.uk/government/statistical-data-sets/police-recorded-crime-and-outcomes-open-data-tables",
+    "download_date": "2026-11-02",
+    "attachment_url": "https://assets.publishing.service.gov.uk/media/6807a1914dd7e0f8897a6197/prc-outcomes-open-data-mar2020-tables-240724.xlsx"
+  },
+  {
+    "file": "prc-outcomes-open-data-mar2021-tables-240425.xlsx",
+    "sha256": "c87feca5b7aab1ae1573fd0267e99cfd9b36b93f647cf4ccb5c2c459fa895fdf",
+    "bytes": 40476037,
+    "years": [
+      "2020/21"
+    ],
+    "quarters": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "burglary_rows": 104544,
+    "headers": [
+      "Financial Year",
+      "Financial Quarter",
+      "Force Name",
+      "Offence Description",
+      "Offence Group",
+      "Offence Subgroup",
+      "Offence Code",
+      "Offence code expired",
+      "Outcome Description",
+      "Outcome Group",
+      "Outcome Type",
+      "Outcomes for offences that were recorded in the quarter",
+      "Outcomes for investigations closed in the quarter"
+    ],
+    "notes_update": "Updated: 24 April 2025",
+    "source_page": "https://www.gov.uk/government/statistical-data-sets/police-recorded-crime-and-outcomes-open-data-tables",
+    "download_date": "2026-11-02",
+    "attachment_url": "https://assets.publishing.service.gov.uk/media/6880899d77a3acd9f4d0e26c/prc-outcomes-open-data-mar2021-tables-240425.xlsx"
+  },
+  {
+    "file": "prc-outcomes-open-data-mar2022-tables-240725.xlsx",
+    "sha256": "7536a78f8cb8416e14246cb2811253f0c3844d5d1a3fb511c4b37b4991144dbc",
+    "bytes": 44397030,
+    "years": [
+      "2021/22"
+    ],
+    "quarters": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "burglary_rows": 104544,
+    "headers": [
+      "Financial Year",
+      "Financial Quarter",
+      "Force Name",
+      "Offence Description",
+      "Offence Group",
+      "Offence Subgroup",
+      "Offence Code",
+      "Offence code expired",
+      "Outcome Description",
+      "Outcome Group",
+      "Outcome Type",
+      "Outcomes for offences that were recorded in the quarter",
+      "Outcomes for investigations closed in the quarter"
+    ],
+    "notes_update": "Updated: 4 August 2025",
+    "source_page": "https://www.gov.uk/government/statistical-data-sets/police-recorded-crime-and-outcomes-open-data-tables",
+    "download_date": "2026-11-02",
+    "attachment_url": "https://assets.publishing.service.gov.uk/media/6890c52123e00ee4ad463ebf/prc-outcomes-open-data-mar2022-tables-240725.xlsx"
+  },
+  {
+    "file": "prc-outcomes-open-data-mar2023-tables-230726.xlsx",
+    "sha256": "590d7ecfc1ad98e445494094095f762b2cd4b2a131a0862eac484d592ddf063a",
+    "bytes": 39841877,
+    "years": [
+      "2022/23"
+    ],
+    "quarters": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "burglary_rows": 104544,
+    "headers": [
+      "Financial Year",
+      "Financial Quarter",
+      "Force Name",
+      "Offence Description",
+      "Offence Group",
+      "Offence Subgroup",
+      "Offence Code",
+      "Offence code expired",
+      "Outcome Description",
+      "Outcome Group",
+      "Outcome Type",
+      "Outcomes for offences that were recorded in the quarter",
+      "Outcomes for investigations closed in the quarter"
+    ],
+    "notes_update": "Updated: 23 July 2026",
+    "source_page": "https://www.gov.uk/government/statistical-data-sets/police-recorded-crime-and-outcomes-open-data-tables",
+    "download_date": "2026-11-02",
+    "attachment_url": "https://assets.publishing.service.gov.uk/media/6a5e57d624d44672cf1b4648/prc-outcomes-open-data-mar2023-tables-230726.xlsx"
+  },
+  {
+    "file": "prc-outcomes-open-data-mar2024-tables-221026.xlsx",
+    "sha256": "bb1320e00ea6dd196f23f6373243bbcaa717d1b220e3e40f98760fc24544cc3a",
+    "bytes": 43423406,
+    "years": [
+      "2023/24"
+    ],
+    "quarters": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "burglary_rows": 114048,
+    "headers": [
+      "Financial Year",
+      "Financial Quarter",
+      "Force Name",
+      "Offence Description",
+      "Offence Group",
+      "Offence Subgroup",
+      "Offence Code",
+      "Offence code expired",
+      "Outcome Description",
+      "Outcome Group",
+      "Outcome Type",
+      "Outcomes for offences that were recorded in the quarter",
+      "Outcomes for investigations closed in the quarter"
+    ],
+    "notes_update": "Updated: 22 October 2026",
+    "source_page": "https://www.gov.uk/government/statistical-data-sets/police-recorded-crime-and-outcomes-open-data-tables",
+    "download_date": "2026-11-02",
+    "attachment_url": "https://assets.publishing.service.gov.uk/media/6ad2345c49ba86d6c953cb0c/prc-outcomes-open-data-mar2024-tables-221026.xlsx"
+  },
+  {
+    "file": "prc-outcomes-open-data-mar2025-tables-221026.xlsx",
+    "sha256": "5ea797fcb2acf968190babff6a3f4c6f46974e451d75fbf9f46807bf825f06f5",
+    "bytes": 43483937,
+    "years": [
+      "2024/25"
+    ],
+    "quarters": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "burglary_rows": 114048,
+    "headers": [
+      "Financial Year",
+      "Financial Quarter",
+      "Force Name",
+      "Offence Description",
+      "Offence Group",
+      "Offence Subgroup",
+      "Offence Code",
+      "Offence code expired",
+      "Outcome Description",
+      "Outcome Group",
+      "Outcome Type",
+      "Outcomes for offences that were recorded in the quarter",
+      "Outcomes for investigations closed in the quarter"
+    ],
+    "notes_update": "Updated: 22 October 2026",
+    "source_page": "https://www.gov.uk/government/statistical-data-sets/police-recorded-crime-and-outcomes-open-data-tables",
+    "download_date": "2026-11-02",
+    "attachment_url": "https://assets.publishing.service.gov.uk/media/6ad23484e5db84746b479748/prc-outcomes-open-data-mar2025-tables-221026.xlsx"
+  },
+  {
+    "file": "prc-outcomes-open-data-mar2026-tables-221026.xlsx",
+    "sha256": "cb8f23484f42bc3d6441f0344d9aa0a0c2c05d8e20190ebca3b0bbb13656cbb5",
+    "bytes": 43905392,
+    "years": [
+      "2025/26"
+    ],
+    "quarters": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "burglary_rows": 114048,
+    "headers": [
+      "Financial Year",
+      "Financial Quarter",
+      "Force Name",
+      "Offence Description",
+      "Offence Group",
+      "Offence Subgroup",
+      "Offence Code",
+      "Offence code expired",
+      "Outcome Description",
+      "Outcome Group",
+      "Outcome Type",
+      "Outcomes for offences that were recorded in the quarter",
+      "Outcomes for investigations closed in the quarter"
+    ],
+    "notes_update": "Updated: 22 October 2026",
+    "source_page": "https://www.gov.uk/government/statistical-data-sets/police-recorded-crime-and-outcomes-open-data-tables",
+    "download_date": "2026-11-02",
+    "attachment_url": "https://assets.publishing.service.gov.uk/media/6ad8b6c5b63982f71c3bd411/prc-outcomes-open-data-mar2026-tables-221026.xlsx"
+  }
+]

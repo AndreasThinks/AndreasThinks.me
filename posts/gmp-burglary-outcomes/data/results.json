@@ -1,0 +1,34 @@
+{
+  "primary": {
+    "metric": "rate",
+    "start": "2017Q2",
+    "end": "2021Q1",
+    "n_pre": 12,
+    "n_train": 8,
+    "n_holdout": 4,
+    "donors": 37,
+    "pre_rmse": 0.3217063695682245,
+    "holdout_rmse": 0.481679984720935,
+    "training_rmse": 0.28224203616286847,
+    "equal_weight_pre_rmse": 2.2549736549838264,
+    "post_mean_gap": 2.22475430670926,
+    "post_rmse": 2.642856981777249,
+    "n_post": 15
+  },
+  "gate": "FAIL: only four post-break pre-treatment quarters; recording continuity and equal cohort maturity unverified",
+  "placebo_total": 38,
+  "placebo_screened": 19,
+  "placebo_gmp": {
+    "force": "Greater Manchester",
+    "pre_rmse": 0.3217063695682245,
+    "post_rmse": 2.713686647927336,
+    "ratio": 8.435290390953364,
+    "post_mean_gap": 2.291274679850485,
+    "n_post": 14,
+    "passes_prefit_screen": true,
+    "rank_all": 1.0,
+    "rank_screened": 1.0
+  },
+  "loo_min": 1.4302352816057362,
+  "loo_max": 2.4721917891934884
+}
